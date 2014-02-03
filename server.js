@@ -2,12 +2,8 @@ var express = require('express');
 
 var app = express();
 
-app.get('/', function(req, res){
-    res.sendfile('./Sim/index.html');
-});
-
-app.get('/sprite.js', function(req, res){
-    res.sendfile('./Sim/sprite.js');
+app.configure(function(){
+    app.use('/', express.static(__dirname + '/Sim'));
 });
 
 app.listen(3000);
