@@ -2,11 +2,12 @@ var express = require('express');
 
 var app = express();
 
-app.get('/hello.txt', function(req, res){
-  var body = 'Hello World';
-  res.setHeader('Content-Type', 'text/plain');
-  res.setHeader('Content-Length', Buffer.byteLength(body));
-  res.end(body);
+app.get('/', function(req, res){
+    res.sendfile('./Sim/index.html');
+});
+
+app.get('/sprite.js', function(req, res){
+    res.sendfile('./Sim/sprite.js');
 });
 
 app.listen(3000);
