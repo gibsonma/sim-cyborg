@@ -1,0 +1,11 @@
+body {
+	margin: 0 auto;
+	overflow: hidden;
+}
+.sjs {
+	background: #f1f4fe;
+	border: 1px #333 solid
+}
+h2 {
+	font-size: 14px
+}
