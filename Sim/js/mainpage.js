@@ -6,7 +6,17 @@ window.onload = function() {
             h: game_height
         });
         // var exec_list = document.getElementById('exec_list');
-        // var bird = scene.Sprite('static/img/bird.png');
+        var background = scene.Layer('background');
+        scene.loadImages(['img/EmptyOffice.jpeg'], function() {
+            var office = background.Sprite('img/EmptyOffice.jpeg');
+            office.position(0, 0);
+            office.transformOrigin(0, 0);
+            office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
+            office.update();
+            //office.size(500,500);
+            
+        });
+        
         // scene.loadImages(['img/bird.png'], function() {
         //     var function_array = [{
         //         'name': 'Initialization',

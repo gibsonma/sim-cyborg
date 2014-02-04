@@ -12,6 +12,7 @@ body {
 
 #ui_wrapper {
 	font-family: 'Open Sans', sans-serif;
+	color: white;
 	position: absolute;
 	top: 0px;
 	left: 0px;
