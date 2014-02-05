@@ -1,78 +1,38 @@
-window.onload = function() {
-        var game_height = window.innerHeight - 5;
-        var game_width = window.innerWidth;
-        var scene = sjs.Scene({
-            w: game_width,
-            h: game_height
-        });
-        // var exec_list = document.getElementById('exec_list');
-        var background = scene.Layer('background');
-        scene.loadImages(['img/EmptyOffice.jpeg'], function() {
-            var office = background.Sprite('img/EmptyOffice.jpeg');
-            office.position(0, 0);
-            office.transformOrigin(0, 0);
-            office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
-            office.update();
-            //office.size(500,500);
-            
-        });
-        
-        // scene.loadImages(['img/bird.png'], function() {
-        //     var function_array = [{
-        //         'name': 'Initialization',
-        //         'execute': function() {
-        //             bird = scene.Sprite('img/bird.png');
-        //             bird.update();
-        //         }
-        //     }, {
-        //         'name': 'Set position',
-        //         'execute': function() {
-        //             bird.position(200, 200);
-        //             bird.update();
-        //         }
-        //     }, {
-        //         'name': 'Move',
-        //         'execute': function() {
-        //             bird.move(-10, -10);
-        //             bird.update();
-        //         }
-        //     }, {
-        //         'name': 'Rotate',
-        //         'execute': function() {
-        //             bird.rotate(Math.PI / 3.0);
-        //             bird.update();
-        //         }
-        //     }, {
-        //         'name': 'Scale',
-        //         'execute': function() {
-        //             bird.scale(bird.xscale + 0.5, bird.yscale + 0.5);
-        //             bird.update();
-        //         }
-        //     }, {
-        //         'name': 'Set opacity',
-        //         'execute': function() {
-        //             bird.setOpacity(bird.opacity - 0.2);
-        //             bird.update();
-        //         }
-        //     }, ]
-        //     var list_str = "";
-        //     for (var i = 0; i < function_array.length; i++) {
-        //         var el = function_array[i];
-        //         var code = String(el['execute']).split('{')[1].split('}')[0].replace(/^\s+|\s+$/g, '');
-        //         list_str = list_str + '<li><h2>' + el.name + '</h2><pre>' +
-        //             code + '</pre><button id="exec_' +
-        //             i + '">Execute</button></li>';
-        //     }
-        //     exec_list.innerHTML = list_str;
-        //     exec_list.onclick = function(e) {
-        //         var index = parseInt(e.target.id.split('_')[1]);
-        //         if (function_array[index])
-        //             function_array[index].execute();
-        //     }
-        // });
-	$.getJSON('data/config_file.json', function(data) {
-		var config = retrieve_config_file(data);
-		alert(config);
 
-	});
-    }; 
+window.onload = function() {
+    var game_height = window.innerHeight - 5;
+    var game_width = window.innerWidth;
+    var scene = sjs.Scene({
+        w: game_width,
+        h: game_height
+    });
+    // var exec_list = document.getElementById('exec_list');
+    var background = scene.Layer('background');
+    scene.loadImages(['img/EmptyOffice.jpeg'], function() {
+        var office = background.Sprite('img/EmptyOffice.jpeg');
+        office.position(0, 0);
+        office.transformOrigin(0, 0);
+        office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
+        office.update();
+    });
+
+    $(document).ready(function() {
+        $.getJSON('data/config_file.json', function(data) {
+            $.each(data, function(key, val) {
+                $("#dialog_box").append("<p>" + key + " - " + val + "</p>");
+            });
+        });
+    });
+}; 
+
+/*function retrieve_config_file(configFile)
+{
+	var result = "";
+	var stringobj = JSON.stringify(configFile);
+	var parsed = JSON.parse(stringobj);
+	for(property in parsed)
+	{
+		result += property + ' : ' + parsed[property] + ', ';
+	}
+	return(result);
+};*/
