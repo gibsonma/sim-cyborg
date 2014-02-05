@@ -70,4 +70,9 @@ window.onload = function() {
         //             function_array[index].execute();
         //     }
         // });
+	$.getJSON('data/config_file.json', function(data) {
+		var config = retrieve_config_file(data);
+		alert(config);
+
+	});
     }; 

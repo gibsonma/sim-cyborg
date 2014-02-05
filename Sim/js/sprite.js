@@ -1817,3 +1817,14 @@ global.sjs = sjs;
 
 })(this);
 
+function retrieve_config_file(configFile)
+{
+	var result = "";
+	var stringobj = JSON.stringify(configFile);
+	var parsed = JSON.parse(stringobj);
+	for(property in parsed)
+	{
+		result += property + ' : ' + parsed[property] + ', ';
+	}
+	return(result);
+}
