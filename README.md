@@ -11,3 +11,8 @@ node.js
 Requires node packages:
 express
 forever
+
+
+Week 0
+Feature - Displaying global variables
+This can be verified by running the test to check that the file is present and is valid json. In addition, its appearence on screen also verifies that this feature work correctly.
