@@ -18,21 +18,16 @@ window.onload = function() {
 
     $(document).ready(function() {
         $.getJSON('data/config_file.json', function(data) {
-            $.each(data, function(key, val) {
-                $("#dialog_box").append("<p>" + key + " - " + val + "</p>");
-            });
+            $.each(data, parse_deep);
         });
     });
 }; 
 
-/*function retrieve_config_file(configFile)
-{
-	var result = "";
-	var stringobj = JSON.stringify(configFile);
-	var parsed = JSON.parse(stringobj);
-	for(property in parsed)
-	{
-		result += property + ' : ' + parsed[property] + ', ';
-	}
-	return(result);
-};*/
+function parse_deep(key, val){
+    if (val !== null && typeof val === "object") {
+        $.each(val, parse_deep);
+    }
+    else {
+        $("#dialog_box").append("<p>" + key + " - " + val + "</p>");
+    }
+}
