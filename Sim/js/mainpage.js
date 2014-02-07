@@ -25,7 +25,9 @@ window.onload = function() {
 
 function parse_deep(key, val){
     if (val !== null && typeof val === "object") {
+        $("#dialog_box").append("<p>" + key + " {</p>");
         $.each(val, parse_deep);
+        $("#dialog_box").append("<p>}</p>");
     }
     else {
         $("#dialog_box").append("<p>" + key + " - " + val + "</p>");
