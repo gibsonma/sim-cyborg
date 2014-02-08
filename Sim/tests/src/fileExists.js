@@ -1,7 +1,12 @@
-function UrlExists(url)
+function UrlExists(fileLocation)
 {
-    var http = new XMLHttpRequest();
-    http.open('HEAD', url, false);
-    http.send();
-    return http.status!=200;
-}
+	var exists = false;
+	$.ajaxSetup({
+		async: false
+	});
+	$.getJSON(fileLocation, function() {
+	  exists = true;
+	})
+	.error(function() { /*fancy error reporting goes here*/ });
+	return exists;
+};
