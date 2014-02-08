@@ -13,7 +13,7 @@ To run, execute ./start_server.sh in the root directory. The main project page c
 * forever
 
 ###To Run tests:
-Open Specrunner.html in /Sim/tests and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
+Open [server]:3000/tests/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
 
 ##Week 0
 Feature - Displaying global variables
