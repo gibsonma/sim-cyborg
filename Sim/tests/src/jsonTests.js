@@ -1,4 +1,4 @@
-function UrlExists(fileLocation)
+function jsonExistsParses(fileLocation)
 {
 	var exists = false;
 	$.ajaxSetup({
@@ -9,4 +9,4 @@ function UrlExists(fileLocation)
 	})
 	.error(function() { /*fancy error reporting goes here*/ });
 	return exists;
-};
+}
