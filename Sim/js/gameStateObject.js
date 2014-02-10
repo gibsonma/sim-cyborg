@@ -56,3 +56,37 @@ function iterate(obj)
       console.log("Key: " + key + " Values: " + obj[key]);
   }
 }
+
+// Barebones game state update loop
+function simpleTick(game_state)
+{
+	var gs = game_state;
+	// Increment current time
+	// Todo: Decide how to represent time
+	gs.current_time++;
+
+	// Iterate over modules and get them to update
+	for (var m in gs.modules) {
+		m.update(gs);
+	}
+
+	// Todo: Simulate problems occurring etc here
+}
+
+// Example 'module.update()' function
+// Having each module implement its own update() allows for modular behaviour
+function update(game_state)
+{
+	// Do different stuff depening on what development method
+	// E.G increment current task progress, check if we can move to next task etc
+	switch (game_state.development_type) {
+		case "Waterfall":
+			console.log("Updating in a waterfall fashion!");
+			break;
+		case "Agile":
+			console.log("Look at me, aren't I agile?");
+			break;
+		default:
+			console.log("What even IS this development methodology?");
+	}
+}
