@@ -10,18 +10,20 @@
   modules - Details the modules involved in the manager's project
   subsystems - Details the subsystems involved in the manager's project
  */
-function game_state(sites, current_time, tasks, real_task_effort, development_type, problems,
-					finance, modules, subsystems)
+ 
+ //Change so that game_state takes no paramters and instead sets all attributes to a default value
+ //Attributes can then be set using functions
+function game_state()
 {
-	this.sites = sites;
-	this.current_time = current_time;
-	this.tasks = tasks;
-	this.real_task_effort = real_task_effort;
-	this.development_type = development_type;
-	this.problems = problems;
-	this.finance = finance;
-	this.modules = modules;
-	this.subsystems = subsystems;
+	this.sites = 0;
+	this.current_time = 0;
+	this.tasks = 0;
+	this.real_task_effort = 0;
+	this.development_type = 0;
+	this.problems = 0;
+	this.finance = 0;
+	this.modules = 0;
+	this.subsystems = 0;
 
 	function change_sites(val){this.sites = val;}
 	function change_time(val){this.current_time = val;}
@@ -38,7 +40,7 @@ function game_state(sites, current_time, tasks, real_task_effort, development_ty
 //to the console
 function init_game_state()
 {
-	var gs = new game_state(10, "02/04/2015 - 14:23", [["Assign work to Europe"],["Deal with strike in San Fran"],["Fundraise money"]], [4,5,8,2], "agile", ["Earthquake in Japan"], [10000, 1000], ["Frontend", "Backend"], ["Database"]);
+	var gs = new game_state([["India", 10, "Okay", 0],["San Francisco", 20, "Excellent", 1],["France", 5, "Behind", 0]], "02/04/2015 - 14:23", [["Assign work to Europe"],["Deal with strike in San Fran"],["Fundraise money"]], [4,5,8,2], "agile", ["Earthquake in Japan"], [10000, 1000], ["Frontend", "Backend"], ["Database"]);
 	iterate(gs);
 	return gs;
 }
