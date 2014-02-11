@@ -96,12 +96,7 @@ function simpleTick(GameState)
     // Todo: Decide how to represent time
     gs.current_time++;
 
-    // Iterate over modules and get them to update
-    for (var m in gs.modules) {
-        m.update(gs);
-    }
-
-    // Todo: Simulate problems occurring etc here
+    update(gs);
 }
 
 // Example 'module.update()' function
