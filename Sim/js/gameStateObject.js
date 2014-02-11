@@ -16,7 +16,7 @@ function GameState()
 	this.sites = [site1];
 	this.current_time = "";
 	this.problems = [];
-	this.finance = [];
+	this.finance = 0;
 
     var main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
     main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
