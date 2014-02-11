@@ -1,4 +1,3 @@
-//constructor
 /*
   sites - Details of each site involved with location, size, status, home site etc
   time - The current time & date in the game
@@ -8,44 +7,81 @@
   problems - Gives details of past and present problems along with the sites affected
   finance - Amount of money remaining in budget, amount spent etc
   modules - Details the modules involved in the manager's project
-  subsystems - Details the subsystems involved in the manager's project
+  tasks - Details the tasks involved in the manager's project
  */
  
- //Change so that game_state takes no paramters and instead sets all attributes to a default value
- //Attributes can then be set using functions
-function game_state()
+function GameState()
 {
-	this.sites = 0;
-	this.current_time = 0;
-	this.tasks = 0;
-	this.real_task_effort = 0;
-	this.development_type = 0;
-	this.problems = 0;
-	this.finance = 0;
-	this.modules = 0;
-	this.subsystems = 0;
+    var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2);
+	this.sites = [site1];
+	this.current_time = "";
+	this.development_type = "";
+	this.problems = [];
+	this.finance = [];
 
-	function change_sites(val){this.sites = val;}
-	function change_time(val){this.current_time = val;}
-	function change_tasks(val){this.tasks = val;}
-	function change_real_task_effort(val){this.real_task_effort = val;}
-	function change_development_type(val){this.development_type = val;}
-	function change_problems(val){this.problems = val;}
-	function change_finance(val){this.finance = val;}
-	function change_modules(val){this.modules = val;}
-	function change_subsystems(val){this.subsystems = val;}
+    var main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
+    main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
+    main_module.tasks[1].assigned = 2;
+    main_module.tasks[2].assigned = 1;
+
+	this.modules = [main_module];
+    this.sites[0].working_on.push(main_module);
+}
+
+GameState.prototype.add_sites = function(site){this.sites.push(site);}
+GameState.prototype.change_time = function(val){this.current_time = val;}
+GameState.prototype.change_real_task_effort = function(val){this.real_task_effort = val;}
+GameState.prototype.change_development_type = function(val){this.development_type = val;}
+GameState.prototype.change_problems = function(val){this.problems = val;}
+GameState.prototype.change_finance = function(val){this.finance = val;}
+GameState.prototype.add_modules = function(module){this.modules.push(module);}
+
+function Site(name, coordinates, culture_modifier, num_staff, effort){
+    this.name = name;
+    this.coordinates = coordinates;
+    this.culture = culture_modifier; //obj
+    this.num_staff = num_staff;
+    this.effort = effort; // home much gets completed each turn
+    this.working_on = [];
+}
+
+function Culture(){}
+
+function Module(name, tasks){
+    this.name = name;
+    this.tasks = tasks; //obj list
+}
+
+function Task(name, total){
+    this.name = name;
+    this.assigned = 0;
+    this.completed = 0;
+    this.total = total;
+}
+
+function update_module(gs) {
+    for (var i=0; i < gs.sites.length; i++){
+        var site = gs.sites[i];
+        for (var j=0; j < site.working_on.length; j++){
+            var module = site.working_on[j];
+            for (var k=0; k < module.tasks.length; k++){
+                var task = module.tasks[k];
+                task.completed = task.completed + (task.assigned * site.effort);
+            }
+        }
+    }
 }
 
 //A quick function to initialise the game state with some ints and strings and print them
 //to the console
-function init_game_state()
+function init_GameState()
 {
-	var gs = new game_state([["India", 10, "Okay", 0],["San Francisco", 20, "Excellent", 1],["France", 5, "Behind", 0]], "02/04/2015 - 14:23", [["Assign work to Europe"],["Deal with strike in San Fran"],["Fundraise money"]], [4,5,8,2], "agile", ["Earthquake in Japan"], [10000, 1000], ["Frontend", "Backend"], ["Database"]);
+	var gs = new GameState();
 	iterate(gs);
 	return gs;
 }
 
-function game_state_to_json(obj)
+function GameState_to_json(obj)
 {
 	var result = JSON.stringify(obj);
 	return result;
@@ -55,14 +91,17 @@ function game_state_to_json(obj)
 function iterate(obj)
 {
 	for (var key in obj) {
-      console.log("Key: " + key + " Values: " + obj[key]);
+      if(obj.hasOwnProperty(key))
+	  {
+		console.log("Key: " + key + " Values: " + obj[key]);
+	  }
   }
 }
 
 // Barebones game state update loop
-function simpleTick(game_state)
+function simpleTick(GameState)
 {
-	var gs = game_state;
+	var gs = GameState;
 	// Increment current time
 	// Todo: Decide how to represent time
 	gs.current_time++;
@@ -77,18 +116,39 @@ function simpleTick(game_state)
 
 // Example 'module.update()' function
 // Having each module implement its own update() allows for modular behaviour
-function update(game_state)
+function update(GameState)
 {
 	// Do different stuff depening on what development method
 	// E.G increment current task progress, check if we can move to next task etc
-	switch (game_state.development_type) {
+	switch (GameState.development_type) {
 		case "Waterfall":
 			console.log("Updating in a waterfall fashion!");
 			break;
 		case "Agile":
 			console.log("Look at me, aren't I agile?");
 			break;
+		case "Reddit":
+			console.log("Will update gamestate after reddit");
+			break;
 		default:
 			console.log("What even IS this development methodology?");
 	}
+}
+
+// for debugging
+
+if (require.main === module){ 
+    console.log("Node method for debugging");
+    var gs = new GameState();
+    console.log(gs);
+    for (var i=0;i < gs.modules.length; i++){
+        console.log(gs.modules[i]);
+    }
+    //console.log (GameState_to_json(gs));
+    update_module(gs);
+    console.log("updated gs");
+    console.log(gs);
+    for (var i=0;i < gs.modules.length; i++){
+        console.log(gs.modules[i]);
+    }
 }

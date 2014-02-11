@@ -1,5 +1,5 @@
 describe("game object", function() {
-	var game = new game_state();
+	var game = new GameState();
     it("checks if sites are properly set", function() {
         expect(game.sites).not.toBeNull();
     });
@@ -27,7 +27,7 @@ describe("game object", function() {
        it("checks if subsystems are properly set", function() {
         expect(game.subsystems).not.toBeNull();
     });
-    var initGame = init_game_state();
+    var initGame = init_GameState();
     	it("checks if the init returns a properly defined object", function() {
     	expect(initGame).toBeDefined();
     });
