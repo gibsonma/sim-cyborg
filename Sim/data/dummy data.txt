@@ -1,0 +1,10 @@
+//Dummy data for game state object
+[["India", 10, "Okay", 0],["San Francisco", 20, "Excellent", 1],["France", 5, "Behind", 0]], 
+"02/04/2015 - 14:23", 
+[["Assign work to Europe"],["Deal with strike in San Fran"],["Fundraise money"]], 
+[4,5,8,2], 
+"agile", 
+["Earthquake in Japan"], 
+[10000, 1000], 
+["Frontend", "Backend"], 
+["Database"]
