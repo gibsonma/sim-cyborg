@@ -7,48 +7,69 @@
   problems - Gives details of past and present problems along with the sites affected
   finance - Amount of money remaining in budget, amount spent etc
   modules - Details the modules involved in the manager's project
-  subsystems - Details the subsystems involved in the manager's project
+  tasks - Details the tasks involved in the manager's project
  */
  
 function GameState()
 {
-
-	this.sites = [];
+    var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2);
+	this.sites = [site1];
 	this.current_time = "";
-	this.tasks = [];
-	this.real_task_effort = [];
 	this.development_type = "";
 	this.problems = [];
 	this.finance = [];
 
-    main_module = new Module("write backend", [new Subsystem("write model",30), new Subsystem("write view", 25), new Subsystem("write controller", 35)]);
+    var main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
+    main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
+    main_module.tasks[1].assigned = 2;
+    main_module.tasks[2].assigned = 1;
+
 	this.modules = [main_module];
+    this.sites[0].working_on.push(main_module);
 }
 
 GameState.prototype.add_sites = function(site){this.sites.push(site);}
 GameState.prototype.change_time = function(val){this.current_time = val;}
-GameState.prototype.change_tasks = function(val){this.tasks = val;}
 GameState.prototype.change_real_task_effort = function(val){this.real_task_effort = val;}
 GameState.prototype.change_development_type = function(val){this.development_type = val;}
 GameState.prototype.change_problems = function(val){this.problems = val;}
 GameState.prototype.change_finance = function(val){this.finance = val;}
 GameState.prototype.add_modules = function(module){this.modules.push(module);}
 
-function Site(name, coordinates, culture_modifier){
+function Site(name, coordinates, culture_modifier, num_staff, effort){
     this.name = name;
     this.coordinates = coordinates;
     this.culture = culture_modifier; //obj
+    this.num_staff = num_staff;
+    this.effort = effort; // home much gets completed each turn
+    this.working_on = [];
 }
 
-function Module(name, subsystems){
+function Culture(){}
+
+function Module(name, tasks){
     this.name = name;
-    this.subsystems = subsystems; //obj list
+    this.tasks = tasks; //obj list
 }
 
-function Subsystem(name, total){
+function Task(name, total){
     this.name = name;
+    this.assigned = 0;
     this.completed = 0;
     this.total = total;
+}
+
+function update_module(gs) {
+    for (var i=0; i < gs.sites.length; i++){
+        var site = gs.sites[i];
+        for (var j=0; j < site.working_on.length; j++){
+            var module = site.working_on[j];
+            for (var k=0; k < module.tasks.length; k++){
+                var task = module.tasks[k];
+                task.completed = task.completed + (task.assigned * site.effort);
+            }
+        }
+    }
 }
 
 //A quick function to initialise the game state with some ints and strings and print them
@@ -114,6 +135,8 @@ function update(GameState)
 	}
 }
 
+// for debugging
+
 if (require.main === module){ 
     console.log("Node method for debugging");
     var gs = new GameState();
@@ -121,5 +144,11 @@ if (require.main === module){
     for (var i=0;i < gs.modules.length; i++){
         console.log(gs.modules[i]);
     }
-    console.log (GameState_to_json(gs));
+    //console.log (GameState_to_json(gs));
+    update_module(gs);
+    console.log("updated gs");
+    console.log(gs);
+    for (var i=0;i < gs.modules.length; i++){
+        console.log(gs.modules[i]);
+    }
 }
