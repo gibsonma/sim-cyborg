@@ -12,12 +12,11 @@
  
 function GameState()
 {
-    var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2);
+    var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2, "Agile");
 	this.sites = [site1];
 	this.current_time = "";
-	this.development_type = "";
 	this.problems = [];
-	this.finance = [];
+	this.finance = 0;
 
     var main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
     main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
@@ -36,13 +35,14 @@ GameState.prototype.change_problems = function(val){this.problems = val;}
 GameState.prototype.change_finance = function(val){this.finance = val;}
 GameState.prototype.add_modules = function(module){this.modules.push(module);}
 
-function Site(name, coordinates, culture_modifier, num_staff, effort){
+function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.name = name;
     this.coordinates = coordinates;
     this.culture = culture_modifier; //obj
     this.num_staff = num_staff;
     this.effort = effort; // home much gets completed each turn
     this.working_on = [];
+	this.development_type = dev;
 }
 
 function Culture(){}
@@ -59,80 +59,76 @@ function Task(name, total){
     this.total = total;
 }
 
-function update_module(gs) {
-    for (var i=0; i < gs.sites.length; i++){
-        var site = gs.sites[i];
-        for (var j=0; j < site.working_on.length; j++){
-            var module = site.working_on[j];
-            for (var k=0; k < module.tasks.length; k++){
-                var task = module.tasks[k];
-                task.completed = task.completed + (task.assigned * site.effort);
-            }
-        }
-    }
+function update_modules(gs) {
 }
 
 //A quick function to initialise the game state with some ints and strings and print them
 //to the console
 function init_GameState()
 {
-	var gs = new GameState();
-	iterate(gs);
-	return gs;
+    var gs = new GameState();
+    iterate(gs);
+    return gs;
 }
 
 function GameState_to_json(obj)
 {
-	var result = JSON.stringify(obj);
-	return result;
+    var result = JSON.stringify(obj);
+    return result;
 }
 
 //A function to iterate through a nested object
 function iterate(obj)
 {
-	for (var key in obj) {
-      if(obj.hasOwnProperty(key))
-	  {
-		console.log("Key: " + key + " Values: " + obj[key]);
-	  }
-  }
+    for (var key in obj) {
+        if(obj.hasOwnProperty(key))
+        {
+            console.log("Key: " + key + " Values: " + obj[key]);
+        }
+    }
 }
 
 // Barebones game state update loop
 function simpleTick(GameState)
 {
-	var gs = GameState;
-	// Increment current time
-	// Todo: Decide how to represent time
-	gs.current_time++;
+    var gs = GameState;
+    // Increment current time
+    // Todo: Decide how to represent time
+    gs.current_time++;
 
-	// Iterate over modules and get them to update
-	for (var m in gs.modules) {
-		m.update(gs);
-	}
+    // Iterate over modules and get them to update
+    for (var m in gs.modules) {
+        m.update(gs);
+    }
 
-	// Todo: Simulate problems occurring etc here
+    // Todo: Simulate problems occurring etc here
 }
 
 // Example 'module.update()' function
 // Having each module implement its own update() allows for modular behaviour
-function update(GameState)
+function update(gs)
 {
-	// Do different stuff depening on what development method
-	// E.G increment current task progress, check if we can move to next task etc
-	switch (GameState.development_type) {
-		case "Waterfall":
-			console.log("Updating in a waterfall fashion!");
-			break;
-		case "Agile":
-			console.log("Look at me, aren't I agile?");
-			break;
-		case "Reddit":
-			console.log("Will update gamestate after reddit");
-			break;
-		default:
-			console.log("What even IS this development methodology?");
-	}
+    for (var i=0; i < gs.sites.length; i++){
+        var site = gs.sites[i];
+        for (var j=0; j < site.working_on.length; j++){
+            var module = site.working_on[j];
+            for (var k=0; k < module.tasks.length; k++){
+                var task = module.tasks[k];
+                switch (site.development_type) {
+                    case "Waterfall":
+                        task.completed = task.completed + (task.assigned * site.effort * 1);
+                        console.log("Updating in a waterfall fashion!");
+                        break;
+                    case "Agile":
+                        task.completed = task.completed + (task.assigned * site.effort * 1.5);
+                        console.log("Look at me, aren't I agile?");
+                        break;
+                    default:
+                        console.log("What even IS this development methodology?");
+                }
+            }
+        }
+    }
 }
 
 // for debugging
@@ -145,7 +141,7 @@ if (require.main === module){
         console.log(gs.modules[i]);
     }
     //console.log (GameState_to_json(gs));
-    update_module(gs);
+    update(gs);
     console.log("updated gs");
     console.log(gs);
     for (var i=0;i < gs.modules.length; i++){
