@@ -1,4 +1,3 @@
-//constructor
 /*
   sites - Details of each site involved with location, size, status, home site etc
   time - The current time & date in the game
@@ -11,36 +10,33 @@
   subsystems - Details the subsystems involved in the manager's project
  */
  
- //Change so that game_state takes no paramters and instead sets all attributes to a default value
- //Attributes can then be set using functions
 function game_state()
 {
-	this.sites = 0;
-	this.current_time = 0;
-	this.tasks = 0;
-	this.real_task_effort = 0;
-	this.development_type = 0;
-	this.problems = 0;
-	this.finance = 0;
-	this.modules = 0;
-	this.subsystems = 0;
-
-	function change_sites(val){this.sites = val;}
-	function change_time(val){this.current_time = val;}
-	function change_tasks(val){this.tasks = val;}
-	function change_real_task_effort(val){this.real_task_effort = val;}
-	function change_development_type(val){this.development_type = val;}
-	function change_problems(val){this.problems = val;}
-	function change_finance(val){this.finance = val;}
-	function change_modules(val){this.modules = val;}
-	function change_subsystems(val){this.subsystems = val;}
+	this.sites = [];
+	this.current_time = "";
+	this.tasks = [];
+	this.real_task_effort = [];
+	this.development_type = "";
+	this.problems = [];
+	this.finance = [];
+	this.modules = [];
+	this.subsystems = [];	
 }
+game_state.prototype.change_sites = function(val){this.sites = val;}
+game_state.prototype.change_time = function(val){this.current_time = val;}
+game_state.prototype.change_tasks = function(val){this.tasks = val;}
+game_state.prototype.change_real_task_effort = function(val){this.real_task_effort = val;}
+game_state.prototype.change_development_type = function(val){this.development_type = val;}
+game_state.prototype.change_problems = function(val){this.problems = val;}
+game_state.prototype.change_finance = function(val){this.finance = val;}
+game_state.prototype.change_modules = function(val){this.modules = val;}
+game_state.prototype.change_subsystems = function(val){this.subsystems = val;}
 
 //A quick function to initialise the game state with some ints and strings and print them
 //to the console
 function init_game_state()
 {
-	var gs = new game_state([["India", 10, "Okay", 0],["San Francisco", 20, "Excellent", 1],["France", 5, "Behind", 0]], "02/04/2015 - 14:23", [["Assign work to Europe"],["Deal with strike in San Fran"],["Fundraise money"]], [4,5,8,2], "agile", ["Earthquake in Japan"], [10000, 1000], ["Frontend", "Backend"], ["Database"]);
+	var gs = new game_state();
 	iterate(gs);
 	return gs;
 }
@@ -55,7 +51,10 @@ function game_state_to_json(obj)
 function iterate(obj)
 {
 	for (var key in obj) {
-      console.log("Key: " + key + " Values: " + obj[key]);
+      if(obj.hasOwnProperty(key))
+	  {
+		console.log("Key: " + key + " Values: " + obj[key]);
+	  }
   }
 }
 
