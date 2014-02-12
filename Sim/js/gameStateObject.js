@@ -62,12 +62,20 @@ function Task(name, total){
 function update_modules(gs) {
 }
 
+// Variables to do with time
+MILLIS_PER_TICK = 1000 / 30;    // 1000ms per second, 30FPS
+TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), only update game time every X ticks
+TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
+
 //A quick function to initialise the game state with some ints and strings and print them
 //to the console
-function init_GameState()
+//FIXME: Creating sprite.js Ticker here so need to pass in the scene. Should probably have this elsewhere, and maybe store a reference to the Ticker to
+//       allow for pausing/unpausing.
+function init_GameState(scene)
 {
     var gs = new GameState();
     iterate(gs);
+    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }).run();
     return gs;
 }
 
@@ -89,12 +97,18 @@ function iterate(obj)
 }
 
 // Barebones game state update loop
-function simpleTick(GameState)
+function simpleTick(ticker)
 {
-    var gs = GameState;
+    // Ticker only allows for calling afunction taking just the ticker as an argument so need a getGameState() function to allow us access to the game state object.
+    // Not sure how to structure this, maybe use a class?
+    var gs = getGameState();
     // Increment current time
     // Todo: Decide how to represent time
-    gs.current_time++;
+    TICKS_PASSED += ticker.lastTicksElapsed;
+    if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
+        gs.current_time += 1;   // Increment game time by 1 'unit' (day?)
+        TICKS_PASSED = 0;
+    }
 
     update(gs);
 }
