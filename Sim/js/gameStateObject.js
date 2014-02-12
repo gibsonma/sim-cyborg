@@ -75,7 +75,7 @@ function setupGame()
     var gameObj = {};
     var gs = init_GameState();
     var scene = getScene();
-    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }).run();
+    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); ticker.run();
     GAME_DATA.ticker = ticker;
 }
 

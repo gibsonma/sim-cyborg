@@ -49,8 +49,6 @@ describe("game object", function() {
       it("checks if time has advanced properly",function(){
         GAME_DATA.scene = sjs.Scene({w:640, h:480});
         setupGame();
-        var oldTime = GAME_DATA.gs.current_time;
-        console.log(GAME_DATA.ticker);
         expect(oldTime).not.toBeNull(); //placeholder til ticker issues resolve
       });
 
