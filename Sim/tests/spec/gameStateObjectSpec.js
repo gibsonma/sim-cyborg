@@ -30,6 +30,8 @@ describe("game object", function() {
     });
       var updatedGame = new GameState();
       update(updatedGame);
+      console.log(GameState_to_json(initGame));
+      console.log(GameState_to_json(updatedGame));
       it("checks if the object updates correctly", function() {
       expect(updatedGame).toBeDefined();
     for (var i=0; i < updatedGame.sites.length; i++){
