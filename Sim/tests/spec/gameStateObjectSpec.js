@@ -28,4 +28,23 @@ describe("game object", function() {
     	it("checks if the init returns a properly defined object", function() {
     	expect(initGame).toBeDefined();
     });
+      var updatedGame = new GameState();
+      update(updatedGame);
+      it("checks if the object updates correctly", function() {
+      expect(updatedGame).toBeDefined();
+    for (var i=0; i < updatedGame.sites.length; i++){
+        var siteUpdated = updatedGame.sites[i];
+        var siteOld = initGame.sites[i];
+        for (var j=0; j < siteUpdated.working_on.length; j++){
+            var moduleUpdated = siteUpdated.working_on[j];
+            var moduleOld = siteOld.working_on[j];
+            for (var k=0; k < moduleUpdated.tasks.length; k++){
+                var taskUpdated = moduleUpdated.tasks[k];
+                var taskOld = moduleOld.tasks[k];
+                expect(taskOld.completed).toBeLessThan(taskUpdated.completed);
+            }
+        }
+    }
+
+    });
 });
