@@ -47,9 +47,15 @@ describe("game object", function() {
     }
     });
       it("checks if time has advanced properly",function(){
-        GAME_DATA.scene = sjs.Scene({w:640, h:480});
+        GAME_DATA.scene = sjs.Scene({w:1, h:1}); //make this invisible
         setupGame();
-        expect(oldTime).not.toBeNull(); //placeholder til ticker issues resolve
+        var oldTime = GAME_DATA.gs.current_time;
+        for(var i = 0; i < 31; i++){
+          GAME_DATA.ticker.lastTicksElapsed = 1; //simulate 30 ticks in realtime
+          simpleTick(GAME_DATA.ticker); //call updated ticker each time
+        }
+        var newTime = GAME_DATA.gs.current_time;
+        expect(oldTime).toBeLessThan(newTime);
       });
 
 });
