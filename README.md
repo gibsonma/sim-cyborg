@@ -15,8 +15,12 @@ NB. There may be a bug on some linux installations where forever cannot find nod
 * forever
 
 ###To Run tests:
-Open [server]:3000/tests/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
+Open [server]:3000/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
 
 ##Week 0
 Feature - Displaying global variables
 This can be verified by running the test to check that the file is present and is valid json. In addition, its appearence on screen also verifies that this feature work correctly.
+
+##Week 1
+Feature - Process Simulator
+This can be verified by running the associated tests and examining the console output when the game state changes
