@@ -14,7 +14,7 @@ function GameState()
 {
     var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2, "Agile");
     this.sites = [site1];
-    this.current_time = "";
+    this.current_time = 0;
     this.problems = [];
     this.finance = 0;
 
