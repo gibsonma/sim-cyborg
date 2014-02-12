@@ -13,17 +13,17 @@
 function GameState()
 {
     var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2, "Agile");
-	this.sites = [site1];
-	this.current_time = "";
-	this.problems = [];
-	this.finance = 0;
+    this.sites = [site1];
+    this.current_time = "";
+    this.problems = [];
+    this.finance = 0;
 
     var main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
     main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
     main_module.tasks[1].assigned = 2;
     main_module.tasks[2].assigned = 1;
 
-	this.modules = [main_module];
+    this.modules = [main_module];
     this.sites[0].working_on.push(main_module);
 }
 
@@ -42,7 +42,7 @@ function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.num_staff = num_staff;
     this.effort = effort; // home much gets completed each turn
     this.working_on = [];
-	this.development_type = dev;
+    this.development_type = dev;
 }
 
 function Culture(){}
@@ -63,20 +63,35 @@ function update_modules(gs) {
 }
 
 // Variables to do with time
-MILLIS_PER_TICK = 1000 / 30;    // 1000ms per second, 30FPS
-TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), only update game time every X ticks
-TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
+var MILLIS_PER_TICK = 1000 / 30;    // 1000ms per second, 30FPS
+var TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), only update game time every X ticks
+var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
+
+// Blop to store the global game data/objects such as game state, the scene, the ticker
+var GAME_DATA = {};
+
+function setupGame()
+{
+    var gameObj = {};
+    var gs = init_GameState();
+    var scene = getScene();
+    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }).run();
+    GAME_DATA.ticker = ticker;
+}
 
 //A quick function to initialise the game state with some ints and strings and print them
 //to the console
-//FIXME: Creating sprite.js Ticker here so need to pass in the scene. Should probably have this elsewhere, and maybe store a reference to the Ticker to
-//       allow for pausing/unpausing.
-function init_GameState(scene)
+function init_GameState()
 {
     var gs = new GameState();
     iterate(gs);
-    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }).run();
+    GAME_DATA.gs = gs;
     return gs;
+}
+
+function getScene()
+{
+    return GAME_DATA.scene;
 }
 
 function GameState_to_json(obj)
@@ -101,7 +116,7 @@ function simpleTick(ticker)
 {
     // Ticker only allows for calling afunction taking just the ticker as an argument so need a getGameState() function to allow us access to the game state object.
     // Not sure how to structure this, maybe use a class?
-    var gs = getGameState();
+    var gs = GAME_DATA.gs;
     // Increment current time
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
