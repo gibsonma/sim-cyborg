@@ -16,6 +16,7 @@ NB. There may be a bug on some linux installations where forever cannot find nod
 
 ###To Run tests:
 Open [server]:3000/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
+[server] here refers to where you have deployed the project. Generally a url like http://localhost:3000 will suffice to load up the index page.
 
 ##Week 0
 Feature - Displaying global variables
@@ -24,3 +25,13 @@ This can be verified by running the test to check that the file is present and i
 ##Week 1
 Feature - Process Simulator
 This can be verified by running the associated tests and examining the console output when the game state changes
+
+Currently the console outputs json representing the game state, which looks something like below:
+
+*Initial State:
+{"sites":[{"name":"Site 1","coordinates":0,"culture":{},"num_staff":5,"effort":2,"working_on":[{"name":"write backend","tasks":[{"name":"write model","assigned":2,"completed":0,"total":30},{"name":"write view","assigned":2,"completed":0,"total":25},{"name":"write controller","assigned":1,"completed":0,"total":35}]}],"development_type":"Agile"}],"current_time":0,"problems":[],"finance":0,"modules":[{"name":"write backend","tasks":[{"name":"write model","assigned":2,"completed":0,"total":30},{"name":"write view","assigned":2,"completed":0,"total":25},{"name":"write controller","assigned":1,"completed":0,"total":35}]}]}
+
+*Updated State
+{"sites":[{"name":"Site 1","coordinates":0,"culture":{},"num_staff":5,"effort":2,"working_on":[{"name":"write backend","tasks":[{"name":"write model","assigned":2,"completed":6,"total":30},{"name":"write view","assigned":2,"completed":6,"total":25},{"name":"write controller","assigned":1,"completed":3,"total":35}]}],"development_type":"Agile"}],"current_time":0,"problems":[],"finance":0,"modules":[{"name":"write backend","tasks":[{"name":"write model","assigned":2,"completed":6,"total":30},{"name":"write view","assigned":2,"completed":6,"total":25},{"name":"write controller","assigned":1,"completed":3,"total":35}]}]} 
+
+As seen below, for each site there is a number of tasks, in the "tasks" field of the json object. To show that progress has happened, we simply look at the "completed" field for each task and see that it has advanced.
