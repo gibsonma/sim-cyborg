@@ -41,7 +41,7 @@ function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.culture = culture_modifier; //obj
     this.num_staff = num_staff;
     this.effort = effort; // home much gets completed each turn
-    this.working_on = [];
+    this.working_on = [];//List of tasks
     this.development_type = dev;
 }
 
@@ -57,6 +57,49 @@ function Task(name, total){
     this.assigned = 0;
     this.completed = 0;
     this.total = total;
+	this.status = "Normal";
+}
+
+//Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
+var PROBLEM_PROBABILITY = 0.5//% chance that a task will experience a problem if its site/module is selected
+function problemSimulator(listOfSites, listOfModules)
+{
+	var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
+	if(chosen[1] == listOfSites)
+	{
+		for(var i = 0; i < listOfSites[chosen[0]].working_on.length; i++)//Cycle through tasks
+		{
+			if(Math.random() >= PROBLEM_PROBABILITY)listOfSites[chosen[0]].working_on[i].status= "Problem Encountered";//Apply problem randomly
+		}
+		return listOfSites;
+	}
+	else
+	{
+		for(var i = 0; i < listOfModules[chosen[0]].tasks.length; i++)
+		{
+			if(Math.random() >= PROBLEM_PROBABILITY)listOfModules[chosen[0]].tasks[i].status= "Problem Encountered";
+		}
+		return listOfModules;
+	}
+}
+
+//A function that takes two arrays, returns one of the arrays along with an index
+function chooseArray(sites, modules)
+{
+	var chosenIndex, chosenArray;
+	var siteIndex = Math.floor((Math.random()*sites.length));//Select item from site array
+	var moduleIndex = Math.floor((Math.random()*modules.length));//Select item from module array
+	if(Math.round(Math.random()) == 0)//Pick one to experience problem
+	{
+		chosenIndex = siteIndex;
+		chosenArray = sites;
+	}
+	else 
+	{
+		chosenIndex = moduleIndex;
+		chosenArray = modules;
+	}
+	return [chosenIndex, chosenArray];
 }
 
 function update_modules(gs) {

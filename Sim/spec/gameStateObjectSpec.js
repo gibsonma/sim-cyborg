@@ -61,3 +61,27 @@ describe("game object", function() {
       });
 
 });
+describe("Problem Simulator", function()
+{
+	var a = new Task("Task A", 10);
+	var b = new Task("Task B", 5);
+	var c = new Task("Task C", 2);
+	var d = new Task("Task D", 2);
+	var e = new Task("Task E", 2);
+	var f = new Task("Task F", 2);
+	var taskListA = [a,b,c];
+	var taskListB = [d,e,f];
+	var siteA = new Site("Site A", 0, 0, 0, 0, 0);
+	var siteB = new Site("Site B", 0, 0, 0, 0, 0);
+	siteA.working_on = taskListA;
+	siteB.working_on = taskListB;
+	var modA = new Module("Mod A", taskListB);
+	var modB = new Module("Mod B", taskListB);
+	var siteList = [siteA, siteB];
+	var moduleList = [modA, modB];
+	
+	it("Returns a defined object", function()
+	{
+		expect(problemSimulator(siteList, moduleList)).toBeDefined();
+	});
+});
