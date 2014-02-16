@@ -85,3 +85,56 @@ describe("Problem Simulator", function()
 		expect(problemSimulator(siteList, moduleList)).toBeDefined();
 	});
 });
+
+describe("game object with predefined scenario", function() {
+  var predef = new GameStatePreDefined(1);
+    it("checks if sites are properly set", function() {
+        expect(predef.sites).not.toBeNull();
+    });
+     it("checks if time is properly set", function() {
+        expect(predef.current_time).not.toBeNull();
+    });
+      it("checks if tasks are properly set", function() {
+        expect(predef.tasks).not.toBeNull();
+    });
+      it("checks if real task effort is properly set", function() {
+        expect(predef.real_task_effort).not.toBeNull();
+    });
+       it("checks if development type is properly set", function() {
+        expect(predef.development_type).not.toBeNull();
+    });
+       it("checks if problems are properly set", function() {
+        expect(predef.problems).not.toBeNull();
+    });
+       it("checks if finance is non negative", function() {
+        expect(predef.finance).not.toBeLessThan(0);
+    });
+        it("checks if modules are properly set", function() {
+        expect(predef.modules).not.toBeNull();
+    });
+    var predefInit = init_GameStatePreDefined(1);
+      it("checks if the init returns a properly defined object", function() {
+      expect(predefInit).toBeDefined();
+    });
+      var updatedGame = new GameStatePreDefined(1);
+      update(updatedGame);
+      console.log(GameState_to_json(predefInit));
+      console.log(GameState_to_json(updatedGame));
+      it("checks if the object updates correctly", function() {
+      expect(updatedGame).toBeDefined();
+      for (var i=0; i < updatedGame.sites.length; i++){
+          var siteUpdated = updatedGame.sites[i];
+          var siteOld = predefInit.sites[i];
+          for (var j=0; j < siteUpdated.working_on.length; j++){
+              var moduleUpdated = siteUpdated.working_on[j];
+              var moduleOld = siteOld.working_on[j];
+              for (var k=0; k < moduleUpdated.tasks.length; k++){
+                  var taskUpdated = moduleUpdated.tasks[k];
+                  var taskOld = moduleOld.tasks[k];
+                  expect(taskOld.completed).toBeLessThan(taskUpdated.completed);
+              }
+          }
+      }
+      });
+
+});
