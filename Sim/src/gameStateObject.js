@@ -9,7 +9,43 @@
   modules - Details the modules involved in the manager's project
   tasks - Details the tasks involved in the manager's project
  */
- 
+function GameStatePreDefined(setting)
+{
+    var site;
+    var main_module;
+    switch(setting)
+    {
+        case 1:
+            site = new Site("Site 1", (121,43), new Culture(), 18, 5, "Agile");
+            main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
+
+        case 2:
+            site = new Site("Site 2", (111,18), new Culture(), 2, 10, "Water");
+            main_module = new Module("write backend", [new Task("write model",40), new Task("write view", 15), new Task("write controller", 50)]);
+
+        case 3:
+            site = new Site("Site 3", (9,5), new Culture(), 25, 1, "Agile");
+            main_module = new Module("write backend", [new Task("write model",20), new Task("write view", 5), new Task("write controller", 10)]);
+
+        default:
+            site = new Site("Site 0", (0,0), new Culture(), 5, 2, "Agile");
+            main_module = new Module("write backend", [new Task("write model",10), new Task("write view", 35), new Task("write controller", 20)]);
+    }
+    this.sites = [site];
+    this.current_time = 0;
+    this.problems = [];
+    this.finance = 0;
+    this.modules = [main_module];
+    this.sites[0].working_on.push(main_module);
+}
+GameStatePreDefined.prototype.add_sites = function(site){this.sites.push(site);}
+GameStatePreDefined.prototype.change_time = function(val){this.current_time = val;}
+GameStatePreDefined.prototype.change_real_task_effort = function(val){this.real_task_effort = val;}
+GameStatePreDefined.prototype.change_development_type = function(val){this.development_type = val;}
+GameStatePreDefined.prototype.change_problems = function(val){this.problems = val;}
+GameStatePreDefined.prototype.change_finance = function(val){this.finance = val;}
+GameStatePreDefined.prototype.add_modules = function(module){this.modules.push(module);}
+
 function GameState()
 {
     var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2, "Agile");
