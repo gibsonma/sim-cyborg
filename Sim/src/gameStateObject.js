@@ -67,7 +67,7 @@ function GameStatePreDefined(setting)
     this.current_time = 0;
     this.problems = [];
     this.finance = 0;
-    this.modules = [main_module];
+    this.modules = [main_module, second_module];
     this.sites[0].working_on.push(main_module);
 }
 GameStatePreDefined.prototype.add_sites = function(site){this.sites.push(site);}
@@ -127,6 +127,22 @@ function Task(name, total){
     this.total = total;//Represents total effort required to complete task
 	this.status = "Normal";
 }
+
+function scheduleCalculator(gs)
+{  
+    var listOfModules = gs.modules;
+    var sumTasks = 0;
+    for(var i = 0; i < listOfModules.length; i++){
+        var modTasks = listOfModules[i].tasks;
+        for(var j = 0; j < modTasks.length; j++)
+        {
+            sumTasks += modTasks[j].total;
+            console.log(sumTasks);
+        }
+    }
+    return sumTasks/2;
+}
+
 
 //Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
