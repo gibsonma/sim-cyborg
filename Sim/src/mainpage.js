@@ -1,15 +1,16 @@
-
+var scene, background, site_images, office;
 window.onload = function() {
     var game_height = window.innerHeight - 5;
     var game_width = window.innerWidth;
-    var scene = sjs.Scene({
+    scene = sjs.Scene({
         w: game_width,
         h: game_height
     });
+    site_images = ['img/EmptyOffice.jpeg', 'img/Office2.jpg', 'img/Office3.jpg'];
     // var exec_list = document.getElementById('exec_list');
-    var background = scene.Layer('background');
-    scene.loadImages(['img/EmptyOffice.jpeg'], function() {
-        var office = background.Sprite('img/EmptyOffice.jpeg');
+    background = scene.Layer('background');
+    scene.loadImages(site_images, function() {
+        office = background.Sprite('img/EmptyOffice.jpeg');
         office.position(0, 0);
         office.transformOrigin(0, 0);
         office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
@@ -19,6 +20,13 @@ window.onload = function() {
     $(document).ready(function() {
         $.getJSON('data/config_file.json', function(data) {
             $.each(data, parse_deep);
+        });
+        $('#site_select').change(function() {
+            chosen_site_index = $('#site_select').val()
+            office = background.Sprite(site_images[chosen_site_index]);
+            office.transformOrigin(0, 0);
+            office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
+            office.update();
         });
     });
 }; 
