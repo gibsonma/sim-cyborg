@@ -20,15 +20,23 @@ function GameStatePreDefined(setting)
             main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
             main_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 6;
-            main_module.tasks[2].assigned = 6;           
+            main_module.tasks[2].assigned = 6;  
+			second_module = new Module("design Frontend", [new Task("create Sprites",30), new Task("link with backend", 25), new Task("Choose Font", 35)]);
+            second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
+            second_module.tasks[1].assigned = 1;
+            second_module.tasks[2].assigned = 1; 
             break;
 
         case 2:
-            site = new Site("Site 2", (111,18), new Culture(), 2, 10, "Water");
+            site = new Site("Site 2", (111,18), new Culture(), 2, 10, "Waterfall");
             main_module = new Module("write backend", [new Task("write model",40), new Task("write view", 15), new Task("write controller", 50)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 1;
             main_module.tasks[2].assigned = 1;
+			second_module = new Module("design Frontend", [new Task("create Sprites",40), new Task("link with backend", 25), new Task("Choose Font", 55)]);
+            second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
+            second_module.tasks[1].assigned = 2;
+            second_module.tasks[2].assigned = 3; 
             break;
 
         case 3:
@@ -37,6 +45,10 @@ function GameStatePreDefined(setting)
             main_module.tasks[0].assigned = 10; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 10;
             main_module.tasks[2].assigned = 5;
+			second_module = new Module("design Frontend", [new Task("create Sprites",10), new Task("link with backend", 15), new Task("Choose Font", 5)]);
+            second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
+            second_module.tasks[1].assigned = 2;
+            second_module.tasks[2].assigned = 6; 
             break;
 
         default:
@@ -45,6 +57,10 @@ function GameStatePreDefined(setting)
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 2;
             main_module.tasks[2].assigned = 1;
+			second_module = new Module("design Frontend", [new Task("create Sprites",25), new Task("link with backend", 10), new Task("Choose Font", 20)]);
+            second_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
+            second_module.tasks[1].assigned = 3;
+            second_module.tasks[2].assigned = 1; 
             break;
     }
     this.sites = [site];
@@ -108,7 +124,7 @@ function Task(name, total){
     this.name = name;
     this.assigned = 0;
     this.completed = 0;
-    this.total = total;
+    this.total = total;//Represents total effort required to complete task
 	this.status = "Normal";
 }
 
