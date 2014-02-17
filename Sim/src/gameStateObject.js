@@ -113,25 +113,40 @@ function Task(name, total){
 }
 
 //Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
-var PROBLEM_PROBABILITY = 0.5//% chance that a task will experience a problem if its site/module is selected
+var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
 function problemSimulator(listOfSites, listOfModules)
 {
 	var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
+	var flag = false;
 	if(chosen[1] == listOfSites)
 	{
 		for(var i = 0; i < listOfSites[chosen[0]].working_on.length; i++)//Cycle through tasks
 		{
-			if(Math.random() >= PROBLEM_PROBABILITY)listOfSites[chosen[0]].working_on[i].status= "Problem Encountered";//Apply problem randomly
+			if(Math.random() <= PROBLEM_PROBABILITY)
+			{
+				listOfSites[chosen[0]].working_on[i].status= "Problem Encountered";//Apply problem randomly
+				flag = true;
+			}
 		}
-		return listOfSites;
+		if(flag == false)
+		{
+			var randIndex = Math.floor((Math.random()*listOfSites[chosen[0]].working_on.length));
+			listOfSites[chosen[0]].working_on[randIndex].status = "Problem Encountered";
+		}
+	//	return listOfSites;
 	}
 	else
 	{
 		for(var i = 0; i < listOfModules[chosen[0]].tasks.length; i++)
 		{
-			if(Math.random() >= PROBLEM_PROBABILITY)listOfModules[chosen[0]].tasks[i].status= "Problem Encountered";
+			if(Math.random() <= PROBLEM_PROBABILITY)listOfModules[chosen[0]].tasks[i].status= "Problem Encountered";
 		}
-		return listOfModules;
+		if(flag == false)
+		{
+			var randIndex = Math.floor((Math.random()*listOfModules[chosen[0]].tasks.length));
+			listOfModules[chosen[0]].tasks[randIndex].status = "Problem Encountered";
+		}
+	//	return listOfModules;
 	}
 }
 
@@ -235,7 +250,7 @@ function simpleTick(ticker)
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-    for (var i=0; i < gs.sites.length; i++){
+	for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];

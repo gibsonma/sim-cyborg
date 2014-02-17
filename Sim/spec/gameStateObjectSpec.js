@@ -80,9 +80,13 @@ describe("Problem Simulator", function()
 	var siteList = [siteA, siteB];
 	var moduleList = [modA, modB];
 	
-	it("Returns a defined object", function()
+	it("Calls the chooseArray helper function", function()
 	{
-		expect(problemSimulator(siteList, moduleList)).toBeDefined();
+		expect(chooseArray(siteList, moduleList)).toBeDefined();
+	});
+	it("Doesn't return a value", function()
+	{
+		expect(problemSimulator(siteList, moduleList)).not.toBeDefined();
 	});
 });
 
