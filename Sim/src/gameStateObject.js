@@ -250,6 +250,7 @@ function simpleTick(ticker)
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
+	problemSimulator(gs.sites, gs.modules);
 	for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         for (var j=0; j < site.working_on.length; j++){
