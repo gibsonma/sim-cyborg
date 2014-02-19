@@ -23,9 +23,9 @@ describe("Problem Simulator", function()
                     expect(chooseArray(siteList, moduleList)).toBeDefined();
                 });
             it("Doesn't return a value", function()
-                    {
-                        expect(problemSimulator(siteList, moduleList)).not.toBeDefined();
-                    });
+                {
+					expect(problemSimulator(siteList, moduleList)).not.toBeDefined();
+                });
         });
 
 describe("Update game state", function (){
@@ -64,8 +64,8 @@ describe("Update game state", function (){
 });
 
 describe("Test predefined scenario", function (){
-    var predefInit = init_GameStatePreDefined(1);
-    var updatedGame = new GameStatePreDefined(1);
+    var predefInit = init_GameState(1);
+    var updatedGame = new GameState(1);
     update(updatedGame);
     console.log(GameState_to_json(predefInit));
     console.log(GameState_to_json(updatedGame));
