@@ -69,13 +69,6 @@ function GameStatePreDefined(setting)
     this.modules = [main_module, second_module];
     this.sites[0].working_on.push(main_module);
 }
-GameStatePreDefined.prototype.add_sites = function(site){this.sites.push(site);}
-GameStatePreDefined.prototype.change_time = function(val){this.current_time = val;}
-GameStatePreDefined.prototype.change_real_task_effort = function(val){this.real_task_effort = val;}
-GameStatePreDefined.prototype.change_development_type = function(val){this.development_type = val;}
-GameStatePreDefined.prototype.change_problems = function(val){this.problems = val;}
-GameStatePreDefined.prototype.change_finance = function(val){this.finance = val;}
-GameStatePreDefined.prototype.add_modules = function(module){this.modules.push(module);}
 
 function GameState()
 {
@@ -93,14 +86,6 @@ function GameState()
     this.modules = [main_module];
     this.sites[0].working_on.push(main_module);
 }
-
-GameState.prototype.add_sites = function(site){this.sites.push(site);}
-GameState.prototype.change_time = function(val){this.current_time = val;}
-GameState.prototype.change_real_task_effort = function(val){this.real_task_effort = val;}
-GameState.prototype.change_development_type = function(val){this.development_type = val;}
-GameState.prototype.change_problems = function(val){this.problems = val;}
-GameState.prototype.change_finance = function(val){this.finance = val;}
-GameState.prototype.add_modules = function(module){this.modules.push(module);}
 
 function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.name = name;
@@ -203,9 +188,8 @@ function setupGame(scene)
 {
     GAME_DATA.scene = scene;
     var gs = init_GameState();
-    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); 
-    ticker.run();
-    GAME_DATA.ticker = ticker;
+    GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); 
+    GAME_DATA.ticker.run();
 }
 
 //A quick function to initialise the game state with some ints and strings and print them
@@ -253,16 +237,15 @@ function simpleTick(ticker)
 {
     // Ticker only allows for calling afunction taking just the ticker as an argument so need a getGameState() function to allow us access to the game state object.
     // Not sure how to structure this, maybe use a class?
-    var gs = GAME_DATA.gs;
     // Increment current time
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
-        gs.current_time += 1;   // Increment game time by 1 'unit' (day?)
+        GAME_DATA.gs.current_time += 1;   // Increment game time by 1 'unit' (day?)
         TICKS_PASSED = 0;
     }
 
-    update(gs);
+    update(GAME_DATA.gs);
 }
 
 // Example 'module.update()' function
@@ -290,23 +273,5 @@ function update(gs)
                 }
             }
         }
-    }
-}
-
-// for debugging
-
-if (require.main === module){ 
-    console.log("Node method for debugging");
-    var gs = new GameState();
-    console.log(gs);
-    for (var i=0;i < gs.modules.length; i++){
-        console.log(gs.modules[i]);
-    }
-    //console.log (GameState_to_json(gs));
-    update(gs);
-    console.log("updated gs");
-    console.log(gs);
-    for (var i=0;i < gs.modules.length; i++){
-        console.log(gs.modules[i]);
     }
 }
