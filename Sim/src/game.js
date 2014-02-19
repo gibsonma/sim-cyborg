@@ -121,7 +121,6 @@ function simpleTick(ticker)
     // Increment current time
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
-    console.log("TICKS_PASSED: " + TICKS_PASSED);
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         GAME_DATA.gs.current_time += 1;   // Increment game time by 1 'unit' (day?)
         display_game_time(GAME_DATA.gs.current_time);
