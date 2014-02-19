@@ -43,4 +43,3 @@ function append_config(key, val){
         $("#main_content").append("<p>" + key + " - " + val + "</p>");
     }
 }
-
