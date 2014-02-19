@@ -11,17 +11,11 @@ function setupGame(scene)
 
 //A quick function to initialise the game state with some ints and strings and print them
 //to the console
-function init_GameState()
-{
-    var gs = new GameState();
-    iterate(gs);
-    GAME_DATA.gs = gs;
-    return gs;
-}
 
-function init_GameStatePreDefined(setting)
+
+function init_GameState(setting)
 {
-    var gs = new GameStatePreDefined(setting);
+    var gs = new GameState(setting);
     iterate(gs);
     GAME_DATA.gs = gs;
     return gs;

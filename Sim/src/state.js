@@ -8,7 +8,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 var GAME_DATA = {};
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
 
-function GameStatePreDefined(setting)
+function GameState(setting)
 {
     var site;
     var site2;
@@ -74,22 +74,6 @@ function GameStatePreDefined(setting)
     this.sites[0].working_on.push(main_module);
 }
 
-function GameState()
-{
-    var site1 = new Site("Site 1", (0,0), new Culture(), 5, 2, "Agile");
-    this.sites = [site1];
-    this.current_time = 0;
-    this.problems = [];
-    this.finance = 0;
-
-    var main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
-    main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
-    main_module.tasks[1].assigned = 2;
-    main_module.tasks[2].assigned = 1;
-
-    this.modules = [main_module];
-    this.sites[0].working_on.push(main_module);
-}
 
 function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.name = name;
