@@ -1,14 +1,13 @@
-/*
-  sites - Details of each site involved with location, size, status, home site etc
-  time - The current time & date in the game
-  tasks - The tasks present in game, both completed, underway and planned
-  real_task_effort - The results of the Module-task completion calculator (25% variation)
-  development_type - The type of development method being used (agile, waterfall etc)
-  problems - Gives details of past and present problems along with the sites affected
-  finance - Amount of money remaining in budget, amount spent etc
-  modules - Details the modules involved in the manager's project
-  tasks - Details the tasks involved in the manager's project
- */
+// Variables to do with time
+var MILLIS_PER_TICK = 1000 / 30;    // 1000ms per second, 30FPS
+var TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), 
+                                    // only update game time every X ticks
+var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
+
+// Blop to store the global game data/objects such as game state, the scene, the ticker
+var GAME_DATA = {};
+var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
+
 function GameStatePreDefined(setting)
 {
     var site;
@@ -145,7 +144,6 @@ function scheduleCalculator(gs)
 
 
 //Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
-var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
 function problemSimulator(listOfSites, listOfModules)
 {
 	var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
@@ -201,23 +199,12 @@ function chooseArray(sites, modules)
 	return [chosenIndex, chosenArray];
 }
 
-function update_modules(gs) {
-}
-
-// Variables to do with time
-var MILLIS_PER_TICK = 1000 / 30;    // 1000ms per second, 30FPS
-var TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), only update game time every X ticks
-var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
-
-// Blop to store the global game data/objects such as game state, the scene, the ticker
-var GAME_DATA = {};
-
-function setupGame()
+function setupGame(scene)
 {
-    var gameObj = {};
+    GAME_DATA.scene = scene;
     var gs = init_GameState();
-    var scene = getScene();
-    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); ticker.run();
+    var ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); 
+    ticker.run();
     GAME_DATA.ticker = ticker;
 }
 

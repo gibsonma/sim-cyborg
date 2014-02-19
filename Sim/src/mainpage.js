@@ -1,5 +1,6 @@
-var scene, background, site_images, office;
 window.onload = function() {
+    var scene, background, site_images, office;
+
     var game_height = window.innerHeight - 5;
     var game_width = window.innerWidth;
     scene = sjs.Scene({
@@ -19,7 +20,7 @@ window.onload = function() {
 
     $(document).ready(function() {
         $.getJSON('data/config_file.json', function(data) {
-            $.each(data, parse_deep);
+            $.each(data, append_config);
         });
         $('#site_select').change(function() {
             chosen_site_index = $('#site_select').val()
@@ -28,16 +29,21 @@ window.onload = function() {
             office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
             office.update();
         });
+        setupSim(scene);
     });
 }; 
 
-function parse_deep(key, val){
+function append_config(key, val){
     if (val !== null && typeof val === "object") {
         $("#dialog_box").append("<p>" + key + " {</p>");
-        $.each(val, parse_deep);
+        $.each(val, append_config);
         $("#dialog_box").append("<p>}</p>");
     }
     else {
         $("#dialog_box").append("<p>" + key + " - " + val + "</p>");
     }
+}
+
+function setupSim(scene){
+    setupGame(scene);
 }
