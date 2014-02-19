@@ -148,7 +148,8 @@ function updateGameStateDialog(gs) {
             html = html + "<p>Module: " + module.name + "</p>";
             for (var k=0; k < module.tasks.length; k++){
                 var task = module.tasks[k];
-                html = html + "<p>Task: " + task.name + " | Completion: " + task.completed + "</p>";
+                var completion = (task.completed / task.total) * 100;
+                html = html + "<p>Task: " + task.name + " | Completion: " + completion + "%</p>";
                 switch (site.development_type) {
                     case "Waterfall":
                         task.completed = task.completed + (task.assigned * site.effort * 1);
