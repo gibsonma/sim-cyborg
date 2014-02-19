@@ -29,7 +29,11 @@ window.onload = function() {
             office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
             office.update();
         });
+        $('#toggle_dialog_btn').click(function() {
+            $('#main_content,#game_state_box').toggle();
+        });
         setupGame(scene);
+        GAME_DATA.state_dialog = $('#game_state_dump');
     });
 }; 
 

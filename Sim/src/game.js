@@ -3,6 +3,7 @@
 function setupGame(scene)
 {
     GAME_DATA.scene = scene;
+    GAME_DATA.state_dialog = null;
     var gs = init_GameState();
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); 
     GAME_DATA.ticker.run();
@@ -132,6 +133,38 @@ function simpleTick(ticker)
         TICKS_PASSED = 0;
     }
     update(GAME_DATA.gs);
+    if (GAME_DATA.state_dialog !== null) {
+        updateGameStateDialog(GAME_DATA.gs);
+    }
+}
+
+function updateGameStateDialog(gs) {
+    var html = "";
+    for (var i=0; i < gs.sites.length; i++){
+        var site = gs.sites[i];
+        html = html + "<p>Site: " + site.name + "</p>";
+        for (var j=0; j < site.working_on.length; j++){
+            var module = site.working_on[j];
+            html = html + "<p>Module: " + module.name + "</p>";
+            for (var k=0; k < module.tasks.length; k++){
+                var task = module.tasks[k];
+                html = html + "<p>Task: " + task.name + " | Completion: " + task.completed + "</p>";
+                switch (site.development_type) {
+                    case "Waterfall":
+                        task.completed = task.completed + (task.assigned * site.effort * 1);
+                        console.log("Updating in a waterfall fashion!");
+                        break;
+                    case "Agile":
+                        task.completed = task.completed + (task.assigned * site.effort * 1.5);
+                        console.log("Look at me, aren't I agile?");
+                        break;
+                    default:
+                        console.log("What even IS this development methodology?");
+                }
+            }
+        }
+    }
+    GAME_DATA.state_dialog.html(html);
 }
 
 function display_game_time(time){

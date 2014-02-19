@@ -21,11 +21,25 @@
                 </select>
             </div>
 
-            <div id="main_content">
-                <h2>Global variables</h2>
-            </div>
-            <div id="time">
-                <h3>Current Time: 0</h3>
+            <div>
+                <div id="dialog_box_controls">
+                    <button id="toggle_dialog_btn">Toggle Globals/Game State</button>
+                </div>
+                <div id="main_content">
+                    <h2>Global variables</h2>
+                </div>
+                <div id="game_state_box" style="display: none;">
+                    <h2>Game State</h2>
+                    <div id="game_state_dump"></div>
+                    <!-- <p>Site: <span id="site_label"></span></p>
+                    <p>Main Module: <span id="main_module_label"></span></p>
+                    <p>Main Module Tasks: <span id="main_module_tasks_label"></span></p>
+                    <p>Second Module: <span id="second_module_label"></span></p>
+                    <p>Second Module Tasks: <span id="second_module_tasks_label"></span></p> -->
+                </div>
+                <div id="time">
+                    <h3>Current Time: 0</h3>
+                </div>                
             </div>
         </div>
     </body>
