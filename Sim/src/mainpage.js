@@ -29,21 +29,18 @@ window.onload = function() {
             office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
             office.update();
         });
-        setupSim(scene);
+        setupGame(scene);
     });
 }; 
 
 function append_config(key, val){
     if (val !== null && typeof val === "object") {
-        $("#dialog_box").append("<p>" + key + " {</p>");
+        $("#main_content").append("<p>" + key + " {</p>");
         $.each(val, append_config);
-        $("#dialog_box").append("<p>}</p>");
+        $("#main_content").append("<p>}</p>");
     }
     else {
-        $("#dialog_box").append("<p>" + key + " - " + val + "</p>");
+        $("#main_content").append("<p>" + key + " - " + val + "</p>");
     }
 }
 
-function setupSim(scene){
-    setupGame(scene);
-}

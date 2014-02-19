@@ -93,7 +93,7 @@ function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.culture = culture_modifier; //obj
     this.num_staff = num_staff;
     this.effort = effort; // home much gets completed each turn
-    this.working_on = [];//List of tasks
+    this.working_on = []; //List of tasks
     this.development_type = dev;
 }
 
