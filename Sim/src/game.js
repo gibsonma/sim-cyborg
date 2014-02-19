@@ -186,18 +186,10 @@ function update(gs)
                 switch (site.development_type) {
                     case "Waterfall":
                         task.completed = task.completed + (task.assigned * site.effort * 1);
-                        if(task.completed > task.total)
-                        {
-                            task.completed = task.total;
-                        }
                         console.log("Updating in a waterfall fashion!");
                         break;
                     case "Agile":
                         task.completed = task.completed + (task.assigned * site.effort * 1.5);
-                        if(task.completed > task.total)
-                        {
-                            task.completed = task.total;
-                        }
                         console.log("Look at me, aren't I agile?");
                         break;
                     default:
