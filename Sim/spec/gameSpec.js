@@ -29,8 +29,8 @@ describe("Problem Simulator", function()
         });
 
 describe("Update game state", function (){
-    var initGame = init_GameState();
-    var updatedGame = new GameState();
+    var initGame = init_GameState(1);
+    var updatedGame = new GameState(1);
     update(updatedGame);
     console.log(GameState_to_json(initGame));
     console.log(GameState_to_json(updatedGame));
@@ -63,26 +63,3 @@ describe("Update game state", function (){
     });
 });
 
-describe("Test predefined scenario", function (){
-    var predefInit = init_GameState(1);
-    var updatedGame = new GameState(1);
-    update(updatedGame);
-    console.log(GameState_to_json(predefInit));
-    console.log(GameState_to_json(updatedGame));
-    it("checks if the object updates correctly", function() {
-        expect(updatedGame).toBeDefined();
-        for (var i=0; i < updatedGame.sites.length; i++){
-            var siteUpdated = updatedGame.sites[i];
-            var siteOld = predefInit.sites[i];
-            for (var j=0; j < siteUpdated.working_on.length; j++){
-                var moduleUpdated = siteUpdated.working_on[j];
-                var moduleOld = siteOld.working_on[j];
-                for (var k=0; k < moduleUpdated.tasks.length; k++){
-                    var taskUpdated = moduleUpdated.tasks[k];
-                    var taskOld = moduleOld.tasks[k];
-                    expect(taskOld.completed).toBeLessThan(taskUpdated.completed);
-                }
-            }
-        }
-    });
-});

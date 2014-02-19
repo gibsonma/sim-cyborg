@@ -11,11 +11,13 @@ var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if
 function GameState(setting)
 {
     var site;
+    var site2;
     var main_module;
     switch(setting)
     {
         case 1:
             site = new Site("Site 1", (121,43), new Culture(), 18, 5, "Agile");
+            site2 = new Site("Site 1a", (43,43), new Culture(), 18, 5, "Agile");
             main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
             main_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 6;
@@ -28,6 +30,7 @@ function GameState(setting)
 
         case 2:
             site = new Site("Site 2", (111,18), new Culture(), 2, 10, "Waterfall");
+            site2 = new Site("Site 2a", (43,43), new Culture(), 18, 5, "Waterfall");
             main_module = new Module("write backend", [new Task("write model",40), new Task("write view", 15), new Task("write controller", 50)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 1;
@@ -40,6 +43,7 @@ function GameState(setting)
 
         case 3:
             site = new Site("Site 3", (9,5), new Culture(), 25, 1, "Agile");
+            site2 = new Site("Site 2a", (43,43), new Culture(), 18, 5, "Agile");
             main_module = new Module("write backend", [new Task("write model",20), new Task("write view", 5), new Task("write controller", 10)]);
             main_module.tasks[0].assigned = 10; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 10;
@@ -62,7 +66,7 @@ function GameState(setting)
             second_module.tasks[2].assigned = 1; 
             break;
     }
-    this.sites = [site];
+    this.sites = [site, site2];
     this.current_time = 0;
     this.problems = [];
     this.finance = 0;

@@ -4,7 +4,7 @@ function setupGame(scene)
 {
     GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
-    var gs = init_GameState();
+    var gs = init_GameState(1);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); 
     GAME_DATA.ticker.run();
 }
@@ -170,7 +170,7 @@ function display_game_time(time){
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-    problemSimulator(gs.sites, gs.modules);
+   // problemSimulator(gs.sites, gs.modules);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         for (var j=0; j < site.working_on.length; j++){
