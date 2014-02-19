@@ -242,10 +242,14 @@ function simpleTick(ticker)
     TICKS_PASSED += ticker.lastTicksElapsed;
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         GAME_DATA.gs.current_time += 1;   // Increment game time by 1 'unit' (day?)
+        display_game_time(GAME_DATA.gs.current_time);
         TICKS_PASSED = 0;
     }
-
     update(GAME_DATA.gs);
+}
+
+function display_game_time(time){
+    $("#time").html("<h3>Current Time: "+time+"</h3>");
 }
 
 // Example 'module.update()' function
