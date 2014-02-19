@@ -1,74 +1,4 @@
-function scheduleCalculator(gs)
-{  
-    var listOfModules = gs.modules;
-    var sumTasks = 0;
-    for(var i = 0; i < listOfModules.length; i++){
-        var modTasks = listOfModules[i].tasks;
-        for(var j = 0; j < modTasks.length; j++)
-        {
-            sumTasks += modTasks[j].total;
-            console.log(sumTasks);
-        }
-    }
-    return sumTasks/2;
-}
-
-
-//Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
-function problemSimulator(listOfSites, listOfModules)
-{
-	var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
-	var flag = false;
-	if(chosen[1] == listOfSites)
-	{
-		for(var i = 0; i < listOfSites[chosen[0]].working_on.length; i++)//Cycle through tasks
-		{
-			if(Math.random() <= PROBLEM_PROBABILITY)
-			{
-				listOfSites[chosen[0]].working_on[i].status= "Problem Encountered";//Apply problem randomly
-				flag = true;
-			}
-		}
-		if(flag == false)
-		{
-			var randIndex = Math.floor((Math.random()*listOfSites[chosen[0]].working_on.length));
-			listOfSites[chosen[0]].working_on[randIndex].status = "Problem Encountered";
-		}
-	//	return listOfSites;
-	}
-	else
-	{
-		for(var i = 0; i < listOfModules[chosen[0]].tasks.length; i++)
-		{
-			if(Math.random() <= PROBLEM_PROBABILITY)listOfModules[chosen[0]].tasks[i].status= "Problem Encountered";
-		}
-		if(flag == false)
-		{
-			var randIndex = Math.floor((Math.random()*listOfModules[chosen[0]].tasks.length));
-			listOfModules[chosen[0]].tasks[randIndex].status = "Problem Encountered";
-		}
-	//	return listOfModules;
-	}
-}
-
-//A function that takes two arrays, returns one of the arrays along with an index
-function chooseArray(sites, modules)
-{
-	var chosenIndex, chosenArray;
-	var siteIndex = Math.floor((Math.random()*sites.length));//Select item from site array
-	var moduleIndex = Math.floor((Math.random()*modules.length));//Select item from module array
-	if(Math.round(Math.random()) == 0)//Pick one to experience problem
-	{
-		chosenIndex = siteIndex;
-		chosenArray = sites;
-	}
-	else 
-	{
-		chosenIndex = moduleIndex;
-		chosenArray = modules;
-	}
-	return [chosenIndex, chosenArray];
-}
+// Game object structs defined in state.js
 
 function setupGame(scene)
 {
@@ -96,6 +26,76 @@ function init_GameStatePreDefined(setting)
     return gs;
 }
 
+function scheduleCalculator(gs)
+{  
+    var listOfModules = gs.modules;
+    var sumTasks = 0;
+    for(var i = 0; i < listOfModules.length; i++){
+        var modTasks = listOfModules[i].tasks;
+        for(var j = 0; j < modTasks.length; j++)
+        {
+            sumTasks += modTasks[j].total;
+            console.log(sumTasks);
+        }
+    }
+    return sumTasks/2;
+}
+
+//Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
+function problemSimulator(listOfSites, listOfModules)
+{
+    var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
+    var flag = false;
+    if(chosen[1] == listOfSites)
+    {
+        for(var i = 0; i < listOfSites[chosen[0]].working_on.length; i++)//Cycle through tasks
+        {
+            if(Math.random() <= PROBLEM_PROBABILITY)
+            {
+                listOfSites[chosen[0]].working_on[i].status= "Problem Encountered";//Apply problem randomly
+                flag = true;
+            }
+        }
+        if(flag == false)
+        {
+            var randIndex = Math.floor((Math.random()*listOfSites[chosen[0]].working_on.length));
+            listOfSites[chosen[0]].working_on[randIndex].status = "Problem Encountered";
+        }
+        //	return listOfSites;
+    }
+    else
+    {
+        for(var i = 0; i < listOfModules[chosen[0]].tasks.length; i++)
+        {
+            if(Math.random() <= PROBLEM_PROBABILITY)listOfModules[chosen[0]].tasks[i].status= "Problem Encountered";
+        }
+        if(flag == false)
+        {
+            var randIndex = Math.floor((Math.random()*listOfModules[chosen[0]].tasks.length));
+            listOfModules[chosen[0]].tasks[randIndex].status = "Problem Encountered";
+        }
+        //	return listOfModules;
+    }
+}
+
+//A function that takes two arrays, returns one of the arrays along with an index
+function chooseArray(sites, modules)
+{
+    var chosenIndex, chosenArray;
+    var siteIndex = Math.floor((Math.random()*sites.length));//Select item from site array
+    var moduleIndex = Math.floor((Math.random()*modules.length));//Select item from module array
+    if(Math.round(Math.random()) == 0)//Pick one to experience problem
+    {
+        chosenIndex = siteIndex;
+        chosenArray = sites;
+    }
+    else 
+    {
+        chosenIndex = moduleIndex;
+        chosenArray = modules;
+    }
+    return [chosenIndex, chosenArray];
+}
 function getScene()
 {
     return GAME_DATA.scene;
@@ -142,8 +142,8 @@ function display_game_time(time){
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-	problemSimulator(gs.sites, gs.modules);
-	for (var i=0; i < gs.sites.length; i++){
+    problemSimulator(gs.sites, gs.modules);
+    for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
