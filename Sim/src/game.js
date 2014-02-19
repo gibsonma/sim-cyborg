@@ -5,7 +5,7 @@ function setupGame(scene)
     GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
     var gs = init_GameState(1);
-    GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_TICK }); 
+    GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
 }
 
@@ -121,12 +121,14 @@ function simpleTick(ticker)
     // Increment current time
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
+    console.log("TICKS_PASSED: " + TICKS_PASSED);
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         GAME_DATA.gs.current_time += 1;   // Increment game time by 1 'unit' (day?)
         display_game_time(GAME_DATA.gs.current_time);
         TICKS_PASSED = 0;
+        update(GAME_DATA.gs);
     }
-    update(GAME_DATA.gs);
+    
     if (GAME_DATA.state_dialog !== null) {
         updateGameStateDialog(GAME_DATA.gs);
     }
@@ -136,7 +138,7 @@ function updateGameStateDialog(gs) {
     var html = "";
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-        html = html + "<p>Site: " + site.name + "</p>";
+        html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + "</p>";
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
             html = html + "<p>Module: " + module.name + "</p>";
@@ -144,18 +146,6 @@ function updateGameStateDialog(gs) {
                 var task = module.tasks[k];
                 var completion = (task.completed / task.total) * 100;
                 html = html + "<p>Task: " + task.name + " | Completion: " + completion + "%</p>";
-                switch (site.development_type) {
-                    case "Waterfall":
-                        task.completed = task.completed + (task.assigned * site.effort * 1);
-                        console.log("Updating in a waterfall fashion!");
-                        break;
-                    case "Agile":
-                        task.completed = task.completed + (task.assigned * site.effort * 1.5);
-                        console.log("Look at me, aren't I agile?");
-                        break;
-                    default:
-                        console.log("What even IS this development methodology?");
-                }
             }
         }
     }

@@ -1,5 +1,7 @@
 // Variables to do with time
-var MILLIS_PER_TICK = 1000 / 30;    // 1000ms per second, 30FPS
+var DESIRED_FPS = 30;
+var MILLIS_PER_FRAME = 1000 / DESIRED_FPS;
+
 var TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), 
                                     // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
