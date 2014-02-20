@@ -38,13 +38,17 @@ As seen below, for each site there is a number of tasks, in the "tasks" field of
 
 ##Week 2
 Feature - Default game scenarios
+
 This can be verified by viewing the main page of the simulation (index.html or navigating to localhost:3000), and clicking one of the scenario buttons on the top of the screen. Currently the game will initialise to scenario 1 on game load, but a user can restart the simulation by clicking any of the three scenario buttons.
 
 Feature - Display of game state and module progress
+
 Clicking the button to the left of the scenario buttons on the main simulation page will toggle between preset constants and the increasing progress of the game state.
 
 Feature - Problem Simulator
+
 Currently this system only assigns problems to tasks, but these problems do not negatively impact progress. Regardless, navigating to specrunner.html as described above will show tests pertaining to the assignment of problems to tasks.
 
 Feature - Final Score
+
 Final Score is displayed at the end of the game.
