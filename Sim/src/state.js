@@ -74,6 +74,7 @@ function GameState(setting)
     this.finance = 10000;
     this.modules = [main_module, second_module];
     this.sites[0].working_on.push(main_module);
+    this.sites[1].working_on.push(second_module);
 }
 
 
