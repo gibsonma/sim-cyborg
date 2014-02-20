@@ -1,10 +1,10 @@
 // Game object structs defined in state.js
 
-function setupGame(scene)
+function setupGame(scene, setting)
 {
     GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
-    var gs = init_GameState(1);
+    var gs = init_GameState(setting);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
 }
