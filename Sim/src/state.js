@@ -33,7 +33,7 @@ function GameState(setting)
         case 2:
             site = new Site("Site 2", (111,18), new Culture(), 2, 10, "Waterfall");
             site2 = new Site("Site 2a", (43,43), new Culture(), 18, 5, "Waterfall");
-            main_module = new Module("write backend", [new Task("write model",40), new Task("write view", 15), new Task("write controller", 50)]);
+            main_module = new Module("write backend", [new Task("write model",400000000), new Task("write view", 15), new Task("write controller", 50)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 1;
             main_module.tasks[2].assigned = 1;
