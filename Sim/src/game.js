@@ -82,15 +82,10 @@ function chooseArray(sites, modules)
     }
     return [chosenIndex, chosenArray];
 }
-function getScene()
-{
-    return GAME_DATA.scene;
-}
 
-function GameState_to_json(obj)
+function GameState_to_json(gs)
 {
-    var result = JSON.stringify(obj);
-    return result;
+    return JSON.stringify(gs);
 }
 
 // Barebones game state update loop
@@ -119,7 +114,25 @@ function incrementTime(){
 }
 
 function check_if_completed(gs) {
-    
+    var finished = true;
+	for (var i=0; i < gs.sites.length; i++){
+        var site = gs.sites[i];
+        for (var j=0; j < site.working_on.length; j++){
+            var module = site.working_on[j];
+            for (var k=0; k < module.tasks.length; k++){
+                var task = module.tasks[k];
+                if(task.completed < task.total)
+                {
+                    finished = false;
+                }
+            }
+        }
+    }
+    if (finished) display_final_score(gs);
+}
+
+function display_final_score(gs){
+    console.log("Gratz, you have " + gs.finance + " gold.");
 }
 
 function updateGameStateDialog(gs) {
@@ -133,7 +146,7 @@ function updateGameStateDialog(gs) {
             for (var k=0; k < module.tasks.length; k++){
                 var task = module.tasks[k];
                 var completion = (task.completed / task.total) * 100;
-                html = html + "<p>Task: " + task.name + " | Completion: " + completion + "%</p>";
+                html = html + "<p>Task: " + task.name + " | Completion: " + Math.round(completion) + "%</p>";
             }
         }
     }
@@ -149,7 +162,7 @@ function display_game_time(){
 function update(gs)
 {
     problemSimulator(gs.sites, gs.modules);
-	for (var i=0; i < gs.sites.length; i++){
+    for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
