@@ -7,6 +7,11 @@ function setupGame(scene, setting)
     GAME_DATA.gs = new GameState(setting);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
+    list_sites_as_options();
+}
+
+function list_sites_as_options() {
+    $("#site_select").html("sdfsssssssssssssdh");
 }
 
 //A quick function to initialise the game state with some ints and strings and print them
@@ -121,18 +126,22 @@ function check_if_completed(gs) {
             var module = site.working_on[j];
             for (var k=0; k < module.tasks.length; k++){
                 var task = module.tasks[k];
-                if(task.completed < task.total)
-                {
-                    finished = false;
-                }
+                if(task.completed < task.total) finished = false;
             }
         }
     }
-    if (finished) display_final_score(gs);
+    if (finished) {
+        display_final_score(gs);
+        //GAME_DATA.scene.reset();
+        GAME_DATA.ticker.pause();
+    }
 }
 
 function display_final_score(gs){
+    $("#center_content, #score_board").toggle();
     console.log("Gratz, you have " + gs.finance + " gold.");
+    var html = "<h1>FINAL SCORE</h1>\n";
+    html = html + "<p>" + gs.finance + "</p>";
 }
 
 function updateGameStateDialog(gs) {
