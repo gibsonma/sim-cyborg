@@ -11,7 +11,10 @@ function setupGame(scene, setting)
 }
 
 function list_sites_as_options() {
-    $("#site_select").html("sdfsssssssssssssdh");
+    $("#site_select").html("");
+    for (var i = 0; i < GAME_DATA.gs.sites.length; i++){
+    $("#site_select").append("<option value=\"" + i + "\">" + GAME_DATA.gs.sites[i].name + "</option>");
+    }
 }
 
 //A quick function to initialise the game state with some ints and strings and print them
