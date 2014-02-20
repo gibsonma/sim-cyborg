@@ -35,3 +35,16 @@ Currently the console outputs json representing the game state, which looks some
 {"sites":[{"name":"Site 1","coordinates":0,"culture":{},"num_staff":5,"effort":2,"working_on":[{"name":"write backend","tasks":[{"name":"write model","assigned":2,"completed":6,"total":30},{"name":"write view","assigned":2,"completed":6,"total":25},{"name":"write controller","assigned":1,"completed":3,"total":35}]}],"development_type":"Agile"}],"current_time":0,"problems":[],"finance":0,"modules":[{"name":"write backend","tasks":[{"name":"write model","assigned":2,"completed":6,"total":30},{"name":"write view","assigned":2,"completed":6,"total":25},{"name":"write controller","assigned":1,"completed":3,"total":35}]}]} 
 
 As seen below, for each site there is a number of tasks, in the "tasks" field of the json object. To show that progress has happened, we simply look at the "completed" field for each task and see that it has advanced.
+
+##Week 2
+Feature - Default game scenarios
+This can be verified by viewing the main page of the simulation (index.html or navigating to localhost:3000), and clicking one of the scenario buttons on the top of the screen. Currently the game will initialise to scenario 1 on game load, but a user can restart the simulation by clicking any of the three scenario buttons.
+
+Feature - Display of game state and module progress
+Clicking the button to the left of the scenario buttons on the main simulation page will toggle between preset constants and the increasing progress of the game state.
+
+Feature - Problem Simulator
+Currently this system only assigns problems to tasks, but these problems do not negatively impact progress. Regardless, navigating to specrunner.html as described above will show tests pertaining to the assignment of problems to tasks.
+
+Feature - Final Score
+Final Score is displayed at the end of the game.
