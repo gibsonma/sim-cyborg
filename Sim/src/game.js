@@ -134,17 +134,18 @@ function check_if_completed(gs) {
         }
     }
     if (finished) {
-        display_final_score(gs);
         //GAME_DATA.scene.reset();
         GAME_DATA.ticker.pause();
+        display_final_score(gs);
     }
 }
 
 function display_final_score(gs){
-    $("#center_content, #score_board").toggle();
+    alert("Final score:\n "+ gs.finance + " dollars left");
+    /*$("#center_content, #score_board").toggle();
     console.log("Gratz, you have " + gs.finance + " gold.");
     var html = "<h1>FINAL SCORE</h1>\n";
-    html = html + "<p>" + gs.finance + "</p>";
+    html = html + "<p>" + gs.finance + "</p>";*/
 }
 
 function updateGameStateDialog(gs) {
