@@ -32,7 +32,19 @@ window.onload = function() {
         $('#toggle_dialog_btn').click(function() {
             $('#main_content,#game_state_box').toggle();
         });
-        setupGame(scene);
+        $('#scenario_1').click(function() {
+            setupGame(scene,1);
+            GAME_DATA.state_dialog = $('#game_state_dump');
+        });
+        $('#scenario_2').click(function() {
+            setupGame(scene,2);
+            GAME_DATA.state_dialog = $('#game_state_dump');
+        });
+        $('#scenario_3').click(function() {
+            setupGame(scene,3);
+            GAME_DATA.state_dialog = $('#game_state_dump');
+        });
+        setupGame(scene,1);
         GAME_DATA.state_dialog = $('#game_state_dump');
     });
 }; 

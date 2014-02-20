@@ -20,11 +20,11 @@ function GameState(setting)
         case 1:
             site = new Site("Site 1", (121,43), new Culture(), 18, 5, "Agile");
             site2 = new Site("Site 1a", (43,43), new Culture(), 18, 5, "Agile");
-            main_module = new Module("write backend", [new Task("write model",30), new Task("write view", 25), new Task("write controller", 35)]);
+            main_module = new Module("write backend", [new Task("write model",300), new Task("write view", 250), new Task("write controller", 350)]);
             main_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 6;
             main_module.tasks[2].assigned = 6;  
-			second_module = new Module("design Frontend", [new Task("create Sprites",30), new Task("link with backend", 25), new Task("Choose Font", 35)]);
+			second_module = new Module("design Frontend", [new Task("create Sprites",300), new Task("link with backend", 250), new Task("Choose Font", 350)]);
             second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 1;
             second_module.tasks[2].assigned = 1; 
@@ -33,11 +33,11 @@ function GameState(setting)
         case 2:
             site = new Site("Site 2", (111,18), new Culture(), 2, 10, "Waterfall");
             site2 = new Site("Site 2a", (43,43), new Culture(), 18, 5, "Waterfall");
-            main_module = new Module("write backend", [new Task("write model",400000000), new Task("write view", 15), new Task("write controller", 50)]);
+            main_module = new Module("write backend", [new Task("write model",400), new Task("write view", 150), new Task("write controller", 500)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 1;
             main_module.tasks[2].assigned = 1;
-			second_module = new Module("design Frontend", [new Task("create Sprites",40), new Task("link with backend", 25), new Task("Choose Font", 55)]);
+			second_module = new Module("design Frontend", [new Task("create Sprites",400), new Task("link with backend", 250), new Task("Choose Font", 550)]);
             second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 2;
             second_module.tasks[2].assigned = 3; 
@@ -46,11 +46,11 @@ function GameState(setting)
         case 3:
             site = new Site("Site 3", (9,5), new Culture(), 25, 1, "Agile");
             site2 = new Site("Site 2a", (43,43), new Culture(), 18, 5, "Agile");
-            main_module = new Module("write backend", [new Task("write model",20), new Task("write view", 5), new Task("write controller", 10)]);
+            main_module = new Module("write backend", [new Task("write model",200), new Task("write view", 50), new Task("write controller", 100)]);
             main_module.tasks[0].assigned = 10; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 10;
             main_module.tasks[2].assigned = 5;
-			second_module = new Module("design Frontend", [new Task("create Sprites",10), new Task("link with backend", 15), new Task("Choose Font", 5)]);
+			second_module = new Module("design Frontend", [new Task("create Sprites",100), new Task("link with backend", 150), new Task("Choose Font", 50)]);
             second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 2;
             second_module.tasks[2].assigned = 6; 

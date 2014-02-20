@@ -1,10 +1,10 @@
 // Game object structs defined in state.js
 
-function setupGame(scene)
+function setupGame(scene, setting)
 {
     GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
-    var gs = init_GameState(1);
+    var gs = init_GameState(setting);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
 }
@@ -40,7 +40,7 @@ function scheduleCalculator(gs)
 function problemSimulator(listOfSites, listOfModules)
 {
     var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
-    var flag = false;
+	var flag = false;
     if(chosen[1] == listOfSites)
     {
         for(var i = 0; i < listOfSites[chosen[0]].working_on.length; i++)//Cycle through tasks
@@ -51,7 +51,7 @@ function problemSimulator(listOfSites, listOfModules)
                 flag = true;
             }
         }
-        if(flag == false)
+        if(flag == false && listOfSites[chosen[0]].working_on.length > 0)
         {
             var randIndex = Math.floor((Math.random()*listOfSites[chosen[0]].working_on.length));
             listOfSites[chosen[0]].working_on[randIndex].status = "Problem Encountered";
@@ -64,7 +64,7 @@ function problemSimulator(listOfSites, listOfModules)
         {
             if(Math.random() <= PROBLEM_PROBABILITY)listOfModules[chosen[0]].tasks[i].status= "Problem Encountered";
         }
-        if(flag == false)
+        if(flag == false && listOfModules[chosen[0]].tasks.length > 0)
         {
             var randIndex = Math.floor((Math.random()*listOfModules[chosen[0]].tasks.length));
             listOfModules[chosen[0]].tasks[randIndex].status = "Problem Encountered";
@@ -159,8 +159,8 @@ function display_game_time(time){
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-   // problemSimulator(gs.sites, gs.modules);
-    for (var i=0; i < gs.sites.length; i++){
+    problemSimulator(gs.sites, gs.modules);
+	for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];

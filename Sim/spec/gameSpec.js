@@ -1,32 +1,63 @@
+describe("init_GameState", function()
+{
+	var setting = 1;
+	it("Returns a defined object", function()
+	{
+		expect(init_GameState(1)).toBeDefined();
+	});
+	it("Assigns the new game state to GAME_DATA", function()
+	{
+		expect(GAME_DATA.gs).toBeDefined();
+	});
+	it("Return a valid game state", function()
+	{
+		expect(init_GameState(1).sites).toBeDefined();
+	});
+});
 
-describe("Problem Simulator", function()
-        {
-            var a = new Task("Task A", 10);
-            var b = new Task("Task B", 5);
-            var c = new Task("Task C", 2);
-            var d = new Task("Task D", 2);
-            var e = new Task("Task E", 2);
-            var f = new Task("Task F", 2);
-            var taskListA = [a,b,c];
-            var taskListB = [d,e,f];
-            var siteA = new Site("Site A", 0, 0, 0, 0, 0);
-            var siteB = new Site("Site B", 0, 0, 0, 0, 0);
-            siteA.working_on = taskListA;
-            siteB.working_on = taskListB;
-            var modA = new Module("Mod A", taskListB);
-            var modB = new Module("Mod B", taskListB);
-            var siteList = [siteA, siteB];
-            var moduleList = [modA, modB];
+describe("scheduleCalculator", function()
+{
+	var game = init_GameState(1);
+	it("Should be passed a defined game state", function()
+	{
+		expect(game).toBeDefined();
+	});
+	it("Returns a number greater than 0 for the total effort", function()
+	{
+		expect(scheduleCalculator(game)).toBeGreaterThan(0);
+	});
+});
 
-            it("Calls the chooseArray helper function", function()
-                {
-                    expect(chooseArray(siteList, moduleList)).toBeDefined();
-                });
-            it("Doesn't return a value", function()
-                {
-					expect(problemSimulator(siteList, moduleList)).not.toBeDefined();
-                });
-        });
+describe("problemSimulator", function()
+{
+    var game = init_GameState(1);
+
+    it("Calls the chooseArray helper function", function()
+    {
+        expect(chooseArray(game.sites, game.modules)).toBeDefined();
+    });
+    it("Doesn't return a value", function()
+    {
+		expect(problemSimulator(game.sites, game.modules)).not.toBeDefined();
+    });
+});
+
+describe("chooseArray", function()
+{
+	var game = init_GameState(1);
+	it("Returns a number as the index", function()
+	{
+		expect(chooseArray(game.sites, game.modules)[0]).toEqual(jasmine.any(Number));
+	});
+	it("Returns one of the arrays passed to it", function()
+	{
+		expect(chooseArray(game.sites, game.modules)[1].length).toEqual(jasmine.any(Number));
+	});
+});
+
+
+		
+
 
 describe("Update game state", function (){
     var initGame = init_GameState(1);
@@ -50,9 +81,9 @@ describe("Update game state", function (){
             }
         }
     });
-
-    it("checks if time has advanced properly",function(){
-        setupGame(sjs.Scene({w:1, h:1}) );
+	
+   it("checks if time has advanced properly",function(){
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
         var oldTime = GAME_DATA.gs.current_time;
         for(var i = 0; i < 31; i++){
             GAME_DATA.ticker.lastTicksElapsed = 1; //simulate 30 ticks in realtime
