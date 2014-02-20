@@ -44,8 +44,8 @@ window.onload = function() {
             setupGame(scene,3);
             GAME_DATA.state_dialog = $('#game_state_dump');
         });
-        //setupGame(scene,1);
-        //GAME_DATA.state_dialog = $('#game_state_dump');
+        setupGame(scene,1);
+        GAME_DATA.state_dialog = $('#game_state_dump');
     });
 }; 
 
