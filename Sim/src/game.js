@@ -12,8 +12,8 @@ function setupGame(scene, setting)
 
 function list_sites_as_options() {
     $("#site_select").html("");
-    for (var i = 0; i < GAME_DATA.gs.sites.length; i++){
-    $("#site_select").append("<option value=\"" + i + "\">" + GAME_DATA.gs.sites[i].name + "</option>");
+    for (var i = 0; i < GAME_DATA.gs.sites.length; i++) {
+        $("#site_select").append("<option value=\"" + i + "\">" + GAME_DATA.gs.sites[i].name + "</option>");
     }
 }
 
@@ -39,7 +39,7 @@ function scheduleCalculator(gs)
 function problemSimulator(listOfSites, listOfModules)
 {
     var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
-	var flag = false;
+    var flag = false;
     if(chosen[1] == listOfSites)
     {
         for(var i = 0; i < listOfSites[chosen[0]].working_on.length; i++)//Cycle through tasks
@@ -111,7 +111,7 @@ function simpleTick(ticker)
         update(GAME_DATA.gs);
         check_if_completed(GAME_DATA.gs);
     }
-    
+
     if (GAME_DATA.state_dialog !== null) {
         updateGameStateDialog(GAME_DATA.gs);
     }
@@ -123,7 +123,7 @@ function incrementTime(){
 
 function check_if_completed(gs) {
     var finished = true;
-	for (var i=0; i < gs.sites.length; i++){
+    for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
@@ -149,17 +149,16 @@ function display_final_score(gs){
 
 function updateGameStateDialog(gs) {
     var html = "";
-    for (var i=0; i < gs.sites.length; i++){
-        var site = gs.sites[i];
-        html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + "</p>";
-        for (var j=0; j < site.working_on.length; j++){
-            var module = site.working_on[j];
-            html = html + "<p>Module: " + module.name + "</p>";
-            for (var k=0; k < module.tasks.length; k++){
-                var task = module.tasks[k];
-                var completion = (task.completed / task.total) * 100;
-                html = html + "<p>Task: " + task.name + " | Completion: " + Math.round(completion) + "%</p>";
-            }
+
+    var site = gs.sites[$('#site_select').val()];
+    html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + "</p>";
+    for (var j=0; j < site.working_on.length; j++){
+        var module = site.working_on[j];
+        html = html + "<p>Module: " + module.name + "</p>";
+        for (var k=0; k < module.tasks.length; k++){
+            var task = module.tasks[k];
+            var completion = (task.completed / task.total) * 100;
+            html = html + "<p>Task: " + task.name + " | Completion: " + Math.round(completion) + "%</p>";
         }
     }
     GAME_DATA.state_dialog.html(html);
