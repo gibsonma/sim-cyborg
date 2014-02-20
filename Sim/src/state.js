@@ -18,8 +18,8 @@ function GameState(setting)
     switch(setting)
     {
         case 1:
-            site = new Site("Site 1", (121,43), new Culture(), 18, 5, "Agile");
-            site2 = new Site("Site 1a", (43,43), new Culture(), 18, 5, "Agile");
+            site = new Site("Site Google", (121,43), new Culture(), 18, 5, "Agile");
+            site2 = new Site("Site Yahoo", (43,43), new Culture(), 18, 5, "Agile");
             main_module = new Module("write backend", [new Task("write model",300), new Task("write view", 250), new Task("write controller", 350)]);
             main_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 6;

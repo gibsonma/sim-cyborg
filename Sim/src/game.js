@@ -149,8 +149,9 @@ function display_final_score(gs){
 
 function updateGameStateDialog(gs) {
     var html = "";
-
-    var site = gs.sites[$('#site_select').val()];
+    var site_index = $('#site_select').val();
+    console.log("site index is " + site_index);
+    var site = gs.sites[site_index];
     html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + "</p>";
     for (var j=0; j < site.working_on.length; j++){
         var module = site.working_on[j];
