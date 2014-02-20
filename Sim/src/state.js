@@ -71,7 +71,7 @@ function GameState(setting)
     this.sites = [site, site2];
     this.current_time = 0;
     this.problems = [];
-    this.finance = 0;
+    this.finance = 10000;
     this.modules = [main_module, second_module];
     this.sites[0].working_on.push(main_module);
 }

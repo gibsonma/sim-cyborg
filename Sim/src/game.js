@@ -4,22 +4,13 @@ function setupGame(scene, setting)
 {
     GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
-    var gs = init_GameState(setting);
+    GAME_DATA.gs = new GameState(setting);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
 }
 
 //A quick function to initialise the game state with some ints and strings and print them
 //to the console
-
-
-function init_GameState(setting)
-{
-    var gs = new GameState(setting);
-    iterate(gs);
-    GAME_DATA.gs = gs;
-    return gs;
-}
 
 function scheduleCalculator(gs)
 {  
@@ -102,17 +93,6 @@ function GameState_to_json(obj)
     return result;
 }
 
-//A function to iterate through a nested object
-function iterate(obj)
-{
-    for (var key in obj) {
-        if(obj.hasOwnProperty(key))
-        {
-            console.log("Key: " + key + " Values: " + obj[key]);
-        }
-    }
-}
-
 // Barebones game state update loop
 function simpleTick(ticker)
 {
@@ -122,15 +102,24 @@ function simpleTick(ticker)
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
-        GAME_DATA.gs.current_time += 1;   // Increment game time by 1 'unit' (day?)
-        display_game_time(GAME_DATA.gs.current_time);
+        incrementTime();
+        display_game_time();
         TICKS_PASSED = 0;
         update(GAME_DATA.gs);
+        check_if_completed(GAME_DATA.gs);
     }
     
     if (GAME_DATA.state_dialog !== null) {
         updateGameStateDialog(GAME_DATA.gs);
     }
+}
+
+function incrementTime(){
+    GAME_DATA.gs.current_time += 1;
+}
+
+function check_if_completed(gs) {
+    
 }
 
 function updateGameStateDialog(gs) {
@@ -151,8 +140,8 @@ function updateGameStateDialog(gs) {
     GAME_DATA.state_dialog.html(html);
 }
 
-function display_game_time(time){
-    $("#time").html("<h3>Current Time: "+time+"</h3>");
+function display_game_time(){
+    $("#time").html("<h3>Current Time: "+GAME_DATA.gs.current_time+"</h3>");
 }
 
 // Example 'module.update()' function

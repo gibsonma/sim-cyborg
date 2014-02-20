@@ -1,23 +1,24 @@
-describe("init_GameState", function()
+describe("setupGame", function()
 {
 	var setting = 1;
-	it("Returns a defined object", function()
-	{
-		expect(init_GameState(1)).toBeDefined();
-	});
+
 	it("Assigns the new game state to GAME_DATA", function()
 	{
+        setupGame(sjs.Scene({w:1, h:1}), setting );
 		expect(GAME_DATA.gs).toBeDefined();
 	});
 	it("Return a valid game state", function()
 	{
-		expect(init_GameState(1).sites).toBeDefined();
+        setupGame(sjs.Scene({w:1, h:1}), setting );
+		expect(GAME_DATA.gs.sites).toBeDefined();
 	});
 });
 
 describe("scheduleCalculator", function()
 {
-	var game = init_GameState(1);
+    var setting = 1;
+    var game = new GameState(setting);
+
 	it("Should be passed a defined game state", function()
 	{
 		expect(game).toBeDefined();
@@ -30,7 +31,8 @@ describe("scheduleCalculator", function()
 
 describe("problemSimulator", function()
 {
-    var game = init_GameState(1);
+    var setting = 1;
+    var game = new GameState(setting);
 
     it("Calls the chooseArray helper function", function()
     {
@@ -44,7 +46,9 @@ describe("problemSimulator", function()
 
 describe("chooseArray", function()
 {
-	var game = init_GameState(1);
+    var setting = 1;
+    var game = new GameState(setting);
+
 	it("Returns a number as the index", function()
 	{
 		expect(chooseArray(game.sites, game.modules)[0]).toEqual(jasmine.any(Number));
@@ -55,13 +59,10 @@ describe("chooseArray", function()
 	});
 });
 
-
-		
-
-
 describe("Update game state", function (){
-    var initGame = init_GameState(1);
-    var updatedGame = new GameState(1);
+    var setting = 1;
+    var initGame = new GameState(setting);
+    var updatedGame = new GameState(setting);
     update(updatedGame);
     console.log(GameState_to_json(initGame));
     console.log(GameState_to_json(updatedGame));

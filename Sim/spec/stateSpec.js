@@ -24,10 +24,6 @@ describe("game object", function() {
     it("checks if modules are properly set", function() {
         expect(game.modules).not.toBeNull();
     });
-    var initGame = init_GameState();
-    it("checks if the init returns a properly defined object", function() {
-        expect(initGame).toBeDefined();
-    });
 
 });
 
