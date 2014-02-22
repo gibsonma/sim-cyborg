@@ -101,5 +101,22 @@ function Task(name, total){
     this.completed = 0;
     this.total = total;//Represents total effort required to complete task
 	this.status = "Normal";
+    this.actual_total = vary(total);
+    console.log("Total: " + this.total);
+    console.log("Actual Total: " + this.actual_total)
 }
 
+function vary(total){
+    var seed = Math.random();
+    var actual_total = total;
+    if(seed > 0.50 && seed < 0.75){
+        actual_total += total/4;
+    
+    }
+    if(seed > 0.75){
+        actual_total -= total/4;
+    }
+    
+    return actual_total;
+
+}
