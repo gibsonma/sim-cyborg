@@ -24,6 +24,9 @@ describe("game object", function() {
     it("checks if modules are properly set", function() {
         expect(game.modules).not.toBeNull();
     });
+	it("checks if home site is set", function() {
+		expect(game.home_site).not.toBeNull();
+	});
 
 });
 

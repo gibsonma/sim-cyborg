@@ -166,10 +166,12 @@ function display_final_score(gs){
 
 function updateGameStateDialog(gs) {
     var html = "";
+	var home_site = "No";
     var site_index = $('#site_select').val();
-    console.log("site index is " + site_index);
+  //  console.log("site index is " + site_index);
     var site = gs.sites[site_index];
-    html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + "</p>";
+	if(site == gs.home_site)home_site = "Yes";
+    html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + " Home Site: " + home_site + "</p>";
     for (var j=0; j < site.working_on.length; j++){
         var module = site.working_on[j];
         html = html + "<p>Module: " + module.name + "</p>";

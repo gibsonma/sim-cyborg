@@ -15,13 +15,17 @@ function GameState(setting)
 {
     var site;
     var site2;
+	var site3;
     var main_module;
     var second_module;
     switch(setting)
     {
         case 1:
-            site = new Site("Site Google", (121,43), new Culture(), 18, 5, "Agile");
-            site2 = new Site("Site Yahoo", (43,43), new Culture(), 18, 5, "Agile");
+            site = new Site("New York", (121,43), new Culture(), 18, 5, "Agile");
+            site2 = new Site("Shanghai", (43,43), new Culture(), 28, 7, "Agile");
+			site3 = new Site("Dublin", (111,18), new Culture(), 8, 6, "Agile");
+			this.sites = [site, site2, site3];
+			this.home_site = site3;
             main_module = new Module("write backend", [new Task("write model",300), new Task("write view", 250), new Task("write controller", 350)]);
             main_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 6;
@@ -30,11 +34,17 @@ function GameState(setting)
             second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 1;
             second_module.tasks[2].assigned = 1; 
+			this.modules = [main_module, second_module];
+			this.sites[0].working_on.push(main_module);
+			this.sites[1].working_on.push(second_module);
+			this.sites[2].working_on.push(second_module);
             break;
 
         case 2:
-            site = new Site("Site 2", (111,18), new Culture(), 2, 10, "Waterfall");
-            site2 = new Site("Site 2a", (43,43), new Culture(), 18, 5, "Waterfall");
+            site = new Site("Dublin", (111,18), new Culture(), 2, 10, "Waterfall");
+            site2 = new Site("Poland", (53,53), new Culture(), 18, 5, "Waterfall");
+			this.sites = [site, site2];
+			this.home_site = site;
             main_module = new Module("write backend", [new Task("write model",400), new Task("write view", 150), new Task("write controller", 500)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 1;
@@ -43,12 +53,18 @@ function GameState(setting)
             second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 2;
             second_module.tasks[2].assigned = 3; 
+			this.modules = [main_module, second_module];
+			this.sites[0].working_on.push(main_module);
+			this.sites[1].working_on.push(second_module);
             break;
 
         case 3:
-            site = new Site("Site 3", (9,5), new Culture(), 25, 1, "Agile");
-            site2 = new Site("Site 3a", (43,43), new Culture(), 18, 5, "Agile");
-            main_module = new Module("write backend", [new Task("write model",200), new Task("write view", 50), new Task("write controller", 100)]);
+            site = new Site("Dublin", (111,18), new Culture(), 25, 1, "Agile");
+            site2 = new Site("San Francisco", (43,43), new Culture(), 18, 5, "Agile");
+			site3 = new Site("Bangalore", (90,70), new Culture(), 8, 6, "Agile");
+            this.sites = [site, site2, site3];
+			this.home_site = site;
+			main_module = new Module("write backend", [new Task("write model",200), new Task("write view", 50), new Task("write controller", 100)]);
             main_module.tasks[0].assigned = 10; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 10;
             main_module.tasks[2].assigned = 5;
@@ -56,11 +72,17 @@ function GameState(setting)
             second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 2;
             second_module.tasks[2].assigned = 6; 
+			this.modules = [main_module, second_module];
+			this.sites[0].working_on.push(main_module);
+			this.sites[1].working_on.push(second_module);
+			this.sites[2].working_on.push(second_module);
             break;
 
         default:
-            site = new Site("Site 0", (0,0), new Culture(), 5, 2, "Agile");
-            main_module = new Module("write backend", [new Task("write model",10), new Task("write view", 35), new Task("write controller", 20)]);
+            site = new Site("Default", (0,0), new Culture(), 5, 2, "Agile");
+            this.sites = [site];
+			this.home_site = site;
+			main_module = new Module("write backend", [new Task("write model",10), new Task("write view", 35), new Task("write controller", 20)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 2;
             main_module.tasks[2].assigned = 1;
@@ -68,16 +90,17 @@ function GameState(setting)
             second_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 3;
             second_module.tasks[2].assigned = 1; 
+			this.modules = [main_module, second_module];
+			this.sites[0].working_on.push(main_module);
+			this.sites[0].working_on.push(second_module);
             break;
     }
-    this.sites = [site, site2];
+    
     this.global_distances = {"Shanghai":3, "Poland":2, "New York":3};
     this.current_time = 0;
     this.problems = [];
     this.finance = 10000;
-    this.modules = [main_module, second_module];
-    this.sites[0].working_on.push(main_module);
-    this.sites[1].working_on.push(second_module);
+
 }
 
 
