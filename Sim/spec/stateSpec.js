@@ -1,5 +1,5 @@
 describe("game object", function() {
-    var game = new GameState();
+    var game = new GameState(1);
     it("checks if sites are properly set", function() {
         expect(game.sites).not.toBeNull();
     });

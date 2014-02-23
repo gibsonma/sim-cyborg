@@ -15,6 +15,8 @@ function GameState(setting)
     var site;
     var site2;
     var main_module;
+    var second_module;
+    var global_distances = {"Shanghai":3, "Poland":2, "New York":3};
     switch(setting)
     {
         case 1:
