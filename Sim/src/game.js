@@ -34,6 +34,22 @@ function scheduleCalculator(gs)
     }
     return sumTasks/2;
 }
+function problemSim(gs)
+{
+    var dTemporal = 1; //temporary value until time difference is set up in default scenarios
+    var dCulture = 1; //temporary value until culture is set up in default scenarios
+    var numSites = gs.sites.length;
+    var seed = Math.floor(Math.random() * numSites); //get a random number between 0 and number of sites
+    var site = "Shanghai" //when scenarios are set up, get this from sites[seed].name, setting it to a random site in the dict for the moment
+    var dGeo = gs.global_distances[site];
+    var dGlobal = dTemporal + dCulture + dGeo;
+
+    var fail = dGlobal/(1+dGlobal);
+    var fail = fail*PROBLEM_CONSTANT;
+
+    console.log(fail);
+    //do something to site with result
+}
 
 //Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
 function problemSimulator(listOfSites, listOfModules)

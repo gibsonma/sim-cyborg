@@ -9,6 +9,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
+var PROBLEM_CONSTANT = 1; //constant value for problem simulator, used to tweak difficulty
 
 function GameState(setting)
 {
@@ -16,7 +17,6 @@ function GameState(setting)
     var site2;
     var main_module;
     var second_module;
-    var global_distances = {"Shanghai":3, "Poland":2, "New York":3};
     switch(setting)
     {
         case 1:
@@ -71,6 +71,7 @@ function GameState(setting)
             break;
     }
     this.sites = [site, site2];
+    this.global_distances = {"Shanghai":3, "Poland":2, "New York":3};
     this.current_time = 0;
     this.problems = [];
     this.finance = 10000;
