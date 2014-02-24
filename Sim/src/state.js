@@ -96,7 +96,9 @@ function GameState(setting)
             break;
     }
     
-    this.global_distances = {"Shanghai":3, "Poland":2, "New York":3};
+    this.global_distances = {"Shanghai":4, "Poland":2, "New York":4, "Bangalore":4};
+	this.temporal_distances = {"Shanghai":3, "Poland":1, "New York":2, "Bangalore":2};
+	this.cultural_distances = {"Shanghai":3, "Poland":2, "New York":2, "Bangalore":3};
     this.current_time = 0;
     this.problems = [];
     this.finance = 10000;
