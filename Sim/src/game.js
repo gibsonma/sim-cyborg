@@ -38,7 +38,8 @@ function problemSim(gs)
 {
     var numSites = gs.sites.length;
     var seed = Math.floor(Math.random() * numSites); //get a random number between 0 and number of sites
-    var site = "Shanghai" //when scenarios are set up, get this from sites[seed].name, setting it to a random site in the dict for the moment
+    var site = gs.sites[seed].name;
+    console.log(site);
     var dGeo = gs.global_distances[site];
 	var dTemporal = gs.temporal_distances[site]; 
     var dCulture = gs.cultural_distances[site];
