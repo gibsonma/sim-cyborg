@@ -17,9 +17,6 @@ function list_sites_as_options() {
     }
 }
 
-//A quick function to initialise the game state with some ints and strings and print them
-//to the console
-
 function scheduleCalculator(gs)
 {  
     var listOfModules = gs.modules;
@@ -28,8 +25,7 @@ function scheduleCalculator(gs)
         var modTasks = listOfModules[i].tasks;
         for(var j = 0; j < modTasks.length; j++)
         {
-            sumTasks += modTasks[j].total;
-            console.log(sumTasks);
+            sumTasks += modTasks[j].actual_total;
         }
     }
     return sumTasks/2;
@@ -39,9 +35,8 @@ function problemSim(gs)
     var numSites = gs.sites.length;
     var seed = Math.floor(Math.random() * numSites); //get a random number between 0 and number of sites
     var site = gs.sites[seed].name;
-    console.log(site);
     var dGeo = gs.global_distances[site];
-	var dTemporal = gs.temporal_distances[site]; 
+    var dTemporal = gs.temporal_distances[site]; 
     var dCulture = gs.cultural_distances[site];
     var dGlobal = dTemporal + dCulture + dGeo;
 
@@ -127,18 +122,33 @@ function simpleTick(ticker)
     }
 
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
-        deduct_revenue()
         incrementTime();
         display_game_time();
         TICKS_PASSED = 0;
         check_if_completed(GAME_DATA.gs);
+
+        if (GAME_DATA.gs.current_time % 24 == 0){
+            deduct_daily_expenses();
+        }
     }
     update(GAME_DATA.gs);
 }
 
-function deduct_revenue(){
-    var ticks_per_month = 24*30;
-    GAME_DATA.gs.capital = GAME_DATA.gs.capital - Math.round((1/ticks_per_month)*GAME_DATA.gs.revenue);
+function deduct_daily_expenses(){
+    var days_per_release = GAME_DATA.gs.days_per_release;
+    var daily_operating_cost = Math.round((1/days_per_release)*GAME_DATA.gs.revenue);
+    var developer_cost = scheduleCalculator(GAME_DATA.gs)/days_per_release;
+    console.log("dev cost: " + developer_cost);
+    var total = days_per_release + developer_cost;
+    deduct_from_capital(total);
+}
+
+function deduct_from_capital(amount){
+    GAME_DATA.gs.capital = GAME_DATA.gs.capital - amount;
+    GAME_DATA.gs.financial_log.push({
+        "time":GAME_DATA.gs.current_time, 
+        "capital":GAME_DATA.gs.capital
+    });
 }
 
 function incrementTime(){
@@ -167,7 +177,7 @@ function check_if_completed(gs) {
 function display_final_score(gs){
     var html = "<br><h1>FINAL SCORE:</h1>";
     html = html + "<p>You started the game with: $" + gs.starting_capital + "</p>";
-    html = html + "<p>You have $" + gs.capital + " left</p><br>";
+    html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p><br>";
     GAME_DATA.state_dialog.html(html);
 }
 
@@ -210,19 +220,11 @@ function update(gs)
                 switch (site.development_type) {
                     case "Waterfall":
                         task.completed = task.completed + ((task.assigned * site.effort * 1)/TICKS_PER_UNIT_TIME);
-                        if(task.completed > task.actual_total)
-                        {
-                            task.completed = task.actual_total;
-                        }
-                        console.log("Updating in a waterfall fashion!");
+                        if(task.completed > task.actual_total) task.completed = task.actual_total;
                         break;
                     case "Agile":
                         task.completed = task.completed + ((task.assigned * site.effort * 1.5)/TICKS_PER_UNIT_TIME);
-                        if(task.completed > task.actual_total)
-                        {
-                            task.completed = task.actual_total;
-                        }
-                        console.log("Look at me, aren't I agile?");
+                        if(task.completed > task.actual_total) task.completed = task.actual_total;
                         break;
                     default:
                         console.log("What even IS this development methodology?");

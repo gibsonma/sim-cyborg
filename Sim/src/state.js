@@ -2,7 +2,7 @@
 var DESIRED_FPS = 30;
 var MILLIS_PER_FRAME = 1000 / DESIRED_FPS;
 
-var TICKS_PER_UNIT_TIME = 10;       // Assuming we don't want the game's time to update every tick (if game time == days), 
+var TICKS_PER_UNIT_TIME = 2;       // Assuming we don't want the game's time to update every tick (if game time == days), 
 // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
 
@@ -104,6 +104,8 @@ function GameState(setting)
     this.revenue = 10000;
     this.capital = 50000;
     this.starting_capital = this.capital;
+    this.financial_log = []; //log of finances to type for graphing
+    this.days_per_release = 30;
 }
 
 
@@ -131,8 +133,6 @@ function Task(name, total){
     this.total = total;//Represents total effort required to complete task
     this.status = "Normal";
     this.actual_total = vary(total);
-    console.log("Total: " + this.total);
-    console.log("Actual Total: " + this.actual_total)
 }
 
 function vary(total){
