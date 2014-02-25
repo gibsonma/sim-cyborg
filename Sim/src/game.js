@@ -46,9 +46,9 @@ function problemSim(gs)
     var dGlobal = dTemporal + dCulture + dGeo;
 
     var fail = dGlobal/(1+dGlobal);
-    var fail = fail*PROBLEM_CONSTANT;
+    var failC = fail*PROBLEM_CONSTANT;
 
-    console.log(fail);
+    console.log(failC);
     //do something to site with result
 }
 
@@ -121,17 +121,24 @@ function simpleTick(ticker)
     // Increment current time
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
+
+    if (GAME_DATA.state_dialog !== null) {
+        updateGameStateDialog(GAME_DATA.gs);
+    }
+
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
+        deduct_revenue()
         incrementTime();
         display_game_time();
         TICKS_PASSED = 0;
         update(GAME_DATA.gs);
         check_if_completed(GAME_DATA.gs);
     }
+}
 
-    if (GAME_DATA.state_dialog !== null) {
-        updateGameStateDialog(GAME_DATA.gs);
-    }
+function deduct_revenue(){
+    var ticks_per_month = 24*30;
+    GAME_DATA.gs.capital = GAME_DATA.gs.capital - Math.round((1/ticks_per_month)*GAME_DATA.gs.revenue);
 }
 
 function incrementTime(){
@@ -158,20 +165,18 @@ function check_if_completed(gs) {
 }
 
 function display_final_score(gs){
-    alert("Final score:\n "+ gs.finance + " dollars left");
-    /*$("#center_content, #score_board").toggle();
-    console.log("Gratz, you have " + gs.finance + " gold.");
-    var html = "<h1>FINAL SCORE</h1>\n";
-    html = html + "<p>" + gs.finance + "</p>";*/
+    var html = "<br><h1>FINAL SCORE:</h1>";
+    html = html + "<p>You started the game with: $" + gs.starting_capital + "</p>";
+    html = html + "<p>You have $" + gs.capital + " left</p><br>";
+    GAME_DATA.state_dialog.html(html);
 }
 
 function updateGameStateDialog(gs) {
-    var html = "";
-	var home_site = "No";
+    var html = "<h2>Game State</h2>";
+    var home_site = "No";
     var site_index = $('#site_select').val();
-  //  console.log("site index is " + site_index);
     var site = gs.sites[site_index];
-	if(site == gs.home_site)home_site = "Yes";
+    if (site == gs.home_site) home_site = "Yes";
     html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + " Home Site: " + home_site + "</p>";
     for (var j=0; j < site.working_on.length; j++){
         var module = site.working_on[j];
