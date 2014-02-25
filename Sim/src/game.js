@@ -137,10 +137,27 @@ function simpleTick(ticker)
 function deduct_daily_expenses(){
     var days_per_release = GAME_DATA.gs.days_per_release;
     var daily_operating_cost = Math.round((1/days_per_release)*GAME_DATA.gs.revenue);
-    var developer_cost = scheduleCalculator(GAME_DATA.gs)/days_per_release;
+    var developer_cost = number_assigned_workers() * GAME_DATA.gs.developer_rate * GAME_DATA.gs.developer_working_hours;
     console.log("dev cost: " + developer_cost);
     var total = days_per_release + developer_cost;
     deduct_from_capital(total);
+}
+
+function number_assigned_workers(){
+    var gs = GAME_DATA.gs;
+    var total_assigned = 0;
+    for (var i=0; i < gs.sites.length; i++){
+        var site = gs.sites[i];
+        for (var j=0; j < site.working_on.length; j++){
+            var module = site.working_on[j];
+            for (var k=0; k < module.tasks.length; k++){
+                var task = module.tasks[k];
+                total_assigned = total_assigned + task.assigned;
+            }
+        }
+    }
+    console.log("total: " + total_assigned);
+    return total_assigned;
 }
 
 function deduct_from_capital(amount){
@@ -169,6 +186,7 @@ function check_if_completed(gs) {
     }
     if (finished) {
         //GAME_DATA.scene.reset();
+        if (GAME_DATA.gs.current_time < 24) deduct_daily_expenses();
         GAME_DATA.ticker.pause();
         display_final_score(gs);
     }

@@ -106,6 +106,8 @@ function GameState(setting)
     this.starting_capital = this.capital;
     this.financial_log = []; //log of finances to type for graphing
     this.days_per_release = 30;
+    this.developer_rate = 30; // how much per dev per hour
+    this.developer_working_hours = 9; // how many hours worked per day
 }
 
 
