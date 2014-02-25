@@ -131,9 +131,9 @@ function simpleTick(ticker)
         incrementTime();
         display_game_time();
         TICKS_PASSED = 0;
-        update(GAME_DATA.gs);
         check_if_completed(GAME_DATA.gs);
     }
+    update(GAME_DATA.gs);
 }
 
 function deduct_revenue(){
@@ -207,7 +207,7 @@ function update(gs)
                 var task = module.tasks[k];
                 switch (site.development_type) {
                     case "Waterfall":
-                        task.completed = task.completed + (task.assigned * site.effort * 1);
+                        task.completed = task.completed + ((task.assigned * site.effort * 1)/TICKS_PER_UNIT_TIME);
                         if(task.completed > task.total)
                         {
                             task.completed = task.total;
@@ -215,7 +215,7 @@ function update(gs)
                         console.log("Updating in a waterfall fashion!");
                         break;
                     case "Agile":
-                        task.completed = task.completed + (task.assigned * site.effort * 1.5);
+                        task.completed = task.completed + ((task.assigned * site.effort * 1.5)/TICKS_PER_UNIT_TIME);
                         if(task.completed > task.total)
                         {
                             task.completed = task.total;
