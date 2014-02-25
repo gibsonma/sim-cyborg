@@ -64,14 +64,14 @@ function GameState(setting)
             site3 = new Site("Bangalore", (90,70), new Culture(), 8, 6, "Agile");
             this.sites = [site, site2, site3];
             this.home_site = site;
-            main_module = new Module("write backend", [new Task("write model",2000), new Task("write view", 500), new Task("write controller", 1000)]);
-            main_module.tasks[0].assigned = 100; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 100;
-            main_module.tasks[2].assigned = 50;
-            second_module = new Module("design Frontend", [new Task("create Sprites",1000), new Task("link with backend", 1500), new Task("Choose Font", 500)]);
-            second_module.tasks[0].assigned = 40; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 20;
-            second_module.tasks[2].assigned = 60; 
+            main_module = new Module("write backend", [new Task("write model",150), new Task("write view", 350), new Task("write controller", 100)]);
+            main_module.tasks[0].assigned = 10; // NB will need to have proper methods to change who's assigned to what
+            main_module.tasks[1].assigned = 10;
+            main_module.tasks[2].assigned = 5;
+            second_module = new Module("design Frontend", [new Task("create Sprites",100), new Task("link with backend", 320), new Task("Choose Font", 50)]);
+            second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
+            second_module.tasks[1].assigned = 2;
+            second_module.tasks[2].assigned = 6; 
             this.modules = [main_module, second_module];
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
@@ -101,11 +101,11 @@ function GameState(setting)
     this.cultural_distances = {"Shanghai":3, "Poland":2, "New York":2, "Bangalore":3, "Dublin":0};
     this.current_time = 0;
     this.problems = [];
-    this.revenue = 10000;
-    this.capital = 50000;
+    this.revenue = 10000; // Amount made per release (see: this.days_per_release)
+    this.capital = 50000; // Current working capital
     this.starting_capital = this.capital;
     this.financial_log = []; //log of finances to type for graphing
-    this.days_per_release = 30;
+    this.days_per_release = 30; 
     this.developer_rate = 30; // how much per dev per hour
     this.developer_working_hours = 9; // how many hours worked per day
 }
