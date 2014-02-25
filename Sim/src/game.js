@@ -25,7 +25,7 @@ function scheduleCalculator(gs)
         var modTasks = listOfModules[i].tasks;
         for(var j = 0; j < modTasks.length; j++)
         {
-            sumTasks += modTasks[j].actual_total;
+            sumTasks += modTasks[j].total;
         }
     }
     return sumTasks/2;
@@ -125,11 +125,11 @@ function simpleTick(ticker)
         incrementTime();
         display_game_time();
         TICKS_PASSED = 0;
-        check_if_completed(GAME_DATA.gs);
 
         if (GAME_DATA.gs.current_time % 24 == 0){
             deduct_daily_expenses();
         }
+        check_if_completed(GAME_DATA.gs);
     }
     update(GAME_DATA.gs);
 }
@@ -137,9 +137,9 @@ function simpleTick(ticker)
 function deduct_daily_expenses(){
     var days_per_release = GAME_DATA.gs.days_per_release;
     var daily_operating_cost = Math.round((1/days_per_release)*GAME_DATA.gs.revenue);
-    var developer_cost = number_assigned_workers() * GAME_DATA.gs.developer_rate * GAME_DATA.gs.developer_working_hours;
-    console.log("dev cost: " + developer_cost);
-    var total = days_per_release + developer_cost;
+    var daily_developer_cost = number_assigned_workers() * GAME_DATA.gs.developer_rate * GAME_DATA.gs.developer_working_hours;
+    var total = daily_operating_cost + daily_developer_cost;
+    console.log("assigned: " + number_assigned_workers());
     deduct_from_capital(total);
 }
 
@@ -156,17 +156,9 @@ function number_assigned_workers(){
             }
         }
     }
-    console.log("total: " + total_assigned);
     return total_assigned;
 }
 
-function deduct_from_capital(amount){
-    GAME_DATA.gs.capital = GAME_DATA.gs.capital - amount;
-    GAME_DATA.gs.financial_log.push({
-        "time":GAME_DATA.gs.current_time, 
-        "capital":GAME_DATA.gs.capital
-    });
-}
 
 function incrementTime(){
     GAME_DATA.gs.current_time += 1;
@@ -197,9 +189,36 @@ function display_final_score(gs){
     html = html + "<p>You started the game with: $" + gs.starting_capital + "</p>";
     html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
     html = html + "<p>You have " + number_assigned_workers() + " workers</p>";
-    html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(GAME_DATA.gs)/number_assigned_workers()) + " hours</p>";
+    html = html + "<br>"
+    html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(gs)/number_assigned_workers()) + " hours</p>";
     html = html + "<p>Actual game time: " + gs.current_time + " hours</p>";
+    html = html + "<br>"
+    html = html + "<p>Expected expenditure: $" + Math.round(scheduleCalculator(gs)*gs.developer_rate) + "</p>";
+    html = html + "<p>Actual expenditure: $" + Math.round(get_total_expenditure()) + "</p>";
+    html = html + "<br>"
     GAME_DATA.state_dialog.html(html);
+}
+
+function get_total_expenditure(){ // work out the amount of expenditure based on financial log
+    var log = GAME_DATA.gs.financial_log;
+    if (log.length == 0) return 0;
+    if (log.length == 1) return GAME_DATA.gs.starting_capital - log[0].capital;
+    var expenses = 0;
+    var difference;
+    for (var i=1; i< log.length; i++){
+        difference = log[i-1].capital - log[i].capital;
+        if (difference > 0) expenses = expenses + difference;
+    }
+    console.log("log length: " + log.length);
+    return expenses;
+}
+
+function deduct_from_capital(amount){
+    GAME_DATA.gs.capital = GAME_DATA.gs.capital - amount;
+    GAME_DATA.gs.financial_log.push({
+        "time":GAME_DATA.gs.current_time, 
+        "capital":GAME_DATA.gs.capital
+    });
 }
 
 function updateGameStateDialog(gs) {
