@@ -46,6 +46,7 @@ window.onload = function() {
         });
         setupGame(scene,1);
         GAME_DATA.state_dialog = $('#game_state_dump');
+        $('#main_content,#game_state_box').toggle();
     });
 }; 
 

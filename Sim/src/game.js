@@ -193,9 +193,12 @@ function check_if_completed(gs) {
 }
 
 function display_final_score(gs){
-    var html = "<br><h1>FINAL SCORE:</h1>";
+    var html = "<h2>FINAL SCORE:</h2>";
     html = html + "<p>You started the game with: $" + gs.starting_capital + "</p>";
-    html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p><br>";
+    html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
+    html = html + "<p>You have " + number_assigned_workers() + " workers</p>";
+    html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(GAME_DATA.gs)/number_assigned_workers()) + " hours</p>";
+    html = html + "<p>Actual game time: " + gs.current_time + " hours</p>";
     GAME_DATA.state_dialog.html(html);
 }
 
