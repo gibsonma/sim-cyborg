@@ -202,12 +202,10 @@ function display_final_score(gs){
 function get_total_expenditure(){ // work out the amount of expenditure based on financial log
     var log = GAME_DATA.gs.financial_log;
     if (log.length == 0) return 0;
-    if (log.length == 1) return GAME_DATA.gs.starting_capital - log[0].capital;
     var expenses = 0;
-    var difference;
-    for (var i=1; i< log.length; i++){
-        difference = log[i-1].capital - log[i].capital;
-        if (difference > 0) expenses = expenses + difference;
+    for (var i=0; i< log.length; i++){
+        var amount = log[i].amount;
+        if (amount < 0) expenses = expenses + Math.abs(amount);
     }
     console.log("log length: " + log.length);
     return expenses;
@@ -217,7 +215,7 @@ function deduct_from_capital(amount){
     GAME_DATA.gs.capital = GAME_DATA.gs.capital - amount;
     GAME_DATA.gs.financial_log.push({
         "time":GAME_DATA.gs.current_time, 
-        "capital":GAME_DATA.gs.capital
+        "amount":-amount
     });
 }
 
