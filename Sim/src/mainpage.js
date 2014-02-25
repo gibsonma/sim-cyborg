@@ -29,6 +29,9 @@ window.onload = function() {
             office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
             office.update();
         });
+        $('#toggle_debug_btn').click(function() {
+            $('#center_content, #toggle_dialog_btn').toggle();
+        });
         $('#toggle_dialog_btn').click(function() {
             $('#main_content,#game_state_box').toggle();
         });
