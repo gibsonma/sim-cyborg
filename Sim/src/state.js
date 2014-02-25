@@ -140,7 +140,6 @@ function vary(total){
     var actual_total = total;
     if(seed > 0.50 && seed < 0.75){
         actual_total += total/4;
-
     }
     if(seed > 0.75){
         actual_total -= total/4;

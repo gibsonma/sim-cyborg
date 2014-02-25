@@ -153,7 +153,7 @@ function check_if_completed(gs) {
             var module = site.working_on[j];
             for (var k=0; k < module.tasks.length; k++){
                 var task = module.tasks[k];
-                if(task.completed < task.total) finished = false;
+                if(task.completed < task.actual_total) finished = false;
             }
         }
     }
@@ -184,7 +184,9 @@ function updateGameStateDialog(gs) {
         for (var k=0; k < module.tasks.length; k++){
             var task = module.tasks[k];
             var completion = (task.completed / task.total) * 100;
-            html = html + "<p>Task: " + task.name + " | Completion: " + Math.round(completion) + "%</p>";
+            html = html + "<p>Task: " + task.name + " | Completion: " + Math.round(completion) + "% ";
+            if (task.completed >= task.actual_total) html = html + " - completed";
+            html = html + "</p>"
         }
     }
     GAME_DATA.state_dialog.html(html);
@@ -208,17 +210,17 @@ function update(gs)
                 switch (site.development_type) {
                     case "Waterfall":
                         task.completed = task.completed + ((task.assigned * site.effort * 1)/TICKS_PER_UNIT_TIME);
-                        if(task.completed > task.total)
+                        if(task.completed > task.actual_total)
                         {
-                            task.completed = task.total;
+                            task.completed = task.actual_total;
                         }
                         console.log("Updating in a waterfall fashion!");
                         break;
                     case "Agile":
                         task.completed = task.completed + ((task.assigned * site.effort * 1.5)/TICKS_PER_UNIT_TIME);
-                        if(task.completed > task.total)
+                        if(task.completed > task.actual_total)
                         {
-                            task.completed = task.total;
+                            task.completed = task.actual_total;
                         }
                         console.log("Look at me, aren't I agile?");
                         break;
