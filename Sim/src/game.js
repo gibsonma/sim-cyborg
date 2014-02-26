@@ -127,12 +127,17 @@ function simpleTick(ticker)
         TICKS_PASSED = 0;
 
         if (GAME_DATA.gs.current_time % 24 == 0){
-            deduct_daily_expenses();
-            add_daily_revenue();
+            daily_transactions();
         }
         check_if_completed(GAME_DATA.gs);
     }
     update(GAME_DATA.gs);
+}
+
+function daily_transactions(){
+    deduct_daily_expenses();
+    add_daily_revenue();
+
 }
 
 function deduct_daily_expenses(){
@@ -146,7 +151,7 @@ function deduct_daily_expenses(){
 function add_daily_revenue(){
     var days_per_release = GAME_DATA.gs.days_per_release;
     var daily_revenue = GAME_DATA.gs.revenue/days_per_release
-    new_transaction(daily_revenue);
+        new_transaction(daily_revenue);
 }
 
 function number_assigned_workers(){
@@ -184,7 +189,7 @@ function check_if_completed(gs) {
     }
     if (finished) {
         //GAME_DATA.scene.reset();
-        if (GAME_DATA.gs.current_time < 24) deduct_daily_expenses();
+        if (GAME_DATA.gs.current_time < 24) daily_transactions();
         GAME_DATA.ticker.pause();
         display_final_score(gs);
     }
@@ -196,13 +201,13 @@ function display_final_score(gs){
     html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
     html = html + "<p>You have " + number_assigned_workers() + " workers</p>";
     html = html + "<br>"
-    html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(gs)/number_assigned_workers()) + " hours</p>";
+        html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(gs)/number_assigned_workers()) + " hours</p>";
     html = html + "<p>Actual game time: " + gs.current_time + " hours</p>";
     html = html + "<br>"
-    html = html + "<p>Expected expenditure: $" + Math.round(scheduleCalculator(gs)*gs.developer_rate) + "</p>";
+        html = html + "<p>Expected expenditure: $" + Math.round(scheduleCalculator(gs)*gs.developer_rate) + "</p>";
     html = html + "<p>Actual expenditure: $" + Math.round(get_total_expenditure()) + "</p>";
     html = html + "<br>"
-    GAME_DATA.state_dialog.html(html);
+        GAME_DATA.state_dialog.html(html);
 }
 
 function get_total_expenditure(){ // work out the amount of expenditure based on financial log
