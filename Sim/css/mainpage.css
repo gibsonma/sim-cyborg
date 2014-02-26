@@ -59,6 +59,17 @@ body {
 	top: 50%;
 }
 
+.site_tile {
+	display: inline-block;
+	margin-top: 20px;
+	text-align: center;
+	vertical-align: middle;
+	width: 200px;
+	height: 200px;
+	background-color: rgba(121, 202, 100, 100);
+	border-radius: 5px 5px;
+}
+
 #main_content,#game_state_box {
     background: rgba(0, 0, 0, .8);
 }

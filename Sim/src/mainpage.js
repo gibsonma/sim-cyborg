@@ -1,3 +1,4 @@
+var TEMPLATES = {};
 window.onload = function() {
     var scene, background, site_images, office;
 
@@ -38,19 +39,60 @@ window.onload = function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
             GAME_DATA.state_dialog = $('#game_state_dump');
+            renderTileview();
         });
         $('#scenario_2').click(function() {
             setupGame(scene,2);
             GAME_DATA.state_dialog = $('#game_state_dump');
+            renderTileview();
         });
         $('#scenario_3').click(function() {
             setupGame(scene,3);
             GAME_DATA.state_dialog = $('#game_state_dump');
+            renderTileview();
         });
         setupGame(scene,1);
         GAME_DATA.state_dialog = $('#game_state_dump');
+        $.get('src/templates/tileview.html', function(template) {
+            TEMPLATES['tileview'] = template;
+            renderTileview();
+        });
     });
 }; 
+
+var tileView;
+function renderTileview() {
+    if (TEMPLATES['tileview']) {
+        tileView = new Ractive({
+            el: 'tiled_view',
+            template: TEMPLATES['tileview'],
+            data: {
+                state: GAME_DATA.gs,
+                statuscolor: function(m) {                    
+                    var averageCompletion = 0;
+
+                    for (var i = m.length - 1; i >= 0; i--) {
+                        var module = m[i];
+                        var moduleCompletionAvg = 0;
+                        for (var i = module.tasks.length - 1; i >= 0; i--) {
+                            var task = module.tasks[i];
+                            var actual_completion = task.completed / task.actual_total;
+                            var current_completion = task.completed / task.total;
+                            var completion_ratio = current_completion / actual_completion;
+                            moduleCompletionAvg += completion_ratio;
+                        };
+                        moduleCompletionAvg = moduleCompletionAvg / module.tasks.length;
+                        averageCompletion += moduleCompletionAvg;
+                    };
+                    averageCompletion = averageCompletion / m.length;
+
+                    return averageCompletion.toFixed(2);
+                }
+            }
+        });
+    }
+    
+};
 
 function append_config(key, val){
     if (val !== null && typeof val === "object") {
@@ -61,4 +103,4 @@ function append_config(key, val){
     else {
         $("#main_content").append("<p>" + key + " - " + val + "</p>");
     }
-}
+};

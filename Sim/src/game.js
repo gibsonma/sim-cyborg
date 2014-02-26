@@ -218,6 +218,10 @@ function updateGameStateDialog(gs) {
         }
     }
     GAME_DATA.state_dialog.html(html);
+    if (tileView) {
+        tileView.update('state');    
+    }
+    
 }
 
 function display_game_time(){
