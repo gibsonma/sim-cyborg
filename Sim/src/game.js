@@ -128,6 +128,7 @@ function simpleTick(ticker)
 
         if (GAME_DATA.gs.current_time % 24 == 0){
             deduct_daily_expenses();
+            add_daily_revenue();
         }
         check_if_completed(GAME_DATA.gs);
     }
@@ -139,8 +140,13 @@ function deduct_daily_expenses(){
     var daily_operating_cost = Math.round((1/days_per_release)*GAME_DATA.gs.revenue);
     var daily_developer_cost = number_assigned_workers() * GAME_DATA.gs.developer_rate * GAME_DATA.gs.developer_working_hours;
     var total = daily_operating_cost + daily_developer_cost;
-    console.log("assigned: " + number_assigned_workers());
-    deduct_from_capital(total);
+    new_transaction(-total);
+}
+
+function add_daily_revenue(){
+    var days_per_release = GAME_DATA.gs.days_per_release;
+    var daily_revenue = GAME_DATA.gs.revenue/days_per_release
+    new_transaction(daily_revenue);
 }
 
 function number_assigned_workers(){
@@ -211,12 +217,14 @@ function get_total_expenditure(){ // work out the amount of expenditure based on
     return expenses;
 }
 
-function deduct_from_capital(amount){
-    GAME_DATA.gs.capital = GAME_DATA.gs.capital - amount;
+function new_transaction(amount){
+    GAME_DATA.gs.capital = GAME_DATA.gs.capital + amount;
     GAME_DATA.gs.financial_log.push({
         "time":GAME_DATA.gs.current_time, 
-        "amount":-amount
+        "amount":amount
     });
+    if (amount > 0) console.log("Adding " + amount + " to capital");
+    else console.log("Deducting " + Math.abs(amount) + " from capital");
 }
 
 function updateGameStateDialog(gs) {
