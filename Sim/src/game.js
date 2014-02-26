@@ -213,7 +213,6 @@ function get_total_expenditure(){ // work out the amount of expenditure based on
         var amount = log[i].amount;
         if (amount < 0) expenses = expenses + Math.abs(amount);
     }
-    console.log("log length: " + log.length);
     return expenses;
 }
 
@@ -223,8 +222,6 @@ function new_transaction(amount){
         "time":GAME_DATA.gs.current_time, 
         "amount":amount
     });
-    if (amount > 0) console.log("Adding " + amount + " to capital");
-    else console.log("Deducting " + Math.abs(amount) + " from capital");
 }
 
 function updateGameStateDialog(gs) {
