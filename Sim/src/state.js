@@ -2,7 +2,7 @@
 var DESIRED_FPS = 30;
 var MILLIS_PER_FRAME = 1000 / DESIRED_FPS;
 
-var TICKS_PER_UNIT_TIME = 2;       // Assuming we don't want the game's time to update every tick (if game time == days), 
+var TICKS_PER_UNIT_TIME = 1;       // Assuming we don't want the game's time to update every tick (if game time == days), 
 // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
 
@@ -27,13 +27,13 @@ function GameState(setting)
             this.sites = [site, site2, site3];
             this.home_site = site3;
             main_module = new Module("write backend", [new Task("write model",3000), new Task("write view", 2500), new Task("write controller", 3500)]);
-            main_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 6;
-            main_module.tasks[2].assigned = 6;  
+            main_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
+            main_module.tasks[1].assigned = 5;
+            main_module.tasks[2].assigned = 3;  
             second_module = new Module("design Frontend", [new Task("create Sprites",3000), new Task("link with backend", 2500), new Task("Choose Font", 3500)]);
-            second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
+            second_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 1;
-            second_module.tasks[2].assigned = 1; 
+            second_module.tasks[2].assigned = 2; 
             this.modules = [main_module, second_module];
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
@@ -75,7 +75,6 @@ function GameState(setting)
             this.modules = [main_module, second_module];
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
-            this.sites[2].working_on.push(second_module);
             break;
 
         default:

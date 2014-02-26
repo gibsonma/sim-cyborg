@@ -25,7 +25,7 @@ function scheduleCalculator(gs)
         var modTasks = listOfModules[i].tasks;
         for(var j = 0; j < modTasks.length; j++)
         {
-            sumTasks += modTasks[j].actual_total;
+            sumTasks += modTasks[j].total;
         }
     }
     return sumTasks/2;
@@ -125,22 +125,33 @@ function simpleTick(ticker)
         incrementTime();
         display_game_time();
         TICKS_PASSED = 0;
-        check_if_completed(GAME_DATA.gs);
 
         if (GAME_DATA.gs.current_time % 24 == 0){
-            deduct_daily_expenses();
+            daily_transactions();
         }
+        check_if_completed(GAME_DATA.gs);
     }
     update(GAME_DATA.gs);
+}
+
+function daily_transactions(){
+    deduct_daily_expenses();
+    add_daily_revenue();
+
 }
 
 function deduct_daily_expenses(){
     var days_per_release = GAME_DATA.gs.days_per_release;
     var daily_operating_cost = Math.round((1/days_per_release)*GAME_DATA.gs.revenue);
-    var developer_cost = number_assigned_workers() * GAME_DATA.gs.developer_rate * GAME_DATA.gs.developer_working_hours;
-    console.log("dev cost: " + developer_cost);
-    var total = days_per_release + developer_cost;
-    deduct_from_capital(total);
+    var daily_developer_cost = number_assigned_workers() * GAME_DATA.gs.developer_rate * GAME_DATA.gs.developer_working_hours;
+    var total = daily_operating_cost + daily_developer_cost;
+    new_transaction(-total);
+}
+
+function add_daily_revenue(){
+    var days_per_release = GAME_DATA.gs.days_per_release;
+    var daily_revenue = GAME_DATA.gs.revenue/days_per_release
+        new_transaction(daily_revenue);
 }
 
 function number_assigned_workers(){
@@ -156,17 +167,9 @@ function number_assigned_workers(){
             }
         }
     }
-    console.log("total: " + total_assigned);
     return total_assigned;
 }
 
-function deduct_from_capital(amount){
-    GAME_DATA.gs.capital = GAME_DATA.gs.capital - amount;
-    GAME_DATA.gs.financial_log.push({
-        "time":GAME_DATA.gs.current_time, 
-        "capital":GAME_DATA.gs.capital
-    });
-}
 
 function incrementTime(){
     GAME_DATA.gs.current_time += 1;
@@ -186,17 +189,44 @@ function check_if_completed(gs) {
     }
     if (finished) {
         //GAME_DATA.scene.reset();
-        if (GAME_DATA.gs.current_time < 24) deduct_daily_expenses();
+        if (GAME_DATA.gs.current_time < 24) daily_transactions();
         GAME_DATA.ticker.pause();
         display_final_score(gs);
     }
 }
 
 function display_final_score(gs){
-    var html = "<br><h1>FINAL SCORE:</h1>";
+    var html = "<h2>FINAL SCORE:</h2>";
     html = html + "<p>You started the game with: $" + gs.starting_capital + "</p>";
-    html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p><br>";
-    GAME_DATA.state_dialog.html(html);
+    html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
+    html = html + "<p>You have " + number_assigned_workers() + " workers</p>";
+    html = html + "<br>"
+        html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(gs)/number_assigned_workers()) + " hours</p>";
+    html = html + "<p>Actual game time: " + gs.current_time + " hours</p>";
+    html = html + "<br>"
+        html = html + "<p>Expected expenditure: $" + Math.round(scheduleCalculator(gs)*gs.developer_rate) + "</p>";
+    html = html + "<p>Actual expenditure: $" + Math.round(get_total_expenditure()) + "</p>";
+    html = html + "<br>"
+        GAME_DATA.state_dialog.html(html);
+}
+
+function get_total_expenditure(){ // work out the amount of expenditure based on financial log
+    var log = GAME_DATA.gs.financial_log;
+    if (log.length == 0) return 0;
+    var expenses = 0;
+    for (var i=0; i< log.length; i++){
+        var amount = log[i].amount;
+        if (amount < 0) expenses = expenses + Math.abs(amount);
+    }
+    return expenses;
+}
+
+function new_transaction(amount){
+    GAME_DATA.gs.capital = GAME_DATA.gs.capital + amount;
+    GAME_DATA.gs.financial_log.push({
+        "time":GAME_DATA.gs.current_time, 
+        "amount":amount
+    });
 }
 
 function updateGameStateDialog(gs) {

@@ -57,6 +57,8 @@ window.onload = function() {
             TEMPLATES['tileview'] = template;
             renderTileview();
         });
+        $('#main_content,#game_state_box').toggle();
+
     });
 }; 
 
