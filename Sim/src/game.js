@@ -49,6 +49,37 @@ function problemSim(gs)
     {
         console.log("A problem has been encountered in the "+ site + " office.");
         gs.sites[seed].problems++;
+
+        var problemSeed = Math.floor(Math.random() * 3)+1 //choose one of 3 problems
+        var workingOnSeed = Math.floor(Math.random() * gs.sites[seed].working_on.length); //choose one module being worked on
+        var problemSite = gs.sites[seed];
+        var problemModule = problemSite.working_on[workingOnSeed];
+
+        var taskSeed = Math.floor(Math.random() * problemModule.tasks.length);
+        var problemTask = problemModule.tasks[taskSeed]; 
+        switch(problemSeed)
+        {
+            case 1: 
+                console.log("A module failed to integrate");
+                problemTask.actual_total += problemTask.actual_total/10; //add a 10% overhead
+                console.log(problemTask.actual_total);
+                break;
+
+            case 2:
+                console.log("Module failed System tests");
+                problemTask.actual_total += problemTask.actual_total/15;
+                console.log(problemTask.actual_total);
+                break;
+
+            case 3:
+                console.log("Module deployment failed");
+                problemTask.actual_total += problemTask.actual_total/5;
+                console.log(problemTask.actual_total);
+                break;
+
+            default:
+                console.log("What's yer prob");
+        }
     }
     //do something to site with result
 }
