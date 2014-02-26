@@ -44,6 +44,12 @@ function problemSim(gs)
     var failC = fail*PROBLEM_CONSTANT;
 
     console.log(failC);
+    var failure_seed = Math.random();
+    if(failure_seed < failC)
+    {
+        console.log("A problem has been encountered in the "+ site + " office.");
+        gs.sites[seed].problems++;
+    }
     //do something to site with result
 }
 

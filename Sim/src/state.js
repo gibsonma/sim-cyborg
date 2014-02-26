@@ -9,7 +9,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
-var PROBLEM_CONSTANT = 1; //constant value for problem simulator, used to tweak difficulty
+var PROBLEM_CONSTANT = 0.4; //constant value for problem simulator, used to tweak difficulty
 
 function GameState(setting)
 {
@@ -119,6 +119,7 @@ function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.effort = effort; // home much gets completed each turn
     this.working_on = []; //List of tasks
     this.development_type = dev;
+    this.problems = 0;
 }
 
 function Culture(){}
