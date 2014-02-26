@@ -99,6 +99,7 @@ function GameState(setting)
     this.temporal_distances = {"Shanghai":3, "Poland":1, "New York":2, "Bangalore":2, "Dublin":0};
     this.cultural_distances = {"Shanghai":3, "Poland":2, "New York":2, "Bangalore":3, "Dublin":0};
     this.current_time = 0;
+	this.days_passed = 0;
     this.problems = [];
     this.revenue = 10000; // Amount made per release (see: this.days_per_release)
     this.capital = 50000; // Current working capital

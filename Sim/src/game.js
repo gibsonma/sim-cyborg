@@ -255,7 +255,8 @@ function updateGameStateDialog(gs) {
 }
 
 function display_game_time(){
-    $("#time").html("<h3>Current Time: "+GAME_DATA.gs.current_time+"</h3>");
+	if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.days_passed++;
+	$("#time").html("<h3>Hours Passed: "+GAME_DATA.gs.current_time+" Days Passed: "+GAME_DATA.gs.days_passed+"</h3>");
 }
 
 // Example 'module.update()' function

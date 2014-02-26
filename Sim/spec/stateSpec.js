@@ -5,6 +5,7 @@ describe("game object", function() {
     });
     it("checks if time is properly set", function() {
         expect(game.current_time).not.toBeNull();
+		expect(game.days_passed).not.toBeNull();
     });
     it("checks if tasks are properly set", function() {
         expect(game.tasks).not.toBeNull();
