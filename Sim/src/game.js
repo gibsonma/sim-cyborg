@@ -265,7 +265,7 @@ function report(gs){
     this.actual_revenue = Math.round(get_total_revenue());
     this.expected_time = scheduleCalculator(gs)/gs.developer_effort;
     var expected_months = this.expected_time/24/gs.days_per_release;
-    this.final_score = Math.round(gs.capital + (expected_months-month)*gs.revenue));
+    this.final_score = Math.round(gs.capital + (expected_months-month)*gs.revenue);
 }
 
 function get_total_expenditure(){ // work out the amount of expenditure based on financial log
