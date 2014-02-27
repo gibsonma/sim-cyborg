@@ -11,6 +11,12 @@ var GAME_DATA = {};
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
 var PROBLEM_CONSTANT = 0.4; //constant value for problem simulator, used to tweak difficulty
 
+//Timezones - dictate when sites work. First index is start of work day, second index is end
+var TIMEZONE_EUROPE = [9,17]
+var TIMEZONE_AMERICA = [2,10]
+var TIMEZONE_ASIA = [18,2]
+var TIMEZONE_EASTERN_EUROPE = [10,18]
+
 function GameState(setting)
 {
     var site;
@@ -21,9 +27,9 @@ function GameState(setting)
     switch(setting)
     {
         case 1:
-            site = new Site("New York", (121,43), new Culture(), 18, 5, "Agile");
-            site2 = new Site("Shanghai", (43,43), new Culture(), 28, 7, "Agile");
-            site3 = new Site("Dublin", (111,18), new Culture(), 8, 6, "Agile");
+            site = new Site("New York", (121,43), new Culture(), 18, 5, "Agile", TIMEZONE_AMERICA);
+            site2 = new Site("Shanghai", (43,43), new Culture(), 28, 7, "Agile", TIMEZONE_ASIA);
+            site3 = new Site("Dublin", (111,18), new Culture(), 8, 6, "Agile", TIMEZONE_EUROPE);
             this.sites = [site, site2, site3];
             this.home_site = site3;
             main_module = new Module("write backend", [new Task("write model",3000), new Task("write view", 2500), new Task("write controller", 3500)]);
@@ -41,8 +47,8 @@ function GameState(setting)
             break;
 
         case 2:
-            site = new Site("Dublin", (111,18), new Culture(), 2, 10, "Waterfall");
-            site2 = new Site("Poland", (53,53), new Culture(), 18, 5, "Waterfall");
+            site = new Site("Dublin", (111,18), new Culture(), 2, 10, "Waterfall", TIMEZONE_EUROPE);
+            site2 = new Site("Poland", (53,53), new Culture(), 18, 5, "Waterfall", TIMEZONE_EASTERN_EUROPE);
             this.sites = [site, site2];
             this.home_site = site;
             main_module = new Module("write backend", [new Task("write model",4000), new Task("write view", 1500), new Task("write controller", 5000)]);
@@ -59,9 +65,9 @@ function GameState(setting)
             break;
 
         case 3:
-            site = new Site("Dublin", (111,18), new Culture(), 25, 1, "Agile");
-            site2 = new Site("San Francisco", (43,43), new Culture(), 18, 5, "Agile");
-            site3 = new Site("Bangalore", (90,70), new Culture(), 8, 6, "Agile");
+            site = new Site("Dublin", (111,18), new Culture(), 25, 1, "Agile", TIMEZONE_EUROPE);
+            site2 = new Site("San Francisco", (43,43), new Culture(), 18, 5, "Agile", TIMEZONE_AMERICA);
+            site3 = new Site("Bangalore", (90,70), new Culture(), 8, 6, "Agile", TIMEZONE_ASIA);
             this.sites = [site, site2, site3];
             this.home_site = site;
             main_module = new Module("write backend", [new Task("write model",150), new Task("write view", 350), new Task("write controller", 100)]);
@@ -78,7 +84,7 @@ function GameState(setting)
             break;
 
         default:
-            site = new Site("Default", (0,0), new Culture(), 5, 2, "Agile");
+            site = new Site("Default", (0,0), new Culture(), 5, 2, "Agile", TIMEZONE_EUROPE);
             this.sites = [site];
             this.home_site = site;
             main_module = new Module("write backend", [new Task("write model",100), new Task("write view", 350), new Task("write controller", 200)]);
@@ -99,7 +105,7 @@ function GameState(setting)
     this.temporal_distances = {"Shanghai":3, "Poland":1, "New York":2, "Bangalore":2, "Dublin":0};
     this.cultural_distances = {"Shanghai":3, "Poland":2, "New York":2, "Bangalore":3, "Dublin":0};
     this.current_time = 0;
-	this.days_passed = 0;
+	this.time = {"Current Hour":0, "Days Passed":0}
     this.problems = [];
     this.revenue = 10000; // Amount made per release (see: this.days_per_release)
     this.capital = 50000; // Current working capital
@@ -111,7 +117,7 @@ function GameState(setting)
 }
 
 
-function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
+function Site(name, coordinates, culture_modifier, num_staff, effort, dev, timezone){
     this.name = name;
     this.coordinates = coordinates;
     this.culture = culture_modifier; //obj
@@ -120,6 +126,7 @@ function Site(name, coordinates, culture_modifier, num_staff, effort, dev){
     this.working_on = []; //List of tasks
     this.development_type = dev;
     this.problems = 0;
+	this.timezone = timezone;
 }
 
 function Culture(){}

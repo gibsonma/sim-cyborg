@@ -210,6 +210,7 @@ function number_assigned_workers(){
 
 function incrementTime(){
     GAME_DATA.gs.current_time += 1;
+	GAME_DATA.gs.time["Current Hour"]++;
 }
 
 function check_if_completed(gs) {
@@ -292,10 +293,20 @@ function updateGameStateDialog(gs) {
 }
 
 function display_game_time(){
-	if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.days_passed++;
-	$("#time").html("<h3>Hours Passed: "+GAME_DATA.gs.current_time+" Days Passed: "+GAME_DATA.gs.days_passed+"</h3>");
+	if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.time["Days Passed"]++;
+	if(GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
+	$("#time").html("<h3>Hours Passed: "+GAME_DATA.gs.current_time+" Days Passed: "+GAME_DATA.gs.time["Days Passed"]+ " Current Time "+GAME_DATA.gs.time["Current Hour"]+":00"+"</h3>");
 }
 
+//Function which takes a site and determines if it should be working based on the timezone it is in
+function should_be_working(site)
+{
+	if(site.timezone[0] >= GAME_DATA.gs.time["Current Hour"] && site.timezone[1] <= GAME_DATA.gs.time["Current Hour"])
+	{
+			return false;
+	}
+	return true;
+}
 // Example 'module.update()' function
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
@@ -303,6 +314,7 @@ function update(gs)
     problemSimulator(gs.sites, gs.modules);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
+		
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
             for (var k=0; k < module.tasks.length; k++){

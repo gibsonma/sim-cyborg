@@ -28,6 +28,11 @@ describe("game object", function() {
 	it("checks if home site is set", function() {
 		expect(game.home_site).not.toBeNull();
 	});
+	it("checks if a timezone has been assigned to each site", function() {
+		expect(game.sites[0].timezone).toEqual(TIMEZONE_AMERICA);
+		expect(game.sites[1].timezone).toEqual(TIMEZONE_ASIA);
+		expect(game.sites[2].timezone).toEqual(TIMEZONE_EUROPE);
+	});
 
 });
 

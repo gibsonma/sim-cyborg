@@ -95,3 +95,15 @@ describe("Update game state", function (){
     });
 });
 
+describe("Sites working during their timezone", function()
+{
+	var gs = new GameState(1);
+	gs.time["Current Hour"] = 10;
+	it("checks to see if a site is working when it is supposed to", function()
+	{
+		expect(should_be_working(gs.sites[0])).toBeTruthy();
+		expect(should_be_working(gs.sites[1])).toBeFalsy();
+		expect(should_be_working(gs.sites[2])).toBeTruthy();
+	});
+});
+
