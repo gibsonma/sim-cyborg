@@ -271,6 +271,17 @@ function get_total_expenditure(){ // work out the amount of expenditure based on
     return expenses;
 }
 
+function get_total_revenue(){
+    var log = GAME_DATA.gs.financial_log;
+    if (log.length == 0) return 0;
+    var income = 0;
+    for (var i=0; i< log.length; i++){
+        var amount = log[i].amount;
+        if (amount > 0) income += Math.abs(amount);
+    }   
+    return income;
+}
+
 function new_transaction(amount){
     GAME_DATA.gs.capital = GAME_DATA.gs.capital + amount;
     GAME_DATA.gs.financial_log.push({
