@@ -1,7 +1,7 @@
 {{#state.sites:i}}
 <div class="site_tile">
 	<p style="color: {{ statuscolor(working_on) }}">{{name}} : {{ statuscolor(working_on) }} </p>
-	<p>Complete: {{working_on[0].tasks[0].completed}}</p>
+	<p>Complete: {{Math.round(working_on[0].tasks[0].completed)}}</p>
 	<p>Total: {{working_on[0].tasks[0].total}}</p>
 	<p>Actual Total: {{working_on[0].tasks[0].actual_total}}</p>	
 </div>

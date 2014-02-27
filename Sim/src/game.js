@@ -50,7 +50,7 @@ function problemSim(gs)
         console.log("A problem has been encountered in the "+ site + " office.");
         gs.sites[seed].problems++;
 
-        var problemSeed = Math.floor(Math.random() * 3)+1 //choose one of 3 problems
+        var problemSeed = Math.floor(Math.random() * 3)+1; //choose one of 3 problems
         var workingOnSeed = Math.floor(Math.random() * gs.sites[seed].working_on.length); //choose one module being worked on
         var problemSite = gs.sites[seed];
         var problemModule = problemSite.working_on[workingOnSeed];
@@ -209,8 +209,8 @@ function number_assigned_workers(){
 
 
 function incrementTime(){
-    GAME_DATA.gs.current_time += 1;
-	GAME_DATA.gs.time["Current Hour"]++;
+    GAME_DATA.gs.current_time ++;
+    GAME_DATA.gs.time["Current Hour"]++;
 }
 
 function check_if_completed(gs) {
@@ -238,14 +238,14 @@ function display_final_score(gs){
     html = html + "<p>You started the game with: $" + gs.starting_capital + "</p>";
     html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
     html = html + "<p>You have " + number_assigned_workers() + " workers</p>";
-    html = html + "<br>"
-        html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(gs)/number_assigned_workers()) + " hours</p>";
+    html = html + "<br>";
+    html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(gs)/number_assigned_workers()) + " hours</p>";
     html = html + "<p>Actual game time: " + gs.current_time + " hours</p>";
-    html = html + "<br>"
-        html = html + "<p>Expected expenditure: $" + Math.round(scheduleCalculator(gs)*gs.developer_rate) + "</p>";
+    html = html + "<br>";
+    html = html + "<p>Expected expenditure: $" + Math.round(scheduleCalculator(gs)*gs.developer_rate) + "</p>";
     html = html + "<p>Actual expenditure: $" + Math.round(get_total_expenditure()) + "</p>";
-    html = html + "<br>"
-        GAME_DATA.state_dialog.html(html);
+    html = html + "<br>";
+    GAME_DATA.state_dialog.html(html);
 }
 
 function get_total_expenditure(){ // work out the amount of expenditure based on financial log
@@ -254,9 +254,30 @@ function get_total_expenditure(){ // work out the amount of expenditure based on
     var expenses = 0;
     for (var i=0; i< log.length; i++){
         var amount = log[i].amount;
-        if (amount < 0) expenses = expenses + Math.abs(amount);
+        if (amount < 0) expenses += Math.abs(amount);
     }
     return expenses;
+}
+
+function get_total_revenue(){
+    var log = GAME_DATA.gs.financial_log;
+    if (log.length == 0) return 0;
+    var income = 0;
+    for (var i=0; i< log.length; i++){
+        var amount = log[i].amount;
+        if (amount > 0) income += Math.abs(amount);
+    }
+    return income;
+}
+
+function report(gs){
+    this.expected_effort = Math.round(scheduleCalculator(gs));
+    this.actual_effort = Math.round(gs.current_time/24*gs.developer_effort*number_assigned_workers());
+    this.expected_budget = Math.round(scheduleCalculator(gs)/gs.developer_effort*number_assigned_workers() * 1.24); // see email for explanation
+    this.actual_budget = get_total_expenditure();
+    var month = Math.round(current_time/24/gs.days_per_release);
+    this.expected_revenue = Math.round(gs.revenue*month);
+    this.actual_revenue = get_total_revenue();
 }
 
 function new_transaction(amount){
@@ -289,23 +310,23 @@ function updateGameStateDialog(gs) {
     if (tileView) {
         tileView.update('state');    
     }
-    
+
 }
 
 function display_game_time(){
-	if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.time["Days Passed"]++;
-	if(GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
-	$("#time").html("<h3>Hours Passed: "+GAME_DATA.gs.current_time+" Days Passed: "+GAME_DATA.gs.time["Days Passed"]+ " Current Time "+GAME_DATA.gs.time["Current Hour"]+":00"+"</h3>");
+    if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.time["Days Passed"]++;
+    if(GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
+    $("#time").html("<h3>Hours Passed: "+GAME_DATA.gs.current_time+" Days Passed: "+GAME_DATA.gs.time["Days Passed"]+ " Current Time "+GAME_DATA.gs.time["Current Hour"]+":00"+"</h3>");
 }
 
 //Function which takes a site and determines if it should be working based on the timezone it is in
 function should_be_working(site)
 {
-	if(site.timezone[0] >= GAME_DATA.gs.time["Current Hour"] && site.timezone[1] <= GAME_DATA.gs.time["Current Hour"])
-	{
-			return false;
-	}
-	return true;
+    if(site.timezone[0] >= GAME_DATA.gs.time["Current Hour"] && site.timezone[1] <= GAME_DATA.gs.time["Current Hour"])
+    {
+        return false;
+    }
+    return true;
 }
 // Example 'module.update()' function
 // Having each module implement its own update() allows for modular behaviour
@@ -314,7 +335,7 @@ function update(gs)
     problemSimulator(gs.sites, gs.modules);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-		
+
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
             for (var k=0; k < module.tasks.length; k++){

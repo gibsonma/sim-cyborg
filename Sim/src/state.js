@@ -112,8 +112,9 @@ function GameState(setting)
     this.starting_capital = this.capital;
     this.financial_log = []; //log of finances to type for graphing
     this.days_per_release = 30; 
+    this.deveoper_effort = 4; //average developer effort per day
     this.developer_rate = 30; // how much per dev per hour
-    this.developer_working_hours = 9; // how many hours worked per day
+    this.developer_working_hours = 9; // how many hours worked per dayA
 }
 
 
@@ -122,7 +123,6 @@ function Site(name, coordinates, culture_modifier, num_staff, effort, dev, timez
     this.coordinates = coordinates;
     this.culture = culture_modifier; //obj
     this.num_staff = num_staff;
-    this.effort = effort; // home much gets completed each turn
     this.working_on = []; //List of tasks
     this.development_type = dev;
     this.problems = 0;
@@ -148,13 +148,12 @@ function Task(name, total){
 function vary(total){
     var seed = Math.random();
     var actual_total = total;
-    if(seed > 0.50 && seed < 0.75){
-        actual_total += total/4;
+    if(seed > 0.50 ){
+        actual_total += Math.round(seed*total/4);
     }
-    if(seed > 0.75){
-        actual_total -= total/4;
+    else{
+        actual_total -= Math.round(seed*total/4);
     }
-
     return actual_total;
-
 }
+
