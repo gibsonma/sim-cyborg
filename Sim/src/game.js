@@ -174,7 +174,6 @@ function simpleTick(ticker)
 function daily_transactions(){
     deduct_daily_expenses();
     add_daily_revenue();
-
 }
 
 function deduct_daily_expenses(){
@@ -267,20 +266,9 @@ function get_total_expenditure(){ // work out the amount of expenditure based on
     var expenses = 0;
     for (var i=0; i< log.length; i++){
         var amount = log[i].amount;
-        if (amount < 0) expenses += Math.abs(amount);
+        if (amount < 0) expenses = expenses + Math.abs(amount);
     }
     return expenses;
-}
-
-function get_total_revenue(){
-    var log = GAME_DATA.gs.financial_log;
-    if (log.length == 0) return 0;
-    var income = 0;
-    for (var i=0; i< log.length; i++){
-        var amount = log[i].amount;
-        if (amount > 0) income += Math.abs(amount);
-    }
-    return income;
 }
 
 function new_transaction(amount){
@@ -318,7 +306,7 @@ function updateGameStateDialog(gs) {
 
 function display_game_time(){
     if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.time["Days Passed"]++;
-    $("#time").html("<h3>Hours Passed: "+GAME_DATA.gs.current_time+" Days Passed: "+GAME_DATA.gs.time["Days Passed"]+ " Current Time "+GAME_DATA.gs.time["Current Hour"]+":00"+"</h3>");
+    $("#time").html("<h3>Days Passed: "+GAME_DATA.gs.time["Days Passed"]+ " Current Time "+GAME_DATA.gs.time["Current Hour"]+":00"+"</h3>");
 }
 
 //Function which takes a site and determines if it should be working based on the timezone it is in
