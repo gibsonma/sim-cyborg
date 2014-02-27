@@ -211,7 +211,6 @@ function number_assigned_workers(){
     return total_assigned;
 }
 
-
 function incrementTime(){
     GAME_DATA.gs.current_time ++;
     GAME_DATA.gs.time["Current Hour"]++;
@@ -240,7 +239,8 @@ function check_if_completed(gs) {
 
 function display_final_score(gs){
     var stats = new report(gs);
-    var html = "<h2>FINAL SCORE:</h2>";
+    var html = "<h2>End of Game Report</h2>";
+    html += "<h3>Final score: " + Math.round(stats.final_score) +"</p>";
     html += "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
     html += "<p>You started the game with: $" + gs.starting_capital + "</p>";
     html += "<p>You have " + number_assigned_workers() + " workers</p>";
@@ -263,6 +263,9 @@ function report(gs){
     var month = gs.current_time/24/gs.days_per_release;
     this.expected_revenue = Math.round(gs.revenue*month);
     this.actual_revenue = Math.round(get_total_revenue());
+    this.expected_time = scheduleCalculator(gs)/gs.developer_effort;
+    var expected_months = this.expected_time/24/gs.days_per_release;
+    this.final_score = Math.round(gs.capital + (expected_months-month)*gs.revenue));
 }
 
 function get_total_expenditure(){ // work out the amount of expenditure based on financial log
