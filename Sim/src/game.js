@@ -19,6 +19,10 @@ function list_sites_as_options() {
 
 function scheduleCalculator(gs)
 {  
+    return sum_tasks(gs)/2;
+}
+
+function sum_tasks(gs){
     var listOfModules = gs.modules;
     var sumTasks = 0;
     for(var i = 0; i < listOfModules.length; i++){
@@ -28,8 +32,9 @@ function scheduleCalculator(gs)
             sumTasks += modTasks[j].total;
         }
     }
-    return sumTasks/2;
+    return sumTasks;
 }
+
 function problemSim(gs)
 {
     var numSites = gs.sites.length;
@@ -253,7 +258,7 @@ function display_final_score(gs){
 function report(gs){
     this.expected_effort = Math.round(scheduleCalculator(gs));
     this.actual_effort = Math.round(gs.current_time/24*gs.developer_effort*number_assigned_workers());
-    this.expected_expenditure = Math.round(scheduleCalculator(gs)/gs.developer_effort*number_assigned_workers() * 1.24); // see email for explanation
+    this.expected_expenditure = Math.round(sum_tasks(gs)/gs.developer_effort*number_assigned_workers() * 1.24); // see email for explanation
     this.actual_expenditure = get_total_expenditure();
     var month = gs.current_time/24/gs.days_per_release;
     this.expected_revenue = Math.round(gs.revenue*month);
