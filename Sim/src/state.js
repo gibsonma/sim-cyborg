@@ -74,7 +74,7 @@ function GameState(setting)
             main_module.tasks[0].assigned = 10; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 10;
             main_module.tasks[2].assigned = 5;
-            second_module = new Module("design Frontend", [new Task("create Sprites",100), new Task("link with backend", 320), new Task("Choose Font", 50)]);
+            second_module = new Module("design Frontend", [new Task("create Sprites",100), new Task("link with backend", 120), new Task("Choose Font", 50)]);
             second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 2;
             second_module.tasks[2].assigned = 6; 
@@ -112,7 +112,7 @@ function GameState(setting)
     this.starting_capital = this.capital;
     this.financial_log = []; //log of finances to type for graphing
     this.days_per_release = 30; 
-    this.deveoper_effort = 4; //average developer effort per day
+    this.developer_effort = 4; //average developer effort per day
     this.developer_rate = 30; // how much per dev per hour
     this.developer_working_hours = 9; // how many hours worked per dayA
 }

@@ -211,6 +211,7 @@ function number_assigned_workers(){
 function incrementTime(){
     GAME_DATA.gs.current_time ++;
     GAME_DATA.gs.time["Current Hour"]++;
+    if (GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
 }
 
 function check_if_completed(gs) {
@@ -234,18 +235,30 @@ function check_if_completed(gs) {
 }
 
 function display_final_score(gs){
+    var stats = new report(gs);
     var html = "<h2>FINAL SCORE:</h2>";
-    html = html + "<p>You started the game with: $" + gs.starting_capital + "</p>";
-    html = html + "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
-    html = html + "<p>You have " + number_assigned_workers() + " workers</p>";
-    html = html + "<br>";
-    html = html + "<p>Expected game time: " + Math.round(scheduleCalculator(gs)/number_assigned_workers()) + " hours</p>";
-    html = html + "<p>Actual game time: " + gs.current_time + " hours</p>";
-    html = html + "<br>";
-    html = html + "<p>Expected expenditure: $" + Math.round(scheduleCalculator(gs)*gs.developer_rate) + "</p>";
-    html = html + "<p>Actual expenditure: $" + Math.round(get_total_expenditure()) + "</p>";
-    html = html + "<br>";
+    html += "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
+    html += "<p>You started the game with: $" + gs.starting_capital + "</p>";
+    html += "<p>You have " + number_assigned_workers() + " workers</p>";
+    html += "<br>";
+    html += "<p>Expected effort: " + stats.expected_effort+"</p>";
+    html += "<p>Actual effort: " + stats.actual_effort+"</p>";
+    html += "<p>Expected expenditure: " + stats.expected_expenditure+"</p>";
+    html += "<p>Actual expenditure: " + stats.actual_expenditure+"</p>";
+    html += "<p>Expected revenue: " + stats.expected_revenue+"</p>";
+    html += "<p>Actual revenue: " + stats.actual_revenue+"</p>";
+    html += "<br>";
     GAME_DATA.state_dialog.html(html);
+}
+
+function report(gs){
+    this.expected_effort = Math.round(scheduleCalculator(gs));
+    this.actual_effort = Math.round(gs.current_time/24*gs.developer_effort*number_assigned_workers());
+    this.expected_expenditure = Math.round(scheduleCalculator(gs)/gs.developer_effort*number_assigned_workers() * 1.24); // see email for explanation
+    this.actual_expenditure = get_total_expenditure();
+    var month = gs.current_time/24/gs.days_per_release;
+    this.expected_revenue = Math.round(gs.revenue*month);
+    this.actual_revenue = Math.round(get_total_revenue());
 }
 
 function get_total_expenditure(){ // work out the amount of expenditure based on financial log
@@ -268,16 +281,6 @@ function get_total_revenue(){
         if (amount > 0) income += Math.abs(amount);
     }
     return income;
-}
-
-function report(gs){
-    this.expected_effort = Math.round(scheduleCalculator(gs));
-    this.actual_effort = Math.round(gs.current_time/24*gs.developer_effort*number_assigned_workers());
-    this.expected_budget = Math.round(scheduleCalculator(gs)/gs.developer_effort*number_assigned_workers() * 1.24); // see email for explanation
-    this.actual_budget = get_total_expenditure();
-    var month = Math.round(current_time/24/gs.days_per_release);
-    this.expected_revenue = Math.round(gs.revenue*month);
-    this.actual_revenue = get_total_revenue();
 }
 
 function new_transaction(amount){
@@ -315,7 +318,6 @@ function updateGameStateDialog(gs) {
 
 function display_game_time(){
     if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.time["Days Passed"]++;
-    if(GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
     $("#time").html("<h3>Hours Passed: "+GAME_DATA.gs.current_time+" Days Passed: "+GAME_DATA.gs.time["Days Passed"]+ " Current Time "+GAME_DATA.gs.time["Current Hour"]+":00"+"</h3>");
 }
 
@@ -342,11 +344,11 @@ function update(gs)
                 var task = module.tasks[k];
                 switch (site.development_type) {
                     case "Waterfall":
-                        task.completed = task.completed + ((task.assigned * site.effort * 1)/TICKS_PER_UNIT_TIME);
+                        task.completed += ((task.assigned * 1)/TICKS_PER_UNIT_TIME);
                         if(task.completed > task.actual_total) task.completed = task.actual_total;
                         break;
                     case "Agile":
-                        task.completed = task.completed + ((task.assigned * site.effort * 1.5)/TICKS_PER_UNIT_TIME);
+                        task.completed += ((task.assigned * 1.5)/TICKS_PER_UNIT_TIME);
                         if(task.completed > task.actual_total) task.completed = task.actual_total;
                         break;
                     default:
