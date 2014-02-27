@@ -12,10 +12,10 @@ var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if
 var PROBLEM_CONSTANT = 0.4; //constant value for problem simulator, used to tweak difficulty
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
-var TIMEZONE_EUROPE = [9,17]
-var TIMEZONE_AMERICA = [2,10]
-var TIMEZONE_ASIA = [18,2]
-var TIMEZONE_EASTERN_EUROPE = [10,18]
+var TIMEZONE_EUROPE = [9,17];
+var TIMEZONE_AMERICA = [2,10];
+var TIMEZONE_ASIA = [18,2];
+var TIMEZONE_EASTERN_EUROPE = [10,18];
 
 function GameState(setting)
 {
@@ -32,11 +32,11 @@ function GameState(setting)
             site3 = new Site("Dublin", (111,18), new Culture(), 8, 6, "Agile", TIMEZONE_EUROPE);
             this.sites = [site, site2, site3];
             this.home_site = site3;
-            main_module = new Module("write backend", [new Task("write model",3000), new Task("write view", 2500), new Task("write controller", 3500)]);
+            main_module = new Module("Backend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
             main_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 5;
             main_module.tasks[2].assigned = 3;  
-            second_module = new Module("design Frontend", [new Task("create Sprites",3000), new Task("link with backend", 2500), new Task("Choose Font", 3500)]);
+            second_module = new Module("Frontend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
             second_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 1;
             second_module.tasks[2].assigned = 2; 
@@ -51,11 +51,11 @@ function GameState(setting)
             site2 = new Site("Poland", (53,53), new Culture(), 18, 5, "Waterfall", TIMEZONE_EASTERN_EUROPE);
             this.sites = [site, site2];
             this.home_site = site;
-            main_module = new Module("write backend", [new Task("write model",4000), new Task("write view", 1500), new Task("write controller", 5000)]);
+            main_module = new Module("Backend", [new Task("Design",4000), new Task("Implement", 1500), new Task("Test", 5000)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 1;
             main_module.tasks[2].assigned = 1;
-            second_module = new Module("design Frontend", [new Task("create Sprites",4000), new Task("link with backend", 2500), new Task("Choose Font", 5500)]);
+            second_module = new Module("Frontend", [new Task("Design",4000), new Task("Implement", 2500), new Task("Test", 5500)]);
             second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 2;
             second_module.tasks[2].assigned = 3; 
@@ -70,11 +70,11 @@ function GameState(setting)
             site3 = new Site("Bangalore", (90,70), new Culture(), 8, 6, "Agile", TIMEZONE_ASIA);
             this.sites = [site, site2, site3];
             this.home_site = site;
-            main_module = new Module("write backend", [new Task("write model",150), new Task("write view", 350), new Task("write controller", 100)]);
+            main_module = new Module("Backend", [new Task("Design",150), new Task("Implement", 350), new Task("Test", 100)]);
             main_module.tasks[0].assigned = 10; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 10;
             main_module.tasks[2].assigned = 5;
-            second_module = new Module("design Frontend", [new Task("create Sprites",100), new Task("link with backend", 120), new Task("Choose Font", 50)]);
+            second_module = new Module("Frontend", [new Task("Design",100), new Task("Implement", 120), new Task("Test", 50)]);
             second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 2;
             second_module.tasks[2].assigned = 6; 
@@ -87,11 +87,11 @@ function GameState(setting)
             site = new Site("Default", (0,0), new Culture(), 5, 2, "Agile", TIMEZONE_EUROPE);
             this.sites = [site];
             this.home_site = site;
-            main_module = new Module("write backend", [new Task("write model",100), new Task("write view", 350), new Task("write controller", 200)]);
+            main_module = new Module("Backend", [new Task("Design",100), new Task("Implement", 350), new Task("Test", 200)]);
             main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 2;
             main_module.tasks[2].assigned = 1;
-            second_module = new Module("design Frontend", [new Task("create Sprites",250), new Task("link with backend", 100), new Task("Choose Font", 200)]);
+            second_module = new Module("Frontend", [new Task("Design",250), new Task("Implement", 100), new Task("Test", 200)]);
             second_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 3;
             second_module.tasks[2].assigned = 1; 
