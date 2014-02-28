@@ -71,15 +71,18 @@ describe("Update game state", function (){
         for (var i=0; i < updatedGame.sites.length; i++){
             var siteUpdated = updatedGame.sites[i];
             var siteOld = initGame.sites[i];
-            for (var j=0; j < siteUpdated.working_on.length; j++){
-                var moduleUpdated = siteUpdated.working_on[j];
-                var moduleOld = siteOld.working_on[j];
-                for (var k=0; k < moduleUpdated.tasks.length; k++){
-                    var taskUpdated = moduleUpdated.tasks[k];
-                    var taskOld = moduleOld.tasks[k];
-                    expect(taskOld.completed).toBeLessThan(taskUpdated.completed);
-                }
-            }
+			if(should_be_working(siteOld, initGame) && should_be_working(siteUpdated, updatedGame))
+			{
+				for (var j=0; j < siteUpdated.working_on.length; j++){
+					var moduleUpdated = siteUpdated.working_on[j];
+					var moduleOld = siteOld.working_on[j];
+					for (var k=0; k < moduleUpdated.tasks.length; k++){
+						var taskUpdated = moduleUpdated.tasks[k];
+						var taskOld = moduleOld.tasks[k];
+						expect(taskOld.completed).toBeLessThan(taskUpdated.completed);
+					}
+				}
+			}
         }
     });
 	
@@ -101,9 +104,17 @@ describe("Sites working during their timezone", function()
 	gs.time["Current Hour"] = 10;
 	it("checks to see if a site is working when it is supposed to", function()
 	{
-		expect(should_be_working(gs.sites[0])).toBeTruthy();
-		expect(should_be_working(gs.sites[1])).toBeFalsy();
-		expect(should_be_working(gs.sites[2])).toBeTruthy();
+		expect(should_be_working(gs.sites[0], gs)).toBeFalsy();//New York
+		expect(should_be_working(gs.sites[1], gs)).toBeFalsy();//Shanghai
+		expect(should_be_working(gs.sites[2], gs)).toBeTruthy();//Dublin
+		gs.time["Current Hour"] = 0;
+		expect(should_be_working(gs.sites[0], gs)).toBeFalsy();
+		expect(should_be_working(gs.sites[1], gs)).toBeTruthy();
+		expect(should_be_working(gs.sites[2], gs)).toBeFalsy();
+		gs.time["Current Hour"] = 9;
+		expect(should_be_working(gs.sites[0], gs)).toBeTruthy();
+		expect(should_be_working(gs.sites[1], gs)).toBeFalsy();
+		expect(should_be_working(gs.sites[2], gs)).toBeTruthy();
 	});
 });
 

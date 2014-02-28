@@ -329,40 +329,48 @@ function display_game_time(){
 }
 
 //Function which takes a site and determines if it should be working based on the timezone it is in
-function should_be_working(site)
+//It does this by getting the times that the site should be working based on its timezone and checking if the current hour is within this range
+function should_be_working(site, gs)
 {
-    if(site.timezone[0] >= GAME_DATA.gs.time["Current Hour"] && site.timezone[1] <= GAME_DATA.gs.time["Current Hour"])
-    {
-        return false;
-    }
-    return true;
+    var time = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+	var current_hour = gs.time["Current Hour"];
+	var time_range = time.slice(site.timezone[0], site.timezone[1]);//Extract timezone from time array
+	if(time_range.length < 8)//If full array not retrieved then timezone must span midnight ex(18-2)
+	{
+		time_range = time.slice(0, site.timezone[1]);//Get partial timezone from midnight
+		time_range.push(time.slice(site.timezone[0]));//Add on rest from before midnight
+	}
+	if(time_range.indexOf(current_hour) == -1)return false;//Check if current hour is within timezone
+	return true;
 }
+
 // Example 'module.update()' function
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-
-        for (var j=0; j < site.working_on.length; j++){
-            var module = site.working_on[j];
-            for (var k=0; k < module.tasks.length; k++){
-                var task = module.tasks[k];
-                switch (site.development_type) {
-                    case "Waterfall":
-                        task.completed += ((task.assigned * 1)/TICKS_PER_UNIT_TIME);
-                        if(task.completed > task.actual_total) task.completed = task.actual_total;
-                        break;
-                    case "Agile":
-                        task.completed += ((task.assigned * 1.5)/TICKS_PER_UNIT_TIME);
-                        if(task.completed > task.actual_total) task.completed = task.actual_total;
-                        break;
-                    default:
-                        console.log("What even IS this development methodology?");
-                }
-            }
-        }
+		if(should_be_working(site, gs))//Checks if site should be working based on current time and the timezone that the site is in
+		{
+			for (var j=0; j < site.working_on.length; j++){
+				var module = site.working_on[j];
+				for (var k=0; k < module.tasks.length; k++){
+					var task = module.tasks[k];
+					switch (site.development_type) {
+						case "Waterfall":
+							task.completed += ((task.assigned * 1)/TICKS_PER_UNIT_TIME);
+							if(task.completed > task.actual_total) task.completed = task.actual_total;
+							break;
+						case "Agile":
+							task.completed += ((task.assigned * 1.5)/TICKS_PER_UNIT_TIME);
+							if(task.completed > task.actual_total) task.completed = task.actual_total;
+							break;
+						default:
+							console.log("What even IS this development methodology?");
+					}
+				}
+			}
+		}
     }
 }
 
