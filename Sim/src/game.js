@@ -52,34 +52,41 @@ function problemSim(gs)
     var failure_seed = Math.random();
     if(failure_seed < failC)
     {
-        console.log("A problem has been encountered in the "+ site + " office.");
-        gs.sites[seed].problems++;
+        console.log("A problem has been encountered in the "+ site + " office.")
 
         var problemSeed = Math.floor(Math.random() * 3)+1; //choose one of 3 problems
         var workingOnSeed = Math.floor(Math.random() * gs.sites[seed].working_on.length); //choose one module being worked on
         var problemSite = gs.sites[seed];
         var problemModule = problemSite.working_on[workingOnSeed];
 
-        var taskSeed = Math.floor(Math.random() * problemModule.tasks.length);
-        var problemTask = problemModule.tasks[taskSeed]; 
+        
         switch(problemSeed)
         {
             case 1: 
+                var problemTask = problemModule.tasks[1];  //this is an implementation problem so always affects the 2nd task in a module
                 console.log("A module failed to integrate");
+                var prob = new Problem("Module failed to integrate",10);
                 problemTask.actual_total += problemTask.actual_total/10; //add a 10% overhead
                 console.log(problemTask.actual_total);
+                gs.sites[seed].problems.push(prob);
                 break;
 
             case 2:
+                var problemTask = problemModule.tasks[2]; 
                 console.log("Module failed System tests");
+                var prob = new Problem("Module failed System tests",15);
                 problemTask.actual_total += problemTask.actual_total/15;
                 console.log(problemTask.actual_total);
+                gs.sites[seed].problems.push(prob);
                 break;
 
             case 3:
+                var problemTask = problemModule.tasks[1]; 
                 console.log("Module deployment failed");
+                var prob = new Problem("Module deployment failed", 5);
                 problemTask.actual_total += problemTask.actual_total/5;
                 console.log(problemTask.actual_total);
+                gs.sites[seed].problems.push(prob);
                 break;
 
             default:

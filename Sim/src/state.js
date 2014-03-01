@@ -125,7 +125,7 @@ function Site(name, coordinates, culture_modifier, num_staff, effort, dev, timez
     this.num_staff = num_staff;
     this.working_on = []; //List of tasks
     this.development_type = dev;
-    this.problems = 0;
+    this.problems = [];
 	this.timezone = timezone;
 }
 
@@ -143,6 +143,10 @@ function Task(name, total){
     this.total = total;//Represents total effort required to complete task
     this.status = "Normal";
     this.actual_total = vary(total);
+}
+function Problem(name,impact){
+    this.impact = impact;
+    this.name = name;
 }
 
 function vary(total){
