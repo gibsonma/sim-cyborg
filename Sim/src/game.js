@@ -157,7 +157,6 @@ function GameState_to_json(gs)
     return JSON.stringify(gs);
 }
 
-// Barebones game state update loop
 function simpleTick(ticker)
 {
     // Ticker only allows for calling afunction taking just the ticker as an argument so need a getGameState() function to allow us access to the game state object.
@@ -357,27 +356,49 @@ function update(gs)
 {
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-		if(should_be_working(site, gs))//Checks if site should be working based on current time and the timezone that the site is in
-		{
-			for (var j=0; j < site.working_on.length; j++){
-				var module = site.working_on[j];
-				for (var k=0; k < module.tasks.length; k++){
-					var task = module.tasks[k];
-					switch (site.development_type) {
-						case "Waterfall":
-							task.completed += ((task.assigned * 1)/TICKS_PER_UNIT_TIME);
-							if(task.completed > task.actual_total) task.completed = task.actual_total;
-							break;
-						case "Agile":
-							task.completed += ((task.assigned * 1.5)/TICKS_PER_UNIT_TIME);
-							if(task.completed > task.actual_total) task.completed = task.actual_total;
-							break;
-						default:
-							console.log("What even IS this development methodology?");
-					}
-				}
-			}
-		}
+        if(should_be_working(site, gs)) //Checks if site should be working based on current time and the timezone that the site is in
+        {
+            /* waterfall needs to be done in stages, so each module can only go onto the next task
+             * once every other module is on the same level (has the same number of tasks done) */
+            var lowest_lifecycle = module_lifecycle_stage(site); 
+            if (lowest_lifecycle != -1){
+                for (var j=0; j < site.working_on.length; j++){
+                    var module = site.working_on[j];
+                    switch (site.development_type) {
+                        case "Waterfall":
+                            if (lowest_lifecycle < module.tasks.length){
+                                var task = module.tasks[lowest_lifecycle];
+                            //    console.log(lowest_lifecycle + ", completed: " + task.completed + " out of actual " + task.actual_total);
+                                if (task.completed < task.actual_total){
+                                    task.completed += task.assigned/TICKS_PER_UNIT_TIME;
+                                    if (task.completed > task.actual_total) task.completed = task.actual_total;
+                                }
+                            }
+                        case "Agile":
+                            for (var k=0; k < module.tasks.length; k++){
+                                var task = module.tasks[k];
+                                task.completed += task.assigned/TICKS_PER_UNIT_TIME;
+                                if(task.completed > task.actual_total) task.completed = task.actual_total;
+                            }
+                    }
+                }
+            }
+        }
     }
 }
 
+function module_lifecycle_stage(site) {
+    var lowest_cycle = -1;
+    for (var j=0; j < site.working_on.length; j++){
+        var module = site.working_on[j];
+        for (var i=0; i < module.tasks.length; i++){
+            var task = module.tasks[i];
+            if (task.completed < task.actual_total) {
+                if (i < lowest_cycle || lowest_cycle == -1) {
+                    lowest_cycle = i;
+                }
+            }
+        }
+    }
+    return lowest_cycle;
+}
