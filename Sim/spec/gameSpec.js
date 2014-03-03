@@ -1,7 +1,7 @@
 describe("setupGame", function()
 {
 	var setting = 1;
-
+	
 	it("Assigns the new game state to GAME_DATA", function()
 	{
         setupGame(sjs.Scene({w:1, h:1}), setting );
@@ -60,7 +60,8 @@ describe("chooseArray", function()
 });
 
 describe("Update game state", function (){
-    var setting = 1;
+	
+   var setting = 1;
     var initGame = new GameState(setting);
     var updatedGame = new GameState(setting);
     update(updatedGame);

@@ -72,23 +72,6 @@ function renderTileview() {
             data: {
                 state: GAME_DATA.gs,
                 statuscolor: function(m) {                    
-                    sites = GAME_DATA.gs.sites;
-					for(var i = 0; i < sites.length; i++)
-					{
-						if(sites[i].problems.length > 0)
-						{
-							var problem = sites[i].problems[0];
-							vex.dialog.buttons.YES.text ='Fix Problem';
-							vex.dialog.buttons.NO.text ='Ignore Problem';
-							vex.dialog.confirm({
-								message: ''+problem.name+' has occured in site '+sites[i].name+' what do you do?',
-								callback: function(value) {
-									if(!value)return console.log("Problem not fixed");
-									return console.log("Problem has been fixed!");
-								}
-								});
-						}
-					}
 					var averageCompletion = 0;
 					
                     for (var i = m.length - 1; i >= 0; i--) {
@@ -112,7 +95,6 @@ function renderTileview() {
             }
         });
     }
-    
 };
 
 function append_config(key, val){

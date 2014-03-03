@@ -9,7 +9,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
-var PROBLEM_CONSTANT = 0.4; //constant value for problem simulator, used to tweak difficulty
+var PROBLEM_CONSTANT = 0.02; //constant value for problem simulator, used to tweak difficulty
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
 var TIMEZONE_EUROPE = [9,17];
@@ -149,12 +149,13 @@ function Task(name, total){
     this.status = "Normal";
     this.actual_total = vary(total);
 }
-function Problem(name,impact, currentProgress, type){
+function Problem(name,impact, currentProgress, module, taskNum){
     this.impact = impact; //a percentage of productivity reduction
     this.name = name;
     this.currentProgress = currentProgress; //snapshot the progress of the task at the time of problem to allow for restoration later
     this.reduction_in_total = currentProgress/impact; //just sub this to the actual_total when resolving a problem
-    this.type = type;
+	this.module = module;//Which module has been affected
+    this.taskNum = taskNum;//Which task has experienced the problem
 }
 
 function vary(total){
