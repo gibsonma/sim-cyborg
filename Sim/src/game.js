@@ -65,7 +65,7 @@ function problemSim(gs)
             case 1: 
                 var problemTask = problemModule.tasks[1];  //this is an implementation problem so always affects the 2nd task in a module
                 console.log("A module failed to integrate");
-                var prob = new Problem("Module failed to integrate",10, problemModule.tasks[1].actual_total);
+                var prob = new Problem("Module failed to integrate",10, problemModule.tasks[1].actual_total,1);
                 problemTask.actual_total += problemTask.actual_total/10; //add a 10% overhead
                 console.log(problemTask.actual_total);
                 gs.sites[seed].problems.push(prob);
@@ -74,7 +74,7 @@ function problemSim(gs)
             case 2:
                 var problemTask = problemModule.tasks[2]; 
                 console.log("Module failed System tests");
-                var prob = new Problem("Module failed System tests",15, problemModule.tasks[2].actual_total);
+                var prob = new Problem("Module failed System tests",15, problemModule.tasks[2].actual_total,2);
                 problemTask.actual_total += problemTask.actual_total/15;
                 console.log(problemTask.actual_total);
                 gs.sites[seed].problems.push(prob);
@@ -83,7 +83,7 @@ function problemSim(gs)
             case 3:
                 var problemTask = problemModule.tasks[1]; 
                 console.log("Module deployment failed");
-                var prob = new Problem("Module deployment failed", 5, problemModule.tasks[1].actual_total);
+                var prob = new Problem("Module deployment failed", 5, problemModule.tasks[1].actual_total,1);
                 problemTask.actual_total += problemTask.actual_total/5;
                 console.log(problemTask.actual_total);
                 gs.sites[seed].problems.push(prob);

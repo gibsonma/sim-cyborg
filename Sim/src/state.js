@@ -149,11 +149,12 @@ function Task(name, total){
     this.status = "Normal";
     this.actual_total = vary(total);
 }
-function Problem(name,impact, currentProgress){
+function Problem(name,impact, currentProgress, type){
     this.impact = impact; //a percentage of productivity reduction
     this.name = name;
     this.currentProgress = currentProgress; //snapshot the progress of the task at the time of problem to allow for restoration later
     this.reduction_in_total = currentProgress/impact; //just add this to the actual_total when resolving a problem
+    this.type = type;
 }
 
 function vary(total){
