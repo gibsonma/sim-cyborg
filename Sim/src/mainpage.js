@@ -6,7 +6,7 @@ window.onload = function() {
     var game_width = window.innerWidth;
     scene = sjs.Scene({
         w: game_width,
-        h: game_height
+          h: game_height
     });
     site_images = ['img/EmptyOffice.jpeg', 'img/Office2.jpg', 'img/Office3.jpg'];
     // var exec_list = document.getElementById('exec_list');
@@ -24,7 +24,7 @@ window.onload = function() {
             $.each(data, append_config);
         });
         $('#site_select').change(function() {
-            chosen_site_index = $('#site_select').val()
+            chosen_site_index = $('#site_select').val();
             office = background.Sprite(site_images[chosen_site_index]);
             office.transformOrigin(0, 0);
             office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
@@ -71,27 +71,27 @@ function renderTileview() {
             template: TEMPLATES['tileview'],
             data: {
                 state: GAME_DATA.gs,
-                statuscolor: function(m) {                    
-					var averageCompletion = 0;
-					
-                    for (var i = m.length - 1; i >= 0; i--) {
-                        
-						var module = m[i];
-                        var moduleCompletionAvg = 0;
-                        for (var i = module.tasks.length - 1; i >= 0; i--) {
-							var task = module.tasks[i];
-                            var actual_completion = task.completed / task.actual_total;
-                            var current_completion = task.completed / task.total;
-                            var completion_ratio = current_completion / actual_completion;
-                            moduleCompletionAvg += completion_ratio;
-                        };
-                        moduleCompletionAvg = moduleCompletionAvg / module.tasks.length;
-                        averageCompletion += moduleCompletionAvg;
-                    };
-                    averageCompletion = averageCompletion / m.length;
+            statuscolor: function(m) {                    
+                var averageCompletion = 0;
 
-                    return averageCompletion.toFixed(2);
-                }
+                for (var i = m.length - 1; i >= 0; i--) {
+
+                    var module = m[i];
+                    var moduleCompletionAvg = 0;
+                    for (var i = module.tasks.length - 1; i >= 0; i--) {
+                        var task = module.tasks[i];
+                        var actual_completion = task.completed / task.actual_total;
+                        var current_completion = task.completed / task.total;
+                        var completion_ratio = current_completion / actual_completion;
+                        moduleCompletionAvg += completion_ratio;
+                    };
+                    moduleCompletionAvg = moduleCompletionAvg / module.tasks.length;
+                    averageCompletion += moduleCompletionAvg;
+                };
+                averageCompletion = averageCompletion / m.length;
+
+                return averageCompletion.toFixed(2);
+            }
             }
         });
     }

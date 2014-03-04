@@ -69,17 +69,17 @@ function GameState(setting)
             this.sites = [site, site2, site3];
             this.home_site = site;
             main_module = new Module("Backend", [new Task("Design",250), new Task("Implement", 200), new Task("Test", 100)]);
-            main_module.tasks[0].assigned = 7; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 4;
-            main_module.tasks[2].assigned = 5;
+            main_module.tasks[0].assigned = 5; // NB will need to have proper methods to change who's assigned to what
+            main_module.tasks[1].assigned = 6;
+            main_module.tasks[2].assigned = 7;
             second_module = new Module("Frontend", [new Task("Design",120), new Task("Implement", 200), new Task("Test", 50)]);
-            second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 4;
-            second_module.tasks[2].assigned = 6; 
+            second_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
+            second_module.tasks[1].assigned = 6;
+            second_module.tasks[2].assigned = 8; 
             third_module = new Module("Support System", [new Task("Design",320), new Task("Implement", 200), new Task("Test", 50)]);
-            third_module.tasks[0].assigned = 5; // NB will need to have proper methods to change who's assigned to what
-            third_module.tasks[1].assigned = 4;
-            third_module.tasks[2].assigned = 5; 
+            third_module.tasks[0].assigned = 7; // NB will need to have proper methods to change who's assigned to what
+            third_module.tasks[1].assigned = 6;
+            third_module.tasks[2].assigned = 7; 
             this.modules = [main_module, second_module];
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
@@ -103,24 +103,38 @@ function GameState(setting)
             this.sites[0].working_on.push(second_module);
             break;
     }
-
-    this.global_distances = {"Shanghai":4, "Poland":2, "New York":4, "Bangalore":4, "Dublin":0};
-    this.temporal_distances = {"Shanghai":3, "Poland":1, "New York":2, "Bangalore":2, "Dublin":0};
-    this.cultural_distances = {"Shanghai":3, "Poland":2, "New York":2, "Bangalore":3, "Dublin":0};
-    this.current_time = 0;
-	this.time = {"Current Hour":0, "Days Passed":0}
+    this.global_distances = 0;
+    this.temporal_distances = 0;
+    this.cultural_distances = 0;
+    this.revenue = 0;
+    this.starting_capital = 0;
+    this.days_per_release = 0;
+    this.developer_effort = 0;
+    this.developer_rate = 0;
+    this.developer_working_hours = 0;
+    this.waterfall_speedup_modifier = 0;
+    this.capital = 0;
     this.problems = [];
-    this.revenue = 10000; // Amount made per release (see: this.days_per_release)
-    this.capital = 50000; // Current working capital
-    this.starting_capital = this.capital;
+    this.time = {"Current Hour":0, "Days Passed":0}
+    this.current_time = 0;
     this.financial_log = []; //log of finances to type for graphing
-    this.days_per_release = 30; 
-    this.developer_effort = 4; //average developer effort per day
-    this.developer_rate = 30; // how much per dev per hour
-    this.developer_working_hours = 9; // how many hours worked per dayA
-    this.waterfall_speedup_modifier = 1.15;
 }
 
+function load_globals(gs){
+    $.getJSON('data/config_file.json', function(obj){
+        gs.global_distances = obj.global_distances;
+        gs.temporal_distances = obj.temporal_distances;
+        gs.cultural_distances = obj.cultural_distances;
+        gs.revenue = obj.revenue;
+        gs.starting_capital = obj.starting_capital;
+        gs.days_per_release = obj.days_per_release;
+        gs.developer_effort = obj.developer_effort;
+        gs.developer_rate = obj.developer_rate;
+        gs.developer_working_hours = obj.developer_working_hours;
+        gs.waterfall_speedup_modifier = obj.waterfall_speedup_modifier;
+        gs.capital = gs.starting_capital;
+    });
+}
 
 function Site(name, coordinates, culture_modifier, dev, timezone){
     this.name = name;
@@ -129,7 +143,7 @@ function Site(name, coordinates, culture_modifier, dev, timezone){
     this.working_on = []; //List of modules
     this.development_type = dev;
     this.problems = [];
-	this.timezone = timezone;
+    this.timezone = timezone;
 }
 
 function Culture(){}
@@ -152,7 +166,7 @@ function Problem(name,impact, currentProgress, module, taskNum){
     this.name = name;
     this.currentProgress = currentProgress; //snapshot the progress of the task at the time of problem to allow for restoration later
     this.reduction_in_total = currentProgress/impact; //just sub this to the actual_total when resolving a problem
-	this.module = module;//Which module has been affected
+    this.module = module;//Which module has been affected
     this.taskNum = taskNum;//Which task has experienced the problem
 }
 
