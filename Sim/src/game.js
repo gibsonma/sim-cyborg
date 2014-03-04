@@ -387,6 +387,7 @@ function should_be_working(site, gs)
         time_range.push(time.slice(site.timezone[0]));//Add on rest from before midnight
     }
     if(time_range.indexOf(current_hour) == -1) return false;//Check if current hour is within timezone
+
     return true;
 }
 

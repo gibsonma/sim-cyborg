@@ -2,7 +2,7 @@
 var DESIRED_FPS = 30;
 var MILLIS_PER_FRAME = 1000 / DESIRED_FPS;
 
-var TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), 
+var TICKS_PER_UNIT_TIME = 10;       // Assuming we don't want the game's time to update every tick (if game time == days), 
 // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
 
@@ -109,7 +109,6 @@ function GameState(setting)
             this.sites[0].working_on.push(second_module);
             break;
     }
-    site.timezone = []
     this.global_distances = 0;
     this.temporal_distances = 0;
     this.cultural_distances = 0;
