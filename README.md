@@ -5,7 +5,9 @@ A final year group project for the D-Cyborg Team
 
 To run, execute ./start_server.sh in the root directory. The main project page can then be accessed in a web browser at port 3000
 
-NB. There may be a bug on some linux installations where forever cannot find nodejs. In the short term this can be fixed by running 'nodejs server.js'
+Global variables which are not typically changed from game to game are stored in Sim/data/config_file.json. 
+
+NB. There may be a bug on some linux installations where forever cannot find nodejs. This can be worked around by running 'nodejs server.js'
 
 ###Requires:
 * node.js
