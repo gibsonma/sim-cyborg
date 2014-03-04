@@ -37,41 +37,41 @@ function sum_tasks(gs){
 
 function intervention(gs)
 {
-	sites = gs.sites;			
-	for(var i = 0; i < sites.length; i++)
-	{
-		if(sites[i].problems.length > 0)
-		{
-			var index = i;//Need to record index for use in callback
-			var problem = sites[i].problems[0];
-			GAME_DATA.ticker.pause();//Pause the game
-			vex.dialog.buttons.YES.text ='Fix Problem';
-			vex.dialog.buttons.NO.text ='Ignore Problem';
-			vex.dialog.confirm({
-				message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' +100+ ' to correct, what do you do?',
-				callback: function(value) {
-					if(!value)//If problem ignored
-					{
-						sites[index].problems.pop();//Pop the problem
-						GAME_DATA.ticker.resume();//Resume game
-						return console.log("Problem not fixed");
-					}
-					gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
-					sites[index].problems.pop();
-					GAME_DATA.ticker.resume();
-					return console.log("Problem has been fixed!");
-				}
-			});
-		}
-	}
+    sites = gs.sites;			
+    for(var i = 0; i < sites.length; i++)
+    {
+        if(sites[i].problems.length > 0)
+        {
+            var index = i;//Need to record index for use in callback
+            var problem = sites[i].problems[0];
+            GAME_DATA.ticker.pause();//Pause the game
+            vex.dialog.buttons.YES.text ='Fix Problem';
+            vex.dialog.buttons.NO.text ='Ignore Problem';
+            vex.dialog.confirm({
+                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' +100+ ' to correct, what do you do?',
+                callback: function(value) {
+                    if(!value)//If problem ignored
+            {
+                sites[index].problems.pop();//Pop the problem
+                GAME_DATA.ticker.resume();//Resume game
+                return console.log("Problem not fixed");
+            }
+            gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+            sites[index].problems.pop();
+            GAME_DATA.ticker.resume();
+            return console.log("Problem has been fixed!");
+                }
+            });
+        }
+    }
 }
 
 function deleteProblems(gs)
 {
-	for(var i = 0; i < gs.sites.length; i++)
-	{
-		gs.sites[i].problems = [];
-	}
+    for(var i = 0; i < gs.sites.length; i++)
+    {
+        gs.sites[i].problems = [];
+    }
 }
 
 function problemSim(gs)
@@ -87,18 +87,18 @@ function problemSim(gs)
     var fail = dGlobal/(1+dGlobal);
     var failC = fail*PROBLEM_CONSTANT;
 
-  //  console.log(failC);
+    //  console.log(failC);
     var failure_seed = Math.random();
     if(failure_seed < failC)
     {
         console.log("A problem has been encountered in the "+ site + " office.")
 
-        var problemSeed = Math.floor(Math.random() * 3)+1; //choose one of 3 problems
+            var problemSeed = Math.floor(Math.random() * 3)+1; //choose one of 3 problems
         var workingOnSeed = Math.floor(Math.random() * gs.sites[seed].working_on.length); //choose one module being worked on
         var problemSite = gs.sites[seed];
         var problemModule = problemSite.working_on[workingOnSeed];
 
-        
+
         switch(problemSeed)
         {
             case 1: 
@@ -378,51 +378,50 @@ function display_game_time(){
 function should_be_working(site, gs)
 {
     var time = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
-	var current_hour = gs.time["Current Hour"];
-	var time_range = time.slice(site.timezone[0], site.timezone[1]);//Extract timezone from time array
-	if(time_range.length < 8)//If full array not retrieved then timezone must span midnight ex(18-2)
-	{
-		time_range = time.slice(0, site.timezone[1]);//Get partial timezone from midnight
-		time_range.push(time.slice(site.timezone[0]));//Add on rest from before midnight
-	}
-	if(time_range.indexOf(current_hour) == -1)return false;//Check if current hour is within timezone
-	return true;
+    var current_hour = gs.time["Current Hour"];
+    var time_range = time.slice(site.timezone[0], site.timezone[1]);//Extract timezone from time array
+    if(time_range.length < 8)//If full array not retrieved then timezone must span midnight ex(18-2)
+    {
+        time_range = time.slice(0, site.timezone[1]);//Get partial timezone from midnight
+        time_range.push(time.slice(site.timezone[0]));//Add on rest from before midnight
+    }
+    if(time_range.indexOf(current_hour) == -1) return false;//Check if current hour is within timezone
+    return true;
 }
 
 // Example 'module.update()' function
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-   // intervention(gs);
-	problemSim(gs);
-	
-	for (var i=0; i < gs.sites.length; i++){
+    // intervention(gs);
+    problemSim(gs);
+
+    for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-        if(should_be_working(site, gs)) //Checks if site should be working based on current time and the timezone that the site is in
-        {
-            /* waterfall needs to be done in stages, so each module can only go onto the next task
-             * once every other module is on the same level (has the same number of tasks done) */
-            var lowest_lifecycle = module_lifecycle_stage(site); 
-            if (lowest_lifecycle != -1){
-                for (var j=0; j < site.working_on.length; j++){
-                    var module = site.working_on[j];
-                    switch (site.development_type) {
-                        case "Waterfall":
-                            if (lowest_lifecycle < module.tasks.length){
-                                var task = module.tasks[lowest_lifecycle];
-                            //    console.log(lowest_lifecycle + ", completed: " + task.completed + " out of actual " + task.actual_total);
-                                if (task.completed < task.actual_total){
-                                    task.completed += task.assigned/TICKS_PER_UNIT_TIME;
-                                    if (task.completed > task.actual_total) task.completed = task.actual_total;
-                                }
+        /* waterfall needs to be done in stages, so each module can only go onto the next task
+         * once every other module is on the same level (has the same number of tasks done) */
+        var lowest_lifecycle = module_lifecycle_stage(site); 
+        if (should_be_working(site,gs) && lowest_lifecycle != -1){
+            for (var j=0; j < site.working_on.length; j++){
+                var module = site.working_on[j];
+                switch (site.development_type) {
+                    case "Waterfall":
+                        if (lowest_lifecycle < module.tasks.length){
+                            var task = module.tasks[lowest_lifecycle];
+                            if (task.completed < task.actual_total){
+                                task.completed += task.assigned * gs.waterfall_speedup_modifier * gs.developer_effort/TICKS_PER_UNIT_TIME;
+                                if (task.completed > task.actual_total) task.completed = task.actual_total;
                             }
-                        case "Agile":
-                            for (var k=0; k < module.tasks.length; k++){
-                                var task = module.tasks[k];
-                                task.completed += task.assigned/TICKS_PER_UNIT_TIME;
-                                if(task.completed > task.actual_total) task.completed = task.actual_total;
-                            }
-                    }
+                        }
+                        break;
+                    case "Agile":
+                        console.log("Agile");
+                        for (var k=0; k < module.tasks.length; k++){
+                            var task = module.tasks[k];
+                            task.completed += task.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
+                            if(task.completed > task.actual_total) task.completed = task.actual_total;
+                        }
+                        break;
                 }
             }
         }

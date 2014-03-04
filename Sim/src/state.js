@@ -2,7 +2,7 @@
 var DESIRED_FPS = 30;
 var MILLIS_PER_FRAME = 1000 / DESIRED_FPS;
 
-var TICKS_PER_UNIT_TIME = 1;       // Assuming we don't want the game's time to update every tick (if game time == days), 
+var TICKS_PER_UNIT_TIME = 2;       // Assuming we don't want the game's time to update every tick (if game time == days), 
 // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
 
@@ -27,28 +27,26 @@ function GameState(setting)
     switch(setting)
     {
         case 1:
-            site = new Site("New York", (121,43), new Culture(), 18, 5, "Agile", TIMEZONE_AMERICA);
-            site2 = new Site("Shanghai", (43,43), new Culture(), 28, 7, "Agile", TIMEZONE_ASIA);
-            site3 = new Site("Dublin", (111,18), new Culture(), 8, 6, "Agile", TIMEZONE_EUROPE);
-            this.sites = [site, site2, site3];
-            this.home_site = site3;
+            site = new Site("New York", (121,43), new Culture(), "Agile", TIMEZONE_AMERICA);
+            site2 = new Site("Shanghai", (43,43), new Culture(), "Waterfall", TIMEZONE_ASIA);
+            this.sites = [site, site2];
+            this.home_site = site2;
             main_module = new Module("Backend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
             main_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 5;
             main_module.tasks[2].assigned = 3;  
             second_module = new Module("Frontend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
             second_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 1;
+            second_module.tasks[1].assigned = 4;
             second_module.tasks[2].assigned = 2; 
             this.modules = [main_module, second_module];
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
-            this.sites[2].working_on.push(second_module);
             break;
 
         case 2:
-            site = new Site("Dublin", (111,18), new Culture(), 2, 10, "Waterfall", TIMEZONE_EUROPE);
-            site2 = new Site("Poland", (53,53), new Culture(), 18, 5, "Waterfall", TIMEZONE_EASTERN_EUROPE);
+            site = new Site("Dublin", (111,18), new Culture(), "Waterfall", TIMEZONE_EUROPE);
+            site2 = new Site("Poland", (53,53), new Culture(), "Waterfall", TIMEZONE_EASTERN_EUROPE);
             this.sites = [site, site2];
             this.home_site = site;
             main_module = new Module("Backend", [new Task("Design",4000), new Task("Implement", 1500), new Task("Test", 5000)]);
@@ -65,22 +63,22 @@ function GameState(setting)
             break;
 
         case 3:
-            site = new Site("Dublin", (111,18), new Culture(), 25, 1, "Waterfall", TIMEZONE_EUROPE);
-            site2 = new Site("San Francisco", (43,43), new Culture(), 18, 5, "Waterfall", TIMEZONE_AMERICA);
-            site3 = new Site("Bangalore", (90,70), new Culture(), 8, 6, "Waterfall", TIMEZONE_ASIA);
+            site = new Site("Dublin", (111,18), new Culture(), "Waterfall", TIMEZONE_EUROPE);
+            site2 = new Site("San Francisco", (43,43), new Culture(), "Waterfall", TIMEZONE_AMERICA);
+            site3 = new Site("Bangalore", (90,70), new Culture(), "Waterfall", TIMEZONE_ASIA);
             this.sites = [site, site2, site3];
             this.home_site = site;
-            main_module = new Module("Backend", [new Task("Design",150), new Task("Implement", 350), new Task("Test", 100)]);
+            main_module = new Module("Backend", [new Task("Design",250), new Task("Implement", 200), new Task("Test", 100)]);
             main_module.tasks[0].assigned = 7; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 8;
+            main_module.tasks[1].assigned = 4;
             main_module.tasks[2].assigned = 5;
-            second_module = new Module("Frontend", [new Task("Design",100), new Task("Implement", 120), new Task("Test", 50)]);
+            second_module = new Module("Frontend", [new Task("Design",120), new Task("Implement", 200), new Task("Test", 50)]);
             second_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 2;
+            second_module.tasks[1].assigned = 4;
             second_module.tasks[2].assigned = 6; 
-            third_module = new Module("Support System", [new Task("Design",100), new Task("Implement", 120), new Task("Test", 50)]);
+            third_module = new Module("Support System", [new Task("Design",320), new Task("Implement", 200), new Task("Test", 50)]);
             third_module.tasks[0].assigned = 5; // NB will need to have proper methods to change who's assigned to what
-            third_module.tasks[1].assigned = 3;
+            third_module.tasks[1].assigned = 4;
             third_module.tasks[2].assigned = 5; 
             this.modules = [main_module, second_module];
             this.sites[0].working_on.push(main_module);
@@ -120,14 +118,14 @@ function GameState(setting)
     this.developer_effort = 4; //average developer effort per day
     this.developer_rate = 30; // how much per dev per hour
     this.developer_working_hours = 9; // how many hours worked per dayA
+    this.waterfall_speedup_modifier = 1.15;
 }
 
 
-function Site(name, coordinates, culture_modifier, num_staff, effort, dev, timezone){
+function Site(name, coordinates, culture_modifier, dev, timezone){
     this.name = name;
     this.coordinates = coordinates;
     this.culture = culture_modifier; //obj
-    this.num_staff = num_staff;
     this.working_on = []; //List of modules
     this.development_type = dev;
     this.problems = [];
