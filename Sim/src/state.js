@@ -2,7 +2,7 @@
 var DESIRED_FPS = 30;
 var MILLIS_PER_FRAME = 1000 / DESIRED_FPS;
 
-var TICKS_PER_UNIT_TIME = 2;       // Assuming we don't want the game's time to update every tick (if game time == days), 
+var TICKS_PER_UNIT_TIME = 30;       // Assuming we don't want the game's time to update every tick (if game time == days), 
 // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
 
@@ -29,8 +29,9 @@ function GameState(setting)
         case 1:
             site = new Site("New York", (121,43), new Culture(), "Agile", TIMEZONE_AMERICA);
             site2 = new Site("Shanghai", (43,43), new Culture(), "Waterfall", TIMEZONE_ASIA);
-            this.sites = [site, site2];
-            this.home_site = site2;
+            site3 = new Site("Dublin", (111,18), new Culture(), "Agile", TIMEZONE_EUROPE);
+            this.sites = [site, site2, site3];
+            this.home_site = site3;
             main_module = new Module("Backend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
             main_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
             main_module.tasks[1].assigned = 5;
@@ -39,9 +40,14 @@ function GameState(setting)
             second_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 4;
             second_module.tasks[2].assigned = 2; 
-            this.modules = [main_module, second_module];
+            third_module = new Module("Frontend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
+            third_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
+            third_module.tasks[1].assigned = 4;
+            third_module.tasks[2].assigned = 3; 
+            this.modules = [main_module, second_module, third_module];
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
+            this.sites[2].working_on.push(third_module);
             break;
 
         case 2:
@@ -103,6 +109,7 @@ function GameState(setting)
             this.sites[0].working_on.push(second_module);
             break;
     }
+    site.timezone = []
     this.global_distances = 0;
     this.temporal_distances = 0;
     this.cultural_distances = 0;
