@@ -395,7 +395,7 @@ function should_be_working(site, gs)
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-    // intervention(gs);
+    intervention(gs);
     problemSim(gs);
 
     for (var i=0; i < gs.sites.length; i++){

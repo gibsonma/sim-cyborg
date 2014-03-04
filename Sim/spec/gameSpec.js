@@ -1,3 +1,11 @@
+beforeEach(function()
+{
+	spyOn(vex, 'open');
+});
+afterEach(function()
+{
+	GAME_DATA.ticker.pause();
+});
 describe("setupGame", function()
 {
 	var setting = 1;
