@@ -126,6 +126,8 @@ describe("Sites working during their timezone", function()
 		expect(should_be_working(gs.sites[0], gs)).toBeTruthy();
 		expect(should_be_working(gs.sites[1], gs)).toBeFalsy();
 		expect(should_be_working(gs.sites[2], gs)).toBeTruthy();
+		gs.time["Current Hour"] = 23;
+		expect(should_be_working(gs.sites[1], gs)).toBeTruthy();//Shanghai
 	});
 });
 

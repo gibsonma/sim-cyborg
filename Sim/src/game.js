@@ -383,16 +383,16 @@ function display_game_time(){
 //It does this by getting the times that the site should be working based on its timezone and checking if the current hour is within this range
 function should_be_working(site, gs)
 {
-    var time = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
     var current_hour = gs.time["Current Hour"];
-    var time_range = time.slice(site.timezone[0], site.timezone[1]);//Extract timezone from time array
-    if(time_range.length < 8)//If full array not retrieved then timezone must span midnight ex(18-2)
+	var tmp;
+    var time_range = TIME_CLOCK.slice(site.timezone[0], site.timezone[1]);//Extract timezone from time array
+	if(time_range.length < 8)//If full array not retrieved then timezone must span midnight ex(18-2)
     {
-        time_range = time.slice(0, site.timezone[1]);//Get partial timezone from midnight
-        time_range.push(time.slice(site.timezone[0]));//Add on rest from before midnight
+        time_range = TIME_CLOCK.slice(0, site.timezone[1]);//Get partial timezone from midnight
+		tmp = TIME_CLOCK.slice(site.timezone[0]);//Get second partial from before midnight
+		time_range = time_range.concat(tmp);//Concatenate the two
     }
     if(time_range.indexOf(current_hour) == -1) return false;//Check if current hour is within timezone
-
     return true;
 }
 
@@ -409,6 +409,7 @@ function update(gs)
          * once every other module is on the same level (has the same number of tasks done) */
         var lowest_lifecycle = module_lifecycle_stage(site); 
         if (should_be_working(site,gs) && lowest_lifecycle != -1){
+		//console.log(site.name + " " + gs.time["Current Hour"]);
             for (var j=0; j < site.working_on.length; j++){
                 var module = site.working_on[j];
                 switch (site.development_type) {
