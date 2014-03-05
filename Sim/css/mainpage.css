@@ -71,6 +71,18 @@ body {
 	font-weight: bold;
 }
 
+.site_tile>.info-popup {
+	margin-top: 100px;
+}
+
+.site_tile.schedule-behind {
+	background-color: rgba(200, 202, 100, 0.4);
+}
+
+.site_tile.schedule-very-behind {
+	background-color: rgba(214, 73, 73, 0.4);
+}
+
 #main_content,#game_state_box {
     background: rgba(0, 0, 0, .8);
 }

@@ -1,0 +1,18 @@
+<div class="popupView">
+<h2>Status for {{site.name}}</h2>
+<h4>Modules + Tasks:</h4>
+<ul>
+{{#site.working_on}}
+<li>
+	<p><strong>{{name}}</strong></p>
+	<ol>
+	{{#tasks}}
+	<li>
+		<p>{{name}}: {{completed.toFixed(2)}}/{{actual_total}}</p>
+	</li>
+	{{/tasks}}
+	</ol>
+</li>
+{{/site.working_on}}
+</ul>
+</div>

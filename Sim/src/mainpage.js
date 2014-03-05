@@ -57,6 +57,9 @@ window.onload = function() {
             TEMPLATES['tileview'] = template;
             renderTileview();
         });
+        $.get('src/templates/popupView.html', function(template) {
+            TEMPLATES['popupView'] = template;
+        });
         $('#main_content,#game_state_box').toggle();
 
     });
@@ -71,31 +74,68 @@ function renderTileview() {
             template: TEMPLATES['tileview'],
             data: {
                 state: GAME_DATA.gs,
-            statuscolor: function(m) {                    
-                var averageCompletion = 0;
-
-                for (var i = m.length - 1; i >= 0; i--) {
-
-                    var module = m[i];
-                    var moduleCompletionAvg = 0;
-                    for (var i = module.tasks.length - 1; i >= 0; i--) {
-                        var task = module.tasks[i];
-                        var actual_completion = task.completed / task.actual_total;
-                        var current_completion = task.completed / task.total;
-                        var completion_ratio = current_completion / actual_completion;
-                        moduleCompletionAvg += completion_ratio;
-                    };
-                    moduleCompletionAvg = moduleCompletionAvg / module.tasks.length;
-                    averageCompletion += moduleCompletionAvg;
-                };
-                averageCompletion = averageCompletion / m.length;
-
-                return averageCompletion.toFixed(2);
+                statusClass: statusClass
             }
-            }
+        });
+        $('.site_tile').not('[data-name="' + GAME_DATA.gs.home_site.name + '"]').find('.info-popup').hide();
+        $('.site_tile>.info-popup').click(function() {
+            showHomeSitePopup();
         });
     }
 };
+
+
+function showHomeSitePopup() {
+    GAME_DATA.ticker.pause();
+    var popupView;
+    vex.open({
+        content: '<div id="info-popup"></div>',
+        afterOpen: function($vexContent) {
+            popupView = new Ractive({
+                el: 'info-popup',
+                template: TEMPLATES['popupView'],
+                data: {
+                    site: GAME_DATA.gs.home_site
+                }
+            });
+        },
+        afterClose: function() {
+            GAME_DATA.ticker.resume();
+        }
+    });
+    
+}
+
+function statusClass(m) {                    
+    var averageCompletion = 0;
+
+    for (var i = m.length - 1; i >= 0; i--) {
+        var module = m[i];
+        var moduleCompletionAvg = 0;
+        for (var i = module.tasks.length - 1; i >= 0; i--) {
+            var task = module.tasks[i];
+            if (task.completed <= 0) {
+                continue;
+            }
+            var actual_completion = task.completed / task.actual_total;
+            var expected_completion = task.completed / task.total;
+            var completion_difference = actual_completion / expected_completion;
+            moduleCompletionAvg += completion_difference;
+        };
+        moduleCompletionAvg = moduleCompletionAvg / module.tasks.length;
+        averageCompletion += moduleCompletionAvg;
+    };
+    averageCompletion = averageCompletion / m.length;
+
+    // averageCompletion of 1.0 means we are dead on target. <1.0 means behind, >1.0 we're ahead of schedule.
+    if (averageCompletion >= 1.0) {
+        return "schedule-ok";
+    } else if (averageCompletion >= 0.9) {
+        return "schedule-behind"
+    } else {
+        return "schedule-very-behind"
+    }
+}
 
 function append_config(key, val){
     if (val !== null && typeof val === "object") {

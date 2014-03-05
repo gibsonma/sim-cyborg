@@ -46,21 +46,26 @@ function intervention(gs)
             var index = i;//Need to record index for use in callback
             var problem = sites[i].problems[0];
             GAME_DATA.ticker.pause();//Pause the game
-            vex.dialog.buttons.YES.text ='Fix Problem';
-            vex.dialog.buttons.NO.text ='Ignore Problem';
             vex.dialog.confirm({
                 message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' +100+ ' to correct, what do you do?',
+                buttons: [
+                    $.extend({}, vex.dialog.buttons.YES, {
+                      text: 'Fix'
+                    }), $.extend({}, vex.dialog.buttons.NO, {
+                      text: 'Ignore'
+                    })
+                  ],
                 callback: function(value) {
                     if(!value)//If problem ignored
-            {
-                sites[index].problems.pop();//Pop the problem
-                GAME_DATA.ticker.resume();//Resume game
-                return console.log("Problem not fixed");
-            }
-            gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
-            sites[index].problems.pop();
-            GAME_DATA.ticker.resume();
-            return console.log("Problem has been fixed!");
+                    {
+                        sites[index].problems.pop();//Pop the problem
+                        GAME_DATA.ticker.resume();//Resume game
+                        return console.log("Problem not fixed");
+                    }
+                    gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+                    sites[index].problems.pop();
+                    GAME_DATA.ticker.resume();
+                    return console.log("Problem has been fixed!");
                 }
             });
         }
