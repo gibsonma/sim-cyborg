@@ -92,12 +92,17 @@ function problemSim(gs)
     var dGlobal = dTemporal + dCulture + dGeo;
 
     var fail = dGlobal/(1+dGlobal);
-    var failC = fail*PROBLEM_CONSTANT;
 
-    //  console.log(failC);
+    var probCD = gs.sites[seed].problemCooldown;
+    var failC = fail*PROBLEM_CONSTANT*probCD;
+    gs.sites[seed].problemCooldown += 0.0005;
+
+
     var failure_seed = Math.random();
+       // console.log(failC +" vs " + failure_seed);
     if(failure_seed < failC)
     {
+        gs.sites[seed].problemCooldown = 0.0025;
         console.log("A problem has been encountered in the "+ site + " office.")
 
             var problemSeed = Math.floor(Math.random() * 3)+1; //choose one of 3 problems

@@ -10,7 +10,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
-var PROBLEM_CONSTANT = 0.005; //constant value for problem simulator, used to tweak difficulty
+var PROBLEM_CONSTANT = 0.005; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
 var TIMEZONE_EUROPE = [9,17];
@@ -151,6 +151,7 @@ function Site(name, coordinates, culture_modifier, dev, timezone){
     this.development_type = dev;
     this.problems = [];
     this.timezone = timezone;
+    this.problemCooldown = 0.0025;
 }
 
 function Culture(){}
