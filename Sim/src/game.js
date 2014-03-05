@@ -47,7 +47,7 @@ function intervention(gs)
             var problem = sites[i].problems[0];
             GAME_DATA.ticker.pause();//Pause the game
             vex.dialog.confirm({
-                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' +100+ ' to correct, what do you do?',
+                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' +1000+ ' to correct, what do you do?',
                 buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
                       text: 'Fix'
@@ -63,7 +63,8 @@ function intervention(gs)
                         return console.log("Problem not fixed");
                     }
                     gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
-                    sites[index].problems.pop();
+					new_transaction(-1000);//Deduct cost of fixing problem
+					sites[index].problems.pop();
                     GAME_DATA.ticker.resume();
                     return console.log("Problem has been fixed!");
                 }
@@ -402,14 +403,12 @@ function update(gs)
 {
     intervention(gs);
     problemSim(gs);
-
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task
          * once every other module is on the same level (has the same number of tasks done) */
         var lowest_lifecycle = module_lifecycle_stage(site); 
         if (should_be_working(site,gs) && lowest_lifecycle != -1){
-		//console.log(site.name + " " + gs.time["Current Hour"]);
             for (var j=0; j < site.working_on.length; j++){
                 var module = site.working_on[j];
                 switch (site.development_type) {
