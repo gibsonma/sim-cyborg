@@ -47,7 +47,7 @@ function intervention(gs)
             var problem = sites[i].problems[0];
             GAME_DATA.ticker.pause();//Pause the game
             vex.dialog.confirm({
-                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' +1000+ ' to correct, what do you do?',
+                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' + problem.cost + ' to correct, what do you do?',
                 buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
                       text: 'Fix'
@@ -63,7 +63,8 @@ function intervention(gs)
                         return console.log("Problem not fixed");
                     }
                     gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
-					new_transaction(-1000);//Deduct cost of fixing problem
+					var cost = problem.cost;
+                    new_transaction(-cost);//Deduct cost of fixing problem
 					sites[index].problems.pop();
                     GAME_DATA.ticker.resume();
                     return console.log("Problem has been fixed!");
@@ -427,7 +428,6 @@ function update(gs)
                         }
                         break;
                     case "Agile":
-                        console.log("Agile");
                         for (var k=0; k < module.tasks.length; k++){
                             var task = module.tasks[k];
                             task.completed += task.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;

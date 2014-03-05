@@ -176,6 +176,7 @@ function Problem(name,impact, currentProgress, module, taskNum){
     this.reduction_in_total = currentProgress/impact; //just sub this to the actual_total when resolving a problem
     this.module = module;//Which module has been affected
     this.taskNum = taskNum;//Which task has experienced the problem
+    this.cost = impact*100;
 }
 
 function vary(total){
