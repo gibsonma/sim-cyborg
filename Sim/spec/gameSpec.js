@@ -1,6 +1,6 @@
 beforeEach(function()
 {
-	spyOn(vex, 'open');
+	vex.closeAll();
 });
 afterEach(function()
 {
@@ -34,36 +34,6 @@ describe("scheduleCalculator", function()
 	it("Returns a number greater than 0 for the total effort", function()
 	{
 		expect(scheduleCalculator(game)).toBeGreaterThan(0);
-	});
-});
-
-describe("problemSimulator", function()
-{
-    var setting = 1;
-    var game = new GameState(setting);
-
-    it("Calls the chooseArray helper function", function()
-    {
-        expect(chooseArray(game.sites, game.modules)).toBeDefined();
-    });
-    it("Doesn't return a value", function()
-    {
-		expect(problemSimulator(game.sites, game.modules)).not.toBeDefined();
-    });
-});
-
-describe("chooseArray", function()
-{
-    var setting = 1;
-    var game = new GameState(setting);
-
-	it("Returns a number as the index", function()
-	{
-		expect(chooseArray(game.sites, game.modules)[0]).toEqual(jasmine.any(Number));
-	});
-	it("Returns one of the arrays passed to it", function()
-	{
-		expect(chooseArray(game.sites, game.modules)[1].length).toEqual(jasmine.any(Number));
 	});
 });
 
@@ -111,7 +81,7 @@ describe("Update game state", function (){
 describe("Sites working during their timezone", function()
 {
 	var gs = new GameState(1);
-    load_globals(gs);
+	load_globals(gs);
 	gs.time["Current Hour"] = 10;
 	it("checks to see if a site is working when it is supposed to", function()
 	{
@@ -128,6 +98,31 @@ describe("Sites working during their timezone", function()
 		expect(should_be_working(gs.sites[2], gs)).toBeTruthy();
 		gs.time["Current Hour"] = 23;
 		expect(should_be_working(gs.sites[1], gs)).toBeTruthy();//Shanghai
+	});
+});
+	
+describe("Intervention Interface", function()
+{
+	var gs = new GameState(1);
+	var val = 100000;
+	load_globals(gs);
+	gs.sites[0].problems[0] = new Problem("Module failed to integrate",10, 20,0,1);
+	gs.capital = val;
+	spyOn(vex, 'open');
+	it("Always removes a problem if one is present", function()
+	{
+		expect(gs.sites[0].problems.length).toEqual(1);
+		interventionAlt(gs, 1);
+		expect(gs.sites[0].problems.length).toEqual(0);
+		gs.sites[0].problems[0] = new Problem("Module failed to integrate",10, 20,0,1);
+		interventionAlt(gs, 0);
+		expect(gs.sites[0].problems.length).toEqual(0);
+	});
+	it("Only removes the problem if it isn't fixed, nothing else", function()
+	{
+		var orig = gs.sites[0].working_on[0].tasks[1].actual_total;
+		interventionAlt(gs, 0);
+		expect(gs.sites[0].working_on[0].tasks[1].actual_total).toEqual(orig);
 	});
 });
 

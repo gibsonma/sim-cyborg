@@ -54,3 +54,8 @@ Currently this system only assigns problems to tasks, but these problems do not 
 Feature - Final Score
 
 Final Score is displayed at the end of the game.
+
+##Week3
+Feature - Intervention Interface
+
+This can be verified by running the game. Every once in a while, a dialog box will open, giving details of a problem that has occured. The player can then choose to either fix the problem, spending resources or ignore which has a negative impact on that task/module's performance. In addition, there are associated tests in gameSpec.js and the function itself, intervention(gs) is present in game.js

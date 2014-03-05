@@ -74,11 +74,32 @@ function intervention(gs)
     }
 }
 
-function deleteProblems(gs)
+//Added because vex is being really annoying, so this is called in gameSpec instead of intervention
+//It has the same functionality, but gets passed an extra parameter to tell it whether or not it
+//should fix the problem
+function interventionAlt(gs, val)
 {
-    for(var i = 0; i < gs.sites.length; i++)
+    sites = gs.sites;			
+    for(var i = 0; i < sites.length; i++)
     {
-        gs.sites[i].problems = [];
+        if(sites[i].problems.length > 0)
+        {
+			var index = i;//Need to record index for use in callback
+            var problem = sites[i].problems[0];
+            if(!val)//If problem ignored
+            {
+				sites[index].problems.pop();//Pop the problem
+				GAME_DATA.ticker.resume();//Resume game		
+				return console.log("Problem not fixed");
+            }
+			console.log("HEU" + gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
+			gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+			console.log("BYE"+ gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
+			var cost = problem.cost;
+			new_transaction(-cost);//Deduct cost of fixing problemnew_transaction(-1000);//Deduct cost of fixing problem
+			sites[index].problems.pop();
+			return console.log("Problem has been fixed!");
+        }
     }
 }
 
@@ -146,62 +167,6 @@ function problemSim(gs)
         }
     }
     //do something to site with result
-}
-
-//Problem simulator that occasionally selects a site or module to experience a problem, with probability determined by game parameters. Problems affect the status of one or more modules or tasks allocated to the site.
-function problemSimulator(listOfSites, listOfModules)
-{
-    var chosen = chooseArray(listOfSites, listOfModules);//Select a site or module [index, array]
-    var flag = false;
-    if(chosen[1] == listOfSites)
-    {
-        for(var i = 0; i < listOfSites[chosen[0]].working_on.length; i++)//Cycle through tasks
-        {
-            if(Math.random() <= PROBLEM_PROBABILITY)
-            {
-                listOfSites[chosen[0]].working_on[i].status= "Problem Encountered";//Apply problem randomly
-                flag = true;
-            }
-        }
-        if(flag == false && listOfSites[chosen[0]].working_on.length > 0)
-        {
-            var randIndex = Math.floor((Math.random()*listOfSites[chosen[0]].working_on.length));
-            listOfSites[chosen[0]].working_on[randIndex].status = "Problem Encountered";
-        }
-        //  return listOfSites;
-    }
-    else
-    {
-        for(var i = 0; i < listOfModules[chosen[0]].tasks.length; i++)
-        {
-            if(Math.random() <= PROBLEM_PROBABILITY)listOfModules[chosen[0]].tasks[i].status= "Problem Encountered";
-        }
-        if(flag == false && listOfModules[chosen[0]].tasks.length > 0)
-        {
-            var randIndex = Math.floor((Math.random()*listOfModules[chosen[0]].tasks.length));
-            listOfModules[chosen[0]].tasks[randIndex].status = "Problem Encountered";
-        }
-        //  return listOfModules;
-    }
-}
-
-//A function that takes two arrays, returns one of the arrays along with an index
-function chooseArray(sites, modules)
-{
-    var chosenIndex, chosenArray;
-    var siteIndex = Math.floor((Math.random()*sites.length));//Select item from site array
-    var moduleIndex = Math.floor((Math.random()*modules.length));//Select item from module array
-    if(Math.round(Math.random()) == 0)//Pick one to experience problem
-    {
-        chosenIndex = siteIndex;
-        chosenArray = sites;
-    }
-    else 
-    {
-        chosenIndex = moduleIndex;
-        chosenArray = modules;
-    }
-    return [chosenIndex, chosenArray];
 }
 
 function GameState_to_json(gs)
