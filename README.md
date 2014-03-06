@@ -5,9 +5,11 @@ A final year group project for the D-Cyborg Team
 
 To run, execute ./start_server.sh in the root directory. The main project page can then be accessed in a web browser at port 3000
 
-Global variables which are not typically changed from game to game are stored in Sim/data/config_file.json. 
-
 NB. There may be a bug on some linux installations where forever cannot find nodejs. This can be worked around by running 'nodejs server.js'
+
+###Config
+
+Global variables which are not typically changed from game to game are stored in Sim/data/config_file.json. 
 
 ###Requires:
 * node.js - Web server
@@ -82,6 +84,10 @@ This can be verified by running the game. Every once in a while, a dialog box wi
 
 A problem has been encountered in the New York office. game.js:128
 Module failed System tests
+
+feature #6 - Status display
+
+A tile view has been implemented which shows the status of all the sites by colour. It also restricts your view of the progress of modules and tasks to your home site.
 
 In addition, there are associated tests in gameSpec.js and the function itself, intervention(gs) is present in game.js and is called in the update function.
 
