@@ -128,6 +128,7 @@ function statusClass(m) {
     averageCompletion = averageCompletion / m.length;
 
     // averageCompletion of 1.0 means we are dead on target. <1.0 means behind, >1.0 we're ahead of schedule.
+    if(averageCompletion == 0) return "schedule-ok"; //temp fix for initial completion bug
     if (averageCompletion >= 1.0) {
         return "schedule-ok";
     } else if (averageCompletion >= 0.9) {
