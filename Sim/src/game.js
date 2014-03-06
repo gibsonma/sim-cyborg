@@ -8,14 +8,6 @@ function setupGame(scene, setting)
     load_globals(GAME_DATA.gs);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
-    list_sites_as_options();
-}
-
-function list_sites_as_options() {
-    $("#site_select").html("");
-    for (var i = 0; i < GAME_DATA.gs.sites.length; i++) {
-        $("#site_select").append("<option value=\"" + i + "\">" + GAME_DATA.gs.sites[i].name + "</option>");
-    }
 }
 
 function scheduleCalculator(gs)
@@ -275,6 +267,7 @@ function display_final_score(gs){
     html += "<p>Expected revenue: " + stats.expected_revenue+"</p>";
     html += "<p>Actual revenue: " + stats.actual_revenue+"</p>";
     html += "<br>";
+    vex.dialog.alert(html);
     GAME_DATA.state_dialog.html(html);
 }
 
@@ -322,24 +315,6 @@ function new_transaction(amount){
 }
 
 function updateGameStateDialog(gs) {
-    var html = "<h2>Game State</h2>";
-    var home_site = "No";
-    var site_index = $('#site_select').val();
-    var site = gs.sites[site_index];
-    if (site == gs.home_site) home_site = "Yes";
-    html = html + "<p>Site: " + site.name + " (" + site.development_type + ")" + " Home Site: " + home_site + "</p>";
-    for (var j=0; j < site.working_on.length; j++){
-        var module = site.working_on[j];
-        html = html + "<p>Module: " + module.name + "</p>";
-        for (var k=0; k < module.tasks.length; k++){
-            var task = module.tasks[k];
-            var completion = (task.completed / task.total) * 100;
-            html = html + "<p>Task: " + task.name + " | Completion: " + Math.round(completion) + "% ";
-            if (task.completed >= task.actual_total) html = html + " - completed";
-            html = html + "</p>"
-        }
-    }
-    GAME_DATA.state_dialog.html(html);
     if (tileView) {
         tileView.update('state');    
     }
