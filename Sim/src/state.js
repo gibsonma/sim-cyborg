@@ -11,6 +11,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 var GAME_DATA = {};
 var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
 var PROBLEM_CONSTANT = 0.005; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
+var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
 var TIMEZONE_EUROPE = [9,17];
@@ -41,7 +42,7 @@ function GameState(setting)
             second_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
             second_module.tasks[1].assigned = 4;
             second_module.tasks[2].assigned = 2; 
-            third_module = new Module("Frontend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
+            third_module = new Module("Middlend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
             third_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
             third_module.tasks[1].assigned = 4;
             third_module.tasks[2].assigned = 3; 

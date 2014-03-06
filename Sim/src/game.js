@@ -12,7 +12,7 @@ function setupGame(scene, setting)
 
 function scheduleCalculator(gs)
 {  
-    return sum_tasks(gs)/2;
+    return sum_tasks(gs)/WORK_LOAD;
 }
 
 function sum_tasks(gs){

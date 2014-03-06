@@ -22,18 +22,21 @@ describe("setupGame", function()
 	});
 });
 
-describe("scheduleCalculator", function()
+describe("Nominal Schedule Calculator", function()
 {
-    var setting = 1;
-    var game = new GameState(setting);
-
-	it("Should be passed a defined game state", function()
+    var game = new GameState(1);
+	var total = 0, taskList;
+	for(var i = 0; i < game.modules.length; i++){
+		taskList = game.modules[i].tasks;
+		for(var j = 0; j < taskList.length; j++)total += taskList[j].total;
+	}
+	it("Sums all the tasks' effort correctly", function()
 	{
-		expect(game).toBeDefined();
+		expect(sum_tasks(game)).toEqual(total);
 	});
-	it("Returns a number greater than 0 for the total effort", function()
+	it("Takes into account the work load modifier", function()
 	{
-		expect(scheduleCalculator(game)).toBeGreaterThan(0);
+		expect(scheduleCalculator(game)).toEqual(total/WORK_LOAD);
 	});
 });
 
