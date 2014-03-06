@@ -32,6 +32,7 @@ Open [server]:3000/SpecRunner.html in a browser and the results of all present t
 ##Week 0
 Feature #17 - Displaying global variables
 This can be verified by running the test to check that the file is present and is valid json. In addition, its appearence on screen also verifies that this feature work correctly.
+These appropriate config file is found in /Sim/data/config_file.json
 
 ##Week 1
 Feature #9 - Process Simulator
