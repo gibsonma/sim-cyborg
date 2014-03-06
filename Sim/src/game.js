@@ -215,15 +215,32 @@ function number_assigned_workers(){
     var total_assigned = 0;
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
+
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
-            for (var k=0; k < module.tasks.length; k++){
-                var task = module.tasks[k];
-                total_assigned = total_assigned + task.assigned;
+            switch (site.development_type) {
+                case "Waterfall":
+                        total_assigned += most_assigned_task(module);
+                    break;
+                case "Agile":
+                    for (var k=0; k < module.tasks.length; k++){
+                        var task = module.tasks[k];
+                        total_assigned += task.assigned;
+                    }
+                    break;
             }
         }
     }
     return total_assigned;
+}
+
+function most_assigned_task(module){
+    var most_assigned = 0;
+    for (var k=0; k < module.tasks.length; k++){
+        var task = module.tasks[k];
+        if (task.assigned > most_assigned) most_assigned = task.assigned;
+    }
+    return most_assigned;
 }
 
 function incrementTime(){
@@ -331,13 +348,13 @@ function display_game_time(){
 function should_be_working(site, gs)
 {
     var current_hour = gs.time["Current Hour"];
-	var tmp;
+    var tmp;
     var time_range = TIME_CLOCK.slice(site.timezone[0], site.timezone[1]);//Extract timezone from time array
-	if(time_range.length < 8)//If full array not retrieved then timezone must span midnight ex(18-2)
+    if(time_range.length < 8)//If full array not retrieved then timezone must span midnight ex(18-2)
     {
         time_range = TIME_CLOCK.slice(0, site.timezone[1]);//Get partial timezone from midnight
-		tmp = TIME_CLOCK.slice(site.timezone[0]);//Get second partial from before midnight
-		time_range = time_range.concat(tmp);//Concatenate the two
+        tmp = TIME_CLOCK.slice(site.timezone[0]);//Get second partial from before midnight
+        time_range = time_range.concat(tmp);//Concatenate the two
     }
     if(time_range.indexOf(current_hour) == -1) return false;//Check if current hour is within timezone
     return true;
