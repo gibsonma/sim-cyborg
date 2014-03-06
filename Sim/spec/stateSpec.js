@@ -33,7 +33,23 @@ describe("game object", function() {
 		expect(game.sites[1].timezone).toEqual(TIMEZONE_ASIA);
 		expect(game.sites[2].timezone).toEqual(TIMEZONE_EUROPE);
 	});
-
 });
+
+describe("Module Completion Calculator", function()
+{
+	var game = new GameState(1);
+	var task = game.sites[0].working_on[0].tasks[0];
+	task.total = 100;
+	var maxVal = 126;
+	var minVal = 74;
+	it("Can implement a 25% variance", function()
+	{
+		expect(vary(task.total)).toBeLessThan(maxVal);
+		task.total = 100;
+		expect(vary(task.total)).toBeGreaterThan(minVal);
+	});
+});
+
+
 
 
