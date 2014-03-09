@@ -152,6 +152,7 @@ function problemSim(gs)
                 problemTask.actual_total += problemTask.actual_total/5;
                 console.log(problemTask.actual_total);
                 gs.sites[seed].problems.push(prob);
+                gs.sites[seed].critical_problem = true;
                 break;
 
             default:

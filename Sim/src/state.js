@@ -151,6 +151,7 @@ function Site(name, coordinates, culture_modifier, dev, timezone){
     this.working_on = []; //List of modules
     this.development_type = dev;
     this.problems = [];
+    this.critical_problem = false;
     this.timezone = timezone;
     this.problemCooldown = 0.0025;
 }
