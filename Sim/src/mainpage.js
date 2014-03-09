@@ -131,10 +131,9 @@ function statusClass(m) {
     if(averageCompletion == 0) return "schedule-ok"; //temp fix for initial completion bug
     if (averageCompletion >= 1.0) {
         return "schedule-ok";
-    } else if (averageCompletion >= 0.9) {
+    } 
+    else {
         return "schedule-behind"
-    } else {
-        return "schedule-very-behind"
     }
 }
 
