@@ -106,6 +106,28 @@ function showHomeSitePopup() {
     
 }
 
+function showSpecificSitePopup(site, cost) {
+    GAME_DATA.ticker.pause();
+    var popupView;
+    vex.open({
+        content: '<div id="info-popup"></div>',
+        afterOpen: function($vexContent) {
+            new_transaction(-cost);//Deduct cost of viewing site
+            popupView = new Ractive({
+                el: 'info-popup',
+                template: TEMPLATES['popupView'],
+                data: {
+                    site: GAME_DATA.gs.sites[site];
+                }
+            });
+        },
+        afterClose: function() {
+            GAME_DATA.ticker.resume();
+        }
+    });
+    
+}
+
 function statusClass(m) {                    
     var averageCompletion = 0;
 
