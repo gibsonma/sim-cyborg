@@ -39,7 +39,7 @@ function intervention(gs)
             var problem = sites[i].problems[0];
             GAME_DATA.ticker.pause();//Pause the game
             vex.dialog.confirm({
-                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost ' + problem.cost + ' to correct, what do you do?',
+                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost $' + problem.cost + ' to correct, what do you do?',
                 buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
                       text: 'Fix'
@@ -59,7 +59,7 @@ function intervention(gs)
                     new_transaction(-cost);//Deduct cost of fixing problem
 					sites[index].problems.pop();
                     GAME_DATA.ticker.resume();
-                    return console.log("Problem has been fixed!");
+                    return console.log("Problem has been fixed for $"+problem.cost+"!");
                 }
             });
         }
@@ -84,9 +84,9 @@ function interventionAlt(gs, val)
 				GAME_DATA.ticker.resume();//Resume game		
 				return console.log("Problem not fixed");
             }
-			console.log("HEU" + gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
+			console.log(gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
 			gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
-			console.log("BYE"+ gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
+			console.log(gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
 			var cost = problem.cost;
 			new_transaction(-cost);//Deduct cost of fixing problemnew_transaction(-1000);//Deduct cost of fixing problem
 			sites[index].problems.pop();
@@ -273,17 +273,17 @@ function check_if_completed(gs) {
 function display_final_score(gs){
     var stats = new report(gs);
     var html = "<h2>End of Game Report</h2>";
-    html += "<h3>Final score: " + Math.round(stats.final_score) +"</p>";
+    html += "<h3>Final score: " + Math.round(stats.final_score) +" points</p>";
     html += "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
     html += "<p>You started the game with: $" + gs.starting_capital + "</p>";
     html += "<p>You have " + number_assigned_workers() + " workers</p>";
     html += "<br>";
-    html += "<p>Expected effort: " + stats.expected_effort+"</p>";
-    html += "<p>Actual effort: " + stats.actual_effort+"</p>";
-    html += "<p>Expected expenditure: " + stats.expected_expenditure+"</p>";
-    html += "<p>Actual expenditure: " + stats.actual_expenditure+"</p>";
-    html += "<p>Expected revenue: " + stats.expected_revenue+"</p>";
-    html += "<p>Actual revenue: " + stats.actual_revenue+"</p>";
+    html += "<p>Expected effort: " + stats.expected_effort+" developer hours</p>";
+    html += "<p>Actual effort: " + stats.actual_effort+" developer hours</p>";
+    html += "<p>Expected expenditure: $" + stats.expected_expenditure+"</p>";
+    html += "<p>Actual expenditure: $" + stats.actual_expenditure+"</p>";
+    html += "<p>Expected revenue: $" + stats.expected_revenue+"</p>";
+    html += "<p>Actual revenue: $" + stats.actual_revenue+"</p>";
     html += "<br>";
     vex.dialog.alert(html);
     GAME_DATA.state_dialog.html(html);
