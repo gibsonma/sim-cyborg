@@ -31,7 +31,7 @@ function setupGame(scene, setting)
     load_globals(GAME_DATA.gs);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
-	//displayScenarioValues(setting);
+    displayScenarioValues(setting);
 }
 
 function scheduleCalculator(gs)

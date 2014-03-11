@@ -129,6 +129,7 @@ function GameState(setting)
 }
 
 function load_globals(gs){
+    $.ajaxSetup( { "async": false } );
     $.getJSON('data/config_file.json', function(obj){
         gs.global_distances = obj.global_distances;
         gs.temporal_distances = obj.temporal_distances;
