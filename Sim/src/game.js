@@ -1,13 +1,38 @@
 // Game object structs defined in state.js
 
+//A function that takes a scenario and displays
+//a vex dialog box containing the details of said scenario
+function displayScenarioValues(scenNum)
+{
+	for(var key in GAME_DATA.gs)console.log(key + ' ' + GAME_DATA.gs[key]);
+	var game = GAME_DATA.gs;
+	var sites = '', capital = game.capital;
+	for(var i = 0; i < game.sites.length; i++)sites += ' ' + game.sites[i].name;
+	GAME_DATA.ticker.pause();//Pause the game
+	vex.dialog.confirm({
+	  message: '<p>You have picked Scenario '+scenNum + '</p>' + 
+	           '<p>Sites:' + sites + '</p>' + 
+			   '<p>Starting Capital: $'+capital+'</p>',
+	  callback: function(value) {
+		GAME_DATA.ticker.resume();
+	  }
+	});
+}
+
+//Ask user which scenario they want
+//Load details of chosen scenario
+//Call setupGame with chosen scenario
+
 function setupGame(scene, setting)
 {
-    GAME_DATA.scene = scene;
+    
+	GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
+	displayScenarioValues(setting);
 }
 
 function scheduleCalculator(gs)
