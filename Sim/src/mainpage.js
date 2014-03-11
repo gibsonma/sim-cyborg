@@ -66,6 +66,8 @@ window.onload = function() {
 }; 
 
 var tileView;
+//Iterate through sites and create an array which corresponds to each site's local time
+//Pass that in and have it displayed
 function renderTileview() {
 
     if (TEMPLATES['tileview']) {
@@ -95,7 +97,7 @@ function showHomeSitePopup() {
                 el: 'info-popup',
                 template: TEMPLATES['popupView'],
                 data: {
-                    site: GAME_DATA.gs.home_site
+                    site: GAME_DATA.gs.home_site//Object passed into popUpView
                 }
             });
         },

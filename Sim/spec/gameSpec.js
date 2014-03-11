@@ -1,15 +1,17 @@
 beforeEach(function()
 {
 	vex.closeAll();
+	spyOn(vex, 'dialog');
 });
 afterEach(function()
 {
 	GAME_DATA.ticker.pause();
 });
+
 describe("setupGame", function()
 {
 	var setting = 1;
-	
+
 	it("Assigns the new game state to GAME_DATA", function()
 	{
         setupGame(sjs.Scene({w:1, h:1}), setting );
@@ -111,7 +113,7 @@ describe("Intervention Interface", function()
 	load_globals(gs);
 	gs.sites[0].problems[0] = new Problem("Module failed to integrate",10, 20,0,1);
 	gs.capital = val;
-	spyOn(vex, 'open');
+
 	it("Always removes a problem if one is present", function()
 	{
 		expect(gs.sites[0].problems.length).toEqual(1);
