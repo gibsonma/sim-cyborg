@@ -25,14 +25,13 @@ function displayScenarioValues(scenNum)
 
 function setupGame(scene, setting)
 {
-    
 	GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
-	displayScenarioValues(setting);
+	//displayScenarioValues(setting);
 }
 
 function scheduleCalculator(gs)

@@ -117,7 +117,7 @@ function showSpecificSitePopup(site, cost) {
                 el: 'info-popup',
                 template: TEMPLATES['popupView'],
                 data: {
-                    site: GAME_DATA.gs.sites[site];
+                    site: GAME_DATA.gs.sites[site]
                 }
             });
         },
