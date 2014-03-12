@@ -24,7 +24,7 @@ function site_builder(site_name, dev_type, home, modules){
             console.log("Unrecognised site name");
             return null;
     }
-    site_obj.working_on = modules;
+    site_obj.modules = modules;
     return site_obj;
 }
 

@@ -127,7 +127,7 @@ function completedTasksEmail(siteIndex)
     new_transaction(-500);
     var result = 'Completed Tasks: '
     var tasks = [];
-    var modules = GAME_DATA.gs.sites[siteIndex].working_on;
+    var modules = GAME_DATA.gs.sites[siteIndex].modules;
     for(var i = 0; i < modules.length; i++)
     {
         tasks = modules[i].tasks;
@@ -152,7 +152,7 @@ function inquireAccurate(siteIndex)
     new_transaction(-100);
     var result = [];
 	var status = '';
-    var modules = GAME_DATA.gs.sites[siteIndex].working_on;
+    var modules = GAME_DATA.gs.sites[siteIndex].modules;
     for(var i = 0; i < modules.length; i++)
     {
         if(statusClass(modules[i]) == 'on-schedule')status = 'On Schedule';
@@ -175,7 +175,7 @@ function inquireCultural(siteIndex)
     new_transaction(-100);
     var result = '';
 	var status = 'On Schedule';
-    var modules = GAME_DATA.gs.sites[siteIndex].working_on;
+    var modules = GAME_DATA.gs.sites[siteIndex].modules;
     for(var i = 0; i < modules.length; i++)
     {
 		result += '<br> ' + modules[i].name + ' : ' + status;

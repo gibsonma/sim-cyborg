@@ -11,10 +11,10 @@ function displayScenarioValues(scenNum)
         sites += '<br>' + game.sites[i].name;
         workers += '<br>' + game.sites[i].name + ' : ' + getSiteWorkers(game.sites[i]) + ' Developers';
         modules += '<br>' + game.sites[i].name + ' : ';
-        for(var j = 0; j < game.sites[i].working_on.length; j++)
+        for(var j = 0; j < game.sites[i].modules.length; j++)
         {
-            modules += game.sites[i].working_on[j].name;
-            tasks += '<br>' + game.sites[i].working_on[j].name + ' : ' + getEffortForModule(game.sites[i].working_on[j]) + ' Developer Hours';
+            modules += game.sites[i].modules[j].name;
+            tasks += '<br>' + game.sites[i].modules[j].name + ' : ' + getEffortForModule(game.sites[i].modules[j]) + ' Developer Hours';
         }
     }
     GAME_DATA.ticker.pause();//Pause the game
@@ -160,8 +160,8 @@ function update(gs)
          * once every other module is on the same level (has the same number of tasks done) */
         var lowest_lifecycle = module_lifecycle_stage(site); 
         if (should_be_working(site, gs) && lowest_lifecycle != -1){
-            for (var j=0; j < site.working_on.length; j++){
-                var module = site.working_on[j];
+            for (var j=0; j < site.modules.length; j++){
+                var module = site.modules[j];
                 switch (site.development_type) {
                     case "Waterfall":
                         if (lowest_lifecycle < module.tasks.length){

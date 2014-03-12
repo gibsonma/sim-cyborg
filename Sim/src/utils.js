@@ -17,9 +17,9 @@ function getSiteWorkers(site)
 {
 	var result = 0;
 
-	for(var i = 0; i < site.working_on.length; i++)
+	for(var i = 0; i < site.modules.length; i++)
 	{
-        result += site.working_on[i].assigned;
+        result += site.modules[i].assigned;
 	}
 	return result;
 }
@@ -47,8 +47,8 @@ function number_assigned_workers(){
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
 
-        for (var j=0; j < site.working_on.length; j++){
-            var module = site.working_on[j];
+        for (var j=0; j < site.modules.length; j++){
+            var module = site.modules[j];
             total_assigned += module.assigned;
         }
     }
@@ -68,8 +68,8 @@ function check_if_completed(gs) {
     var finished = true;
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-        for (var j=0; j < site.working_on.length; j++){
-            var module = site.working_on[j];
+        for (var j=0; j < site.modules.length; j++){
+            var module = site.modules[j];
             for (var k=0; k < module.tasks.length; k++){
                 var task = module.tasks[k];
                 if(task.completed < task.actual_total) finished = false;
@@ -133,8 +133,8 @@ function should_be_working(site, gs)
 
 function module_lifecycle_stage(site) {
     var lowest_cycle = -1;
-    for (var j=0; j < site.working_on.length; j++){
-        var module = site.working_on[j];
+    for (var j=0; j < site.modules.length; j++){
+        var module = site.modules[j];
         for (var i=0; i < module.tasks.length; i++){
             var task = module.tasks[i];
             if (task.completed < task.actual_total) {
@@ -170,8 +170,8 @@ function get_all_modules(){
     var modules = [];
     for (var i=0; i< gs.sites.length; i++){
         var site = gs.sites[i];
-        for (var j=0; j < site.working_on.length; j++){
-            modules.push(site.working_on[j]);
+        for (var j=0; j < site.modules.length; j++){
+            modules.push(site.modules[j]);
         }
     }
     return modules;

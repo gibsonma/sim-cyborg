@@ -38,7 +38,7 @@ describe("game object", function() {
 describe("Module Completion Calculator", function()
 {
 	var game = new GameState(1);
-	var task = game.sites[0].working_on[0].tasks[0];
+	var task = game.sites[0].modules[0].tasks[0];
 	task.total = 100;
 	var maxVal = 126;
 	var minVal = 74;

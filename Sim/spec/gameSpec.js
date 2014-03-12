@@ -30,8 +30,8 @@ describe("Nominal Schedule Calculator", function()
 	var total = 0
     for (var k=0; k <game.sites.length; k++){
         var site = game.sites[k];
-        for(var i = 0; i < site.working_on.length; i++){
-            var taskList = site.working_on[i].tasks;
+        for(var i = 0; i < site.modules.length; i++){
+            var taskList = site.modules[i].tasks;
             for(var j = 0; j < taskList.length; j++) total += taskList[j].total;
         }
     }
@@ -60,9 +60,9 @@ describe("Update game state", function (){
             var siteOld = initGame.sites[i];
 			if(should_be_working(siteOld, initGame) && should_be_working(siteUpdated, updatedGame))
 			{
-				for (var j=0; j < siteUpdated.working_on.length; j++){
-					var moduleUpdated = siteUpdated.working_on[j];
-					var moduleOld = siteOld.working_on[j];
+				for (var j=0; j < siteUpdated.modules.length; j++){
+					var moduleUpdated = siteUpdated.modules[j];
+					var moduleOld = siteOld.modules[j];
 					for (var k=0; k < moduleUpdated.tasks.length; k++){
 						var taskUpdated = moduleUpdated.tasks[k];
 						var taskOld = moduleOld.tasks[k];
@@ -128,9 +128,9 @@ describe("Intervention Interface", function()
 	});
 	it("Only removes the problem if it isn't fixed, nothing else", function()
 	{
-		var orig = gs.sites[0].working_on[0].tasks[1].actual_total;
+		var orig = gs.sites[0].modules[0].tasks[1].actual_total;
 		interventionAlt(gs, 0);
-		expect(gs.sites[0].working_on[0].tasks[1].actual_total).toEqual(orig);
+		expect(gs.sites[0].modules[0].tasks[1].actual_total).toEqual(orig);
 	});
 });
 
@@ -155,7 +155,7 @@ describe("Displaying Scenario Values", function()
         testModule.tasks[0].assigned = 3;
         testModule.tasks[1].assigned = 5;
         testModule.tasks[2].assigned = 3; 
-		testSite.working_on[0] = testModule;
+		testSite.modules[0] = testModule;
 		it("Given a site, it returns the correct number of workers", function()
 		{
 			expect(getSiteWorkers(testSite)).toEqual(11);

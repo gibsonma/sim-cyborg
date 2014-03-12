@@ -24,7 +24,7 @@ function intervention(gs)
                         GAME_DATA.ticker.resume();//Resume game
                         return console.log("Problem not fixed");
                     }
-                    gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+                    gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
 					var cost = problem.cost;
                     new_transaction(-cost);//Deduct cost of fixing problem
 					sites[index].problems.pop();
@@ -54,9 +54,9 @@ function interventionAlt(gs, val)
 				GAME_DATA.ticker.resume();//Resume game		
 				return console.log("Problem not fixed");
             }
-			console.log(gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
-			gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
-			console.log(gs.sites[index].working_on[problem.module].tasks[problem.taskNum].actual_total);
+			console.log(gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total);
+			gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+			console.log(gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total);
 			var cost = problem.cost;
 			new_transaction(-cost);//Deduct cost of fixing problemnew_transaction(-1000);//Deduct cost of fixing problem
 			sites[index].problems.pop();
@@ -90,9 +90,9 @@ function problemSim(gs)
         console.log("A problem has been encountered in the "+ site + " office.")
 
         var problemSeed = Math.floor(Math.random() * 7)+1; //choose one of 7 problems
-        var workingOnSeed = Math.floor(Math.random() * gs.sites[seed].working_on.length); //choose one module being worked on
+        var workingOnSeed = Math.floor(Math.random() * gs.sites[seed].modules.length); //choose one module being worked on
         var problemSite = gs.sites[seed];
-        var problemModule = problemSite.working_on[workingOnSeed];
+        var problemModule = problemSite.modules[workingOnSeed];
 
         switch(problemSeed)
         {

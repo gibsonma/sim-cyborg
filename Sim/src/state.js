@@ -20,11 +20,6 @@ var TIMEZONE_EASTERN_EUROPE = [10,18];
 
 function GameState(setting)
 {
-    var site;
-    var site2;
-    var site3;
-    var main_module;
-    var second_module;
     switch(setting)
     {
         /*
@@ -115,7 +110,7 @@ function load_globals(gs){
 function Site(name, culture_modifier, dev, timezone, home){
     this.name = name;
     this.culture = culture_modifier; //obj
-    this.working_on = []; //List of modules
+    this.modules = []; //List of modules
     this.development_type = dev;
     this.problems = [];
     this.critical_problem = false;
