@@ -116,9 +116,35 @@ function renderTileview() {
         $('.site_tile>.info-popup-tasks').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
+			completedTasksEmail(siteIndex);
         });
     }
 };
+
+function completedTasksEmail(siteIndex)
+{
+    GAME_DATA.ticker.pause();
+    new_transaction(-500);
+    var result = 'Completed Tasks: '
+    var tasks = [];
+    var modules = GAME_DATA.gs.sites[siteIndex].working_on;
+    for(var i = 0; i < modules.length; i++)
+    {
+        tasks = modules[i].tasks;
+        for(var j = 0; j < tasks.length; j++)
+        {
+            if(tasks[j].completed >= tasks[j].actual_total)result += '<br>' + tasks[j].name;
+        }
+    }
+    vex.dialog.confirm({
+      message: '<p>' + result + '</p>' 
+               ,
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
+}
 
 function inquireAccurate(siteIndex)
 {
