@@ -34,7 +34,6 @@ window.onload = function() {
             setupGame(scene,3);
             renderTileview();
         });
-    //    setupGame(scene,1);
         $.get('src/templates/tileview.html', function(template) {
             TEMPLATES['tileview'] = template;
             renderTileview();
@@ -57,7 +56,8 @@ function renderTileview() {
             template: TEMPLATES['tileview'],
             data: {
                 state: GAME_DATA.gs,
-                statusClass: statusClass
+                statusClass: statusClass,
+                currentTask: currently_doing_which_task
             }
         });
         var home = get_home_site(GAME_DATA.gs.sites).name;
@@ -133,7 +133,7 @@ function completedTasksEmail(siteIndex)
         tasks = modules[i].tasks;
         for(var j = 0; j < tasks.length; j++)
         {
-            if(tasks[j].completed >= tasks[j].actual_total)result += '<br>' + tasks[j].name;
+            if(tasks[j].completed >= tasks[j].actual_total) result += '<br>' + tasks[j].name;
         }
     }
     vex.dialog.confirm({
@@ -155,7 +155,7 @@ function inquireAccurate(siteIndex)
     var modules = GAME_DATA.gs.sites[siteIndex].modules;
     for(var i = 0; i < modules.length; i++)
     {
-        if(statusClass(modules[i]) == 'on-schedule')status = 'On Schedule';
+        if(statusClass(modules[i]) == 'on-schedule') status = 'On Schedule';
 		else status = 'Behind Schedule';
 		result += '<br> ' + modules[i].name + ' : ' + status;
     }
