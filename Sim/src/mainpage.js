@@ -64,10 +64,12 @@ function renderTileview() {
         $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup').hide();
         $('.site_tile').find('.info-popup-nonhome').hide();
         $('.site_tile').find('.info-popup-email').hide();
-        $('.site_tile').find('.info-popup-status').hide();        
+        $('.site_tile').find('.info-popup-status').hide();
+        $('.site_tile').find('.info-popup-tasks').hide();                  
         $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup-nonhome').toggle();
         $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup-email').toggle();
-        $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup-status').toggle();        
+        $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup-status').toggle();     
+        $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup-tasks').toggle();      
         $('.site_tile>.info-popup').click(function() {
             showHomeSitePopup();
         });
@@ -110,6 +112,10 @@ function renderTileview() {
             {
                 inquireAccurate(siteIndex);//function for accurate
             }
+        });
+        $('.site_tile>.info-popup-tasks').click(function() {
+            var siteName = $(this).parent().attr('data-name');
+            var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
         });
     }
 };
