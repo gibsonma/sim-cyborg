@@ -89,7 +89,7 @@ function problemSim(gs)
         gs.sites[seed].problemCooldown = 0.0025;
         console.log("A problem has been encountered in the "+ site + " office.")
 
-        var problemSeed = Math.floor(Math.random() * 3)+1; //choose one of 3 problems
+        var problemSeed = Math.floor(Math.random() * 7)+1; //choose one of 7 problems
         var workingOnSeed = Math.floor(Math.random() * gs.sites[seed].working_on.length); //choose one module being worked on
         var problemSite = gs.sites[seed];
         var problemModule = problemSite.working_on[workingOnSeed];
@@ -97,32 +97,50 @@ function problemSim(gs)
         switch(problemSeed)
         {
             case 1: 
-                var problemTask = problemModule.tasks[1];  //this is an implementation problem so always affects the 2nd task in a module
-                console.log("A module failed to integrate");
-                var prob = new Problem("Module failed to integrate",10, problemModule.tasks[1].actual_total,workingOnSeed,1);
-                problemTask.actual_total += problemTask.actual_total/10; //add a 10% overhead
-                console.log(problemTask.actual_total);
+                var problemTask = problemModule.tasks[problemSeed-1];  //design
+                var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                problemTask.actual_total += problemTask.actual_total/50; //add a 50% overhead
                 gs.sites[seed].problems.push(prob);
                 break;
 
             case 2:
-                var problemTask = problemModule.tasks[2]; 
-                console.log("Module failed System tests");
-                var prob = new Problem("Module failed System tests",15, problemModule.tasks[2].actual_total,workingOnSeed,2);
-                problemTask.actual_total += problemTask.actual_total/15;
-                console.log(problemTask.actual_total);
+                var problemTask = problemModule.tasks[problemSeed-1];  //implementation
+                var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                problemTask.actual_total += problemTask.actual_total/50; 
                 gs.sites[seed].problems.push(prob);
                 break;
 
             case 3:
-                var problemTask = problemModule.tasks[1]; 
-                console.log("Module deployment failed");
-                var prob = new Problem("Module deployment failed", 5, problemModule.tasks[1].actual_total,workingOnSeed,1);
-                problemTask.actual_total += problemTask.actual_total/5;
-                console.log(problemTask.actual_total);
+                var problemTask = problemModule.tasks[problemSeed-1];  //test
+                var prob = new Problem("unit tests failed",25, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                problemTask.actual_total += problemTask.actual_total/25; 
                 gs.sites[seed].problems.push(prob);
-                gs.sites[seed].critical_problem = true;
                 break;
+
+            case 4:
+                var problemTask = problemModule.tasks[problemSeed-1];  //integration
+                var prob = new Problem("integration failure",40, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                problemTask.actual_total += problemTask.actual_total/40; 
+                gs.sites[seed].problems.push(prob);
+                break;
+
+            case 5:
+                var problemTask = problemModule.tasks[problemSeed-1];  //integration
+                var prob = new Problem("system test failure",55, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                problemTask.actual_total += problemTask.actual_total/55; 
+                break;   
+
+            case 6:
+                var problemTask = problemModule.tasks[problemSeed-1];  //integration
+                var prob = new Problem("deployment failure",70, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                problemTask.actual_total += problemTask.actual_total/70; 
+                break; 
+
+            case 7:
+                var problemTask = problemModule.tasks[problemSeed-1];  //integration
+                var prob = new Problem("acceptance test failure",100, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                problemTask.actual_total += problemTask.actual_total/100; 
+                break;                        
 
             default:
                 console.log("What's yer prob");
