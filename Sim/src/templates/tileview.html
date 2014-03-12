@@ -1,7 +1,7 @@
 {{#state.sites:i}}
 <div class="site_tile {{ statusClass(modules) }}" data-name="{{name}}">
     <p>{{name}} {{local_time}}:00</p>
-    <table>
+    <table class="status_table">
         <tr>
             <td>Name:</td>
             {{#modules}}
@@ -23,7 +23,13 @@
         <tr>
             <td>Stage:</td>
             {{#modules}}
-            <td>{{currentTask(tasks)}}</td>
+            <td>{{currentTask(tasks).name}}</td>
+            {{/modules}}
+        </tr>
+        <tr>
+            <td>Stage Progress</td>
+            {{#modules:i}}
+            <td>{{progress(modules[i])}}</td>
             {{/modules}}
         </tr>
     </table>

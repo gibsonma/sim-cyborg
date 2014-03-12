@@ -64,8 +64,8 @@ body {
 	margin-top: 20px;
 	text-align: center;
 	vertical-align: middle;
-	width: 300px;
-	height: 300px;
+	width: 450px;
+	height: 450px;
 	background-color: rgba(121, 202, 100, 0.4);
 	border-radius: 5px 5px;
 	font-weight: bold;
@@ -85,4 +85,9 @@ body {
 
 #main_content,#game_state_box {
     background: rgba(0, 0, 0, .8);
+}
+
+.status_table {
+    width: 100%;
+    margin: 0px auto;
 }

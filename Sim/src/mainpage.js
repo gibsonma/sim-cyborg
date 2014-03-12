@@ -57,7 +57,8 @@ function renderTileview() {
             data: {
                 state: GAME_DATA.gs,
                 statusClass: statusClass,
-                currentTask: currently_doing_which_task
+                currentTask: currently_doing_which_task,
+                progress: progress_on_current_task
             }
         });
         var home = get_home_site(GAME_DATA.gs.sites).name;
@@ -299,4 +300,19 @@ function statusClass(m) {
     else {
         return "schedule-behind"
     }
+}
+
+function currently_doing_which_task(tasks){
+    for (var i=0; i<tasks.length; i++){
+        var task = tasks[i];
+        if (task.completed < task.actual_total) return task;
+    }
+    return tasks[tasks.length-1];
+}
+
+function progress_on_current_task(module){
+    var doing_task = currently_doing_which_task(module.tasks);
+    return doing_task.completed;
+    var progress = doing_task.completed / GAME_DATA.gs.developer_effort / module.assigned;
+    return progress;
 }

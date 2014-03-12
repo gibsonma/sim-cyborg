@@ -167,7 +167,7 @@ function update(gs)
                         if (lowest_lifecycle < module.tasks.length){
                             var task = module.tasks[lowest_lifecycle];
                             if (task.completed < task.actual_total){
-                                task.completed += module.assigned * gs.waterfall_speedup_modifier * gs.developer_effort/TICKS_PER_UNIT_TIME;
+                                task.completed += module.assigned * gs.developer_effort/TICKS_PER_UNIT_TIME;
                                 if (task.completed > task.actual_total) task.completed = task.actual_total;
                             }
                         }

@@ -3,7 +3,7 @@
 //by summing up the expected total of its tasks and returning it
 function getEffortForModule(module)
 {
-	if(!module.tasks)return -1;
+	if (!module.tasks) return -1;
 	var result = 0;
 	for(var i = 0; i < module.tasks.length; i++)
 	{
@@ -175,12 +175,4 @@ function get_all_modules(){
         }
     }
     return modules;
-}
-
-function currently_doing_which_task(tasks){
-    for (var i=0; i<tasks.length; i++){
-        var task = tasks[i];
-        if (task.completed < task.actual_total) return task.name;
-    }
-    return "Successful!";
 }

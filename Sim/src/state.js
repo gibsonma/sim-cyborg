@@ -82,7 +82,6 @@ function GameState(setting)
     this.developer_effort = 0;
     this.developer_rate = 0;
     this.developer_working_hours = 0;
-    this.waterfall_speedup_modifier = 0;
     this.capital = 0;
     this.problems = [];
     this.time = {"Current Hour":0, "Days Passed":0}
@@ -102,7 +101,6 @@ function load_globals(gs){
         gs.developer_effort = obj.developer_effort;
         gs.developer_rate = obj.developer_rate;
         gs.developer_working_hours = obj.developer_working_hours;
-        gs.waterfall_speedup_modifier = obj.waterfall_speedup_modifier;
         gs.capital = gs.starting_capital;
     });
 }
@@ -132,7 +130,6 @@ function Module(name, tasks, assigned){
 
 function Task(name, total){
     this.name = name;
-    this.assigned = 0;
     this.completed = 0;
     this.total = total;//Represents total effort required to complete task
     this.status = "Normal";
