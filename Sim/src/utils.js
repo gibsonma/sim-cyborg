@@ -14,10 +14,12 @@ function getEffortForModule(module)
 //Given a site, this function goes through all the tasks being worked on and returns how many workers that are working at the site
 function getSiteWorkers(site)
 {
-	var result = 0, modules = site.working_on;
+	var result = 0;
+    var modules = site.working_on;
+
 	for(var i = 0; i < modules.length; i++)
 	{
-		for(var j = 0; j < modules[i].tasks.length; j++)result += modules[i].tasks[j].assigned;	
+        result += modules.assigned;
 	}
 	return result;
 }
@@ -48,17 +50,7 @@ function number_assigned_workers(){
 
         for (var j=0; j < site.working_on.length; j++){
             var module = site.working_on[j];
-            switch (site.development_type) {
-                case "Waterfall":
-                        total_assigned += most_assigned_task(module);
-                    break;
-                case "Agile":
-                    for (var k=0; k < module.tasks.length; k++){
-                        var task = module.tasks[k];
-                        total_assigned += task.assigned;
-                    }
-                    break;
-            }
+            total_assigned += module.assigned;
         }
     }
     return total_assigned;

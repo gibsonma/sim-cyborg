@@ -28,23 +28,16 @@ function GameState(setting)
     switch(setting)
     {
         case 1:
-            site = new Site("New York", new Culture("western"), "Agile", TIMEZONE_AMERICA, false);
-            site2 = new Site("Shanghai", new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
-            site3 = new Site("Dublin", new Culture("western"), "Agile", TIMEZONE_EUROPE, true);
+            site = site_builder("New York", "Agile", false, 10);
+            site2 = site_builder("Shanghai", "Waterfall", false, 20);
+            site3 = site_builder("Dublin", "Agile", true, 15);
+
+            main_module = module_builder("Backend", 10, 10000);
+            second_module = module_builder("Middle End", 12, 8000);
+            third_module = module_builder("Front End", 12, 8000);
+
             this.sites = [site, site2, site3];
             this.home_site = site3;
-            main_module = new Module("Backend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
-            main_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 5;
-            main_module.tasks[2].assigned = 3;  
-            second_module = new Module("Frontend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
-            second_module.tasks[0].assigned = 3; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 4;
-            second_module.tasks[2].assigned = 2; 
-            third_module = new Module("Middlend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
-            third_module.tasks[0].assigned = 4; // NB will need to have proper methods to change who's assigned to what
-            third_module.tasks[1].assigned = 4;
-            third_module.tasks[2].assigned = 3; 
             this.modules = [main_module, second_module, third_module];
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
@@ -144,8 +137,9 @@ function Culture(influence){
     this.influence = influence;
 }
 
-function Module(name, tasks){
+function Module(name, tasks, assigned){
     this.name = name;
+    this.assigned = assigned;
     this.tasks = tasks; //obj list
 }
 
