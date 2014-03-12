@@ -28,9 +28,9 @@ function GameState(setting)
     switch(setting)
     {
         case 1:
-            site = new Site("New York", (121,43), new Culture("western"), "Agile", TIMEZONE_AMERICA, false);
-            site2 = new Site("Shanghai", (43,43), new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
-            site3 = new Site("Dublin", (111,18), new Culture("western"), "Agile", TIMEZONE_EUROPE, true);
+            site = new Site("New York", new Culture("western"), "Agile", TIMEZONE_AMERICA, false);
+            site2 = new Site("Shanghai", new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
+            site3 = new Site("Dublin", new Culture("western"), "Agile", TIMEZONE_EUROPE, true);
             this.sites = [site, site2, site3];
             this.home_site = site3;
             main_module = new Module("Backend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
@@ -52,8 +52,8 @@ function GameState(setting)
             break;
 
         case 2:
-            site = new Site("Dublin", (111,18), new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
-            site2 = new Site("Poland", (53,53), new Culture("eastern european"), "Waterfall", TIMEZONE_EASTERN_EUROPE, false);
+            site = new Site("Dublin", new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
+            site2 = new Site("Poland", new Culture("eastern european"), "Waterfall", TIMEZONE_EASTERN_EUROPE, false);
             this.sites = [site, site2];
             this.home_site = site;
             main_module = new Module("Backend", [new Task("Design",4000), new Task("Implement", 1500), new Task("Test", 5000)]);
@@ -70,9 +70,9 @@ function GameState(setting)
             break;
 
         case 3:
-            site = new Site("Dublin", (111,18), new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
-            site2 = new Site("San Francisco", (43,43), new Culture("western"), "Waterfall", TIMEZONE_AMERICA, false);
-            site3 = new Site("Bangalore", (90,70), new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
+            site = new Site("Dublin", new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
+            site2 = new Site("San Francisco", new Culture("western"), "Waterfall", TIMEZONE_AMERICA, false);
+            site3 = new Site("Bangalore", new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
             this.sites = [site, site2, site3];
             this.home_site = site;
             main_module = new Module("Backend", [new Task("Design",250), new Task("Implement", 200), new Task("Test", 100)]);
@@ -91,23 +91,6 @@ function GameState(setting)
             this.sites[0].working_on.push(main_module);
             this.sites[1].working_on.push(second_module);
             this.sites[2].working_on.push(third_module);
-            break;
-
-        default:
-            site = new Site("Default", (0,0), new Culture(), 5, 2, "Agile", TIMEZONE_EUROPE, true);
-            this.sites = [site];
-            this.home_site = site;
-            main_module = new Module("Backend", [new Task("Design",100), new Task("Implement", 350), new Task("Test", 200)]);
-            main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 2;
-            main_module.tasks[2].assigned = 1;
-            second_module = new Module("Frontend", [new Task("Design",250), new Task("Implement", 100), new Task("Test", 200)]);
-            second_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 3;
-            second_module.tasks[2].assigned = 1; 
-            this.modules = [main_module, second_module];
-            this.sites[0].working_on.push(main_module);
-            this.sites[0].working_on.push(second_module);
             break;
     }
     this.global_distances = 0;
@@ -144,9 +127,8 @@ function load_globals(gs){
     });
 }
 
-function Site(name, coordinates, culture_modifier, dev, timezone, home){
+function Site(name, culture_modifier, dev, timezone, home){
     this.name = name;
-    this.coordinates = coordinates;
     this.culture = culture_modifier; //obj
     this.working_on = []; //List of modules
     this.development_type = dev;
