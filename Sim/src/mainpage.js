@@ -20,39 +20,19 @@ window.onload = function() {
     });
 
     $(document).ready(function() {
-        $.getJSON('data/config_file.json', function(data) {
-            $.each(data, append_config);
-        });
-        $('#site_select').change(function() {
-            chosen_site_index = $('#site_select').val();
-            office = background.Sprite(site_images[chosen_site_index]);
-            office.transformOrigin(0, 0);
-            office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
-            office.update();
-        });
-        $('#toggle_debug_btn').click(function() {
-            $('#center_content, #toggle_dialog_btn').toggle();
-        });
-        $('#toggle_dialog_btn').click(function() {
-            $('#main_content,#game_state_box').toggle();
-        });
         $('#scenario_1').click(function() {
             setupGame(scene,1);
-            GAME_DATA.state_dialog = $('#game_state_dump');
             renderTileview();
         });
         $('#scenario_2').click(function() {
             setupGame(scene,2);
-            GAME_DATA.state_dialog = $('#game_state_dump');
             renderTileview();
         });
         $('#scenario_3').click(function() {
             setupGame(scene,3);
-            GAME_DATA.state_dialog = $('#game_state_dump');
             renderTileview();
         });
         setupGame(scene,1);
-        GAME_DATA.state_dialog = $('#game_state_dump');
         $.get('src/templates/tileview.html', function(template) {
             TEMPLATES['tileview'] = template;
             renderTileview();
@@ -60,7 +40,6 @@ window.onload = function() {
         $.get('src/templates/popupView.html', function(template) {
             TEMPLATES['popupView'] = template;
         });
-        $('#main_content,#game_state_box').toggle();
 
     });
 }; 
@@ -192,14 +171,3 @@ function statusClass(m) {
         return "schedule-behind"
     }
 }
-
-function append_config(key, val){
-    if (val !== null && typeof val === "object") {
-        $("#main_content").append("<p>" + key + " {</p>");
-        $.each(val, append_config);
-        $("#main_content").append("<p>}</p>");
-    }
-    else {
-        $("#main_content").append("<p>" + key + " - " + val + "</p>");
-    }
-};
