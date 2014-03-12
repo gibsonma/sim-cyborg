@@ -27,6 +27,11 @@ function GameState(setting)
     var second_module;
     switch(setting)
     {
+        /*
+         * headers:
+         * site_builder(name, dev_type, home, module);
+         * module_builder(name, assigned, effort_points);
+         */
         case 1:
             this.sites = [
                 site_builder("New York", "Agile", false, [
