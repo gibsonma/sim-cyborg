@@ -196,3 +196,9 @@ function vary(total){
     return actual_total;
 }
 
+
+function GameState_to_json(gs)
+{
+    return JSON.stringify(gs);
+}
+
