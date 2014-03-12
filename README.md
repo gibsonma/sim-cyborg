@@ -3,7 +3,7 @@ sim-cyborg
 
 A final year group project for the D-Cyborg Team
 
-To run, execute ./start_server.sh in the root directory. The main project page can then be accessed in a web browser at port 3000
+To run, execute ./start_server.sh in the root directory. The main project page can then be accessed in a web browser at "localhost:3000"
 
 NB. There may be a bug on some linux installations where forever cannot find nodejs. This can be worked around by running 'nodejs server.js'
 
@@ -13,7 +13,6 @@ Global variables which are not typically changed from game to game are stored in
 
 ###Requires:
 * node.js - Web server
-* Vex 2.0.1 - Used to display dialog boxes in the simulation
 
 ###Requires node packages:
 * express - Web application framework
@@ -23,11 +22,10 @@ Global variables which are not typically changed from game to game are stored in
 node.js - http://nodejs.org/
 express - Use npm (https://www.npmjs.org/) npm install express
 forever - npm install forever
-Vex - Already present in project but to to install manually, download from http://github.hubspot.com/vex/ and unzip into \sim-cyborg\Sim\lib Everything except the js and css folders can then be deleted
 
 ###To Run tests:
-Open [server]:3000/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
-[server] here refers to where you have deployed the project. Generally a url like http://localhost:3000 will suffice to load up the index page.
+Open localhost:3000/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
+
 
 ##Week 0
 Feature #17 - Displaying global variables
@@ -94,3 +92,11 @@ A tile view has been implemented which shows the status of all the sites by colo
 
 In addition, there are associated tests in gameSpec.js and the function itself, intervention(gs) is present in game.js and is called in the update function.
 
+##Week4
+Feature #7 - Inquiry Interface
+
+This feature can be seen displayed on the tiled view once a simulation scenario is selected. A variety of options to inquire on work's progress on a site, each with varying costs are displayed. Options are influenced by the cultural background of a given site.
+
+Feature #15 - Cultural Differences
+
+Each site has a specific culture identifier, which is used to decide how they report failure etc to the player. An example of this can be seen if the first scenario is selected and an asian site is sent an 'are you on schedule?' email. They will always report yes regardless of the state of the site.
