@@ -64,16 +64,16 @@ function GameState(setting)
         case 3:
             this.sites = [
                 site_builder("New York", "Agile", false, [
-                        module_builder("Backend", 11, 10000),
-                        module_builder("Database", 8, 1000)
+                        module_builder("Backend", 11, 1000),
+                        module_builder("Database", 8, 100)
                         ]),
-                site_builder("Shanghai", "Waterfall", false, [
-                        module_builder("Middle End", 12, 9000),
-                        module_builder("Communications Software", 9, 3000)
+                site_builder("Shanghai", "Agile", false, [
+                        module_builder("Middle End", 12, 900),
+                        module_builder("Communications Software", 9, 300)
                         ]),
-                site_builder("Dublin", "Waterfall", true, [
-                        module_builder("Front End", 15, 11000),
-                        module_builder("Mobile Client", 9, 3000)
+                site_builder("Dublin", "Agile", true, [
+                        module_builder("Front End", 15, 1100),
+                        module_builder("Mobile Client", 11, 300)
                         ])
                     ];
             break;

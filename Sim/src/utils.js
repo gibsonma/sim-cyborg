@@ -76,6 +76,7 @@ function check_if_completed(gs) {
             }
         }
     }
+    return finished;
 }
 
 function report(gs){

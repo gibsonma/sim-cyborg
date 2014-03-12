@@ -92,7 +92,11 @@ function simpleTick(ticker)
         if (GAME_DATA.gs.current_time % 24 == 0){
             daily_transactions();
         }
-        check_if_completed(GAME_DATA.gs);
+        if (check_if_completed(GAME_DATA.gs)){
+            if (GAME_DATA.gs.current_time < 24) daily_transactions();
+            GAME_DATA.ticker.pause();
+            display_final_score(GAME_DATA.gs);
+        }
     }
     update(GAME_DATA.gs);
 }
@@ -130,9 +134,10 @@ function display_final_score(gs){
     html += "<br>";
     vex.dialog.alert(html);
 }
+
 var tileView;
+
 function update_tileview(gs) {
-    
 	if (tileView) {
         tileView.update('state');    
     }
