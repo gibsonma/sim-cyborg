@@ -4,65 +4,75 @@
 //a vex dialog box containing the details of said scenario
 function displayScenarioValues(scenNum)
 {
-	if(isNaN(scenNum))return -1;
-	var game = GAME_DATA.gs, sites = '', modules = '', tasks = '', workers = '', capital = game.capital;
-	for(var i = 0; i < game.sites.length; i++)
-	{
-		sites += '<br>' + game.sites[i].name;
-		workers += '<br>' + game.sites[i].name + ' : ' + getSiteWorkers(game.sites[i]) + ' Developers';
-		modules += '<br>' + game.sites[i].name + ' : ';
-		for(var j = 0; j < game.sites[i].working_on.length; j++)
-		{
-			modules += game.sites[i].working_on[j].name;
-			tasks += '<br>' + game.sites[i].working_on[j].name + ' : ' + getEffortForModule(game.sites[i].working_on[j]) + ' Developer Hours';
-		}
-	}
-	GAME_DATA.ticker.pause();//Pause the game
-	vex.dialog.confirm({
-	  message: '<p>You have picked Scenario '+scenNum + '</p>' + 
-	           '<p>Sites:' + sites + '</p>' + 
-			   '<p>Number of Developers:' + workers + '</p>' +
-			   '<p>Modules:' + modules + '</p>' +
-			   '<p>Expected Effort:' + tasks + '</p>' +
-			   '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
-			   '<p>Starting Capital: $'+capital+'</p>',
-	  callback: function(value) {
-		GAME_DATA.ticker.resume();
-		return value;
-	  }
-	});
+    if(isNaN(scenNum))return -1;
+    var game = GAME_DATA.gs, sites = '', modules = '', tasks = '', workers = '', capital = game.capital;
+    for(var i = 0; i < game.sites.length; i++)
+    {
+        sites += '<br>' + game.sites[i].name;
+        workers += '<br>' + game.sites[i].name + ' : ' + getSiteWorkers(game.sites[i]) + ' Developers';
+        modules += '<br>' + game.sites[i].name + ' : ';
+        for(var j = 0; j < game.sites[i].working_on.length; j++)
+        {
+            modules += game.sites[i].working_on[j].name;
+            tasks += '<br>' + game.sites[i].working_on[j].name + ' : ' + getEffortForModule(game.sites[i].working_on[j]) + ' Developer Hours';
+        }
+    }
+    GAME_DATA.ticker.pause();//Pause the game
+    vex.dialog.confirm({
+      message: '<p>You have picked Scenario '+scenNum + '</p>' + 
+               '<p>Sites:' + sites + '</p>' + 
+               '<p>Number of Developers:' + workers + '</p>' +
+               '<p>Modules:' + modules + '</p>' +
+               '<p>Expected Effort:' + tasks + '</p>' +
+               '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
+               '<p>Starting Capital: $'+capital+'</p>',
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
 }
 
+//Given a module, this function will calculate how much effort will be required to complete it
+//by summing up the expected total of its tasks and returning it
 //Ask user which scenario they want
 //Load details of chosen scenario
 //Call setupGame with chosen scenario
 
 function setupGame(scene, setting)
 {
-	GAME_DATA.scene = scene;
+    GAME_DATA.scene = scene;
     GAME_DATA.state_dialog = null;
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
-	setLocalTime(GAME_DATA.gs.sites, GAME_DATA.gs.home_site);
+    setLocalTime(GAME_DATA.gs.sites, GAME_DATA.gs.home_site);
 }
 
-//The home site's start time is known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and assigned
+//Goes through the sites and finds the home site. This site's time is then known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and returned
 function setLocalTime(sites, homeSite)
 {
-	var homeZone = homeSite.timezone, difference = 0;
-	for(var i = 0; i < sites.length; i++)
-	{
-		site = sites[i];
-		if(site != homeSite)
-		{
-			difference = homeZone[0] - site.timezone[0];
-			if(difference > 0)site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference];
-			else if(difference < 0)site.local_time = TIME_CLOCK[-difference];
-		}
-	}
+    var homeZone = homeSite.timezone, difference = 0;
+//  console.log(homeSite.name + ' ' + homeZone);
+    for(var i = 0; i < sites.length; i++)
+    {
+        site = sites[i];
+        if(site != homeSite)
+        {
+            difference = homeZone[0] - site.timezone[0];
+        //  console.log(site.name + ' ' + difference);
+            if(difference > 0)
+            {
+                site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference];
+            }
+            else if(difference < 0)
+            {
+                site.local_time = TIME_CLOCK[-difference];
+            }
+        }
+    }
 }
 
 function simpleTick(ticker)
@@ -73,6 +83,10 @@ function simpleTick(ticker)
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
 
+    if (GAME_DATA.state_dialog !== null) {
+        updateGameStateDialog(GAME_DATA.gs);
+    }
+
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         incrementTime();
         display_game_time();
@@ -81,11 +95,7 @@ function simpleTick(ticker)
         if (GAME_DATA.gs.current_time % 24 == 0){
             daily_transactions();
         }
-        if (check_if_completed(GAME_DATA.gs)){
-            if (GAME_DATA.gs.current_time < 24) daily_transactions();
-            GAME_DATA.ticker.pause();
-            display_final_score(gs);
-        };
+        check_if_completed(GAME_DATA.gs);
     }
     update(GAME_DATA.gs);
 }
@@ -94,18 +104,18 @@ function incrementTime(){
     GAME_DATA.gs.current_time ++;
     GAME_DATA.gs.time["Current Hour"]++;
     if (GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
-	incrementLocalTimes();
+    incrementLocalTimes();
 }
 //Goes through each site and updates its local time
 function incrementLocalTimes()
 {
-	var game = GAME_DATA.gs;
-	for(var i = 0; i < game.sites.length; i++)
-	{
-		site = game.sites[i];
-		site.local_time++;
-		if (site.local_time >= 24)site.local_time = 0;
-	}
+    var game = GAME_DATA.gs;
+    for(var i = 0; i < game.sites.length; i++)
+    {
+        site = game.sites[i];
+        site.local_time++;
+        if (site.local_time >= 24)site.local_time = 0;
+    }
 }
 
 function display_final_score(gs){
@@ -125,6 +135,12 @@ function display_final_score(gs){
     html += "<br>";
     vex.dialog.alert(html);
     GAME_DATA.state_dialog.html(html);
+}
+function updateGameStateDialog(gs) {
+    if (tileView) {
+        tileView.update('state');    
+    }
+
 }
 
 function display_game_time(){
@@ -168,4 +184,3 @@ function update(gs)
         }
     }
 }
-
