@@ -20,6 +20,7 @@ window.onload = function() {
     });
 	GAME_DATA.gs = new GameState(1);
     load_globals(GAME_DATA.gs);
+	vex.dialog.alert("Select a scenario to start the simulation!");
     $(document).ready(function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
@@ -103,15 +104,59 @@ function renderTileview() {
             var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
             if(GAME_DATA.gs.sites[siteIndex].culture.influence == "asian" || GAME_DATA.gs.sites[siteIndex].culture.influence == "russian")
             {
-                //function for all ok
+                inquireCultural(siteIndex);//function for all ok
             }
             else
             {
-                //function for accurate
+                inquireAccurate(siteIndex);//function for accurate
             }
         });
     }
 };
+
+function inquireAccurate(siteIndex)
+{
+    GAME_DATA.ticker.pause();
+    new_transaction(-100);
+    var result = [];
+	var status = '';
+    var modules = GAME_DATA.gs.sites[siteIndex].working_on;
+    for(var i = 0; i < modules.length; i++)
+    {
+        if(statusClass(modules[i]) == 'on-schedule')status = 'On Schedule';
+		else status = 'Behind Schedule';
+		result += '<br> ' + modules[i].name + ' : ' + status;
+    }
+    vex.dialog.confirm({
+      message: '<p>' + result + '</p>'
+               ,
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
+}
+
+function inquireCultural(siteIndex)
+{
+    GAME_DATA.ticker.pause();
+    new_transaction(-100);
+    var result = '';
+	var status = 'On Schedule';
+    var modules = GAME_DATA.gs.sites[siteIndex].working_on;
+    for(var i = 0; i < modules.length; i++)
+    {
+		result += '<br> ' + modules[i].name + ' : ' + status;
+    }
+     vex.dialog.confirm({
+      message: '<p>' + result + '</p>'
+               ,
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
+}
 
 function showEmailResponsePositive()
 {
