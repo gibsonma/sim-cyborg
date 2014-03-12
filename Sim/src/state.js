@@ -73,7 +73,7 @@ function GameState(setting)
         case 3:
             site = new Site("Dublin", (111,18), new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
             site2 = new Site("San Francisco", (43,43), new Culture("western"), "Waterfall", TIMEZONE_AMERICA, false);
-            site3 = new Site("Bangalore", (90,70), new Culture("indian"), "Waterfall", TIMEZONE_ASIA, false);
+            site3 = new Site("Bangalore", (90,70), new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
             this.sites = [site, site2, site3];
             this.home_site = site;
             main_module = new Module("Backend", [new Task("Design",250), new Task("Implement", 200), new Task("Test", 100)]);
