@@ -4,6 +4,7 @@
 //a vex dialog box containing the details of said scenario
 function displayScenarioValues(scenNum)
 {
+	if(isNaN(scenNum))return -1;
 	var game = GAME_DATA.gs, sites = '', modules = '', tasks = '', workers = '', capital = game.capital;
 	for(var i = 0; i < game.sites.length; i++)
 	{
@@ -27,6 +28,7 @@ function displayScenarioValues(scenNum)
 			   '<p>Starting Capital: $'+capital+'</p>',
 	  callback: function(value) {
 		GAME_DATA.ticker.resume();
+		return value;
 	  }
 	});
 }

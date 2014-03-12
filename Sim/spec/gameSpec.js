@@ -158,5 +158,14 @@ describe("Displaying Scenario Values", function()
 			expect(getSiteWorkers(testSite)).toEqual(11);
 		});
 	});
+	it("Returns -1 if not passed a number & Calls the helper functions", function()
+	{
+		getEffortForModule = jasmine.createSpy();
+		getSiteWorkers = jasmine.createSpy();
+		displayScenarioValues(1)
+		expect(displayScenarioValues("Not a Number")).toEqual(-1);
+		expect(getEffortForModule).toHaveBeenCalled();
+		expect(getSiteWorkers).toHaveBeenCalled();
+	});
 });
 
