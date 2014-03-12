@@ -29,15 +29,15 @@ function GameState(setting)
     {
         case 1:
             this.sites = [
-                site_builder("New York", "Agile", false, 10, [
+                site_builder("New York", "Agile", false, [
                         module_builder("Backend", 6, 10000),
                         module_builder("Database", 2, 1000)
                         ]),
-                site_builder("Shanghai", "Waterfall", false, 20, [
+                site_builder("Shanghai", "Waterfall", false, [
                         module_builder("Middle End", 6, 9000),
                         module_builder("Communications Software", 4, 3000)
                         ]),
-                site_builder("Dublin", "Agile", true, 15, [
+                site_builder("Dublin", "Agile", true, [
                         module_builder("Front End", 7, 11000),
                         module_builder("Mobile Client", 3, 3000)
                         ])

@@ -154,7 +154,7 @@ function update(gs)
         /* waterfall needs to be done in stages, so each module can only go onto the next task
          * once every other module is on the same level (has the same number of tasks done) */
         var lowest_lifecycle = module_lifecycle_stage(site); 
-        if (should_be_working(site,gs) && lowest_lifecycle != -1){
+        if (should_be_working(site, gs) && lowest_lifecycle != -1){
             for (var j=0; j < site.working_on.length; j++){
                 var module = site.working_on[j];
                 switch (site.development_type) {
