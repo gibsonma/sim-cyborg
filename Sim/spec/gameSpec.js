@@ -169,3 +169,46 @@ describe("Displaying Scenario Values", function()
 	});
 });
 
+describe("Setting the local times", function()
+{
+	var game = new GameState(1);
+	beforeEach(function()
+	{
+		for(var i = 0; i < game.sites.length; i++)game.sites[i].local_time = 0;
+		game.home_site.local_time = 0;
+	});
+	it("Sets local times correctly when Dublin is the home site", function()
+	{
+		game.home_site = game.sites[2];
+		setLocalTime(game.sites, game.home_site);
+		expect(game.home_site.name).toEqual("Dublin");
+		expect(game.home_site.local_time).toEqual(0);
+		expect(game.sites[0].name).toEqual("New York");
+		expect(game.sites[0].local_time).toEqual(17);
+		expect(game.sites[1].name).toEqual("Shanghai");
+		expect(game.sites[1].local_time).toEqual(9);
+	});
+	it("Sets local times correctly when New York is the home site", function()
+	{
+		game.home_site = game.sites[0];
+		setLocalTime(game.sites, game.home_site);
+		expect(game.home_site.name).toEqual("New York");
+		expect(game.home_site.local_time).toEqual(0);
+		expect(game.sites[2].name).toEqual("Dublin");
+		expect(game.sites[2].local_time).toEqual(7);
+		expect(game.sites[1].name).toEqual("Shanghai");
+		expect(game.sites[1].local_time).toEqual(16);
+	});
+	it("Sets local times correctly when Shanghai is the home site", function()
+	{
+		game.home_site = game.sites[1];
+		setLocalTime(game.sites, game.home_site);
+		expect(game.home_site.name).toEqual("Shanghai");
+		expect(game.home_site.local_time).toEqual(0);
+		expect(game.sites[2].name).toEqual("Dublin");
+		expect(game.sites[2].local_time).toEqual(15);
+		expect(game.sites[0].name).toEqual("New York");
+		expect(game.sites[0].local_time).toEqual(8);
+	});
+});
+

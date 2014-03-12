@@ -69,6 +69,31 @@ function setupGame(scene, setting)
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
+	setLocalTime(GAME_DATA.gs.sites, GAME_DATA.gs.home_site);
+}
+
+//Goes through the sites and finds the home site. This site's time is then known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and returned
+function setLocalTime(sites, homeSite)
+{
+	var homeZone = homeSite.timezone, difference = 0;
+//	console.log(homeSite.name + ' ' + homeZone);
+	for(var i = 0; i < sites.length; i++)
+	{
+		site = sites[i];
+		if(site != homeSite)
+		{
+			difference = homeZone[0] - site.timezone[0];
+		//	console.log(site.name + ' ' + difference);
+			if(difference > 0)
+			{
+				site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference];
+			}
+			else if(difference < 0)
+			{
+				site.local_time = TIME_CLOCK[-difference];
+			}
+		}
+	}
 }
 
 function scheduleCalculator(gs)
@@ -309,6 +334,18 @@ function incrementTime(){
     GAME_DATA.gs.current_time ++;
     GAME_DATA.gs.time["Current Hour"]++;
     if (GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
+	incrementLocalTimes();
+}
+//Goes through each site and updates its local time
+function incrementLocalTimes()
+{
+	var game = GAME_DATA.gs;
+	for(var i = 0; i < game.sites.length; i++)
+	{
+		site = game.sites[i];
+		site.local_time++;
+		if (site.local_time >= 24)site.local_time = 0;
+	}
 }
 
 function check_if_completed(gs) {
