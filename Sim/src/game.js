@@ -72,26 +72,18 @@ function setupGame(scene, setting)
 	setLocalTime(GAME_DATA.gs.sites, GAME_DATA.gs.home_site);
 }
 
-//Goes through the sites and finds the home site. This site's time is then known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and returned
+//The home site's start time is known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and assigned
 function setLocalTime(sites, homeSite)
 {
 	var homeZone = homeSite.timezone, difference = 0;
-//	console.log(homeSite.name + ' ' + homeZone);
 	for(var i = 0; i < sites.length; i++)
 	{
 		site = sites[i];
 		if(site != homeSite)
 		{
 			difference = homeZone[0] - site.timezone[0];
-		//	console.log(site.name + ' ' + difference);
-			if(difference > 0)
-			{
-				site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference];
-			}
-			else if(difference < 0)
-			{
-				site.local_time = TIME_CLOCK[-difference];
-			}
+			if(difference > 0)site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference];
+			else if(difference < 0)site.local_time = TIME_CLOCK[-difference];
 		}
 	}
 }
