@@ -53,6 +53,8 @@ Feature #20 - Default game scenarios
 
 This can be verified by viewing the main page of the simulation (index.html or navigating to localhost:3000), and clicking one of the scenario buttons on the top of the screen. Currently the game will initialise to scenario 1 on game load, but a user can restart the simulation by clicking any of the three scenario buttons.
 
+The details of each scenario are now displayed once the player selects them. At the moment, since scenario 1 is automatically selected, this will pop up once the simulation loads but this will be changed. The user can then click on any of the other scenario buttons and see the relevant popup The relevant code for this is found in game.js with the function 'displayScenarioValues()'. The associated tests are in gameSpec.js under 'Displaying Scenario Values'
+
 Feature #6 - Display of game state and module progress
 
 Clicking the button to the left of the scenario buttons on the main simulation page will toggle between preset constants and the increasing progress of the game state.

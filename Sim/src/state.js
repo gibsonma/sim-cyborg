@@ -143,7 +143,6 @@ function load_globals(gs){
         gs.waterfall_speedup_modifier = obj.waterfall_speedup_modifier;
         gs.capital = gs.starting_capital;
     });
-    console.log(gs.revenue);
 }
 
 function Site(name, coordinates, culture_modifier, dev, timezone, home){

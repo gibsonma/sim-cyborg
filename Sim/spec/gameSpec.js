@@ -131,3 +131,32 @@ describe("Intervention Interface", function()
 	});
 });
 
+describe("Displaying Scenario Values", function()
+{
+	describe("Calculating Effort for each Module", function()
+	{
+		expModule = new Module("Backend", [new Task("Design",1000), new Task("Implement", 2500), new Task("Test", 3500)]);
+		it("Calculates the total effort required to complete a module correctly", function()
+		{
+			expect(getEffortForModule(expModule)).toEqual(7000);
+		});
+		it("Returns -1 when an invalid object is passed in", function()
+		{
+			expect(getEffortForModule("Fake Module")).toEqual(-1);
+		});
+	});
+	describe("Get the number of workers per site", function()
+	{
+		testSite = new Site("New York", (121,43), new Culture("western"), "Agile", TIMEZONE_AMERICA, false);
+		testModule = new Module("Backend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
+        testModule.tasks[0].assigned = 3;
+        testModule.tasks[1].assigned = 5;
+        testModule.tasks[2].assigned = 3; 
+		testSite.working_on[0] = testModule;
+		it("Given a site, it returns the correct number of workers", function()
+		{
+			expect(getSiteWorkers(testSite)).toEqual(11);
+		});
+	});
+});
+

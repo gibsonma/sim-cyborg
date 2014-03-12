@@ -4,19 +4,54 @@
 //a vex dialog box containing the details of said scenario
 function displayScenarioValues(scenNum)
 {
-	for(var key in GAME_DATA.gs)console.log(key + ' ' + GAME_DATA.gs[key]);
-	var game = GAME_DATA.gs;
-	var sites = '', capital = game.capital;
-	for(var i = 0; i < game.sites.length; i++)sites += ' ' + game.sites[i].name;
+	var game = GAME_DATA.gs, sites = '', modules = '', tasks = '', workers = '', capital = game.capital;
+	for(var i = 0; i < game.sites.length; i++)
+	{
+		sites += '<br>' + game.sites[i].name;
+		workers += '<br>' + game.sites[i].name + ' : ' + getSiteWorkers(game.sites[i]) + ' Developers';
+		modules += '<br>' + game.sites[i].name + ' : ';
+		for(var j = 0; j < game.sites[i].working_on.length; j++)
+		{
+			modules += game.sites[i].working_on[j].name;
+			tasks += '<br>' + game.sites[i].working_on[j].name + ' : ' + getEffortForModule(game.sites[i].working_on[j]) + ' Developer Hours';
+		}
+	}
 	GAME_DATA.ticker.pause();//Pause the game
 	vex.dialog.confirm({
 	  message: '<p>You have picked Scenario '+scenNum + '</p>' + 
 	           '<p>Sites:' + sites + '</p>' + 
+			   '<p>Number of Developers:' + workers + '</p>' +
+			   '<p>Modules:' + modules + '</p>' +
+			   '<p>Expected Effort:' + tasks + '</p>' +
+			   '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
 			   '<p>Starting Capital: $'+capital+'</p>',
 	  callback: function(value) {
 		GAME_DATA.ticker.resume();
 	  }
 	});
+}
+
+//Given a module, this function will calculate how much effort will be required to complete it
+//by summing up the expected total of its tasks and returning it
+function getEffortForModule(module)
+{
+	if(!module.tasks)return -1;
+	var result = 0;
+	for(var i = 0; i < module.tasks.length; i++)
+	{
+		result += module.tasks[i].total;
+	}
+	return result;
+}
+//Given a site, this function goes through all the tasks being worked on and returns how many workers that are working at the site
+function getSiteWorkers(site)
+{
+	var result = 0, modules = site.working_on;
+	for(var i = 0; i < modules.length; i++)
+	{
+		for(var j = 0; j < modules[i].tasks.length; j++)result += modules[i].tasks[j].assigned;	
+	}
+	return result;
 }
 
 //Ask user which scenario they want
