@@ -77,25 +77,61 @@ function renderTileview() {
             var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
             if(GAME_DATA.gs.sites[siteIndex].culture.influence == "asian" || GAME_DATA.gs.sites[siteIndex].culture.influence == "russian")
             {
-                console.log("ok");
+                showEmailResponsePositive();
             } 
             else if(siteStatus == 'site_tile schedule-ok')
             {
-                console.log("ok");
+                showEmailResponsePositive();
 
             }
             else if(siteStatus == 'site_tile schedule-behind')
             {
-                console.log("behind");
+                showEmailResponseNegative();
             }
             else
             {
-                console.log("very behind");
+                showEmailResponseCritical();
 
             }
         });
     }
 };
+
+function showEmailResponsePositive()
+{
+     GAME_DATA.ticker.pause();//Pause the game
+    vex.dialog.confirm({
+      message: '<p>Everything is on schedule at this site.</p>',
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
+}
+
+function showEmailResponseNegative()
+{
+     GAME_DATA.ticker.pause();//Pause the game
+    vex.dialog.confirm({
+      message: '<p>We are behind at this site.</p>',
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
+}
+
+function showEmailResponseCritical()
+{
+     GAME_DATA.ticker.pause();//Pause the game
+    vex.dialog.confirm({
+      message: '<p>We have a critical problem at this site.</p>',
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
+}
 
 
 function showHomeSitePopup() {
