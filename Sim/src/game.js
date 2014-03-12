@@ -56,10 +56,6 @@ function simpleTick(ticker)
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
 
-    if (GAME_DATA.state_dialog !== null) {
-        updateGameStateDialog(GAME_DATA.gs);
-    }
-
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         incrementTime();
         display_game_time();
@@ -100,12 +96,6 @@ function display_final_score(gs){
     html += "<br>";
     vex.dialog.alert(html);
     GAME_DATA.state_dialog.html(html);
-}
-function updateGameStateDialog(gs) {
-
-    if (tileView) {
-        tileView.update('state');    
-    }
 }
 
 function display_game_time(){
