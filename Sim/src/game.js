@@ -85,7 +85,7 @@ function simpleTick(ticker)
     update_tileview(GAME_DATA.gs);
 
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
-        incrementTime();
+        incrementTime(GAME_DATA.gs);
         display_game_time();
         TICKS_PASSED = 0;
 
@@ -97,22 +97,20 @@ function simpleTick(ticker)
     update(GAME_DATA.gs);
 }
 
-function incrementTime(){
-    GAME_DATA.gs.current_time ++;
-    GAME_DATA.gs.time["Current Hour"]++;
-    if (GAME_DATA.gs.time["Current Hour"] >= 24)GAME_DATA.gs.time["Current Hour"] = 0;
-    incrementLocalTimes();
+function incrementTime(gs){
+    gs.current_time ++;
+    gs.time["Current Hour"]++;
+    if (gs.time["Current Hour"] >= 24)gs.time["Current Hour"] = 0;
+	incrementLocalTimes(gs);
 }
 //Goes through each site and updates its local time
-function incrementLocalTimes()
+function incrementLocalTimes(gs)
 {
-    var game = GAME_DATA.gs;
-    for(var i = 0; i < game.sites.length; i++)
-    {
-        site = game.sites[i];
-        site.local_time++;
-        if (site.local_time >= 24)site.local_time = 0;
-    }
+	for(var i = 0; i < gs.sites.length; i++)
+	{
+		gs.sites[i].local_time++;
+		if (gs.sites[i].local_time >= 24)gs.sites[i].local_time = 0;
+	}
 }
 
 function display_final_score(gs){
@@ -132,9 +130,10 @@ function display_final_score(gs){
     html += "<br>";
     vex.dialog.alert(html);
 }
-
+var tileView;
 function update_tileview(gs) {
-    if (tileView) {
+    
+	if (tileView) {
         tileView.update('state');    
     }
 }

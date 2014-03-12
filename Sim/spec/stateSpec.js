@@ -49,7 +49,17 @@ describe("Module Completion Calculator", function()
 		expect(vary(task.total)).toBeGreaterThan(minVal);
 	});
 });
-
+describe("Updating local timezones", function()
+{
+	var game = new GameState(1);
+	setLocalTime(game.sites, game.home_site);
+	it("Updated local times correctly", function()
+	{
+		expect(game.sites[0].local_time).toEqual(17);
+		incrementTime(game);
+		expect(game.sites[0].local_time).toEqual(18);
+	});
+});
 
 
 
