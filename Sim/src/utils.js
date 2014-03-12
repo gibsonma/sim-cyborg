@@ -11,15 +11,15 @@ function getEffortForModule(module)
 	}
 	return result;
 }
+
 //Given a site, this function goes through all the tasks being worked on and returns how many workers that are working at the site
 function getSiteWorkers(site)
 {
 	var result = 0;
-    var modules = site.working_on;
 
-	for(var i = 0; i < modules.length; i++)
+	for(var i = 0; i < site.working_on.length; i++)
 	{
-        result += modules.assigned;
+        result += site.working_on[i].assigned;
 	}
 	return result;
 }
