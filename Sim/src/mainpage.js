@@ -18,7 +18,8 @@ window.onload = function() {
         office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
         office.update();
     });
-
+	GAME_DATA.gs = new GameState(1);
+    load_globals(GAME_DATA.gs);
     $(document).ready(function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
@@ -32,7 +33,7 @@ window.onload = function() {
             setupGame(scene,3);
             renderTileview();
         });
-        setupGame(scene,1);
+    //    setupGame(scene,1);
         $.get('src/templates/tileview.html', function(template) {
             TEMPLATES['tileview'] = template;
             renderTileview();
@@ -40,7 +41,7 @@ window.onload = function() {
         $.get('src/templates/popupView.html', function(template) {
             TEMPLATES['popupView'] = template;
         });
-
+	$('.site_tile').hide();
     });
 }; 
 
