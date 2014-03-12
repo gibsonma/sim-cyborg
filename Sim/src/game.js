@@ -42,7 +42,6 @@ function displayScenarioValues(scenNum)
 function setupGame(scene, setting)
 {
     GAME_DATA.scene = scene;
-    GAME_DATA.state_dialog = null;
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
@@ -83,9 +82,7 @@ function simpleTick(ticker)
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
 
-    if (GAME_DATA.state_dialog !== null) {
-        updateGameStateDialog(GAME_DATA.gs);
-    }
+    update_tileview(GAME_DATA.gs);
 
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         incrementTime();
@@ -134,13 +131,12 @@ function display_final_score(gs){
     html += "<p>Actual revenue: $" + stats.actual_revenue+"</p>";
     html += "<br>";
     vex.dialog.alert(html);
-    GAME_DATA.state_dialog.html(html);
 }
-function updateGameStateDialog(gs) {
+
+function update_tileview(gs) {
     if (tileView) {
         tileView.update('state');    
     }
-
 }
 
 function display_game_time(){
