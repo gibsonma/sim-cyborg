@@ -52,7 +52,7 @@ describe("Module Completion Calculator", function()
 describe("Updating local timezones", function()
 {
 	var game = new GameState(1);
-	setLocalTime(game.sites, game.home_site);
+	setLocalTime(game.sites, get_home_site(game.sites));
 	it("Updated local times correctly", function()
 	{
 		expect(game.sites[0].local_time).toEqual(17);

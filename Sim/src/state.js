@@ -43,47 +43,34 @@ function GameState(setting)
                         ])
                     ];
             break;
-
         case 2:
-            site = new Site("Dublin", new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
-            site2 = new Site("Poland", new Culture("eastern european"), "Waterfall", TIMEZONE_EASTERN_EUROPE, false);
-            this.sites = [site, site2];
-            this.home_site = site;
-            main_module = new Module("Backend", [new Task("Design",4000), new Task("Implement", 1500), new Task("Test", 5000)]);
-            main_module.tasks[0].assigned = 2; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 1;
-            main_module.tasks[2].assigned = 1;
-            second_module = new Module("Frontend", [new Task("Design",4000), new Task("Implement", 2500), new Task("Test", 5500)]);
-            second_module.tasks[0].assigned = 1; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 2;
-            second_module.tasks[2].assigned = 3; 
-            this.modules = [main_module, second_module];
-            this.sites[0].working_on.push(main_module);
-            this.sites[1].working_on.push(second_module);
+            this.sites = [
+                site_builder("Dublin", "Waterfall", true, [
+                        module_builder("Backend", 6, 10000),
+                        module_builder("Database", 2, 1000)
+                        ]),
+                site_builder("Poland", "Waterfall", false, [
+                        module_builder("Middle End", 6, 9000),
+                        module_builder("Backend", 6, 5000)
+                        ]),
+                    ];
             break;
 
         case 3:
-            site = new Site("Dublin", new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
-            site2 = new Site("San Francisco", new Culture("western"), "Waterfall", TIMEZONE_AMERICA, false);
-            site3 = new Site("Bangalore", new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
-            this.sites = [site, site2, site3];
-            this.home_site = site;
-            main_module = new Module("Backend", [new Task("Design",250), new Task("Implement", 200), new Task("Test", 100)]);
-            main_module.tasks[0].assigned = 5; // NB will need to have proper methods to change who's assigned to what
-            main_module.tasks[1].assigned = 6;
-            main_module.tasks[2].assigned = 7;
-            second_module = new Module("Frontend", [new Task("Design",120), new Task("Implement", 200), new Task("Test", 50)]);
-            second_module.tasks[0].assigned = 6; // NB will need to have proper methods to change who's assigned to what
-            second_module.tasks[1].assigned = 6;
-            second_module.tasks[2].assigned = 8; 
-            third_module = new Module("Support System", [new Task("Design",320), new Task("Implement", 200), new Task("Test", 50)]);
-            third_module.tasks[0].assigned = 7; // NB will need to have proper methods to change who's assigned to what
-            third_module.tasks[1].assigned = 6;
-            third_module.tasks[2].assigned = 7; 
-            this.modules = [main_module, second_module];
-            this.sites[0].working_on.push(main_module);
-            this.sites[1].working_on.push(second_module);
-            this.sites[2].working_on.push(third_module);
+            this.sites = [
+                site_builder("New York", "Agile", false, [
+                        module_builder("Backend", 11, 10000),
+                        module_builder("Database", 8, 1000)
+                        ]),
+                site_builder("Shanghai", "Waterfall", false, [
+                        module_builder("Middle End", 12, 9000),
+                        module_builder("Communications Software", 9, 3000)
+                        ]),
+                site_builder("Dublin", "Waterfall", true, [
+                        module_builder("Front End", 15, 11000),
+                        module_builder("Mobile Client", 9, 3000)
+                        ])
+                    ];
             break;
     }
     this.global_distances = 0;

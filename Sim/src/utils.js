@@ -24,15 +24,14 @@ function getSiteWorkers(site)
 	return result;
 }
 function scheduleCalculator(gs)
-
 {  
     return sum_tasks(gs)/WORK_LOAD;
 }
 
 function sum_tasks(gs){
-    var listOfModules = gs.modules;
+    var listOfModules = get_all_modules();
     var sumTasks = 0;
-    for(var i = 0; i < listOfModules.length; i++){
+    for (var i = 0; i < listOfModules.length; i++){
         var modTasks = listOfModules[i].tasks;
         for(var j = 0; j < modTasks.length; j++)
         {
@@ -163,4 +162,16 @@ function get_home_site(sites){
         if (sites[i].home == true) return sites[i];
     }
     console.log("Home site not set");
+}
+
+function get_all_modules(){
+    var gs = GAME_DATA.gs;
+    var modules = [];
+    for (var i=0; i< gs.sites.length; i++){
+        var site = gs.sites[i];
+        for (var j=0; j < site.working_on.length; j++){
+            modules.push(site.working_on[j]);
+        }
+    }
+    return modules;
 }
