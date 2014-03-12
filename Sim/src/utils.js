@@ -54,15 +54,6 @@ function number_assigned_workers(){
     }
     return total_assigned;
 }
-function most_assigned_task(module){
-
-    var most_assigned = 0;
-    for (var k=0; k < module.tasks.length; k++){
-        var task = module.tasks[k];
-        if (task.assigned > most_assigned) most_assigned = task.assigned;
-    }
-    return most_assigned;
-}
 
 function check_if_completed(gs) {
     var finished = true;
