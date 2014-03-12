@@ -29,9 +29,9 @@ function GameState(setting)
     switch(setting)
     {
         case 1:
-            site = new Site("New York", (121,43), new Culture(), "Agile", TIMEZONE_AMERICA, false);
-            site2 = new Site("Shanghai", (43,43), new Culture(), "Waterfall", TIMEZONE_ASIA, false);
-            site3 = new Site("Dublin", (111,18), new Culture(), "Agile", TIMEZONE_EUROPE, true);
+            site = new Site("New York", (121,43), new Culture("western"), "Agile", TIMEZONE_AMERICA, false);
+            site2 = new Site("Shanghai", (43,43), new Culture("asian"), "Waterfall", TIMEZONE_ASIA, false);
+            site3 = new Site("Dublin", (111,18), new Culture("western"), "Agile", TIMEZONE_EUROPE, true);
             this.sites = [site, site2, site3];
             this.home_site = site3;
             main_module = new Module("Backend", [new Task("Design",3000), new Task("Implement", 2500), new Task("Test", 3500)]);
@@ -53,8 +53,8 @@ function GameState(setting)
             break;
 
         case 2:
-            site = new Site("Dublin", (111,18), new Culture(), "Waterfall", TIMEZONE_EUROPE, true);
-            site2 = new Site("Poland", (53,53), new Culture(), "Waterfall", TIMEZONE_EASTERN_EUROPE, false);
+            site = new Site("Dublin", (111,18), new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
+            site2 = new Site("Poland", (53,53), new Culture("eastern european"), "Waterfall", TIMEZONE_EASTERN_EUROPE, false);
             this.sites = [site, site2];
             this.home_site = site;
             main_module = new Module("Backend", [new Task("Design",4000), new Task("Implement", 1500), new Task("Test", 5000)]);
@@ -71,9 +71,9 @@ function GameState(setting)
             break;
 
         case 3:
-            site = new Site("Dublin", (111,18), new Culture(), "Waterfall", TIMEZONE_EUROPE, true);
-            site2 = new Site("San Francisco", (43,43), new Culture(), "Waterfall", TIMEZONE_AMERICA, false);
-            site3 = new Site("Bangalore", (90,70), new Culture(), "Waterfall", TIMEZONE_ASIA, false);
+            site = new Site("Dublin", (111,18), new Culture("western"), "Waterfall", TIMEZONE_EUROPE, true);
+            site2 = new Site("San Francisco", (43,43), new Culture("western"), "Waterfall", TIMEZONE_AMERICA, false);
+            site3 = new Site("Bangalore", (90,70), new Culture("indian"), "Waterfall", TIMEZONE_ASIA, false);
             this.sites = [site, site2, site3];
             this.home_site = site;
             main_module = new Module("Backend", [new Task("Design",250), new Task("Implement", 200), new Task("Test", 100)]);
@@ -159,7 +159,9 @@ function Site(name, coordinates, culture_modifier, dev, timezone, home){
     this.home = home;
 }
 
-function Culture(){}
+function Culture(influence){
+    this.influence = influence;
+}
 
 function Module(name, tasks){
     this.name = name;

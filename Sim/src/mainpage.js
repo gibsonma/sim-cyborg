@@ -81,15 +81,39 @@ function renderTileview() {
         });
         $('.site_tile').not('[data-name="' + GAME_DATA.gs.home_site.name + '"]').find('.info-popup').hide();
         $('.site_tile').find('.info-popup-nonhome').hide();
+        $('.site_tile').find('.info-popup-email').hide();
         $('.site_tile').not('[data-name="' + GAME_DATA.gs.home_site.name + '"]').find('.info-popup-nonhome').toggle();
+        $('.site_tile').not('[data-name="' + GAME_DATA.gs.home_site.name + '"]').find('.info-popup-email').toggle();
         $('.site_tile>.info-popup').click(function() {
             showHomeSitePopup();
         });
         $('.site_tile>.info-popup-nonhome').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
-            console.log(siteIndex);
             showSpecificSitePopup(siteIndex,1000);
+        });
+        $('.site_tile>.info-popup-email').click(function() {
+            var siteName = $(this).parent().attr('data-name');
+            var siteStatus = $(this).parent().attr('class');
+            var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
+            if(GAME_DATA.gs.sites[siteIndex].culture.influence == "asian" || GAME_DATA.gs.sites[siteIndex].culture.influence == "russian")
+            {
+                console.log("ok");
+            } 
+            else if(siteStatus == 'site_tile schedule-ok')
+            {
+                console.log("ok");
+
+            }
+            else if(siteStatus == 'site_tile schedule-behind')
+            {
+                console.log("behind");
+            }
+            else
+            {
+                console.log("very behind");
+
+            }
         });
     }
 };
