@@ -47,7 +47,7 @@ function setupGame(scene, setting)
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
-    setLocalTime(GAME_DATA.gs.sites, GAME_DATA.gs.home_site);
+    setLocalTime(GAME_DATA.gs.sites, get_home_site(GAME_DATA.gs.sites));
 }
 
 //Goes through the sites and finds the home site. This site's time is then known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and returned

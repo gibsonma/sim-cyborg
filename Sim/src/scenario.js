@@ -1,22 +1,31 @@
 
-function site_builder(site_name, dev_type, home){
+function site_builder(site_name, dev_type, home, modules){
+    var site_obj;
     switch (site_name){
         case "New York":
-            return new Site(site_name, new Culture("western"), dev_type, TIMEZONE_AMERICA, home);
+            site_obj = new Site(site_name, new Culture("western"), dev_type, TIMEZONE_AMERICA, home);
+            break;
         case "Shanghai":
-            return new Site(site_name, new Culture("asian"), dev_type, TIMEZONE_ASIA, home);
+            site_obj = new Site(site_name, new Culture("asian"), dev_type, TIMEZONE_ASIA, home);
+            break;
         case "Dublin":
-            return new Site(site_name, new Culture("western"), dev_type, TIMEZONE_EUROPE, home);
+            site_obj = new Site(site_name, new Culture("western"), dev_type, TIMEZONE_EUROPE, home);
+            break;
         case "Poland":
-            return new Site(site_name, new Culture("eastern european"), dev_type, TIMEZONE_EASTERN_EUROPE, home);
+            site_obj = new Site(site_name, new Culture("eastern european"), dev_type, TIMEZONE_EASTERN_EUROPE, home);
+            break;
         case "San Francisco":
-            return new Site(site_name, new Culture("western"), dev_type, TIMEZONE_AMERICA, home);
+            site_obj = new Site(site_name, new Culture("western"), dev_type, TIMEZONE_AMERICA, home);
+            break;
         case "Bangalore":
-            return new Site(site_name, new Culture("asian"), dev_type, TIMEZONE_ASIA, home);
+            site_obj = new Site(site_name, new Culture("asian"), dev_type, TIMEZONE_ASIA, home);
+            break;
         default:
             console.log("Unrecognised site name");
             return null;
     }
+    site_obj.working_on = modules;
+    return site_obj;
 }
 
 function module_builder(name, assigned, points){

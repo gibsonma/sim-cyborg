@@ -28,20 +28,20 @@ function GameState(setting)
     switch(setting)
     {
         case 1:
-            site = site_builder("New York", "Agile", false, 10);
-            site2 = site_builder("Shanghai", "Waterfall", false, 20);
-            site3 = site_builder("Dublin", "Agile", true, 15);
-
-            main_module = module_builder("Backend", 10, 10000);
-            second_module = module_builder("Middle End", 12, 8000);
-            third_module = module_builder("Front End", 12, 8000);
-
-            this.sites = [site, site2, site3];
-            this.home_site = site3;
-            this.modules = [main_module, second_module, third_module];
-            this.sites[0].working_on.push(main_module);
-            this.sites[1].working_on.push(second_module);
-            this.sites[2].working_on.push(third_module);
+            this.sites = [
+                site_builder("New York", "Agile", false, 10, [
+                        module_builder("Backend", 6, 10000),
+                        module_builder("Database", 2, 1000)
+                        ]),
+                site_builder("Shanghai", "Waterfall", false, 20, [
+                        module_builder("Middle End", 6, 9000),
+                        module_builder("Communications Software", 4, 3000)
+                        ]),
+                site_builder("Dublin", "Agile", true, 15, [
+                        module_builder("Front End", 7, 11000),
+                        module_builder("Mobile Client", 3, 3000)
+                        ])
+                    ];
             break;
 
         case 2:

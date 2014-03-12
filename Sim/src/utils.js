@@ -157,3 +157,10 @@ function getIndexOfSiteByName(name, gs) {
     }
     return -1;
 }
+
+function get_home_site(sites){
+    for (var i=0; i < sites.length; i++){
+        if (sites[i].home == true) return sites[i];
+    }
+    console.log("Home site not set");
+}

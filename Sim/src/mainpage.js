@@ -59,11 +59,12 @@ function renderTileview() {
                 statusClass: statusClass
             }
         });
-        $('.site_tile').not('[data-name="' + GAME_DATA.gs.home_site.name + '"]').find('.info-popup').hide();
+        var home = get_home_site(GAME_DATA.gs.sites).name;
+        $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup').hide();
         $('.site_tile').find('.info-popup-nonhome').hide();
         $('.site_tile').find('.info-popup-email').hide();
-        $('.site_tile').not('[data-name="' + GAME_DATA.gs.home_site.name + '"]').find('.info-popup-nonhome').toggle();
-        $('.site_tile').not('[data-name="' + GAME_DATA.gs.home_site.name + '"]').find('.info-popup-email').toggle();
+        $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup-nonhome').toggle();
+        $('.site_tile').not('[data-name="' + home + '"]').find('.info-popup-email').toggle();
         $('.site_tile>.info-popup').click(function() {
             showHomeSitePopup();
         });
@@ -145,7 +146,7 @@ function showHomeSitePopup() {
                 el: 'info-popup',
                 template: TEMPLATES['popupView'],
                 data: {
-                    site: GAME_DATA.gs.home_site//Object passed into popUpView
+                    site: get_home_site(GAME_DATA.gs.sites) //Object passed into popUpView
                 }
             });
         },
