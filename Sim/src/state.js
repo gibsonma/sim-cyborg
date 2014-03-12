@@ -3,14 +3,13 @@ var DESIRED_FPS = 30;
 var MILLIS_PER_FRAME = 1000 / DESIRED_FPS;
 var TIME_CLOCK = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];//Represents the 24 hour clock used to track the progress of days
 
-var TICKS_PER_UNIT_TIME = 10;       // Assuming we don't want the game's time to update every tick (if game time == days), 
+var TICKS_PER_UNIT_TIME = 2;       // Assuming we don't want the game's time to update every tick (if game time == days), 
 // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
 
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
-var PROBLEM_PROBABILITY = 0.1//% chance that a task will experience a problem if its site/module is selected
-var PROBLEM_CONSTANT = 0.005; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
+var PROBLEM_CONSTANT = 0.05; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
