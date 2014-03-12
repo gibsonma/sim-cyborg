@@ -155,6 +155,7 @@ function Site(name, coordinates, culture_modifier, dev, timezone, home){
     this.timezone = timezone;
     this.problemCooldown = 0.0025;
     this.home = home;
+    this.local_time = 0;
 }
 
 function Culture(influence){
