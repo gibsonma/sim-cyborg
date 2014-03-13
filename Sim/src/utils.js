@@ -167,3 +167,28 @@ function get_all_modules(){
     }
     return modules;
 }
+
+function currently_doing_which_task(tasks){
+    for (var i=0; i<tasks.length; i++){
+        var task = tasks[i];
+        if (task.completed < task.actual_total) {
+            if (task.completed != 0) return task;
+            if (i > 0) return tasks[i-1];
+        }
+    }
+    return tasks[tasks.length-1];
+}
+
+function progress_on_current_task(module){
+    var doing_task = currently_doing_which_task(module.tasks);
+    if (doing_task.completed == doing_task.actual_total) return total_of_current_task(module);
+    var progress = doing_task.completed / GAME_DATA.gs.developer_effort / module.assigned / GAME_DATA.gs.developer_working_hours;
+    return progress;
+}
+
+function total_of_current_task(module){
+    var doing_task = currently_doing_which_task(module.tasks);
+    var total = doing_task.total / GAME_DATA.gs.developer_effort / module.assigned / GAME_DATA.gs.developer_working_hours;
+    if (doing_task.completed == doing_task.actual_total) return total;
+    return total;
+}
