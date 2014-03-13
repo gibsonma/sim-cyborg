@@ -1,7 +1,5 @@
 Filepath,"	Function Name","	Reason its's not tested"
 ~\Sim\src\game.js,"	simpleTick	",
-~\Sim\src\game.js,"	incrementTime	",
-~\Sim\src\game.js,"	display_final_score","	"
 ~\Sim\src\game.js,"	update_tileView	",
 ~\Sim\src\game.js,"	display_game_time","	"
 ~\Sim\src\game.js,"	update	",
