@@ -42,6 +42,19 @@ window.onload = function() {
             TEMPLATES['popupView'] = template;
         });
         $('.site_tile').hide();
+        if (TICKS_PER_UNIT_TIME <= 1) {
+            $('#time_faster').prop('disabled', true);
+        };
+        $('#time_slower').click(function() {
+            TICKS_PER_UNIT_TIME += 1;
+            $('#time_faster').prop('disabled', false);
+        });
+        $('#time_faster').click(function() {
+            if (TICKS_PER_UNIT_TIME === 2) {
+                $('#time_faster').prop('disabled', true);
+            };
+            TICKS_PER_UNIT_TIME -= 1;
+        });
     });
 }; 
 
