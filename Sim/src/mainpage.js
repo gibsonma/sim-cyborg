@@ -180,7 +180,7 @@ function inquireAccurate(site)
     var modules = site.modules;
     for(var i = 0; i < modules.length; i++)
     {
-        if(statusClass(modules[i]) == 'on-schedule') status = 'On Schedule';
+        if(statusClassModules(modules[i]) == 'on-schedule') status = 'On Schedule';
         else status = 'Behind Schedule';
         result += '<br> ' + modules[i].name + ' : ' + status;
     }
@@ -330,4 +330,35 @@ function statusClass(site) {
     else {
         return "schedule-behind"
     }
+}
+
+function statusClassModules(m){
+    var averageCompletion = 0;
+    for (var i = m.length - 1; i >= 0; i--) {
+        var module = m[i];
+        var moduleCompletionAvg = 0;
+        for (var i = module.tasks.length - 1; i >= 0; i--) {
+            var task = module.tasks[i];
+            if (task.completed <= 0) {
+                continue;
+            }
+            var actual_completion = task.completed / task.actual_total;
+            var expected_completion = task.completed / task.total;
+            var completion_difference = actual_completion / expected_completion;
+            moduleCompletionAvg += completion_difference;
+        };
+        moduleCompletionAvg = moduleCompletionAvg / module.tasks.length;
+        averageCompletion += moduleCompletionAvg;
+    };
+    averageCompletion = averageCompletion / m.length;
+
+    // averageCompletion of 1.0 means we are dead on target. <1.0 means behind, >1.0 we're ahead of schedule.
+    if(averageCompletion == 0) return "schedule-ok"; //temp fix for initial completion bug
+    if (averageCompletion >= 1.0) {
+        return "schedule-ok";
+    } 
+    else {
+        return "schedule-behind"
+    }
+
 }
