@@ -24,6 +24,7 @@ describe("Sites working during their timezone", function()
 describe("Nominal Schedule Calculator", function()
 {
     var game = new GameState(1);
+	
 	var total = 0
     for (var k=0; k <game.sites.length; k++){
         var site = game.sites[k];
@@ -39,5 +40,44 @@ describe("Nominal Schedule Calculator", function()
 	it("Takes into account the work load modifier", function()
 	{
 		expect(scheduleCalculator(game)).toEqual(37000);
+	});
+});
+
+describe("check_if_completed", function()
+{
+	var game = new GameState(1);
+	it("Returns false if all the tasks in a game are not completed", function()
+	{
+		expect(check_if_completed(game)).toBeFalsy();
+	});
+});
+
+describe("getIndexOfSiteByName", function()
+{
+	var game = new GameState(1);
+	var name = "New York";
+	it("Returns the correct index for a given site name", function()
+	{
+		expect(getIndexOfSiteByName(name, game)).toEqual(0);
+	});
+	it("Returns -1 if given a name that doesn't correspond to a site", function()
+	{
+		expect(getIndexOfSiteByName("False", game)).toEqual(-1);
+	});
+});
+
+describe("get_home_site", function()
+{
+	var game = new GameState(1);
+	var sites = game.sites;
+	var fake_sites = [];
+	game.home_site = sites[2];
+	it("Returns the home site when given an array of sites", function()
+	{
+		expect(get_home_site(sites)).toEqual(game.home_site);
+	});
+	it("Doesn't return anything of site not found", function()
+	{
+		expect(get_home_site(fake_sites)).not.toBeDefined();
 	});
 });
