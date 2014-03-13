@@ -21,24 +21,6 @@ body {
 	text-shadow: black 2px 2px;
 }
 
-#status_footer {
-	position: absolute;
-	left: 10px;
-	bottom: 10px;
-}
-
-#map_footer {
-	position: absolute;
-	right: 10px;
-	bottom: 10px;
-}
-
-#map_footer {
-	position: absolute;
-	right: 10px;
-	bottom: 10px;
-}
-
 #options_header {
 	position: absolute;
 	left: 10px;
