@@ -145,7 +145,7 @@ function update_tileview(gs) {
 }
 
 function display_game_time(gs){
-    if(gs.current_time % 24 == 0)gs.time["Days Passed"]++;
+    if(gs.time["Current Hour"] % 24 == 0)gs.time["Days Passed"]++;
     $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+gs.time["Current Hour"]+":00"+"</h3>");
 }
 
