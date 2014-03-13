@@ -1,43 +1,44 @@
-Filepath,	Function Name	Reason its's not tested
-~\Sim\src\game.js	simpleTick	
-~\Sim\src\game.js	incrementTime	
-~\Sim\src\game.js	display_final_score	
-~\Sim\src\game.js	update_tileView	
-~\Sim\src\game.js	display_game_time	
-~\Sim\src\game.js	update	
-~\Sim\src\finance.js	daily_transactions	
-~\Sim\src\finance.js	deduct_daily_expenses	
-~\Sim\src\finance.js	add_daily_revenue	
-~\Sim\src\finance.js	new_transaction	
-~\Sim\src\mainpage.js	renderTileView	
-~\Sim\src\mainpage.js	completedTasksEmail	
-~\Sim\src\mainpage.js	inquireAccurate	
-~\Sim\src\mainpage.js	inquireCultural	
-~\Sim\src\mainpage.js	showEmailResponsePositive	
-~\Sim\src\mainpage.js	showEmailResponseNegative	
-~\Sim\src\mainpage.js	showEmailResponseCritical	
-~\Sim\src\mainpage.js	showHomeSitePopup	
-~\Sim\src\mainpage.js	showSpecificSitePopup	
-~\Sim\src\mainpage.js	statusClass	
-~\Sim\src\problem.js	intervention(Alt) Fix the test	
-~\Sim\src\problem.js	problemSim	
-~\Sim\src\scenario.js	site_builder	
-~\Sim\src\scenario.js	module_builder	
-~\Sim\src\scenario.js	task_builder	
-~\Sim\src\state.js	load_globals	
-~\Sim\src\state.js	Site	
-~\Sim\src\state.js	Culture	
-~\Sim\src\state.js	Module	
-~\Sim\src\state.js	Task	
-~\Sim\src\state.js	Problem	
-~\Sim\src\state.js	GameState_to_json	
-~\Sim\src\utils.js	number_assigned_workers	
-~\Sim\src\utils.js	most_assigned_task	
-~\Sim\src\utils.js	check_if_completed	
-~\Sim\src\utils.js	report	
-~\Sim\src\utils.js	get_total_expenditure	
-~\Sim\src\utils.js	get_total_revenue	
-~\Sim\src\utils.js	module_lifecycle_stage	
-~\Sim\src\utils.js	getIndexOfSiteByName	
-~\Sim\src\utils.js	get_home_site	
-~\Sim\src\utils.js	get_all_modules	
+Filepath,	Function Name,	Reason its's not tested
+~\Sim\src\game.js,	simpleTick	,
+~\Sim\src\game.js,	incrementTime	,
+~\Sim\src\game.js,	display_final_score,	
+~\Sim\src\game.js,	update_tileView	,
+~\Sim\src\game.js,	display_game_time,	
+~\Sim\src\game.js,	update	,
+~\Sim\src\finance.js,	daily_transactions	,
+~\Sim\src\finance.js,	deduct_daily_expenses,	
+~\Sim\src\finance.js,	add_daily_revenue,	
+~\Sim\src\finance.js,	new_transaction	,
+~\Sim\src\mainpage.js,	renderTileView	,
+~\Sim\src\mainpage.js,	completedTasksEmail,	
+~\Sim\src\mainpage.js,	inquireAccurate	,
+~\Sim\src\mainpage.js,	inquireCultural	,
+~\Sim\src\mainpage.js,	showEmailResponsePositive,	
+~\Sim\src\mainpage.js,	showEmailResponseNegative,	
+~\Sim\src\mainpage.js,	showEmailResponseCritical,	
+~\Sim\src\mainpage.js,	showHomeSitePopup	,
+~\Sim\src\mainpage.js,	showSpecificSitePopup,	
+~\Sim\src\mainpage.js,	statusClass	,
+~\Sim\src\problem.js,	intervention(Alt) Fix the test,	
+~\Sim\src\problem.js,	problemSim	,
+~\Sim\src\scenario.js,	site_builder	,
+~\Sim\src\scenario.js,	module_builder,	
+~\Sim\src\scenario.js,	task_builder,	
+~\Sim\src\state.js,	load_globals,	
+~\Sim\src\state.js,	Site	,
+~\Sim\src\state.js,	Culture	,
+~\Sim\src\state.js,	Module	,
+~\Sim\src\state.js,	Task	,
+~\Sim\src\state.js,	Problem	,
+~\Sim\src\state.js,	GameState_to_json	,
+~\Sim\src\utils.js,	number_assigned_workers,	
+~\Sim\src\utils.js,	most_assigned_task	,
+~\Sim\src\utils.js,	check_if_completed,	
+~\Sim\src\utils.js,	report	,
+~\Sim\src\utils.js,	get_total_expenditure,	
+~\Sim\src\utils.js,	get_total_revenue	,
+~\Sim\src\utils.js,	module_lifecycle_stage,	
+~\Sim\src\utils.js,	getIndexOfSiteByName,	
+~\Sim\src\utils.js,	get_home_site	,
+~\Sim\src\utils.js,	get_all_modules,	
+>>>>>>> work
