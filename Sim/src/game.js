@@ -121,6 +121,7 @@ function display_final_score(gs){
     var stats = new report(gs);
     var html = "<h2>End of Game Report</h2>";
     html += "<h3>Final score: " + Math.round(stats.final_score) +" points</p>";
+    html += "<p>Your project took: " + stats.months_str + "</p>";
     html += "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
     html += "<p>You started the game with: $" + gs.starting_capital + "</p>";
     html += "<p>You have " + number_assigned_workers() + " workers</p>";
