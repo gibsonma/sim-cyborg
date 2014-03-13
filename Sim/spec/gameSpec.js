@@ -41,6 +41,31 @@ describe("incrementTime", function()
 	});
 });
 
+describe("display_final_score", function()
+{
+	var game = new GameState(1);
+	it("Calls its helper functions", function()
+	{
+		number_assigned_workers = jasmine.createSpy();
+		display_final_score(game);
+		expect(number_assigned_workers).toHaveBeenCalled();
+	});
+});
+
+describe("display_game_time", function()
+{
+	var game = new GameState(1);
+	game.time["Current Hour"] = 23;
+	game.time["Days Passed"] = 10;
+	it("Updates the number of days passed correctly", function()
+	{
+		incrementTime(game);
+		display_game_time(game);
+		expect(game.time["Current Hour"]).toEqual(0);
+		expect(game.time["Days Passed"]).toEqual(11);
+	});
+});
+
 describe("Update game state", function (){
 	
     var setting = 2;

@@ -1,10 +1,7 @@
 Filepath,"	Function Name","	Reason its's not tested"
-~\Sim\src\game.js,"	simpleTick	",
-~\Sim\src\game.js,"	incrementTime	",
-~\Sim\src\game.js,"	display_final_score","	"
+~\Sim\src\game.js,"	simpleTick	",External Library
 ~\Sim\src\game.js,"	update_tileView	",
-~\Sim\src\game.js,"	display_game_time","	"
-~\Sim\src\game.js,"	update	",
+~\Sim\src\game.js,"	update	","Tested in ""Update Game State"""
 ~\Sim\src\finance.js,"	daily_transactions	",
 ~\Sim\src\finance.js,"	deduct_daily_expenses","	"
 ~\Sim\src\finance.js,"	add_daily_revenue","	"

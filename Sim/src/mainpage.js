@@ -272,9 +272,15 @@ function showSpecificSitePopup(site, cost) {
 
 }
 
-function statusClass(m) {                    
+function statusClass(site) {
+    if (site.culture.influence === "asian" || site.culture.influence === "russian") {
+        return "schedule-ok";
+    };
+    if(site.critical_problem === true) {
+        return "schedule-very-behind";
+    }        
     var averageCompletion = 0;
-
+    var m = site.modules;
     for (var i = m.length - 1; i >= 0; i--) {
         var module = m[i];
         var moduleCompletionAvg = 0;

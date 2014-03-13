@@ -139,7 +139,8 @@ function problemSim(gs)
             case 7:
                 var problemTask = problemModule.tasks[problemSeed-1];  //acceptance
                 var prob = new Problem("acceptance test failure",100, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/100; 
+                problemTask.actual_total += problemTask.actual_total/100;
+                problemSite.critical_problem = true;
                 break;                        
 
             default:

@@ -86,7 +86,7 @@ function simpleTick(ticker)
 
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         incrementTime(GAME_DATA.gs);
-        display_game_time();
+        display_game_time(GAME_DATA.gs);
         TICKS_PASSED = 0;
 
         if (GAME_DATA.gs.current_time % 24 == 0){
@@ -145,9 +145,9 @@ function update_tileview(gs) {
     }
 }
 
-function display_game_time(){
-    if(GAME_DATA.gs.current_time % 24 == 0)GAME_DATA.gs.time["Days Passed"]++;
-    $("#time").html("<h3>Days Passed: "+GAME_DATA.gs.time["Days Passed"]+ " Current Time "+GAME_DATA.gs.time["Current Hour"]+":00"+"</h3>");
+function display_game_time(gs){
+    if(gs.time["Current Hour"] % 24 == 0)gs.time["Days Passed"]++;
+    $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+gs.time["Current Hour"]+":00"+"</h3>");
 }
 
 // Example 'module.update()' function
