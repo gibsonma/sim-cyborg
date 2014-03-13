@@ -101,6 +101,7 @@ function renderTileview() {
         $('.site_tile>.info-popup-nonhome').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
+            update_actual_total(site);
             showSpecificSitePopup(site,1000);
         });
         $('.site_tile>.info-popup-email').click(function() {
@@ -293,6 +294,16 @@ function showSpecificSitePopup(site, cost) {
         }
     });
 
+}
+
+function update_actual_total(site){
+    for (var i=0; i < site.modules.length; i++){
+        var module = site.modules[i]
+        for (var j=0; j < module.tasks.length; j++){
+            var task = module.task[j];
+            task.total = task.actual_total;
+        }
+    }
 }
 
 function statusClass(site) {
