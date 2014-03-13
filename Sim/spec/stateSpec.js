@@ -60,6 +60,62 @@ describe("Updating local timezones", function()
 		expect(game.sites[0].local_time).toEqual(18);
 	});
 });
+describe("GameState_to_json", function()
+{
+	var game = new GameState(1);
+	it("turns gamestate into json", function()
+	{
+		expect(GameState_to_json(game)).not.toBeNull();
 
 
+	});
+});
+describe("Problem", function()
+{
+	it("checks if problem is defined", function()
+	{
+		var p = new Problem("test problem", 100, 0, 0, 1);
+		expect(p).toBeDefined();
 
+	});
+});
+
+describe("Site", function()
+{
+	it("checks if site is defined", function()
+	{
+		var s = new Site("Test Site", "asian", "Agile", TIMEZONE_EUROPE, false);
+		expect(s).toBeDefined();
+
+	});
+});
+
+describe("Culture", function()
+{
+	it("checks if culture is defined", function()
+	{
+		var c = new Culture("asian");
+		expect(c).toBeDefined();
+
+	});
+});
+
+describe("Module", function()
+{
+	it("checks if module is defined", function()
+	{
+		var m = new Module("test module", 6, []);
+		expect(m).toBeDefined();
+
+	});
+});
+
+describe("Task", function()
+{
+	it("checks if task is defined", function()
+	{
+		var t = new Task("Test Task", 100);
+		expect(t).toBeDefined();
+
+	});
+});
