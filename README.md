@@ -14,6 +14,8 @@ Global variables which are not typically changed from game to game are stored in
 ###Requires:
 * node.js - Web server
 
+(Development carried out using nodejs v0.10.15)
+
 ###Requires node packages:
 * express - Web application framework
 * forever - Keep a script running continually
