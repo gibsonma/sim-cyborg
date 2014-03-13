@@ -102,8 +102,6 @@ function months_to_str(months){
     var gs = GAME_DATA.gs;
     var plural_str = "months";
 
-    console.log("Months: " + months);
-
     if (months < 1) ret = Math.round(months*gs.days_per_month) + " days";
     else {
         if (Math.floor(months) == 1) plural_str = "month";
