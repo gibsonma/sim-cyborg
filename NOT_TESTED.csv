@@ -16,6 +16,7 @@ Filepath,"	Function Name","	Reason its's not tested"
 ~\Sim\src\mainpage.js,"	showHomeSitePopup	",
 ~\Sim\src\mainpage.js,"	showSpecificSitePopup","	"
 ~\Sim\src\mainpage.js,"	statusClass	",
+~\Sim\src\problem.js,"	intervention(Alt) Fix the test","	"
 ~\Sim\src\problem.js,"	problemSim	",
 ~\Sim\src\scenario.js,"	site_builder	",
 ~\Sim\src\scenario.js,"	module_builder","	"
