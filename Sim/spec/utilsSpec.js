@@ -38,6 +38,6 @@ describe("Nominal Schedule Calculator", function()
 	});
 	it("Takes into account the work load modifier", function()
 	{
-		expect(scheduleCalculator(game)).toEqual(total/WORK_LOAD);
+		expect(scheduleCalculator(game)).toEqual(37000);
 	});
 });

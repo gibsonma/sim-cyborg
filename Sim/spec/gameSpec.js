@@ -25,7 +25,6 @@ describe("setupGame", function()
 });
 
 
-
 describe("Update game state", function (){
 	
     var setting = 2;

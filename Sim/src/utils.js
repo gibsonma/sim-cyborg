@@ -25,20 +25,22 @@ function getSiteWorkers(site)
 }
 function scheduleCalculator(gs)
 {  
-    return sum_tasks(gs)/WORK_LOAD;
+    return sum_tasks(gs);
 }
 
 function sum_tasks(gs){
-    var listOfModules = get_all_modules();
-    var sumTasks = 0;
-    for (var i = 0; i < listOfModules.length; i++){
-        var modTasks = listOfModules[i].tasks;
-        for(var j = 0; j < modTasks.length; j++)
-        {
-            sumTasks += modTasks[j].total;
+    var effort=0;
+    for (var i=0; i<gs.sites.length; i++){
+        var site = gs.sites[i];
+        for (var j=0; j< site.modules.length; j++){
+            var module = site.modules[j];
+            for (var k=0; k<module.tasks.length; k++){
+                var task = module.tasks[k];
+                effort += task.total;
+            }
         }
     }
-    return sumTasks;
+    return effort;
 }
 function number_assigned_workers(){
 
@@ -71,15 +73,21 @@ function check_if_completed(gs) {
 }
 
 function report(gs){
+
+    var days_completed = gs.current_time / 24;
+    var effort_per_day = gs.developer_effort * gs.developer_working_hours;
+
+    this.actual_effort = Math.round(days_completed*effort_per_day*number_assigned_workers());
     this.expected_effort = Math.round(scheduleCalculator(gs));
-    this.actual_effort = Math.round(gs.current_time/24*gs.developer_effort*number_assigned_workers());
-    this.expected_expenditure = Math.round(sum_tasks(gs)/gs.developer_effort*number_assigned_workers() * 1.24); // see email for explanation
+    
+    this.expected_expenditure = Math.round((scheduleCalculator(gs)/gs.developer_effort) * gs.developer_rate * 1.24); // see email for explanation
     this.actual_expenditure = get_total_expenditure();
+
     var month = gs.current_time/24/gs.days_per_release;
     this.expected_revenue = Math.round(gs.revenue*month);
     this.actual_revenue = Math.round(get_total_revenue());
-    this.expected_time = scheduleCalculator(gs)/gs.developer_effort;
-    var expected_months = this.expected_time/24/gs.days_per_release;
+
+    var expected_months = scheduleCalculator(gs)/24/gs.days_per_release/number_assigned_workers();
     this.final_score = Math.round(gs.capital + (expected_months-month)*gs.revenue);
 }
 
@@ -140,11 +148,7 @@ function module_lifecycle_stage(site) {
 
 function getIndexOfSiteByName(name, gs) {
     for(var i = 0; i < gs.sites.length; i++){
-        if(name == gs.sites[i].name)
-        {
-            return i;
-        }
-
+        if(name == gs.sites[i].name) return i;
     }
     return -1;
 }
@@ -154,18 +158,6 @@ function get_home_site(sites){
         if (sites[i].home == true) return sites[i];
     }
     console.log("Home site not set");
-}
-
-function get_all_modules(){
-    var gs = GAME_DATA.gs;
-    var modules = [];
-    for (var i=0; i< gs.sites.length; i++){
-        var site = gs.sites[i];
-        for (var j=0; j < site.modules.length; j++){
-            modules.push(site.modules[j]);
-        }
-    }
-    return modules;
 }
 
 function currently_doing_which_task(tasks){
