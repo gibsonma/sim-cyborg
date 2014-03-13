@@ -45,18 +45,28 @@ window.onload = function() {
         if (TICKS_PER_UNIT_TIME <= 1) {
             $('#time_faster').prop('disabled', true);
         };
+        updateSpeedLabel();
         $('#time_slower').click(function() {
             TICKS_PER_UNIT_TIME += 1;
             $('#time_faster').prop('disabled', false);
+            updateSpeedLabel();
         });
         $('#time_faster').click(function() {
             if (TICKS_PER_UNIT_TIME === 2) {
                 $('#time_faster').prop('disabled', true);
             };
             TICKS_PER_UNIT_TIME -= 1;
+            updateSpeedLabel();
         });
     });
-}; 
+};
+
+function updateSpeedLabel() {
+    var speed = 1 / TICKS_PER_UNIT_TIME;
+    speed *= 100;
+    speed = Math.floor(speed);
+    $('#time_speed_label').text(speed)
+} 
 
 var tileView;
 //Iterate through sites and create an array which corresponds to each site's local time

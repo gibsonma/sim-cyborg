@@ -146,8 +146,20 @@ function update_tileview(gs) {
 }
 
 function display_game_time(gs){
+    var daysRemaining = calculate_days_remaining(gs);
     if(gs.time["Current Hour"] % 24 == 0)gs.time["Days Passed"]++;
     $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+gs.time["Current Hour"]+":00"+"</h3>");
+    $("#time").append("<h3>Estimated days remaining: " + daysRemaining + "</h3>");
+}
+
+function calculate_days_remaining(gs) {
+    var stats = new report(gs);
+
+    var effort_per_day = gs.developer_effort * gs.developer_working_hours * number_assigned_workers();
+
+    var remainingEffort = stats.expected_effort - stats.actual_effort;
+
+    return Math.floor(remainingEffort / effort_per_day);
 }
 
 // Example 'module.update()' function
