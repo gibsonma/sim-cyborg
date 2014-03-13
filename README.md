@@ -109,5 +109,6 @@ Sites will also return colours based on their cultural influence (e.g asian site
 
 Sites also go red only when dealing with a critical problem. All of this information is readily available on the main page of the simulation.
 
+Buttons have also been added which allow for speedup and slowdown of the game speed based on the user's preference
 
 The Simulation also asks the user to choose a scenario once the page is open rather than starting it immediately. Clicking a scenario button (one of three listed at the top of the screen) will also display info about that scenario.
