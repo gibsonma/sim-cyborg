@@ -57,6 +57,7 @@ function number_assigned_workers(){
     return total_assigned;
 }
 
+
 function check_if_completed(gs) {
     var finished = true;
     for (var i=0; i < gs.sites.length; i++){
@@ -101,8 +102,6 @@ function months_to_str(months){
     var ret;
     var gs = GAME_DATA.gs;
     var plural_str = "months";
-
-    console.log("Months: " + months);
 
     if (months < 1) ret = Math.round(months*gs.days_per_month) + " days";
     else {

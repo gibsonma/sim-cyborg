@@ -23,12 +23,8 @@ Filepath,"	Function Name","	Reason its's not tested"
 ~\Sim\src\state.js,"	load_globals","	"
 ~\Sim\src\utils.js,"	number_assigned_workers","	"
 ~\Sim\src\utils.js,"	most_assigned_task	",
-~\Sim\src\utils.js,"	check_if_completed","	"
 ~\Sim\src\utils.js,"	report	",
 ~\Sim\src\utils.js,"	get_total_expenditure","	"
 ~\Sim\src\utils.js,"	get_total_revenue	",
 ~\Sim\src\utils.js,"	module_lifecycle_stage","	"
-~\Sim\src\utils.js,"	getIndexOfSiteByName","	"
-~\Sim\src\utils.js,"	get_home_site	",
 ~\Sim\src\utils.js,"	get_all_modules","	"
->>>>>>> work,,
