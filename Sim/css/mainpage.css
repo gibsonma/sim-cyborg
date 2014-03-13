@@ -41,6 +41,13 @@ body {
 	top: 50%;
 }
 
+#time_speed_label {
+	display: inline-block;
+}
+#time_speed_label:after {
+	content: "%";
+}
+
 .site_tile {
 	display: inline-block;
 	margin-top: 20px;

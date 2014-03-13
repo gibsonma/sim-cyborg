@@ -42,8 +42,31 @@ window.onload = function() {
             TEMPLATES['popupView'] = template;
         });
         $('.site_tile').hide();
+        if (TICKS_PER_UNIT_TIME <= 1) {
+            $('#time_faster').prop('disabled', true);
+        };
+        updateSpeedLabel();
+        $('#time_slower').click(function() {
+            TICKS_PER_UNIT_TIME += 1;
+            $('#time_faster').prop('disabled', false);
+            updateSpeedLabel();
+        });
+        $('#time_faster').click(function() {
+            if (TICKS_PER_UNIT_TIME === 2) {
+                $('#time_faster').prop('disabled', true);
+            };
+            TICKS_PER_UNIT_TIME -= 1;
+            updateSpeedLabel();
+        });
     });
-}; 
+};
+
+function updateSpeedLabel() {
+    var speed = 1 / TICKS_PER_UNIT_TIME;
+    speed *= 100;
+    speed = Math.floor(speed);
+    $('#time_speed_label').text(speed);
+} 
 
 var tileView;
 //Iterate through sites and create an array which corresponds to each site's local time
@@ -77,14 +100,14 @@ function renderTileview() {
         });
         $('.site_tile>.info-popup-nonhome').click(function() {
             var siteName = $(this).parent().attr('data-name');
-            var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
-            showSpecificSitePopup(siteIndex,1000);
+            var site = getSiteByName(siteName, GAME_DATA.gs);
+            showSpecificSitePopup(site,1000);
         });
         $('.site_tile>.info-popup-email').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var siteStatus = $(this).parent().attr('class');
-            var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
-            if(GAME_DATA.gs.sites[siteIndex].culture.influence == "asian" || GAME_DATA.gs.sites[siteIndex].culture.influence == "russian")
+            var site = getSiteByName(siteName, GAME_DATA.gs);
+            if(site.culture.influence == "asian" || site.culture.influence == "russian")
         {
             showEmailResponsePositive();
         } 
@@ -105,31 +128,31 @@ function renderTileview() {
         });
         $('.site_tile>.info-popup-status').click(function() {
             var siteName = $(this).parent().attr('data-name');
-            var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
-            if(GAME_DATA.gs.sites[siteIndex].culture.influence == "asian" || GAME_DATA.gs.sites[siteIndex].culture.influence == "russian")
+            var site = getSiteByName(siteName, GAME_DATA.gs);
+            if(site.culture.influence == "asian" || site.culture.influence == "russian")
         {
-            inquireCultural(siteIndex);//function for all ok
+            inquireCultural(site);//function for all ok
         }
             else
         {
-            inquireAccurate(siteIndex);//function for accurate
+            inquireAccurate(site);//function for accurate
         }
         });
         $('.site_tile>.info-popup-tasks').click(function() {
             var siteName = $(this).parent().attr('data-name');
-            var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
-            completedTasksEmail(siteIndex);
+            var site = getSiteByName(siteName, GAME_DATA.gs);
+            completedTasksEmail(site);
         });
     }
 };
 
-function completedTasksEmail(siteIndex)
+function completedTasksEmail(site)
 {
     GAME_DATA.ticker.pause();
     new_transaction(-500);
-    var result = 'Completed Tasks: '
+    var result = 'Completed Tasks: ';
         var tasks = [];
-    var modules = GAME_DATA.gs.sites[siteIndex].modules;
+    var modules = site.modules;
     for(var i = 0; i < modules.length; i++)
     {
         tasks = modules[i].tasks;
@@ -148,13 +171,13 @@ function completedTasksEmail(siteIndex)
     });
 }
 
-function inquireAccurate(siteIndex)
+function inquireAccurate(site)
 {
     GAME_DATA.ticker.pause();
     new_transaction(-100);
     var result = [];
     var status = '';
-    var modules = GAME_DATA.gs.sites[siteIndex].modules;
+    var modules = site.modules;
     for(var i = 0; i < modules.length; i++)
     {
         if(statusClass(modules[i]) == 'on-schedule') status = 'On Schedule';
@@ -171,13 +194,13 @@ function inquireAccurate(siteIndex)
     });
 }
 
-function inquireCultural(siteIndex)
+function inquireCultural(site)
 {
     GAME_DATA.ticker.pause();
     new_transaction(-100);
     var result = '';
     var status = 'On Schedule';
-    var modules = GAME_DATA.gs.sites[siteIndex].modules;
+    var modules = site.modules;
     for(var i = 0; i < modules.length; i++)
     {
         result += '<br> ' + modules[i].name + ' : ' + status;
@@ -272,9 +295,15 @@ function showSpecificSitePopup(site, cost) {
 
 }
 
-function statusClass(m) {                    
+function statusClass(site) {
+    if (site.culture.influence === "asian" || site.culture.influence === "russian") {
+        return "schedule-ok";
+    };
+    if(site.critical_problem === true) {
+        return "schedule-very-behind";
+    }        
     var averageCompletion = 0;
-
+    var m = site.modules;
     for (var i = m.length - 1; i >= 0; i--) {
         var module = m[i];
         var moduleCompletionAvg = 0;
