@@ -272,7 +272,10 @@ function showSpecificSitePopup(site, cost) {
 
 }
 
-function statusClass(m) {                    
+function statusClass(m, critical_problem) {
+    if(critical_problem === true) {
+        return "schedule-very-behind";
+    }        
     var averageCompletion = 0;
 
     for (var i = m.length - 1; i >= 0; i--) {
