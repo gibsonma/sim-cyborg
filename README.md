@@ -109,10 +109,24 @@ Sites will also return colours based on their cultural influence (e.g asian site
 
 Sites also go red only when dealing with a critical problem. All of this information is readily available on the main page of the simulation.
 
-Buttons have also been added which allow for speedup and slowdown of the game speed based on the user's preference
-
 Feature #20 - Default game scenarios (updated)
 
 The Simulation also asks the user to choose a scenario once the page is open rather than starting it immediately. Clicking a scenario button (one of three listed at the top of the screen) will also display info about that scenario.
 
-The scenarios now follow a normal 7 stage development cycle
+The scenarios now follow a normal 7 stage development cycle, with each stage taking a percentage of time as indicated in the backlog.
+
+Feature #3 - Game score calculator (updated)
+
+Final game score updated according to what was discussed in meeting.
+
+Feature #14 - End of game report (updated)
+
+The end of game report has been updated according to what was discussed in the meeting. Revenue is now calculated according to a 6 month development period and 6 month revenue period, with extra revenue for finishing before the 6 month mark.
+
+Feature #9 - Process Simulator (updated)
+
+Process simulator now behaves differently for Agile and Waterfall. If a site has multiple waterfall modules each module can only progress to the next stage in the development cycle once all the other modules are also ready to progress
+
+Extra features:
+
+Buttons have also been added which allow for speedup and slowdown of the game speed based on the user's preference
