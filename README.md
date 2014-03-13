@@ -19,9 +19,9 @@ Global variables which are not typically changed from game to game are stored in
 * forever - Keep a script running continually
 
 ###Installing Dependencies
-node.js - http://nodejs.org/
-express - Use npm (https://www.npmjs.org/) npm install express
-forever - npm install forever
+*node.js - http://nodejs.org/
+*express - Use npm (https://www.npmjs.org/) npm install express
+*forever - npm install forever
 
 ###To Run tests:
 Open localhost:3000/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
