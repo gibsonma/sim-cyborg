@@ -75,31 +75,41 @@ function check_if_completed(gs) {
 function report(gs){
 
     var days_completed = gs.current_time / 24;
-    var effort_per_day = gs.developer_effort * gs.developer_working_hours;
+    var effort_per_day = gs.developer_effort * gs.developer_working_hours * number_assigned_workers();
     
-    var months_str;
     var months = gs.current_time/24/gs.days_per_release;
-    if (months < 1) this.months_str = Math.ceil(gs.current_time/24) + " days";
-    else {
-        var months_plural_str = "months";
-        if (Math.floor(months) == 1) months_plural_str = "month";
-        this.months_str = Math.floor(months) + " " + months_plural_str+ " and " + Math.ceil((gs.current_time/24)%gs.days_per_release) + " days";
-    }
+    this.months_str = months_to_str(months);
 
-    this.actual_effort = Math.round(days_completed*effort_per_day*number_assigned_workers());
+    this.actual_effort = Math.round(days_completed*effort_per_day);
     this.expected_effort = Math.round(scheduleCalculator(gs));
     
     this.expected_expenditure = Math.round((scheduleCalculator(gs)/gs.developer_effort) * gs.developer_rate * 1.24); // see email for explanation
     this.actual_expenditure = get_total_expenditure();
 
     var month = Math.ceil(gs.current_time/24/gs.days_per_release);
-    console.log("Month is " + month);
     this.expected_revenue = Math.round(gs.revenue/2);
-    console.log("Revenue is " + gs.revenue);
     this.actual_revenue = Math.round( (6-(month-6)) * (gs.revenue/12) );
+    
+    this.expected_months = scheduleCalculator(gs)/ effort_per_day / gs.days_per_release;
 
-    var expected_months = scheduleCalculator(gs)/24/gs.days_per_release/number_assigned_workers();
-    this.final_score = Math.round(gs.capital + (expected_months-month)*gs.revenue);
+    this.final_score = Math.round(gs.capital + (6-(month-6))* (gs.revenue/12));
+
+    this.expected_months_str = months_to_str(this.expected_months);
+}
+
+function months_to_str(months){
+    var ret;
+    var gs = GAME_DATA.gs;
+    var plural_str = "months";
+
+    console.log("Months: " + months);
+
+    if (months < 1) ret = Math.round(months*gs.days_per_release) + " days";
+    else {
+        if (Math.floor(months) == 1) plural_str = "month";
+        ret = Math.floor(months) + " " + plural_str+ " and " + Math.ceil((months-Math.floor(months))*  gs.days_per_release) + " days";
+    }
+    return ret;
 }
 
 function get_total_expenditure(){ // work out the amount of expenditure based on financial log
