@@ -82,6 +82,7 @@ function report(gs){
     
     this.expected_expenditure = Math.round((scheduleCalculator(gs)/gs.developer_effort) * gs.developer_rate * 1.24); // see email for explanation
     this.actual_expenditure = get_total_expenditure();
+
     var month = gs.current_time/24/gs.days_per_release;
     this.expected_revenue = Math.round(gs.revenue*month);
     this.actual_revenue = Math.round(get_total_revenue());
