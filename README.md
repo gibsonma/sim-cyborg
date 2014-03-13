@@ -61,7 +61,7 @@ Clicking the button to the left of the scenario buttons on the main simulation p
 
 Feature #11 - Problem Simulator
 
-Currently this system only assigns problems to tasks, but these problems do not negatively impact progress. Regardless, navigating to specrunner.html as described above will show tests pertaining to the assignment of problems to tasks.
+Problem Simulation assigns problems to tasks, notifies the user through the simulation and negatively impacts game progress as set out in the documentation provided in the backlog.
 
 Feature #14 - End of game report
 
