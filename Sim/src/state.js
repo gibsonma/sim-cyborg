@@ -59,7 +59,7 @@ function GameState(setting)
         case 3:
             this.sites = [
                 site_builder("New York", "Agile", true, [
-                        module_builder("Backend", 1, 100)
+                        module_builder("Backend", 10, 1000)
                         //module_builder("Database", 8, 100)
                         ])/*,
                 site_builder("Shanghai", "Agile", false, [

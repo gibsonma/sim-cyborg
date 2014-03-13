@@ -76,11 +76,11 @@ function report(gs){
 
     var days_completed = gs.current_time / 24;
     var effort_per_day = gs.developer_effort * gs.developer_working_hours;
+
     this.actual_effort = Math.round(days_completed*effort_per_day*number_assigned_workers());
-
     this.expected_effort = Math.round(scheduleCalculator(gs));
-
-    this.expected_expenditure = Math.round(sum_tasks(gs)/gs.developer_effort*number_assigned_workers() * 1.24); // see email for explanation
+    
+    this.expected_expenditure = Math.round((scheduleCalculator(gs)/gs.developer_effort) * gs.developer_rate * 1.24); // see email for explanation
     this.actual_expenditure = get_total_expenditure();
     var month = gs.current_time/24/gs.days_per_release;
     this.expected_revenue = Math.round(gs.revenue*month);
