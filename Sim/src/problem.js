@@ -45,7 +45,7 @@ function interventionAlt(gs, val)
     for(var i = 0; i < sites.length; i++)
     {
         if(sites[i].problems.length > 0)
-        {
+           {
 			var index = i;//Need to record index for use in callback
             var problem = sites[i].problems[0];
             if(!val)//If problem ignored
@@ -54,7 +54,7 @@ function interventionAlt(gs, val)
 				GAME_DATA.ticker.resume();//Resume game		
 				return console.log("Problem not fixed");
             }
-			console.log(gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total);
+			console.log("Actual total: " +gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total);
 			gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
 			console.log(gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total);
 			var cost = problem.cost;

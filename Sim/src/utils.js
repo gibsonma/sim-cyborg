@@ -156,9 +156,9 @@ function module_lifecycle_stage(site) {
     return lowest_cycle;
 }
 
-function getIndexOfSiteByName(name, gs) {
+function getSiteByName(name, gs) {
     for(var i = 0; i < gs.sites.length; i++){
-        if(name == gs.sites[i].name) return i;
+        if(name == gs.sites[i].name) return gs.sites[i];
     }
     return -1;
 }
