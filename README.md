@@ -127,6 +127,10 @@ Feature #9 - Process Simulator (updated)
 
 Process simulator now behaves differently for Agile and Waterfall. If a site has multiple waterfall modules each module can only progress to the next stage in the development cycle once all the other modules are also ready to progress
 
+Feature #11 - Problem Simulator (updated)
+
+Problems now occur and display an intervention screen where the player can fix a problem for a cost
+
 Extra features:
 
 Buttons have also been added which allow for speedup and slowdown of the game speed based on the user's preference
