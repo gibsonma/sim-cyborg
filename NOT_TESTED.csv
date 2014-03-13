@@ -22,12 +22,6 @@ Filepath,"	Function Name","	Reason its's not tested"
 ~\Sim\src\scenario.js,"	module_builder","	"
 ~\Sim\src\scenario.js,"	task_builder","	"
 ~\Sim\src\state.js,"	load_globals","	"
-~\Sim\src\state.js,"	Site	",
-~\Sim\src\state.js,"	Culture	",
-~\Sim\src\state.js,"	Module	",
-~\Sim\src\state.js,"	Task	",
-~\Sim\src\state.js,"	Problem	",
-~\Sim\src\state.js,"	GameState_to_json	",
 ~\Sim\src\utils.js,"	number_assigned_workers","	"
 ~\Sim\src\utils.js,"	most_assigned_task	",
 ~\Sim\src\utils.js,"	check_if_completed","	"
