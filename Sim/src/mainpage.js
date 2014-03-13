@@ -18,9 +18,9 @@ window.onload = function() {
         office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
         office.update();
     });
-	GAME_DATA.gs = new GameState(1);
+    GAME_DATA.gs = new GameState(1);
     load_globals(GAME_DATA.gs);
-	vex.dialog.alert("Select a scenario to start the simulation!");
+    vex.dialog.alert("Select a scenario to start the simulation!");
     $(document).ready(function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
@@ -41,7 +41,7 @@ window.onload = function() {
         $.get('src/templates/popupView.html', function(template) {
             TEMPLATES['popupView'] = template;
         });
-	$('.site_tile').hide();
+        $('.site_tile').hide();
     });
 }; 
 
@@ -56,10 +56,10 @@ function renderTileview() {
             template: TEMPLATES['tileview'],
             data: {
                 state: GAME_DATA.gs,
-                statusClass: statusClass,
-                currentTask: currently_doing_which_task,
-                progress: progress_on_current_task,
-                current_total: total_of_current_task
+            statusClass: statusClass,
+            currentTask: currently_doing_which_task,
+            progress: progress_on_current_task,
+            current_total: total_of_current_task
             }
         });
         var home = get_home_site(GAME_DATA.gs.sites).name;
@@ -85,40 +85,40 @@ function renderTileview() {
             var siteStatus = $(this).parent().attr('class');
             var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
             if(GAME_DATA.gs.sites[siteIndex].culture.influence == "asian" || GAME_DATA.gs.sites[siteIndex].culture.influence == "russian")
-            {
-                showEmailResponsePositive();
-            } 
+        {
+            showEmailResponsePositive();
+        } 
             else if(siteStatus == 'site_tile schedule-ok')
-            {
-                showEmailResponsePositive();
+        {
+            showEmailResponsePositive();
 
-            }
+        }
             else if(siteStatus == 'site_tile schedule-behind')
-            {
-                showEmailResponseNegative();
-            }
+        {
+            showEmailResponseNegative();
+        }
             else
-            {
-                showEmailResponseCritical();
+        {
+            showEmailResponseCritical();
 
-            }
+        }
         });
         $('.site_tile>.info-popup-status').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
             if(GAME_DATA.gs.sites[siteIndex].culture.influence == "asian" || GAME_DATA.gs.sites[siteIndex].culture.influence == "russian")
-            {
-                inquireCultural(siteIndex);//function for all ok
-            }
+        {
+            inquireCultural(siteIndex);//function for all ok
+        }
             else
-            {
-                inquireAccurate(siteIndex);//function for accurate
-            }
+        {
+            inquireAccurate(siteIndex);//function for accurate
+        }
         });
         $('.site_tile>.info-popup-tasks').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var siteIndex = getIndexOfSiteByName(siteName, GAME_DATA.gs);
-			completedTasksEmail(siteIndex);
+            completedTasksEmail(siteIndex);
         });
     }
 };
@@ -128,7 +128,7 @@ function completedTasksEmail(siteIndex)
     GAME_DATA.ticker.pause();
     new_transaction(-500);
     var result = 'Completed Tasks: '
-    var tasks = [];
+        var tasks = [];
     var modules = GAME_DATA.gs.sites[siteIndex].modules;
     for(var i = 0; i < modules.length; i++)
     {
@@ -139,12 +139,12 @@ function completedTasksEmail(siteIndex)
         }
     }
     vex.dialog.confirm({
-      message: '<p>' + result + '</p>' 
-               ,
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+        message: '<p>' + result + '</p>' 
+        ,
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
@@ -153,21 +153,21 @@ function inquireAccurate(siteIndex)
     GAME_DATA.ticker.pause();
     new_transaction(-100);
     var result = [];
-	var status = '';
+    var status = '';
     var modules = GAME_DATA.gs.sites[siteIndex].modules;
     for(var i = 0; i < modules.length; i++)
     {
         if(statusClass(modules[i]) == 'on-schedule') status = 'On Schedule';
-		else status = 'Behind Schedule';
-		result += '<br> ' + modules[i].name + ' : ' + status;
+        else status = 'Behind Schedule';
+        result += '<br> ' + modules[i].name + ' : ' + status;
     }
     vex.dialog.confirm({
-      message: '<p>' + result + '</p>'
-               ,
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+        message: '<p>' + result + '</p>'
+        ,
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
@@ -176,55 +176,55 @@ function inquireCultural(siteIndex)
     GAME_DATA.ticker.pause();
     new_transaction(-100);
     var result = '';
-	var status = 'On Schedule';
+    var status = 'On Schedule';
     var modules = GAME_DATA.gs.sites[siteIndex].modules;
     for(var i = 0; i < modules.length; i++)
     {
-		result += '<br> ' + modules[i].name + ' : ' + status;
+        result += '<br> ' + modules[i].name + ' : ' + status;
     }
-     vex.dialog.confirm({
-      message: '<p>' + result + '</p>'
-               ,
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+    vex.dialog.confirm({
+        message: '<p>' + result + '</p>'
+        ,
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
 function showEmailResponsePositive()
 {
-     GAME_DATA.ticker.pause();//Pause the game
+    GAME_DATA.ticker.pause();//Pause the game
     vex.dialog.confirm({
-      message: '<p>Everything is on schedule at this site.</p>',
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+        message: '<p>Everything is on schedule at this site.</p>',
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
 function showEmailResponseNegative()
 {
-     GAME_DATA.ticker.pause();//Pause the game
+    GAME_DATA.ticker.pause();//Pause the game
     vex.dialog.confirm({
-      message: '<p>We are behind at this site.</p>',
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+        message: '<p>We are behind at this site.</p>',
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
 function showEmailResponseCritical()
 {
-     GAME_DATA.ticker.pause();//Pause the game
+    GAME_DATA.ticker.pause();//Pause the game
     vex.dialog.confirm({
-      message: '<p>We have a critical problem at this site.</p>',
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+        message: '<p>We have a critical problem at this site.</p>',
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
@@ -237,17 +237,17 @@ function showHomeSitePopup() {
         afterOpen: function($vexContent) {
             popupView = new Ractive({
                 el: 'info-popup',
-                template: TEMPLATES['popupView'],
-                data: {
-                    site: get_home_site(GAME_DATA.gs.sites) //Object passed into popUpView
-                }
+            template: TEMPLATES['popupView'],
+            data: {
+                site: get_home_site(GAME_DATA.gs.sites) //Object passed into popUpView
+            }
             });
         },
         afterClose: function() {
             GAME_DATA.ticker.resume();
         }
     });
-    
+
 }
 
 function showSpecificSitePopup(site, cost) {
@@ -259,17 +259,17 @@ function showSpecificSitePopup(site, cost) {
             new_transaction(-cost);//Deduct cost of viewing site
             popupView = new Ractive({
                 el: 'info-popup',
-                template: TEMPLATES['popupView'],
-                data: {
-                    site: GAME_DATA.gs.sites[site]
-                }
+                      template: TEMPLATES['popupView'],
+                      data: {
+                          site: GAME_DATA.gs.sites[site]
+                      }
             });
         },
         afterClose: function() {
             GAME_DATA.ticker.resume();
         }
     });
-    
+
 }
 
 function statusClass(m) {                    
