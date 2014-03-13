@@ -125,8 +125,8 @@ function display_final_score(gs){
     html += "<p>You started the game with: $" + gs.starting_capital + "</p>";
     html += "<p>You have " + number_assigned_workers() + " workers</p>";
     html += "<br>";
-    html += "<p>Expected effort: " + stats.expected_effort+" developer hours</p>";
-    html += "<p>Actual effort: " + stats.actual_effort+" developer hours</p>";
+    html += "<p>Expected effort: " + stats.expected_effort+" effort points</p>";
+    html += "<p>Actual effort: " + stats.actual_effort+" effort points</p>";
     html += "<p>Expected expenditure: $" + stats.expected_expenditure+"</p>";
     html += "<p>Actual expenditure: $" + stats.actual_expenditure+"</p>";
     html += "<p>Expected revenue: $" + stats.expected_revenue+"</p>";

@@ -29,7 +29,7 @@
         <tr>
             <td>Stage Progress</td>
             {{#modules:i}}
-            <td>{{ Math.floor(progress(modules[i])) }} / {{ Math.round(current_total(modules[i])) }} days</td>
+            <td>{{ Math.ceil(progress(modules[i])) }} / {{ Math.ceil(current_total(modules[i])) }} days</td>
             {{/modules}}
         </tr>
     </table>
