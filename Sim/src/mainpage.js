@@ -101,7 +101,7 @@ function renderTileview() {
         $('.site_tile>.info-popup-nonhome').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
-            //update_actual_total(site);
+            update_actual_total(site);
             showSpecificSitePopup(site,1000);
         });
         $('.site_tile>.info-popup-email').click(function() {
@@ -285,7 +285,7 @@ function showSpecificSitePopup(site, cost) {
                 el: 'info-popup',
                       template: TEMPLATES['popupView'],
                       data: {
-                          site: GAME_DATA.gs.sites[site]
+                          site: site
                       }
             });
         },

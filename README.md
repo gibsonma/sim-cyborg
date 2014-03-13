@@ -103,7 +103,7 @@ Each site has a specific culture identifier, which is used to decide how they re
 
 Feature #6 - Status Display (updated)
 
-This now shows more information - mainly the expected value of each module length/the effort involved in completion (without the variance)
+This now shows more information. The tile view shows the current task a module is undergoing, and the progress. The progress is accurate for the home site, but estimated for the other sites. The progress for the other sites are updated to the actual values after visiting a site.
 
 Sites will also return colours based on their cultural influence (e.g asian sites will always report green even if critical).
 
@@ -111,4 +111,8 @@ Sites also go red only when dealing with a critical problem. All of this informa
 
 Buttons have also been added which allow for speedup and slowdown of the game speed based on the user's preference
 
+Feature #20 - Default game scenarios (updated)
+
 The Simulation also asks the user to choose a scenario once the page is open rather than starting it immediately. Clicking a scenario button (one of three listed at the top of the screen) will also display info about that scenario.
+
+The scenarios now follow a normal 7 stage development cycle
