@@ -42,7 +42,7 @@ window.onload = function() {
             TEMPLATES['popupView'] = template;
         });
         $('.site_tile').hide();
-        if (TICKS_PER_UNIT_TIME <= 1) {
+        if (TICKS_PER_UNIT_TIME <= 2) {
             $('#time_faster').prop('disabled', true);
         };
         updateSpeedLabel();
@@ -52,7 +52,7 @@ window.onload = function() {
             updateSpeedLabel();
         });
         $('#time_faster').click(function() {
-            if (TICKS_PER_UNIT_TIME === 2) {
+            if (TICKS_PER_UNIT_TIME === 3) {
                 $('#time_faster').prop('disabled', true);
             };
             TICKS_PER_UNIT_TIME -= 1;
@@ -62,7 +62,7 @@ window.onload = function() {
 };
 
 function updateSpeedLabel() {
-    var speed = 1 / TICKS_PER_UNIT_TIME;
+    var speed = 1 / (TICKS_PER_UNIT_TIME - 1);
     speed *= 100;
     speed = Math.floor(speed);
     $('#time_speed_label').text(speed);

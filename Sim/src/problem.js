@@ -147,5 +147,7 @@ function problemSim(gs)
                 console.log("What's yer prob");
         }
     }
-    //do something to site with result
+    console.log(failC);
+    return failC;
+
 }
