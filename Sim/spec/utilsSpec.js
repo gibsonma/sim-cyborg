@@ -39,7 +39,7 @@ describe("Nominal Schedule Calculator", function()
 	});
 	it("Takes into account the work load modifier", function()
 	{
-		expect(scheduleCalculator(game)).toEqual(37000);
+		expect(scheduleCalculator(game)).toEqual(40000);
 	});
 });
 
@@ -58,11 +58,7 @@ describe("getIndexOfSiteByName", function()
 	var name = "New York";
 	it("Returns the correct index for a given site name", function()
 	{
-		expect(getIndexOfSiteByName(name, game)).toEqual(0);
-	});
-	it("Returns -1 if given a name that doesn't correspond to a site", function()
-	{
-		expect(getIndexOfSiteByName("False", game)).toEqual(-1);
+		expect(getSiteByName(name, game)).toBeDefined;
 	});
 });
 
