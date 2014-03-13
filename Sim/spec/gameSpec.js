@@ -24,6 +24,22 @@ describe("setupGame", function()
 	});
 });
 
+describe("incrementTime", function()
+{
+	var game = new GameState(1);
+	it("Increments the current time", function()
+	{
+		expect(game.time["Current Hour"]).toEqual(0);
+		incrementTime(game);
+		expect(game.time["Current Hour"]).toEqual(1);
+	});
+	it("Resets the time back to 0 when its >= 24", function()
+	{
+		game.time["Current Hour"] = 24;
+		incrementTime(game);
+		expect(game.time["Current Hour"]).toEqual(0);
+	});
+});
 
 describe("Update game state", function (){
 	
