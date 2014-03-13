@@ -41,6 +41,23 @@ describe("incrementTime", function()
 	});
 });
 
+describe("display_final_score", function()
+{
+	var game = new GameState(1);
+	it("Calls its helper functions", function()
+	{
+		number_assigned_workers = jasmine.createSpy();
+		display_final_score(game);
+		expect(number_assigned_workers).toHaveBeenCalled();
+		expect(vex.dialog).toHaveBeenCalled();
+	});
+});
+
+describe("update_tileview", function()
+{
+	var game = new GameState(1);
+});
+
 describe("Update game state", function (){
 	
     var setting = 2;
