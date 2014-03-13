@@ -100,3 +100,14 @@ This feature can be seen displayed on the tiled view once a simulation scenario 
 Feature #15 - Cultural Differences
 
 Each site has a specific culture identifier, which is used to decide how they report failure etc to the player. An example of this can be seen if the first scenario is selected and an asian site is sent an 'are you on schedule?' email. They will always report yes regardless of the state of the site.
+
+Feature #6 - Status Display (updated)
+
+This now shows more information - mainly the expected value of each module length/the effort involved in completion (without the variance)
+
+Sites will also return colours based on their cultural influence (e.g asian sites will always report green even if critical).
+
+Sites also go red only when dealing with a critical problem. All of this information is readily available on the main page of the simulation.
+
+
+The Simulation also asks the user to choose a scenario once the page is open rather than starting it immediately. Clicking a scenario button (one of three listed at the top of the screen) will also display info about that scenario.
