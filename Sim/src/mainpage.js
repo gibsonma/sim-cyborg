@@ -65,7 +65,7 @@ function updateSpeedLabel() {
     var speed = 1 / TICKS_PER_UNIT_TIME;
     speed *= 100;
     speed = Math.floor(speed);
-    $('#time_speed_label').text(speed)
+    $('#time_speed_label').text(speed);
 } 
 
 var tileView;
