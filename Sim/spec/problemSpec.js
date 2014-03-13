@@ -22,3 +22,19 @@ describe("Intervention Interface", function()
 		expect(gs.sites[0].modules[0].tasks[1].actual_total).toEqual(orig);
 	});
 });
+
+describe("Problem Simulator", function()
+{
+	it("checks to make sure the fail value used to calculate problems is valid", function()
+	{
+		var gs = new GameState(1);
+			for(int i = 0; i < 10; i++)
+			{
+				var fail = problemSim(gs);
+			}
+		expect(fail).toBeLessThan(1);
+		expect(fail).toBeGreaterThan(0);
+
+	});
+
+});

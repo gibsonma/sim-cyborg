@@ -147,6 +147,9 @@ function update_tileview(gs) {
 
 function display_game_time(gs){
     var daysRemaining = calculate_days_remaining(gs);
+    if (daysRemaining < 0) {
+        daysRemaining = "0 (Overdue!)";
+    }
     if(gs.time["Current Hour"] % 24 == 0)gs.time["Days Passed"]++;
     $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+gs.time["Current Hour"]+":00"+"</h3>");
     $("#time").append("<h3>Estimated days remaining: " + daysRemaining + "</h3>");

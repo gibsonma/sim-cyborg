@@ -57,6 +57,7 @@ function number_assigned_workers(){
     return total_assigned;
 }
 
+
 function check_if_completed(gs) {
     var finished = true;
     for (var i=0; i < gs.sites.length; i++){
