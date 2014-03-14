@@ -50,26 +50,18 @@ function setupGame(scene, setting)
     setLocalTime(GAME_DATA.gs.sites, get_home_site(GAME_DATA.gs.sites));
 }
 
-//Goes through the sites and finds the home site. This site's time is then known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and returned
+//The home site's time is known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and set
 function setLocalTime(sites, homeSite)
 {
     var homeZone = homeSite.timezone, difference = 0;
-//  console.log(homeSite.name + ' ' + homeZone);
     for(var i = 0; i < sites.length; i++)
     {
         site = sites[i];
         if(site != homeSite)
         {
             difference = homeZone[0] - site.timezone[0];
-        //  console.log(site.name + ' ' + difference);
-            if(difference > 0)
-            {
-                site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference];
-            }
-            else if(difference < 0)
-            {
-                site.local_time = TIME_CLOCK[-difference];
-            }
+            if(difference > 0)site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference]; 
+            else if(difference < 0)site.local_time = TIME_CLOCK[-difference];   
         }
     }
 }
@@ -150,18 +142,18 @@ function display_game_time(gs){
     if (daysRemaining < 0) {
         daysRemaining = "0 (Overdue!)";
     }
-    if(gs.time["Current Hour"] % 24 == 0)gs.time["Days Passed"]++;
+    if(gs.time["Current Hour"] % 24 == 0)
+	{
+		gs.time["Days Passed"]++;
+	}
     $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+gs.time["Current Hour"]+":00"+"</h3>");
     $("#time").append("<h3>Estimated days remaining: " + daysRemaining + "</h3>");
 }
 
 function calculate_days_remaining(gs) {
     var stats = new report(gs);
-
     var effort_per_day = gs.developer_effort * gs.developer_working_hours * number_assigned_workers();
-
     var remainingEffort = stats.expected_effort - stats.actual_effort;
-
     return Math.floor(remainingEffort / effort_per_day);
 }
 
