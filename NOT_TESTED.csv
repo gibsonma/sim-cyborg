@@ -21,10 +21,7 @@ Filepath,Function Name,Reason its's not tested
 ~\Sim\src\scenario.js,module_builder,N/A
 ~\Sim\src\scenario.js,task_builder,N/A
 ~\Sim\src\state.js,load_globals,N/A
-~\Sim\src\utils.js,number_assigned_workers,N/A
-~\Sim\src\utils.js,most_assigned_task,N/A
-~\Sim\src\utils.js,report,N/A
-~\Sim\src\utils.js,get_total_expenditure,N/A	
-~\Sim\src\utils.js,get_total_revenue,N/A
-~\Sim\src\utils.js,module_lifecycle_stage,N/A
-~\Sim\src\utils.js,get_all_modules,N/A
+~\Sim\src\utils.js,months_to_str,N/A
+~\Sim\src\utils.js,currently_doing_which_tasks,N/A
+~\Sim\src\utils.js,progress_on_current_task,N/A
+~\Sim\src\utils.js,total_of_current_task,N/A

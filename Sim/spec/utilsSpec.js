@@ -52,7 +52,7 @@ describe("check_if_completed", function()
 	});
 });
 
-describe("getIndexOfSiteByName", function()
+describe("getSiteByName", function()
 {
 	var game = new GameState(1);
 	var name = "New York";
@@ -77,3 +77,98 @@ describe("get_home_site", function()
 		expect(get_home_site(fake_sites)).not.toBeDefined();
 	});
 });
+
+//NOTE result is passed to the expect as calling the function
+//or assigning result inside the it block causes it to return undefined...
+describe("getEffortForModule", function()
+{
+	var game = new GameState(1);
+	var mod = module_builder("Test", 10, 1200);
+	var result = getEffortForModule(mod);
+	it("Returns the total effort of the module", function()
+	{
+		expect(result).toEqual(1200);
+	});
+});
+
+describe("getSiteWorkers", function()
+{
+	var site = site_builder("New York", "Agile", false, [
+                        module_builder("Backend", 6, 10000),
+                        module_builder("Database", 2, 3000)]);
+	var result = getSiteWorkers(site);
+	it("Returns the correct number of workers", function()
+	{
+		expect(result).toEqual(8);
+	});
+});
+
+describe("number_assigned_workers", function()
+{
+	var game = new GameState(1);
+	GAME_DATA.gs = game;
+	var result = number_assigned_workers();
+	var num_workers = 0
+	for (var i=0; i < GAME_DATA.gs.sites.length; i++){
+        var site = GAME_DATA.gs.sites[i];
+		num_workers += getSiteWorkers(site);
+    }
+	it("Gets the total number of assigned workers in the game", function()
+	{
+		expect(GAME_DATA.gs).toBeDefined();
+		expect(result).toEqual(num_workers);
+	});
+});
+
+describe("report", function()
+{
+	var game = new GameState(1);
+	var obj = new report(game);
+	it("Creates the report object correctly", function()
+	{
+		expect(obj).toBeDefined();
+		expect(obj.months_str).toBeDefined();
+		expect(obj.actual_effort).toBeDefined();
+		expect(obj.expected_effort).toBeDefined();
+		expect(obj.actual_expenditure).toBeDefined();
+		expect(obj.expected_expenditure).toBeDefined();
+		expect(obj.actual_revenue).toBeDefined();
+		expect(obj.expected_revenue).toBeDefined();
+		expect(obj.expected_months).toBeDefined();
+		expect(obj.final_score).toBeDefined();
+		expect(obj.expected_months_str).toBeDefined();
+	});
+});
+
+describe("get_total_expenditure", function()
+{
+	var game = new GameState(1);
+	GAME_DATA.gs = game;
+	
+	it("Returns the expenses", function()
+	{
+		GAME_DATA.gs.financial_log.push({
+			"time":GAME_DATA.gs.current_time, 
+			"amount":1000
+		});
+		GAME_DATA.gs.financial_log.push({
+			"time":GAME_DATA.gs.current_time, 
+			"amount":-100
+		});
+		expect(GAME_DATA.gs.financial_log).toBeDefined();
+		expect(get_total_expenditure()).toEqual(100);
+	});
+});
+
+describe("module_lifecycle_stage", function()
+{
+	var game = new GameState(1);
+	var site = game.sites[0];
+	it("Return the lowest cycle", function()
+	{
+		expect(site).toBeDefined();
+		expect(module_lifecycle_stage(site)).toEqual(0);
+	});
+});
+
+

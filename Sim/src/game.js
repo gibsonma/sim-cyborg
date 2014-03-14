@@ -13,7 +13,7 @@ function displayScenarioValues(scenNum)
         modules += '<br>' + game.sites[i].name + ' : ';
         for(var j = 0; j < game.sites[i].modules.length; j++)
         {
-            modules += game.sites[i].modules[j].name;
+            modules += game.sites[i].modules[j].name + '; ';
             tasks += '<br>' + game.sites[i].modules[j].name + ' : ' + getEffortForModule(game.sites[i].modules[j]) + ' Developer Hours';
         }
     }

@@ -3,12 +3,9 @@
 //by summing up the expected total of its tasks and returning it
 function getEffortForModule(module)
 {
-	if (!module.tasks) return -1;
+	if (module.tasks == undefined) return -1;
 	var result = 0;
-	for(var i = 0; i < module.tasks.length; i++)
-	{
-		result += module.tasks[i].total;
-	}
+	for(var i = 0; i < module.tasks.length; i++)result += module.tasks[i].total;
 	return result;
 }
 
@@ -48,11 +45,7 @@ function number_assigned_workers(){
     var total_assigned = 0;
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-
-        for (var j=0; j < site.modules.length; j++){
-            var module = site.modules[j];
-            total_assigned += module.assigned;
-        }
+		total_assigned += getSiteWorkers(site);
     }
     return total_assigned;
 }
