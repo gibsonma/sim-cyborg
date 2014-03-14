@@ -1,30 +1,30 @@
-Filepath,"	Function Name","	Reason its's not tested"
-~\Sim\src\game.js,"	simpleTick	","External Library"
-~\Sim\src\game.js,"	update_tileView	","Tested as part of "update""
-~\Sim\src\game.js,"	update	","Tested in ""Update Game State"""
-~\Sim\src\finance.js,"	daily_transactions	",
-~\Sim\src\finance.js,"	deduct_daily_expenses","	"
-~\Sim\src\finance.js,"	add_daily_revenue","	"
-~\Sim\src\finance.js,"	new_transaction	",
-~\Sim\src\mainpage.js,"	renderTileView	",
-~\Sim\src\mainpage.js,"	completedTasksEmail","	"
-~\Sim\src\mainpage.js,"	inquireAccurate	",
-~\Sim\src\mainpage.js,"	inquireCultural	",
-~\Sim\src\mainpage.js,"	showEmailResponsePositive","	"
-~\Sim\src\mainpage.js,"	showEmailResponseNegative","	"
-~\Sim\src\mainpage.js,"	showEmailResponseCritical","	"
-~\Sim\src\mainpage.js,"	showHomeSitePopup	",
-~\Sim\src\mainpage.js,"	showSpecificSitePopup","	"
-~\Sim\src\mainpage.js,"	statusClass	",
-~\Sim\src\problem.js,"	intervention(Alt) Fix the test","	"
-~\Sim\src\scenario.js,"	site_builder	",
-~\Sim\src\scenario.js,"	module_builder","	"
-~\Sim\src\scenario.js,"	task_builder","	"
-~\Sim\src\state.js,"	load_globals","	"
-~\Sim\src\utils.js,"	number_assigned_workers","	"
-~\Sim\src\utils.js,"	most_assigned_task	",
-~\Sim\src\utils.js,"	report	",
-~\Sim\src\utils.js,"	get_total_expenditure","	"
-~\Sim\src\utils.js,"	get_total_revenue	",
-~\Sim\src\utils.js,"	module_lifecycle_stage","	"
-~\Sim\src\utils.js,"	get_all_modules","	"
+Filepath,Function Name,Reason its's not tested
+~\Sim\src\game.js,simpleTick,External Library
+~\Sim\src\game.js,update_tileView,Tested as part of update
+~\Sim\src\game.js,update,Tested in Update Game State
+~\Sim\src\finance.js,daily_transactions,N/A
+~\Sim\src\finance.js,deduct_daily_expenses,N/A
+~\Sim\src\finance.js,add_daily_revenue,N/A
+~\Sim\src\finance.js,new_transaction,N/A
+~\Sim\src\mainpage.js,renderTileView,N/A
+~\Sim\src\mainpage.js,completedTasksEmail,N/A
+~\Sim\src\mainpage.js,inquireAccurate,N/A
+~\Sim\src\mainpage.js,inquireCultural,N/A
+~\Sim\src\mainpage.js,showEmailResponsePositive,N/A
+~\Sim\src\mainpage.js,showEmailResponseNegative,N/A
+~\Sim\src\mainpage.js,showEmailResponseCritical,N/A
+~\Sim\src\mainpage.js,showHomeSitePopup,N/A
+~\Sim\src\mainpage.js,showSpecificSitePopup,N/A
+~\Sim\src\mainpage.js,statusClass,N/A
+~\Sim\src\problem.js,intervention(Alt) Fix the test,N/A
+~\Sim\src\scenario.js,site_builder,N/A
+~\Sim\src\scenario.js,module_builder,N/A
+~\Sim\src\scenario.js,task_builder,N/A
+~\Sim\src\state.js,load_globals,N/A
+~\Sim\src\utils.js,number_assigned_workers,N/A
+~\Sim\src\utils.js,most_assigned_task,N/A
+~\Sim\src\utils.js,report,N/A
+~\Sim\src\utils.js,get_total_expenditure,N/A	
+~\Sim\src\utils.js,get_total_revenue,N/A
+~\Sim\src\utils.js,module_lifecycle_stage,N/A
+~\Sim\src\utils.js,get_all_modules,N/A
