@@ -1,6 +1,6 @@
 {{#state.sites:i}}
 <div class="site_tile {{ statusClass(.) }}" data-name="{{name}}">
-    <p>{{name}} {{local_time}}:00</p>
+    <p>{{name}} {{time_padder}}{{local_time}}:00</p>
     <table class="status_table">
         <tr>
             <td>Name:</td>

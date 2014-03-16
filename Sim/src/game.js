@@ -63,6 +63,7 @@ function setLocalTime(sites, homeSite)
             if(difference > 0)site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference]; 
             else if(difference < 0)site.local_time = TIME_CLOCK[-difference];   
         }
+        
     }
 }
 
@@ -106,6 +107,11 @@ function incrementLocalTimes(gs)
 	{
 		gs.sites[i].local_time++;
 		if (gs.sites[i].local_time >= 24)gs.sites[i].local_time = 0;
+        if (gs.sites[i].local_time < 10) {
+            gs.sites[i].time_padder = "0";
+        } else {
+            gs.sites[i].time_padder = "";
+        }
 	}
 }
 
@@ -146,7 +152,11 @@ function display_game_time(gs){
 	{
 		gs.time["Days Passed"]++;
 	}
-    $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+gs.time["Current Hour"]+":00"+"</h3>");
+    var curHour = gs.time["Current Hour"];
+    if (curHour < 10) {
+        curHour = "0" + curHour;
+    }
+    $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+ curHour +":00"+"</h3>");
     $("#time").append("<h3>Estimated days remaining: " + daysRemaining + "</h3>");
 }
 
