@@ -82,6 +82,7 @@ body {
 }
 
 button {
+	text-shadow: black 1px 1px;
 	background: #5E8DC0;
 	color: white;
 	-webkit-border-radius: 3px;
@@ -99,5 +100,9 @@ button {
 	padding: 0.5em 1.5em;
 	-webkit-appearance: none;
 	cursor: pointer;
+}
+
+button:disabled {
+	background: #9FB2C7;
 }
 
