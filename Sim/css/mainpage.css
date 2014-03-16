@@ -55,7 +55,7 @@ body {
 	vertical-align: middle;
 	width: 400px;
 	height: 400px;
-	background-color: rgba(121, 202, 100, 0.4);
+	background-color: rgba(121, 202, 100, 0.7);
 	border-radius: 5px 5px;
 	font-weight: bold;
 }
@@ -65,11 +65,11 @@ body {
 }
 
 .site_tile.schedule-behind {
-	background-color: rgba(200, 202, 100, 0.4);
+	background-color: rgba(200, 202, 100, 0.7);
 }
 
 .site_tile.schedule-very-behind {
-	background-color: rgba(214, 73, 73, 0.4);
+	background-color: rgba(214, 73, 73, 0.7);
 }
 
 #main_content,#game_state_box {

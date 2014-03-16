@@ -1,6 +1,7 @@
 var TEMPLATES = {};
+var scene, background, site_images, office;
 window.onload = function() {
-    var scene, background, site_images, office;
+    
 
     var game_height = window.innerHeight - 5;
     var game_width = window.innerWidth;
@@ -144,6 +145,15 @@ function renderTileview() {
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             completedTasksEmail(site);
+        });
+        $('.site_tile').each(function(i) {
+            var $el = $(this);
+            $el.find('button').click(function() {
+                office = background.Sprite(site_images[i] || site_images[0]);
+                office.transformOrigin(0, 0);
+                office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
+                office.update();
+            });
         });
     }
 };
