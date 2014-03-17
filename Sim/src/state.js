@@ -145,6 +145,16 @@ function Problem(name,impact, currentProgress, module, taskNum){
     this.cost = impact*100;
 }
 
+//A class that represents an intervention in the game
+function Intervention(name, cost, problem, impact, is_implemented)
+{
+	this.name = name;//Name of the intervention
+	this.cost = cost;//How much it costs to implement
+	this.problem = problem;//The problem is helps prevent
+	this.impact = impact;//The impact on the problem it has, 25 would equate to a 25% reduction in problem occurence
+	this.is_implemented = is_implemented;//Is it currently implemented?
+}
+
 function vary(total){
     var seed = Math.random();
     var actual_total = total;
