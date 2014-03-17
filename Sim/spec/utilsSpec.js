@@ -156,7 +156,7 @@ describe("get_total_expenditure", function()
 			"amount":-100
 		});
 		expect(GAME_DATA.gs.financial_log).toBeDefined();
-		expect(get_total_expenditure()).toEqual(100);
+		expect(get_total_expenditure()).toEqual(1100);
 	});
 });
 

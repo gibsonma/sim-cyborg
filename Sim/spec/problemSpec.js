@@ -1,3 +1,12 @@
+describe("purchase_intervention", function()
+{
+	//TODO
+});
+describe("disregard_intervention", function()
+{
+	//TODO
+});
+
 describe("Intervention Interface", function()
 {
 	var gs = new GameState(1);
@@ -23,7 +32,7 @@ describe("Intervention Interface", function()
 	});
 });
 
-describe("Problem Simulator", function()
+/*describe("Problem Simulator", function()
 {
 	it("checks to make sure the fail value used to calculate problems is valid", function()
 	{
@@ -37,4 +46,4 @@ describe("Problem Simulator", function()
 
 	});
 
-});
+});*/

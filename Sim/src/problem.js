@@ -1,3 +1,17 @@
+//Get passed an intervention & buys it for the player
+function purchase_intervention(chosen)
+{
+	chosen.is_implemented = true;//Changes it to implemented 
+	new_transaction(-chosen.init_cost);//Records the cost of it
+	console.log("Intervention: " + chosen.name + " purchased");
+}
+//Get passed an intervention & removes it from the player's daily expenses
+function disregard_intervention(chosen)
+{
+	chosen.is_implemented = false;
+	console.log("Intervention: " + chosen.name + " is no longer in use by the player");
+}
+
 function intervention(gs)
 {
     sites = gs.sites;			
