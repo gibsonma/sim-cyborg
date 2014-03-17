@@ -6,6 +6,21 @@ describe("disregard_intervention", function()
 {
 	//TODO
 });
+describe("displayInterventions", function()
+{
+	//TODO
+});
+describe("get_applicable_interventions", function()
+{
+	var game = new GameState(1);
+	load_globals(game);
+	var problem = new Problem("Module failed to integrate",10, 20,0,1);
+	var intervention = { name : 'Face to face meetings', init_cost : 5000, daily_cost : 150, is_implemented : false, affects : [ 1, 1, 1, 1, 1, 1, 1 ] };
+	it("Returns a list of applicable interventions", function()
+	{
+		expect(get_applicable_interventions(game, problem)[0]).toEqual(intervention);
+	});
+});
 
 describe("Intervention Interface", function()
 {

@@ -1,11 +1,3 @@
-/*
-	Pass in interventions through config
-	Each problem has one or more interventions associated with it, passed in when the problem object is created
-	When a problem is encountered, this list of interventions will be displayed in the dialog box, allowing the
-	player to implement which ever ones he likes, setting the 'implemented' flag of each intervention to true if selected / false by default
-	For displaying all the interventions to the player, simply display whats passed in from the config file
-	Depending on which are selected there, we may have to hardcode the effects each intervention has on different problems
-*/
 //Get passed an intervention & buys it for the player
 function purchase_intervention(chosen)
 {
@@ -38,6 +30,21 @@ function displayInterventions(gs)
     });
 }
 
+//Gets passed the game state and a problem
+//Find out which interventions apply to the problem and return it
+function get_applicable_interventions(gs, problem)
+{
+	var task_num = problem.taskNum;
+	var affects;
+	var result = [];
+	for(var i = 0; i < gs.interventions.length; i++)
+	{
+		affects = gs.interventions[i].affects;
+		if(affects[task_num])result.push(gs.interventions[i]);
+	}
+	return result;
+}
+
 function intervention(gs)
 {
     sites = gs.sites;			
@@ -47,6 +54,10 @@ function intervention(gs)
         {
             var index = i;//Need to record index for use in callback
             var problem = sites[i].problems[0];
+			var interventions = get_applicable_interventions(gs, problem);
+			//Pass into dialog box
+			//For each intervention make button and onclick event
+			//Make necessary changes to culture etc as a result
             GAME_DATA.ticker.pause();//Pause the game
             vex.dialog.confirm({
                 message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost $' + problem.cost + ' to correct, what do you do?',
