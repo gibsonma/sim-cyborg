@@ -35,6 +35,9 @@ window.onload = function() {
             setupGame(scene,3);
             renderTileview();
         });
+		$('#options').click(function() {
+			
+		});
         $.get('src/templates/tileview.html', function(template) {
             TEMPLATES['tileview'] = template;
             renderTileview();

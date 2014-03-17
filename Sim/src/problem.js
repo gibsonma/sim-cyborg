@@ -12,6 +12,7 @@ function disregard_intervention(chosen)
 	console.log("Intervention: " + chosen.name + " is no longer in use by the player");
 }
 
+
 function intervention(gs)
 {
     sites = gs.sites;			
