@@ -125,13 +125,11 @@ describe("Intervention", function()
 	it("Checks that Interventions are initialised properly", function()
 	{
 		var p = new Problem("test problem", 100, 0, 0, 1);
-		var i = new Intervention("Implement Face to Face Meetings", 2000, 100, p, 25, false)
+		var i = new Intervention("Implement Face to Face Meetings", 2000, 100, false);
 		expect(i).toBeDefined();
 		expect(i.name).toEqual(jasmine.any(String));
 		expect(i.init_cost).toEqual(jasmine.any(Number));
 		expect(i.daily_cost).toEqual(jasmine.any(Number));
-		expect(i.problem).toEqual(p);
-		expect(i.impact).toEqual(jasmine.any(Number));
 		expect(i.is_implemented).toEqual(jasmine.any(Boolean));
 	});
 });

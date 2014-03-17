@@ -148,13 +148,11 @@ function Problem(name,impact, currentProgress, module, taskNum){
 }
 
 //A class that represents an intervention in the game
-function Intervention(name, init_cost, daily_cost, problem, impact, is_implemented)
+function Intervention(name, init_cost, daily_cost, is_implemented)
 {
 	this.name = name;//Name of the intervention
 	this.init_cost = init_cost;//How much it costs to buy initially
 	this.daily_cost = daily_cost;//How much it costs to keep per day
-	this.problem = problem;//The problem it helps prevent
-	this.impact = impact;//The impact on the problem it has, 25 would equate to a 25% reduction in problem occurence
 	this.is_implemented = is_implemented;//Is it currently implemented?
 }
 

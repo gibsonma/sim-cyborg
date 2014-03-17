@@ -1,3 +1,11 @@
+/*
+	Pass in interventions through config
+	Each problem has one or more interventions associated with it, passed in when the problem object is created
+	When a problem is encountered, this list of interventions will be displayed in the dialog box, allowing the
+	player to implement which ever ones he likes, setting the 'implemented' flag of each intervention to true if selected / false by default
+	For displaying all the interventions to the player, simply display whats passed in from the config file
+	Depending on which are selected there, we may have to hardcode the effects each intervention has on different problems
+*/
 //Get passed an intervention & buys it for the player
 function purchase_intervention(chosen)
 {
