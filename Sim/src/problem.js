@@ -18,7 +18,7 @@ function displayInterventions(gs)
 	var interventions = '';
 	for(var i = 0; i < gs.interventions.length; i++)
 	{
-		interventions += gs.interventions[i] + '<br>'; 
+		interventions += gs.interventions[i].name + '<br>'; 
 	}
 	vex.dialog.confirm({
       message: '<p> List of Interventions: </p>' +
