@@ -36,7 +36,7 @@ window.onload = function() {
             renderTileview();
         });
 		$('#options').click(function() {
-			
+			if(GAME_DATA.ticker)displayInterventions(GAME_DATA.gs);
 		});
         $.get('src/templates/tileview.html', function(template) {
             TEMPLATES['tileview'] = template;

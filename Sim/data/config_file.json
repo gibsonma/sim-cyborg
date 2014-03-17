@@ -25,6 +25,7 @@
     "days_per_month": 30,
     "developer_effort": 4,
     "developer_rate": 30,
-    "developer_working_hours": 8
+    "developer_working_hours": 8,
+	"interventions": ["Face to face meetings","Cultural Ambassador"]
 }
 

@@ -11,7 +11,24 @@ function disregard_intervention(chosen)
 	chosen.is_implemented = false;
 	console.log("Intervention: " + chosen.name + " is no longer in use by the player");
 }
-
+//Pauses the game and opens a dialog listing the interventions
+function displayInterventions(gs)
+{
+	GAME_DATA.ticker.pause();
+	var interventions = '';
+	for(var i = 0; i < gs.interventions.length; i++)
+	{
+		interventions += gs.interventions[i] + '<br>'; 
+	}
+	vex.dialog.confirm({
+      message: '<p> List of Interventions: </p>' +
+			   '<p>' + interventions + '</p>', 
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return value;
+      }
+    });
+}
 
 function intervention(gs)
 {

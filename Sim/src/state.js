@@ -87,6 +87,7 @@ function GameState(setting)
     this.time = {"Current Hour":0, "Days Passed":0}
     this.current_time = 0;
     this.financial_log = []; //log of finances to type for graphing
+	this.interventions = [];
 }
 
 function load_globals(gs){
@@ -102,6 +103,7 @@ function load_globals(gs){
         gs.developer_rate = obj.developer_rate;
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
+		gs.interventions = obj.interventions;	
     });
 }
 
