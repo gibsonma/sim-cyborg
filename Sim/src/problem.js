@@ -115,9 +115,10 @@ function generateProblemPercentages() //to give each problem a minimal level of 
 
     for(var i = 0; i < 7; i++)
     {
-        var percentage = (30 + (Math.floor(Math.random* 40)))/100 //40% variance
+        var percentage = 0.3 + Math.floor(Math.random()*5)/10; //40% variance
         percentages.push(percentage);
     }
+    return percentages;
 
 }
 
@@ -135,14 +136,14 @@ function problemSim(gs)
 
     var probCD = gs.sites[seed].problemCooldown;
     var failC = fail*PROBLEM_CONSTANT*probCD;
-    gs.sites[seed].problemCooldown += 0.0005;
+    gs.sites[seed].problemCooldown += 0.005;
 
 
     var failure_seed = Math.random();
-    // console.log(failC +" vs " + failure_seed);
+    //console.log(failC +" vs " + failure_seed);
     if(failure_seed < failC)
     {
-        gs.sites[seed].problemCooldown = 0.0025;
+        gs.sites[seed].problemCooldown = 0.005;
         console.log("A problem has been encountered in the "+ site + " office.")
 
         var problemSeed = Math.floor(Math.random() * 7)+1; //choose one of 7 problems
@@ -155,7 +156,7 @@ function problemSim(gs)
             case 1: 
                 var chanceAfterReduction = percentages[problemSeed-1];
 
-                if(Math.random() < chanceAfterReduction){
+                if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //design
                     var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/50; //add a 50% overhead
@@ -166,7 +167,7 @@ function problemSim(gs)
             case 2:
                 var chanceAfterReduction = percentages[problemSeed-1];
 
-                if(Math.random() < chanceAfterReduction){
+                if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //implementation
                     var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/50; 
@@ -177,7 +178,7 @@ function problemSim(gs)
             case 3:
                 var chanceAfterReduction = percentages[problemSeed-1];
 
-                if(Math.random() < chanceAfterReduction){
+                if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //test
                     var prob = new Problem("unit tests failed",25, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/25; 
@@ -188,7 +189,7 @@ function problemSim(gs)
             case 4:
                 var chanceAfterReduction = percentages[problemSeed-1];
 
-                if(Math.random() < chanceAfterReduction){
+                if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //integration
                     var prob = new Problem("integration failure",40, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/40; 
@@ -199,7 +200,7 @@ function problemSim(gs)
             case 5:
                 var chanceAfterReduction = percentages[problemSeed-1];
 
-                if(Math.random() < chanceAfterReduction){
+                if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //system test
                     var prob = new Problem("system test failure",55, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/55;
@@ -209,7 +210,7 @@ function problemSim(gs)
             case 6:
                 var chanceAfterReduction = percentages[problemSeed-1];
 
-                if(Math.random() < chanceAfterReduction){
+                if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //deployment
                     var prob = new Problem("deployment failure",70, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/70; 
@@ -219,7 +220,7 @@ function problemSim(gs)
             case 7:
                 var chanceAfterReduction = percentages[problemSeed-1];
 
-                if(Math.random() < chanceAfterReduction){            
+                if(failC < chanceAfterReduction){            
                     var problemTask = problemModule.tasks[problemSeed-1];  //acceptance
                     var prob = new Problem("acceptance test failure",100, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/100;

@@ -118,7 +118,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.problems = [];
     this.critical_problem = false;
     this.timezone = timezone;
-    this.problemCooldown = 0.0025;
+    this.problemCooldown = 0.005;
     this.home = home;
     this.local_time = 0;
 }

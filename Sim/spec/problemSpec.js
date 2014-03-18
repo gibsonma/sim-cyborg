@@ -1,3 +1,5 @@
+var game = new GameState(1);
+
 describe("purchase_intervention", function()
 {
 	//TODO
@@ -12,7 +14,7 @@ describe("displayInterventions", function()
 });
 describe("get_applicable_interventions", function()
 {
-	var game = new GameState(1);
+	//var game = new GameState(1);
 	load_globals(game);
 	var problem = new Problem("Module failed to integrate",10, 20,0,1);
 	var intervention = { name : 'Face to face meetings', init_cost : 5000, daily_cost : 150, is_implemented : false, affects : [ 1, 1, 1, 1, 1, 1, 1 ] };
@@ -47,18 +49,33 @@ describe("Intervention Interface", function()
 	});
 });
 
-/*describe("Problem Simulator", function()
+describe("Problem Simulator", function()
 {
 	it("checks to make sure the fail value used to calculate problems is valid", function()
 	{
-		var gs = new GameState(1);
-			for(int i = 0; i < 10; i++)
+		//var gs = new GameState(1);
+			for(var i = 0; i < 10; i++)
 			{
-				var fail = problemSim(gs);
+				var fail = problemSim(game);
 			}
 		expect(fail).toBeLessThan(1);
-		expect(fail).toBeGreaterThan(0);
+		expect(fail).toBeGreaterThan(-0.1);
 
 	});
 
-});*/
+});
+
+describe("Problem Percentage Generator", function()
+{
+	it("checks to make sure the function generates appropriate percentages in the range we want", function()
+	{
+		var percentagesToTest = generateProblemPercentages();
+		for(var i = 0; i < percentagesToTest.length; i++)
+		{
+			expect(percentagesToTest[i]).toBeLessThan(0.71);
+			expect(percentagesToTest[i]).toBeGreaterThan(-0.1);
+		}
+
+	});
+
+});
