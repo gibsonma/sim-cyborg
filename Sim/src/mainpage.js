@@ -65,6 +65,13 @@ window.onload = function() {
     });
 };
 
+
+function implementChosenIntervention(intervention)
+{
+	console.log("Clicked Again!");
+	console.log(interventon);
+}
+
 function updateSpeedLabel() {
     var speed = 1 / (TICKS_PER_UNIT_TIME - 1);
     speed *= 100;
@@ -114,23 +121,23 @@ function renderTileview() {
             var siteStatus = $(this).parent().attr('class');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             if(site.culture.influence == "asian" || site.culture.influence == "russian")
-        {
-            showEmailResponsePositive();
-        } 
-            else if(siteStatus == 'site_tile schedule-ok')
-        {
-            showEmailResponsePositive();
+			{
+				showEmailResponsePositive();
+			} 
+				else if(siteStatus == 'site_tile schedule-ok')
+			{
+				showEmailResponsePositive();
 
-        }
-            else if(siteStatus == 'site_tile schedule-behind')
-        {
-            showEmailResponseNegative();
-        }
-            else
-        {
-            showEmailResponseCritical();
+			}
+				else if(siteStatus == 'site_tile schedule-behind')
+			{
+				showEmailResponseNegative();
+			}
+				else
+			{
+				showEmailResponseCritical();
 
-        }
+			}
         });
         $('.site_tile>.info-popup-status').click(function() {
             var siteName = $(this).parent().attr('data-name');
@@ -145,10 +152,15 @@ function renderTileview() {
         }
         });
         $('.site_tile>.info-popup-tasks').click(function() {
-            var siteName = $(this).parent().attr('data-name');
+            console.log("Clicked");
+			var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             completedTasksEmail(site);
         });
+		$('.site_tile>.info-popup-intervention').click(function() {
+			console.log("Clicked!");
+			implementChosenIntervention($(this).parent());
+		});
         $('.site_tile').each(function(i) {
             var $el = $(this);
             $el.find('button').click(function() {

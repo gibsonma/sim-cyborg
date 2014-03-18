@@ -28,6 +28,12 @@
     "developer_working_hours": 8,
 	"interventions": [
 		{"name":"Face to face meetings","init_cost": 5000, "daily_cost":150, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
+		{"name":"Video Conferencing","init_cost": 10000, "daily_cost":300, "is_implemented":false, "affects":[1,0,0,0,0,0,0]},
+		{"name":"Cultural Training","init_cost": 20000, "daily_cost":100, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
+		{"name":"Cultural Ambassador","init_cost": 5000, "daily_cost":250, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
+		{"name":"Low Context Comms","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
+		{"name":"High Context Comms","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
+		{"name":"Communication Tools","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Exchange Programme", "init_cost": 10000, "daily_cost":350, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
 	]
 }

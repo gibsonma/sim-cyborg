@@ -5,27 +5,26 @@
 function displayScenarioValues(scenNum)
 {
     if(isNaN(scenNum))return -1;
-    var game = GAME_DATA.gs, sites = '', modules = '', tasks = '', workers = '', capital = game.capital;
-    for(var i = 0; i < game.sites.length; i++)
-    {
-        sites += '<br>' + game.sites[i].name;
-        workers += '<br>' + game.sites[i].name + ' : ' + getSiteWorkers(game.sites[i]) + ' Developers';
-        modules += '<br>' + game.sites[i].name + ' : ';
-        for(var j = 0; j < game.sites[i].modules.length; j++)
-        {
-            modules += game.sites[i].modules[j].name + '; ';
-            tasks += '<br>' + game.sites[i].modules[j].name + ' : ' + getEffortForModule(game.sites[i].modules[j]) + ' Developer Hours';
-        }
-    }
-    GAME_DATA.ticker.pause();//Pause the game
+    var game = GAME_DATA.gs, items = [], result = '', module, site;
+	for(var i = 0; i < game.sites.length; i++)
+	{
+		site = game.sites[i];
+		items[i] = '<br>' + site.name + ' : ' + getSiteWorkers(site) + ' Developers';
+		items[i] += '<br> Modules: ';
+		for(var j = 0; j < site.modules.length; j++)
+		{
+			module = site.modules[j];
+			items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' Developer Hours';	
+		}
+		items[i] += '<br>';
+		result += items[i];
+	}	
+	GAME_DATA.ticker.pause();//Pause the game
     vex.dialog.confirm({
       message: '<p>You have picked Scenario '+scenNum + '</p>' + 
-               '<p>Sites:' + sites + '</p>' + 
-               '<p>Number of Developers:' + workers + '</p>' +
-               '<p>Modules:' + modules + '</p>' +
-               '<p>Expected Effort:' + tasks + '</p>' +
+               '<p>Sites:' + result + '</p>' + 
                '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
-               '<p>Starting Capital: $'+capital+'</p>',
+               '<p>Starting Capital: $'+ game.capital+'</p>',
       callback: function(value) {
         GAME_DATA.ticker.resume();
         return value;

@@ -47,7 +47,7 @@ function get_applicable_interventions(gs, problem)
 
 function intervention(gs)
 {
-    sites = gs.sites;			
+    sites = gs.sites;	
     for(var i = 0; i < sites.length; i++)
     {
         if(sites[i].problems.length > 0)
@@ -55,32 +55,25 @@ function intervention(gs)
             var index = i;//Need to record index for use in callback
             var problem = sites[i].problems[0];
 			var interventions = get_applicable_interventions(gs, problem);
-			//Pass into dialog box
-			//For each intervention make button and onclick event
-			//Make necessary changes to culture etc as a result
+			var buttonList = '';
+			for(var i = 0; i < interventions.length; i++)
+			{
+				buttonList += '<button class="info-popup-intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
+			}
             GAME_DATA.ticker.pause();//Pause the game
-            vex.dialog.confirm({
-                message: ''+problem.name+' has occured in site '+sites[i].name+'. It will cost $' + problem.cost + ' to correct, what do you do?',
+			vex.dialog.alert({
+                message: '<p>'+problem.name+' has occured in site '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
                 buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
-                      text: 'Fix'
-                    }), $.extend({}, vex.dialog.buttons.NO, {
-                      text: 'Ignore'
+                      text: 'OK'
                     })
                   ],
-                callback: function(value) {
-                    if(!value)//If problem ignored
-                    {
-                        sites[index].problems.pop();//Pop the problem
-                        GAME_DATA.ticker.resume();//Resume game
-                        return console.log("Problem not fixed");
-                    }
-                    gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+                callback: function(value) {    
+                    sites[index].problems.pop();//Pop the problem
 					var cost = problem.cost;
                     new_transaction(-cost);//Deduct cost of fixing problem
-					sites[index].problems.pop();
-                    GAME_DATA.ticker.resume();
-                    return console.log("Problem has been fixed for $"+problem.cost+"!");
+                    GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
+                    return console.log("Resolution Chosen");
                 }
             });
         }
