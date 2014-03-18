@@ -25,21 +25,13 @@ describe("Nominal Schedule Calculator", function()
 {
     var game = new GameState(1);
 	
-	var total = 0
-    for (var k=0; k <game.sites.length; k++){
-        var site = game.sites[k];
-        for(var i = 0; i < site.modules.length; i++){
-            var taskList = site.modules[i].tasks;
-            for(var j = 0; j < taskList.length; j++) total += taskList[j].total;
-        }
-    }
 	it("Sums all the tasks' effort correctly", function()
 	{
-		expect(sum_tasks(game)).toEqual(total);
+		expect(sum_tasks(game)).toEqual(47000);
 	});
 	it("Takes into account the work load modifier", function()
 	{
-		expect(scheduleCalculator(game)).toEqual(40000);
+		expect(scheduleCalculator(game)).toEqual(47000);
 	});
 });
 

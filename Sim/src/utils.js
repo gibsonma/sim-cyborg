@@ -27,18 +27,40 @@ function scheduleCalculator(gs)
 
 function sum_tasks(gs){
     var effort=0;
-    for (var i=0; i<gs.sites.length; i++){
+    for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-        for (var j=0; j< site.modules.length; j++){
-            var module = site.modules[j];
-            for (var k=0; k<module.tasks.length; k++){
-                var task = module.tasks[k];
-                effort += task.total;
-            }
+        switch (site.development_type) {
+            case "Waterfall":
+                for (var j=0; j< site.modules[0].tasks.length; j++){
+                    effort += longest_task(site.modules, j) * site.modules.length;
+                }
+                break;
+            case "Agile":
+                for (var j=0; j< site.modules.length; j++){
+                    var module = site.modules[j];
+                    for (var j=0; j< site.modules.length; j++){
+                        var module = site.modules[j];
+                        for (var k=0; k<module.tasks.length; k++){
+                            var task = module.tasks[k];
+                            effort += task.total;
+                        }
+                    }
+                }
+                break;
         }
     }
     return effort;
 }
+
+function longest_task(modules, task_idx){
+    var longest = 0;
+    for (var i=0; i < modules.length; i++){
+        var task = modules[i].tasks[task_idx];
+        if (task.total > longest) longest = task.total;
+    }
+    return longest;
+}
+
 function number_assigned_workers(){
 
     var gs = GAME_DATA.gs;

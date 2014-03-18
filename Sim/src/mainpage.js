@@ -109,7 +109,7 @@ function implementChosenIntervention(gs, intervention_name)
 }
 
 function updateSpeedLabel() {
-    var speed = 1 / (TICKS_PER_UNIT_TIME - 1);
+    var speed = 1 / (TICKS_PER_UNIT_TIME);
     speed *= 100;
     speed = Math.floor(speed);
     $('#time_speed_label').text(speed);
