@@ -14,7 +14,7 @@ function displayScenarioValues(scenNum)
 		for(var j = 0; j < site.modules.length; j++)
 		{
 			module = site.modules[j];
-			items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' Developer Hours';	
+			items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' effort points';	
 		}
 		items[i] += '<br>';
 		result += items[i];

@@ -120,6 +120,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.problemCooldown = 0.005;
     this.home = home;
     this.local_time = 0;
+    this.last_state = "schedule-ok";
 }
 
 function Culture(influence){

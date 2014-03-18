@@ -27,11 +27,11 @@ describe("Nominal Schedule Calculator", function()
 	
 	it("Sums all the tasks' effort correctly", function()
 	{
-		expect(sum_tasks(game)).toEqual(47000);
+		expect(sum_tasks(game.sites[0])).toEqual(12996);
 	});
 	it("Takes into account the work load modifier", function()
 	{
-		expect(scheduleCalculator(game)).toEqual(47000);
+		expect(scheduleCalculator(game)).toEqual(46961);
 	});
 });
 

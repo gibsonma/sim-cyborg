@@ -21,33 +21,36 @@ function getSiteWorkers(site)
 	return result;
 }
 function scheduleCalculator(gs)
-{  
-    return sum_tasks(gs);
+{   
+    var sum =0;
+    for (var i=0; i< gs.sites.length; i++){
+        sum += sum_tasks(gs.sites[i]);
+    }
+    return sum;
 }
 
-function sum_tasks(gs){
+function sum_tasks(site){
     var effort=0;
-    for (var i=0; i < gs.sites.length; i++){
-        var site = gs.sites[i];
-        switch (site.development_type) {
-            case "Waterfall":
-                for (var j=0; j< site.modules[0].tasks.length; j++){
-                    effort += longest_task(site.modules, j) * site.modules.length;
+    switch (site.development_type) {
+        case "Waterfall":
+            for (var j=0; j< site.modules.length; j++){
+                var module = site.modules[j];
+                for (var k=0; k<module.tasks.length; k++){
+                    var task = module.tasks[k];
+                    var longest = longest_task(site.modules, k);
+                    effort += Math.floor(longest/module.assigned)*module.assigned;
                 }
-                break;
-            case "Agile":
-                for (var j=0; j< site.modules.length; j++){
-                    var module = site.modules[j];
-                    for (var j=0; j< site.modules.length; j++){
-                        var module = site.modules[j];
-                        for (var k=0; k<module.tasks.length; k++){
-                            var task = module.tasks[k];
-                            effort += task.total;
-                        }
-                    }
+            }
+            break;
+        case "Agile":
+            for (var j=0; j< site.modules.length; j++){
+                var module = site.modules[j];
+                for (var k=0; k<module.tasks.length; k++){
+                    var task = module.tasks[k];
+                    effort += Math.floor(task.total/module.assigned)*module.assigned;
                 }
-                break;
-        }
+            }
+            break;
     }
     return effort;
 }
@@ -67,11 +70,10 @@ function number_assigned_workers(){
     var total_assigned = 0;
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-		total_assigned += getSiteWorkers(site);
+        total_assigned += getSiteWorkers(site);
     }
     return total_assigned;
 }
-
 
 function check_if_completed(gs) {
     var finished = true;
@@ -92,20 +94,20 @@ function report(gs){
 
     var days_completed = gs.current_time / 24;
     var effort_per_day = gs.developer_effort * gs.developer_working_hours * number_assigned_workers();
-    
+
     var months = gs.current_time/24/gs.days_per_month;
     this.months_str = months_to_str(months);
 
     this.actual_effort = Math.round(days_completed*effort_per_day);
     this.expected_effort = Math.round(scheduleCalculator(gs));
-    
+
     this.expected_expenditure = Math.round((scheduleCalculator(gs)/gs.developer_effort) * gs.developer_rate * 1.24); // see email for explanation
     this.actual_expenditure = get_total_expenditure();
 
     var month = Math.ceil(gs.current_time/24/gs.days_per_month);
     this.expected_revenue = Math.round(gs.revenue/2);
     this.actual_revenue = Math.round( (6-(month-6)) * (gs.revenue/12) );
-    
+
     this.expected_months = scheduleCalculator(gs)/ effort_per_day / gs.days_per_month;
 
     this.final_score = Math.round(gs.capital + (6-(month-6))* (gs.revenue/12));
