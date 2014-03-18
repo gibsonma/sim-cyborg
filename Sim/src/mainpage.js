@@ -66,10 +66,46 @@ window.onload = function() {
 };
 
 
-function implementChosenIntervention(intervention)
+function implementChosenIntervention(gs, intervention_name)
 {
 	console.log("Clicked Again!");
 	console.log(interventon);
+	var intervention;
+	for(var i = 0; i < gs.interventions; i++)
+	{
+		if(intervention_name == gs.interventions[i].name)intervention = gs.interventions[i];
+	}
+	if(intervention)purchase(intervention);
+	switch(intervention_name)
+	{
+		case 'Face to face meetings':
+								for(var i = 0; i < gs.sites.length; i++)
+								{
+									var site = gs.sites[i];
+									gs.global_distance[site] -= 4;
+									if(gs.global_distance[site] < 0)gs.global_distance[site] = 0;
+									gs.cultrual_distance[site] -= -4;
+									if(gs.cultural_distance[site] < 0)gs.cultural_distance[site] = 0;
+								}
+								break;
+		case 'Video Conferencing':
+								break;
+		case 'Cultural Training':
+								break;
+		case 'Cultural Ambassador':
+								break;
+		case 'Low Context Comms':
+								break;
+		case 'High Context Comms':
+								break;
+		case 'Communication Tools':
+								break;
+		case 'Exchange Programme':
+								break;
+		default:
+			console.log("Invalid Intervention Passed in");
+			break;
+	}
 }
 
 function updateSpeedLabel() {
@@ -159,7 +195,7 @@ function renderTileview() {
         });
 		$('.site_tile>.info-popup-intervention').click(function() {
 			console.log("Clicked!");
-			implementChosenIntervention($(this).parent());
+			implementChosenIntervention(GAME_DATA.gs, $(this).parent());
 		});
         $('.site_tile').each(function(i) {
             var $el = $(this);
