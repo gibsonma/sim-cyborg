@@ -65,6 +65,49 @@ window.onload = function() {
     });
 };
 
+
+function implementChosenIntervention(gs, intervention_name)
+{
+	console.log("Clicked Again!");
+	console.log(interventon);
+	var intervention;
+	for(var i = 0; i < gs.interventions; i++)
+	{
+		if(intervention_name == gs.interventions[i].name)intervention = gs.interventions[i];
+	}
+	if(intervention)purchase(intervention);
+	switch(intervention_name)
+	{
+		case 'Face to face meetings':
+								for(var i = 0; i < gs.sites.length; i++)
+								{
+									var site = gs.sites[i];
+									gs.global_distance[site] -= 4;
+									if(gs.global_distance[site] < 0)gs.global_distance[site] = 0;
+									gs.cultrual_distance[site] -= -4;
+									if(gs.cultural_distance[site] < 0)gs.cultural_distance[site] = 0;
+								}
+								break;
+		case 'Video Conferencing':
+								break;
+		case 'Cultural Training':
+								break;
+		case 'Cultural Ambassador':
+								break;
+		case 'Low Context Comms':
+								break;
+		case 'High Context Comms':
+								break;
+		case 'Communication Tools':
+								break;
+		case 'Exchange Programme':
+								break;
+		default:
+			console.log("Invalid Intervention Passed in");
+			break;
+	}
+}
+
 function updateSpeedLabel() {
     var speed = 1 / (TICKS_PER_UNIT_TIME - 1);
     speed *= 100;
@@ -114,23 +157,23 @@ function renderTileview() {
             var siteStatus = $(this).parent().attr('class');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             if(site.culture.influence == "asian" || site.culture.influence == "russian")
-        {
-            showEmailResponsePositive();
-        } 
-            else if(siteStatus == 'site_tile schedule-ok')
-        {
-            showEmailResponsePositive();
+			{
+				showEmailResponsePositive();
+			} 
+				else if(siteStatus == 'site_tile schedule-ok')
+			{
+				showEmailResponsePositive();
 
-        }
-            else if(siteStatus == 'site_tile schedule-behind')
-        {
-            showEmailResponseNegative();
-        }
-            else
-        {
-            showEmailResponseCritical();
+			}
+				else if(siteStatus == 'site_tile schedule-behind')
+			{
+				showEmailResponseNegative();
+			}
+				else
+			{
+				showEmailResponseCritical();
 
-        }
+			}
         });
         $('.site_tile>.info-popup-status').click(function() {
             var siteName = $(this).parent().attr('data-name');
@@ -145,10 +188,15 @@ function renderTileview() {
         }
         });
         $('.site_tile>.info-popup-tasks').click(function() {
-            var siteName = $(this).parent().attr('data-name');
+            console.log("Clicked");
+			var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             completedTasksEmail(site);
         });
+		$('.site_tile>.info-popup-intervention').click(function() {
+			console.log("Clicked!");
+			implementChosenIntervention(GAME_DATA.gs, $(this).parent());
+		});
         $('.site_tile').each(function(i) {
             var $el = $(this);
             $el.find('button').click(function() {
