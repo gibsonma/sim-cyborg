@@ -105,6 +105,18 @@ function interventionAlt(gs, val)
     }
 }
 
+function generateProblemPercentages() //to give each problem a minimal level of mitigation i.e the numbers reduced by interventions choices
+{ 
+
+
+    for(var i = 0; i < 7; i++)
+    {
+        var percentage = (30 + (Math.floor(Math.random* 40)))/100 //40% variance
+        percentages.push(percentage);
+    }
+
+}
+
 function problemSim(gs)
 {
     var numSites = gs.sites.length;
@@ -137,50 +149,78 @@ function problemSim(gs)
         switch(problemSeed)
         {
             case 1: 
-                var problemTask = problemModule.tasks[problemSeed-1];  //design
-                var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/50; //add a 50% overhead
-                gs.sites[seed].problems.push(prob);
+                var chanceAfterReduction = percentages[problemSeed-1];
+
+                if(Math.random() < chanceAfterReduction){
+                    var problemTask = problemModule.tasks[problemSeed-1];  //design
+                    var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    problemTask.actual_total += problemTask.actual_total/50; //add a 50% overhead
+                    gs.sites[seed].problems.push(prob);
+                }
                 break;
 
             case 2:
-                var problemTask = problemModule.tasks[problemSeed-1];  //implementation
-                var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/50; 
-                gs.sites[seed].problems.push(prob);
+                var chanceAfterReduction = percentages[problemSeed-1];
+
+                if(Math.random() < chanceAfterReduction){
+                    var problemTask = problemModule.tasks[problemSeed-1];  //implementation
+                    var prob = new Problem("A task has fallen more than 25% behind",50, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    problemTask.actual_total += problemTask.actual_total/50; 
+                    gs.sites[seed].problems.push(prob);
+                }
                 break;
 
             case 3:
-                var problemTask = problemModule.tasks[problemSeed-1];  //test
-                var prob = new Problem("unit tests failed",25, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/25; 
-                gs.sites[seed].problems.push(prob);
+                var chanceAfterReduction = percentages[problemSeed-1];
+
+                if(Math.random() < chanceAfterReduction){
+                    var problemTask = problemModule.tasks[problemSeed-1];  //test
+                    var prob = new Problem("unit tests failed",25, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    problemTask.actual_total += problemTask.actual_total/25; 
+                    gs.sites[seed].problems.push(prob);
+                }
                 break;
 
             case 4:
-                var problemTask = problemModule.tasks[problemSeed-1];  //integration
-                var prob = new Problem("integration failure",40, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/40; 
-                gs.sites[seed].problems.push(prob);
+                var chanceAfterReduction = percentages[problemSeed-1];
+
+                if(Math.random() < chanceAfterReduction){
+                    var problemTask = problemModule.tasks[problemSeed-1];  //integration
+                    var prob = new Problem("integration failure",40, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    problemTask.actual_total += problemTask.actual_total/40; 
+                    gs.sites[seed].problems.push(prob);
+                }
                 break;
 
             case 5:
-                var problemTask = problemModule.tasks[problemSeed-1];  //system test
-                var prob = new Problem("system test failure",55, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/55; 
+                var chanceAfterReduction = percentages[problemSeed-1];
+
+                if(Math.random() < chanceAfterReduction){
+                    var problemTask = problemModule.tasks[problemSeed-1];  //system test
+                    var prob = new Problem("system test failure",55, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    problemTask.actual_total += problemTask.actual_total/55;
+                }
                 break;   
 
             case 6:
-                var problemTask = problemModule.tasks[problemSeed-1];  //deployment
-                var prob = new Problem("deployment failure",70, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/70; 
+                var chanceAfterReduction = percentages[problemSeed-1];
+
+                if(Math.random() < chanceAfterReduction){
+                    var problemTask = problemModule.tasks[problemSeed-1];  //deployment
+                    var prob = new Problem("deployment failure",70, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    problemTask.actual_total += problemTask.actual_total/70; 
+                }
                 break; 
 
             case 7:
-                var problemTask = problemModule.tasks[problemSeed-1];  //acceptance
-                var prob = new Problem("acceptance test failure",100, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
-                problemTask.actual_total += problemTask.actual_total/100;
-                problemSite.critical_problem = true;
+                var chanceAfterReduction = percentages[problemSeed-1];
+
+                if(Math.random() < chanceAfterReduction){            
+                    var problemTask = problemModule.tasks[problemSeed-1];  //acceptance
+                    var prob = new Problem("acceptance test failure",100, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    problemTask.actual_total += problemTask.actual_total/100;
+                    problemSite.critical_problem = true;
+                }
                 break;                        
 
             default:

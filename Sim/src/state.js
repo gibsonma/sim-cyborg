@@ -18,6 +18,9 @@ var TIMEZONE_AMERICA = [2,10];
 var TIMEZONE_ASIA = [18,2];
 var TIMEZONE_EASTERN_EUROPE = [10,18];
 
+//mitigation minimum cap to prevent abuse
+var percentages = []
+
 function GameState(setting)
 {
     switch(setting)
