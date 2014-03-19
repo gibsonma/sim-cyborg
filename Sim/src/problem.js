@@ -87,7 +87,6 @@ function reduce_percentages(changes_list)
 	{
 		percentages[i] -= changes_list[i];
 		if(percentages[i] < 0.25)percentages[i] = 0.25;
-		console.log(percentages[i]);
 	}
 }
 
