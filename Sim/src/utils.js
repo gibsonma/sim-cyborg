@@ -37,8 +37,7 @@ function sum_tasks(site){
                 var module = site.modules[j];
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
-                    var longest = longest_task(site.modules, k);
-                    effort += Math.floor(longest/module.assigned)*module.assigned;
+                    effort += longest_task(site.modules, k);
                 }
             }
             break;
@@ -47,7 +46,7 @@ function sum_tasks(site){
                 var module = site.modules[j];
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
-                    effort += Math.floor(task.total/module.assigned)*module.assigned;
+                    effort += task.total;
                 }
             }
             break;

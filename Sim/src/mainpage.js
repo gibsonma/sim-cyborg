@@ -394,6 +394,7 @@ function statusClass(site) {
         if (actually_completed >= expected_completed) site.state = "schedule-ok"
         else site.state = "schedule-behind";
     }
+
     return site.state;
 }
 

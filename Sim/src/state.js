@@ -55,23 +55,15 @@ function GameState(setting)
                 site_builder("Poland", "Waterfall", false, [
                         module_builder("Middle End", 6, 9000),
                         module_builder("Backend", 6, 5000)
-                        ]),
+                        ]), // they're finishing at different times
                     ];
             break;
 
         case 3:
             this.sites = [
-                site_builder("New York", "Agile", false, [
-                        module_builder("Backend", 10, 1000),
-                        module_builder("Database", 8, 100)
-                        ]),
-                site_builder("Shanghai", "Agile", false, [
-                        module_builder("Middle End", 12, 900),
-                        module_builder("Communications Software", 9, 300)
-                        ]),
-                site_builder("Dublin", "Agile", true, [
-                        module_builder("Front End", 15, 1100),
-                        module_builder("Mobile Client", 11, 300)
+                site_builder("Dublin", "Waterfall", true, [
+                        module_builder("########", 10, 1000),
+                        module_builder("AAAAAAAA", 10, 1000)
                         ])
                     ];
             break;
@@ -161,6 +153,8 @@ function Intervention(name, init_cost, daily_cost, is_implemented, affects)
 }
 
 function vary(total){
+    // TODO: set this back, I'm returning total here for testing
+    return total;
     var seed = Math.random();
     var actual_total = total;
     if(seed > 0.50 ){
