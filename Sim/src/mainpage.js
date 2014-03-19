@@ -371,40 +371,32 @@ function update_actual_total(site){
 }
 
 function statusClass(site) {
+    var gs = GAME_DATA.gs;
     if (site.culture.influence === "asian" || site.culture.influence === "russian") {
         return "schedule-ok";
     };
     if(site.critical_problem === true) {
         return "schedule-very-behind";
     }        
-    var averageCompletion = 0;
-    var m = site.modules;
-    for (var i = m.length - 1; i >= 0; i--) {
-        var module = m[i];
-        var moduleCompletionAvg = 0;
-        for (var i = module.tasks.length - 1; i >= 0; i--) {
-            var task = module.tasks[i];
-            if (task.completed <= 0) {
-                continue;
-            }
-            var actual_completion = task.completed / task.actual_total;
-            var expected_completion = task.completed / task.total;
-            var completion_difference = actual_completion / expected_completion;
-            moduleCompletionAvg += completion_difference;
-        };
-        moduleCompletionAvg = moduleCompletionAvg / module.tasks.length;
-        averageCompletion += moduleCompletionAvg;
-    };
-    averageCompletion = averageCompletion / m.length;
 
-    // averageCompletion of 1.0 means we are dead on target. <1.0 means behind, >1.0 we're ahead of schedule.
-    if(averageCompletion == 0) return "schedule-ok"; //temp fix for initial completion bug
-    if (averageCompletion >= 1.0) {
-        return "schedule-ok";
-    } 
-    else {
-        return "schedule-behind"
+    if (gs.current_time % 24 == 0){
+        var actually_completed = 0;
+        for (var i=0; i < site.modules.length; i++){
+            var module = site.modules[i];
+            for (var j=0; j < module.tasks.length; j++){
+                var task = module.tasks[j];
+                actually_completed += task.completed;
+            }
+        }
+        var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
+        var expected_completed = effort_per_day * gs.current_time/24;
+        console.log("actually: " + actually_completed);
+        console.log("expected: " + expected_completed);
+
+        if (actually_completed >= expected_completed) site.state = "schedule-ok"
+        else site.state = "schedule-behind";
     }
+    return site.state;
 }
 
 function statusClassModules(m){

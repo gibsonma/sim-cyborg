@@ -81,7 +81,6 @@ function GameState(setting)
     this.cultural_distances = 0;
     this.revenue = 0;
     this.starting_capital = 0;
-    this.days_per_month = 0;
     this.developer_effort = 0;
     this.developer_rate = 0;
     this.developer_working_hours = 0;
@@ -91,6 +90,7 @@ function GameState(setting)
     this.current_time = 0;
     this.financial_log = []; //log of finances to type for graphing
 	this.interventions = [];
+    this.days_per_month = 30;
 }
 
 function load_globals(gs){
@@ -101,7 +101,6 @@ function load_globals(gs){
         gs.cultural_distances = obj.cultural_distances;
         gs.revenue = obj.revenue;
         gs.starting_capital = obj.starting_capital;
-        gs.days_per_month = obj.days_per_month;
         gs.developer_effort = obj.developer_effort;
         gs.developer_rate = obj.developer_rate;
         gs.developer_working_hours = obj.developer_working_hours;
@@ -121,6 +120,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.problemCooldown = 0.005;
     this.home = home;
     this.local_time = 0;
+    this.last_state = "schedule-ok";
 }
 
 function Culture(influence){

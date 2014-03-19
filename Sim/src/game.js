@@ -14,7 +14,7 @@ function displayScenarioValues(scenNum)
 		for(var j = 0; j < site.modules.length; j++)
 		{
 			module = site.modules[j];
-			items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' Developer Hours';	
+			items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' effort points';	
 		}
 		items[i] += '<br>';
 		result += items[i];
@@ -80,6 +80,7 @@ function simpleTick(ticker)
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         incrementTime(GAME_DATA.gs);
         display_game_time(GAME_DATA.gs);
+        display_gold(GAME_DATA.gs);
         TICKS_PASSED = 0;
 
         if (GAME_DATA.gs.current_time % 24 == 0){
@@ -92,6 +93,10 @@ function simpleTick(ticker)
         }
     }
     update(GAME_DATA.gs);
+}
+
+function display_gold(gs){
+    $("#gold").html("<h3>&#36;"+Math.round(gs.capital*100)/100+"</h3>");
 }
 
 function incrementTime(gs){
