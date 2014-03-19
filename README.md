@@ -37,3 +37,16 @@ Open localhost:3000/SpecRunner.html in a browser and the results of all present 
 * Inquiry Interface: The inquiry interface is a series of options, on a per site basis, which allow the user to explore a site in detail, to effectively decide if a site is accurately reporting their progress. Each option has an associated cost.
 * Cultural Influenced Reporting: Not every site will report information accurately, based on cultural influences predefined by the literature in the backlog. This can be seen when an asian site is reporting all green, and the user visits to see that the site may not actually be on track with it's progress.
 * End of Game Report: Score is calculated based on the formula given in the backlog, and displayed at the end of the game. This report also records other metrics such as revenue and productivity etc etc.
+
+###Master Config:
+Edit this at /Sim/Data/config_file.json
+
+* Global Distances: Defines geographical distance between home site and other sites.
+* Temporal Distances: Defines time difference between home site and other sites.
+* Cultural Distances: Defines cultural differences between home site and other sites.
+* Revenue: 
+* Starting Capital: The amount of money the player starts with.
+* Developer Effort:
+* Developer Rate:
+* Developer Working Hours: Hours a day the developer will work.
+* Interventions: Initial and Daily cost for interventions, and the tasks they will affect. The numbers 0-6 represent the 7 stages of the product's lifecycle.
