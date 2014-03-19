@@ -69,10 +69,15 @@ window.onload = function() {
 //Tracks when the player selects an intervention
 $('body').on('click', '#intervention', function(){ 
 	var tmp = $(this).context.innerHTML;
+	console.log(tmp);
 	implementChosenIntervention(GAME_DATA.gs, tmp);
 } );
 //Tracks when the player selects an intervention
-
+$('body').on('click', '#intervention1', function(){ 
+	var tmp = $(this).context.innerHTML;
+	console.log(tmp);
+	implementChosenIntervention(GAME_DATA.gs, tmp);
+} );
 
 
 function updateSpeedLabel() {

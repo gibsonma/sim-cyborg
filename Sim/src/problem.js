@@ -12,19 +12,32 @@ function disregard_intervention(chosen)
 	console.log("Intervention: " + chosen.name + " is no longer in use by the player");
 }
 //Pauses the game and opens a dialog listing the interventions
-//buttonList += '<button id="intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
+//Add Confirmation that intervention is bought
+//Change to table format
+//Name of intervention 
 function displayInterventions(gs)
 {
 	GAME_DATA.ticker.pause();
-	var interventions = '';
+	var interventions = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
 	for(var i = 0; i < gs.interventions.length; i++)
 	{
-		interventions += '<button id="intervention">' + gs.interventions[i].name + ' $' + gs.interventions[i].init_cost +  '</button>' + '</br>';
+		var item = gs.interventions[i];
+		if(item.is_implemented)
+		{
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd">Already Implemented</td>';
+		}
+		else 
+		{
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention">BUY ' + item.name+'</button></td>'
+		}
+		interventions += '</tr>';
+		
+	//	interventions += '<button id="intervention">' + gs.interventions[i].name + ' $' + gs.interventions[i].init_cost +  '</button>' + '</br>';
 	//	console.log(interventions);
 	}
+	interventions += '</table>';
 	vex.dialog.confirm({
-      message: '<p> List of Interventions: </p>' +
-			   '<p>' + interventions + '</p>', 
+      message: '<p>' + interventions + '</p>', 
       callback: function(value) {
         GAME_DATA.ticker.resume();
         return value;
@@ -47,6 +60,9 @@ function implementChosenIntervention(gs, intervention_name)
 	}
 	if(!chosen)return -1;
 	purchase_intervention(chosen);
+	GAME_DATA.ticker.pause()
+	vex.dialog.alert(chosen.name + " have been purchased!");
+	GAME_DATA.ticker.resume();
 	switch(chosen.name)//Values taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
 	{				   //High impact of 4 translates to a 0.4 reduction in problem occurance
 		case 'Face to face meetings':

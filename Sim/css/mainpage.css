@@ -47,6 +47,11 @@ body {
 #time_speed_label:after {
 	content: "%";
 }
+.itable, .itr, .itd {
+	border: 1px #000 solid;
+	background: #5E8DC0;
+	color: white;
+}
 
 .site_tile {
 	display: inline-block;
