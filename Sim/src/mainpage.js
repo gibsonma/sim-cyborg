@@ -68,6 +68,8 @@ window.onload = function() {
 
 function implementChosenIntervention(gs, intervention_name)
 {
+	//REDUCE VALUES IN PERCENTAGE[]
+	//CAP chance at 25% for example
 	console.log("Clicked Again!");
 	console.log(interventon);
 	var intervention;
@@ -193,7 +195,7 @@ function renderTileview() {
             var site = getSiteByName(siteName, GAME_DATA.gs);
             completedTasksEmail(site);
         });
-		$('.site_tile>.info-popup-intervention').click(function() {
+		$('.site_tile>.info-popup-Face to face meetings').click(function() {
 			console.log("Clicked!");
 			implementChosenIntervention(GAME_DATA.gs, $(this).parent());
 		});

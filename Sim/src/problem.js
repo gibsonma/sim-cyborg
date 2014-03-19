@@ -56,10 +56,12 @@ function intervention(gs)
             var problem = sites[i].problems[0];
 			var interventions = get_applicable_interventions(gs, problem);
 			var buttonList = '';
+			var game = gs;
 			for(var i = 0; i < interventions.length; i++)
 			{
 				buttonList += '<button class="info-popup-intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
 			}
+			console.log(buttonList);
             GAME_DATA.ticker.pause();//Pause the game
 			vex.dialog.alert({
                 message: '<p>'+problem.name+' has occured in site '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
