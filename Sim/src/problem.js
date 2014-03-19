@@ -29,6 +29,67 @@ function displayInterventions(gs)
       }
     });
 }
+//Takes an intervention, purchases it for the player and applies the necessary changes
+//to the relevant problems based on which intervention was chosen
+function implementChosenIntervention(gs, intervention_name)
+{
+	var interventions = gs.interventions;
+	var chosen;
+	for(var i = 0; i < interventions.length; i++)
+	{
+		if(intervention_name.indexOf(interventions[i].name) != -1)
+		{//Finds which intervention was chosen based on the name
+			chosen = interventions[i];
+			break;
+		}
+	}
+	if(!chosen)return -1;
+	purchase_intervention(chosen);
+	switch(chosen.name)//Values taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
+	{				   //High impact of 4 translates to a 0.4 reduction in problem occurance
+		case 'Face to face meetings':
+				reduce_percentages([0.4,0.4,0.4,0.4,0.4,0.4,0.4]);
+				break;
+		case 'Video Conferencing':
+				reduce_percentages([0.2,0,0,0,0,0,0]);
+				break;
+		case 'Cultural Training':
+				reduce_percentages([0.3,0.3,0.3,0.3,0.3,0.3,0.3]);
+				break;
+		case 'Cultural Ambassador':
+				reduce_percentages([0.3,0.3,0.3,0.3,0.3,0.3,0.3]);
+				break;
+		case 'Low Context Comms':
+				reduce_percentages([0.2,0.2,0.2,0.2,0.2,0.2,0.2]);
+				break;
+		case 'Synchronous Communication Possibilities':
+				reduce_percentages([0.3,0.3,0.3,0.3,0.3,0.3,0.3]);
+				break;
+		case 'Communication Tools':
+				reduce_percentages([0.2,0.2,0.2,0.2,0.2,0.2,0.2]);
+				break;
+		case 'Exchange Program':
+				reduce_percentages([0.4,0,0,0,0,0.4,0]);
+				break;
+		case 'Reduce Multi-cultural interactions':
+				reduce_percentages([0.1,0.1,0.1,0.1,0.1,0.1,0.1]);
+				break;
+		default:
+			console.log("Invalid Intervention Passed in");
+			break;
+	}
+}
+//Passed in an array of numbers, subtracts them from the corresponding percentages
+//to a minimum of 0.25
+function reduce_percentages(changes_list)
+{
+	for(var i = 0; i < changes_list.length; i++)
+	{
+		percentages[i] -= changes_list[i];
+		if(percentages[i] < 0.25)percentages[i] = 0.25;
+		console.log(percentages[i]);
+	}
+}
 
 //Gets passed the game state and a problem
 //Find out which interventions apply to the problem and return it
@@ -58,10 +119,9 @@ function intervention(gs)
 			var buttonList = '';
 			var game = gs;
 			for(var i = 0; i < interventions.length; i++)
-			{
-				buttonList += '<button class="info-popup-intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
+			{//Generates the list of buttons
+				buttonList += '<button id="intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
 			}
-			console.log(buttonList);
             GAME_DATA.ticker.pause();//Pause the game
 			vex.dialog.alert({
                 message: '<p>'+problem.name+' has occured in site '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
@@ -72,8 +132,7 @@ function intervention(gs)
                   ],
                 callback: function(value) {    
                     sites[index].problems.pop();//Pop the problem
-					var cost = problem.cost;
-                    new_transaction(-cost);//Deduct cost of fixing problem
+                    new_transaction(-problem.cost);//Deduct cost of fixing problem
                     GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
                     return console.log("Resolution Chosen");
                 }
