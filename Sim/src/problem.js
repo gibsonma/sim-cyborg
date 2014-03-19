@@ -12,13 +12,15 @@ function disregard_intervention(chosen)
 	console.log("Intervention: " + chosen.name + " is no longer in use by the player");
 }
 //Pauses the game and opens a dialog listing the interventions
+//buttonList += '<button id="intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
 function displayInterventions(gs)
 {
 	GAME_DATA.ticker.pause();
 	var interventions = '';
 	for(var i = 0; i < gs.interventions.length; i++)
 	{
-		interventions += gs.interventions[i].name + '<br>'; 
+		interventions += '<button id="intervention">' + gs.interventions[i].name + ' $' + gs.interventions[i].init_cost +  '</button>' + '</br>';
+	//	console.log(interventions);
 	}
 	vex.dialog.confirm({
       message: '<p> List of Interventions: </p>' +

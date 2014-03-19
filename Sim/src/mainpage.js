@@ -71,6 +71,8 @@ $('body').on('click', '#intervention', function(){
 	var tmp = $(this).context.innerHTML;
 	implementChosenIntervention(GAME_DATA.gs, tmp);
 } );
+//Tracks when the player selects an intervention
+
 
 
 function updateSpeedLabel() {
