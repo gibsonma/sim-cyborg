@@ -187,43 +187,35 @@ function update(gs)
             for (var j=0; j < site.modules.length; j++){
                 var module = site.modules[j];
                 var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
-                work(work_done, module, site);
+                switch (site.development_type) {
+                    case "Waterfall":
+                        var lowest_lifecycle = module_lifecycle_stage(site); 
+                        for (var j=lowest_lifecycle; j < module.tasks.length; j++){
+                            var task = module.tasks[j];
+                            if (task.completed < task.actual_total){
+                                task.completed += work_done;
+                                if (task.completed > task.actual_total) {
+                                    task.completed = task.actual_total;
+                                }
+                                return;
+                            }
+                        }
+                        break;
+                    case "Agile":
+                        var worked_on_module = false;
+                        for (var k=0; k < module.tasks.length; k++){
+                            var task = module.tasks[k];
+                            if (task.completed < task.actual_total && worked_on_module == false){
+                                task.completed += work_done;
+                                worked_on_module = true;
+                                if(task.completed > task.actual_total) {
+                                    task.completed = task.actual_total;
+                                }
+                            }
+                        }
+                        break;
+                }
             }
         }
-    }
-}
-
-function work(amount, module, site){
-    switch (site.development_type) {
-        case "Waterfall":
-            var lowest_lifecycle = module_lifecycle_stage(site); 
-            for (var j=lowest_lifecycle; j < module.tasks.length; j++){
-                var task = module.tasks[j];
-                if (task.completed < task.actual_total){
-                    task.completed += amount;
-                    if (task.completed > task.actual_total) {
-                        var extra_work = task.completed - task.actual_total;
-                        work(extra_work, module, site);
-                        task.completed = task.actual_total;
-                    }
-                    return;
-                }
-            }
-            break;
-        case "Agile":
-            var worked_on_module = false;
-            for (var k=0; k < module.tasks.length; k++){
-                var task = module.tasks[k];
-                if (task.completed < task.actual_total && worked_on_module == false){
-                    task.completed += amount;
-                    worked_on_module = true;
-                    if(task.completed > task.actual_total) {
-                        var extra_work = task.completed - task.actual_total;
-                        work(extra_work, module, site);
-                        task.completed = task.actual_total;
-                    }
-                }
-            }
-            break;
     }
 }

@@ -30,23 +30,28 @@ function scheduleCalculator(gs)
 }
 
 function sum_tasks(site){
+    var gs = GAME_DATA.gs;
     var effort=0;
     switch (site.development_type) {
         case "Waterfall":
             for (var j=0; j< site.modules.length; j++){
                 var module = site.modules[j];
+                var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
                     effort += longest_task(site.modules, k);
+                    if (task.total % work_done != 0) effort += work_done;
                 }
             }
             break;
         case "Agile":
             for (var j=0; j< site.modules.length; j++){
                 var module = site.modules[j];
+                var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
                     effort += task.total;
+                    if (task.total % work_done != 0) effort += work_done;
                 }
             }
             break;
@@ -57,8 +62,9 @@ function sum_tasks(site){
 function longest_task(modules, task_idx){
     var longest = 0;
     for (var i=0; i < modules.length; i++){
-        var task = modules[i].tasks[task_idx];
-        if (task.total > longest) longest = task.total;
+        var module = modules[i];
+        var task = module.tasks[task_idx];
+        if (task.total/module.assigned > longest) longest = task.total/module.assigned;
     }
     return longest;
 }
