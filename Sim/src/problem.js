@@ -24,11 +24,11 @@ function displayInterventions(gs)
 		var item = gs.interventions[i];
 		if(item.is_implemented)
 		{
-			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd">Already Implemented</td>';
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Sell ' + item.name+'</button></td>'
 		}
 		else 
 		{
-			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention">BUY ' + item.name+'</button></td>'
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention">Buy ' + item.name+'</button></td>'
 		}
 		interventions += '</tr>';
 		
@@ -44,9 +44,9 @@ function displayInterventions(gs)
       }
     });
 }
-//Takes an intervention, purchases it for the player and applies the necessary changes
-//to the relevant problems based on which intervention was chosen
-function implementChosenIntervention(gs, intervention_name)
+//Takes a string containing the name of an intervention and returns
+//which intervention it is
+function getChosenIntervention(gs, intervention_name)
 {
 	var interventions = gs.interventions;
 	var chosen;
@@ -59,6 +59,15 @@ function implementChosenIntervention(gs, intervention_name)
 		}
 	}
 	if(!chosen)return -1;
+	return chosen;
+}
+//Takes an intervention, purchases it for the player and applies the necessary changes
+//to the relevant problems based on which intervention was chosen
+function implementChosenIntervention(gs, intervention_name)
+{
+	var interventions = gs.interventions;
+	var chosen = getChosenIntervention(gs, intervention_name);
+	if(chosen == -1)return -1;
 	purchase_intervention(chosen);
 	GAME_DATA.ticker.pause()
 	vex.dialog.alert(chosen.name + " have been purchased!");
@@ -96,6 +105,17 @@ function implementChosenIntervention(gs, intervention_name)
 			console.log("Invalid Intervention Passed in");
 			break;
 	}
+}
+//Sells an intervention based on player input
+function disregardChosenIntervention(gs, intervention_name)
+{
+	var interventions = gs.interventions;
+	var chosen = getChosenIntervention(gs, intervention_name);
+	if(chosen == -1)return -1;
+	disregard_intervention(chosen);
+	GAME_DATA.ticker.pause()
+	vex.dialog.alert(chosen.name + " have been discarded!");
+	GAME_DATA.ticker.resume();
 }
 //Passed in an array of numbers, subtracts them from the corresponding percentages
 //to a minimum of 0.25
