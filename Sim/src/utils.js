@@ -66,31 +66,24 @@ function sum_tasks(site){
 function sum_completed_tasks(site){
     var gs = GAME_DATA.gs;
     var effort=0;
-    //console.log(JSON.stringify(site.modules,null,2));
     switch (site.development_type) {
         case "Waterfall":
             for (var j=0; j< site.modules.length; j++){
                 var module = site.modules[j];
-                console.log("Module.name: " + module.name);
                 console.log(JSON.stringify(module));
                 var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
                     if (task.completed == task.actual_total){
                         var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
-                        console.log("Max per hour-----: " + max_per_hour);
-                        console.log("Longest-------: " + effort_per_time_longest_task_completion(site.modules, k));
                         var work = effort_per_time_longest_task_completion(site.modules, k) * max_per_hour;
-                        console.log(effort + ": Adding effort for " + task.name + ": " + work);
                         effort += work;
                         if (task.total + work_done > work) {
                             effort += remainder(task.total, work_done);
-                            console.log("Adding remainder: " + remainder(task.total, work_done));
                         }
                     }
                     else {
                         effort += task.completed;
-                        console.log("Adding imcomplete: " + task.completed);
                     }
                 }
             }

@@ -248,8 +248,7 @@ function inquireAccurate(site)
         result += '<br> ' + modules[i].name + ' : ' + status;
     }
     vex.dialog.confirm({
-        message: '<p>' + result + '</p>'
-        ,
+        message: '<p>' + result + '</p>',
         callback: function(value) {
             GAME_DATA.ticker.resume();
             return value;
@@ -377,18 +376,14 @@ function statusClass(site) {
         return "schedule-very-behind";
     }        
     if (gs.current_time % 24 == 0){
-        console.log("IT'S A NEW DAY: Time: " + gs.current_time);
         var actually_completed = sum_completed_tasks(site);
-        console.log("actually: " + actually_completed);
 
         var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
         var expected_completed = effort_per_day * gs.current_time/24;
-        console.log("expected: " + expected_completed);
 
         if (actually_completed >= expected_completed) site.state = "schedule-ok"
         else site.state = "schedule-behind";
     }
-
     return site.state;
 }
 
@@ -420,5 +415,4 @@ function statusClassModules(m){
     else {
         return "schedule-behind"
     }
-
 }

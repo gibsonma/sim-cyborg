@@ -27,11 +27,33 @@ describe("Nominal Schedule Calculator", function()
 	
 	it("Sums all the tasks' effort correctly", function()
 	{
-		expect(sum_tasks(game.sites[0])).toEqual(12996);
+		expect(sum_tasks(game.sites[0])).toEqual(13120);
 	});
 	it("Takes into account the work load modifier", function()
 	{
-		expect(scheduleCalculator(game)).toEqual(46961);
+		expect(scheduleCalculator(game)).toEqual(39308);
+	});
+	it("Takes remainder into account", function()
+	{
+		expect(remainder(150, 40)).toEqual(10);
+	});
+});
+
+describe("Completion calculator ", function()
+{
+    var game = new GameState(1);
+	
+	it("Takes into account the work load modifier", function()
+	{
+		expect(sum_completed_tasks(game.sites[0])).toEqual(0);
+	});
+	it("effort_per_time_longest_task", function()
+	{
+		expect(effort_per_time_longest_task(game.sites[0].modules,0)).toEqual(168.75);
+	});
+	it("the amount of the time for the longest task that is undergoing completion", function()
+	{
+		expect(effort_per_time_longest_task_completion(game.sites[0].modules,0)).toEqual(0);
 	});
 });
 
