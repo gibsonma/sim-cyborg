@@ -6,29 +6,29 @@ function displayScenarioValues(scenNum)
 {
     if(isNaN(scenNum))return -1;
     var game = GAME_DATA.gs, items = [], result = '', module, site;
-	for(var i = 0; i < game.sites.length; i++)
-	{
-		site = game.sites[i];
-		items[i] = '<br>' + site.name + ' : ' + getSiteWorkers(site) + ' Developers';
-		items[i] += '<br> Modules: ';
-		for(var j = 0; j < site.modules.length; j++)
-		{
-			module = site.modules[j];
-			items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' effort points';	
-		}
-		items[i] += '<br>';
-		result += items[i];
-	}	
-	GAME_DATA.ticker.pause();//Pause the game
+    for(var i = 0; i < game.sites.length; i++)
+    {
+        site = game.sites[i];
+        items[i] = '<br>' + site.name + ' : ' + getSiteWorkers(site) + ' Developers';
+        items[i] += '<br> Modules: ';
+        for(var j = 0; j < site.modules.length; j++)
+        {
+            module = site.modules[j];
+            items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' effort points';	
+        }
+        items[i] += '<br>';
+        result += items[i];
+    }	
+    GAME_DATA.ticker.pause();//Pause the game
     vex.dialog.confirm({
-      message: '<p>You have picked Scenario '+scenNum + '</p>' + 
-               '<p>Sites:' + result + '</p>' + 
-               '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
-               '<p>Starting Capital: $'+ game.capital+'</p>',
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+        message: '<p>You have picked Scenario '+scenNum + '</p>' + 
+        '<p>Sites:' + result + '</p>' + 
+        '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
+        '<p>Starting Capital: $'+ game.capital+'</p>',
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
@@ -44,7 +44,7 @@ function setupGame(scene, setting)
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
     generateProblemPercentages()
-    GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
+        GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
     setLocalTime(GAME_DATA.gs.sites, get_home_site(GAME_DATA.gs.sites));
@@ -63,7 +63,7 @@ function setLocalTime(sites, homeSite)
             if(difference > 0)site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference]; 
             else if(difference < 0)site.local_time = TIME_CLOCK[-difference];   
         }
-        
+
     }
 }
 
@@ -103,21 +103,21 @@ function incrementTime(gs){
     gs.current_time ++;
     gs.time["Current Hour"]++;
     if (gs.time["Current Hour"] >= 24)gs.time["Current Hour"] = 0;
-	incrementLocalTimes(gs);
+    incrementLocalTimes(gs);
 }
 //Goes through each site and updates its local time
 function incrementLocalTimes(gs)
 {
-	for(var i = 0; i < gs.sites.length; i++)
-	{
-		gs.sites[i].local_time++;
-		if (gs.sites[i].local_time >= 24)gs.sites[i].local_time = 0;
+    for(var i = 0; i < gs.sites.length; i++)
+    {
+        gs.sites[i].local_time++;
+        if (gs.sites[i].local_time >= 24)gs.sites[i].local_time = 0;
         if (gs.sites[i].local_time < 10) {
             gs.sites[i].time_padder = "0";
         } else {
             gs.sites[i].time_padder = "";
         }
-	}
+    }
 }
 
 function display_final_score(gs){
@@ -143,7 +143,7 @@ function display_final_score(gs){
 var tileView;
 
 function update_tileview(gs) {
-	if (tileView) {
+    if (tileView) {
         tileView.update('state');    
     }
 }
@@ -154,9 +154,9 @@ function display_game_time(gs){
         daysRemaining = "0 (Overdue!)";
     }
     if(gs.time["Current Hour"] % 24 == 0)
-	{
-		gs.time["Days Passed"]++;
-	}
+    {
+        gs.time["Days Passed"]++;
+    }
     var curHour = gs.time["Current Hour"];
     if (curHour < 10) {
         curHour = "0" + curHour;
@@ -181,23 +181,18 @@ function update(gs)
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task
-         * once every other module is on the same level (has the same number of tasks done) */
-        var lowest_lifecycle = module_lifecycle_stage(site); 
+         * * once every other module is on the same level (has the same number of tasks done) */
+        var lowest_lifecycle = module_lifecycle_stage(site);
         if (should_be_working(site, gs) && lowest_lifecycle != -1){
             for (var j=0; j < site.modules.length; j++){
                 var module = site.modules[j];
-                var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 switch (site.development_type) {
                     case "Waterfall":
-                        var lowest_lifecycle = module_lifecycle_stage(site); 
-                        for (var j=lowest_lifecycle; j < module.tasks.length; j++){
-                            var task = module.tasks[j];
+                        if (lowest_lifecycle < module.tasks.length){
+                            var task = module.tasks[lowest_lifecycle];
                             if (task.completed < task.actual_total){
-                                task.completed += work_done;
-                                if (task.completed > task.actual_total) {
-                                    task.completed = task.actual_total;
-                                }
-                                return;
+                                task.completed += module.assigned * gs.developer_effort/TICKS_PER_UNIT_TIME;
+                                if (task.completed > task.actual_total) task.completed = task.actual_total;
                             }
                         }
                         break;
@@ -206,12 +201,10 @@ function update(gs)
                         for (var k=0; k < module.tasks.length; k++){
                             var task = module.tasks[k];
                             if (task.completed < task.actual_total && worked_on_module == false){
-                                task.completed += work_done;
+                                task.completed += module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                                 worked_on_module = true;
-                                if(task.completed > task.actual_total) {
-                                    task.completed = task.actual_total;
-                                }
                             }
+                            if(task.completed > task.actual_total) task.completed = task.actual_total;
                         }
                         break;
                 }
