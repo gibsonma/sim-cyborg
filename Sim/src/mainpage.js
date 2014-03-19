@@ -377,11 +377,12 @@ function statusClass(site) {
         return "schedule-very-behind";
     }        
     if (gs.current_time % 24 == 0){
+        console.log("IT'S A NEW DAY: Time: " + gs.current_time);
         var actually_completed = sum_completed_tasks(site);
+        console.log("actually: " + actually_completed);
 
         var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
         var expected_completed = effort_per_day * gs.current_time/24;
-        console.log("actually: " + actually_completed);
         console.log("expected: " + expected_completed);
 
         if (actually_completed >= expected_completed) site.state = "schedule-ok"

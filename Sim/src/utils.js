@@ -39,8 +39,9 @@ function sum_tasks(site){
                 var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
-                    effort += longest_task(site.modules, k);
-                    if (task.total + work_done > longest_task) {
+                    var idle_work_on_this_module = effort_per_time_longest_task(site.modules, k) * module.assigned;
+                    effort += idle_work_on_this_module;
+                    if (task.total + work_done > idle_work_on_this_module) {
                         effort += remainder(task.total, work_done);
                     }
                 }
@@ -69,17 +70,23 @@ function sum_completed_tasks(site){
         case "Waterfall":
             for (var j=0; j< site.modules.length; j++){
                 var module = site.modules[j];
+                console.log("Module.name: " + module.name);
+                console.log(JSON.stringify(module));
                 var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
                     if (task.completed == task.actual_total){
-                        effort += longest_task_completion(site.modules, k);
-                        if (task.total + work_done > longest_task_completion(site.modules, k)) {
+                        var idle_work_on_this_module = effort_per_time_longest_task(site.modules, k) * module.assigned;
+                        console.log(effort + ": Adding effort for " + task.name + ": " + idle_work_on_this_module);
+                        effort += idle_work_on_this_module;
+                        if (task.total + work_done > idle_work_on_this_module) {
                             effort += remainder(task.total, work_done);
+                            console.log("Adding remainder: " + remainder(task.total, work_done));
                         }
                     }
                     else {
                         effort += task.completed;
+                        console.log("Adding imcomplete: " + task.completed);
                     }
                 }
             }
@@ -108,32 +115,16 @@ function remainder(total, work){
     return (Math.ceil(total/work) * work) - total;
 }
 
-function longest_task(modules, task_idx){
-    var longest = 0;
+function effort_per_time_longest_task(modules, task_idx){
     var length_of_longest =0;
     for (var i=0; i < modules.length; i++){
         var module = modules[i];
         var task = module.tasks[task_idx];
         if (task.total/module.assigned > length_of_longest) {
-            longest = task.total;
             length_of_longest = task.total/module.assigned;
         }
     }
-    return longest;
-}
-
-function longest_task_completion(modules, task_idx){
-    var longest = 0;
-    var length_of_longest =0;
-    for (var i=0; i < modules.length; i++){
-        var module = modules[i];
-        var task = module.tasks[task_idx];
-        if (task.total/module.assigned > length_of_longest) {
-            longest = task;
-            length_of_longest = task.total/module.assigned;
-        }
-    }
-    return longest.completed;
+    return length_of_longest;
 }
 
 function number_assigned_workers(){
