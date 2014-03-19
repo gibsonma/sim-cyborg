@@ -31,9 +31,10 @@
 		{"name":"Cultural Training","init_cost": 20000, "daily_cost":100, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Cultural Ambassador","init_cost": 5000, "daily_cost":250, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Low Context Comms","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
-		{"name":"High Context Comms","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
+		{"name":"Synchronous Communication Possibilities","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Communication Tools","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
-		{"name":"Exchange Programme", "init_cost": 10000, "daily_cost":350, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
+		{"name":"Reduce Multi-cultural interactions","init_cost": 200, "daily_cost":25, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
+		{"name":"Exchange Program", "init_cost": 10000, "daily_cost":350, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
 	]
 }
 

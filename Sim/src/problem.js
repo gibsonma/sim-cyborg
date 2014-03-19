@@ -12,22 +12,120 @@ function disregard_intervention(chosen)
 	console.log("Intervention: " + chosen.name + " is no longer in use by the player");
 }
 //Pauses the game and opens a dialog listing the interventions
+//Add Confirmation that intervention is bought
+//Change to table format
+//Name of intervention 
 function displayInterventions(gs)
 {
 	GAME_DATA.ticker.pause();
-	var interventions = '';
+	var interventions = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
 	for(var i = 0; i < gs.interventions.length; i++)
 	{
-		interventions += gs.interventions[i].name + '<br>'; 
+		var item = gs.interventions[i];
+		if(item.is_implemented)
+		{
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Sell ' + item.name+'</button></td>'
+		}
+		else 
+		{
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention">Buy ' + item.name+'</button></td>'
+		}
+		interventions += '</tr>';
+		
+	//	interventions += '<button id="intervention">' + gs.interventions[i].name + ' $' + gs.interventions[i].init_cost +  '</button>' + '</br>';
+	//	console.log(interventions);
 	}
+	interventions += '</table>';
 	vex.dialog.confirm({
-      message: '<p> List of Interventions: </p>' +
-			   '<p>' + interventions + '</p>', 
+      message: '<p>' + interventions + '</p>', 
       callback: function(value) {
         GAME_DATA.ticker.resume();
         return value;
       }
     });
+}
+//Takes a string containing the name of an intervention and returns
+//which intervention it is
+function getChosenIntervention(gs, intervention_name)
+{
+	var interventions = gs.interventions;
+	var chosen;
+	for(var i = 0; i < interventions.length; i++)
+	{
+		if(intervention_name.indexOf(interventions[i].name) != -1)
+		{//Finds which intervention was chosen based on the name
+			chosen = interventions[i];
+			break;
+		}
+	}
+	if(!chosen)return -1;
+	return chosen;
+}
+//Takes an intervention, purchases it for the player and applies the necessary changes
+//to the relevant problems based on which intervention was chosen
+function implementChosenIntervention(gs, intervention_name)
+{
+	var interventions = gs.interventions;
+	var chosen = getChosenIntervention(gs, intervention_name);
+	if(chosen == -1)return -1;
+	purchase_intervention(chosen);
+	GAME_DATA.ticker.pause()
+	vex.dialog.alert(chosen.name + " have been purchased!");
+	GAME_DATA.ticker.resume();
+	switch(chosen.name)//Values taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
+	{				   //High impact of 4 translates to a 0.4 reduction in problem occurance
+		case 'Face to face meetings':
+				reduce_percentages([0.4,0.4,0.4,0.4,0.4,0.4,0.4]);
+				break;
+		case 'Video Conferencing':
+				reduce_percentages([0.2,0,0,0,0,0,0]);
+				break;
+		case 'Cultural Training':
+				reduce_percentages([0.3,0.3,0.3,0.3,0.3,0.3,0.3]);
+				break;
+		case 'Cultural Ambassador':
+				reduce_percentages([0.3,0.3,0.3,0.3,0.3,0.3,0.3]);
+				break;
+		case 'Low Context Comms':
+				reduce_percentages([0.2,0.2,0.2,0.2,0.2,0.2,0.2]);
+				break;
+		case 'Synchronous Communication Possibilities':
+				reduce_percentages([0.3,0.3,0.3,0.3,0.3,0.3,0.3]);
+				break;
+		case 'Communication Tools':
+				reduce_percentages([0.2,0.2,0.2,0.2,0.2,0.2,0.2]);
+				break;
+		case 'Exchange Program':
+				reduce_percentages([0.4,0,0,0,0,0.4,0]);
+				break;
+		case 'Reduce Multi-cultural interactions':
+				reduce_percentages([0.1,0.1,0.1,0.1,0.1,0.1,0.1]);
+				break;
+		default:
+			console.log("Invalid Intervention Passed in");
+			break;
+	}
+}
+//Sells an intervention based on player input
+function disregardChosenIntervention(gs, intervention_name)
+{
+	var interventions = gs.interventions;
+	var chosen = getChosenIntervention(gs, intervention_name);
+	if(chosen == -1)return -1;
+	disregard_intervention(chosen);
+	GAME_DATA.ticker.pause()
+	vex.dialog.alert(chosen.name + " have been discarded!");
+	GAME_DATA.ticker.resume();
+}
+//Passed in an array of numbers, subtracts them from the corresponding percentages
+//to a minimum of 0.25
+function reduce_percentages(changes_list)
+{
+	for(var i = 0; i < changes_list.length; i++)
+	{
+		percentages[i] -= changes_list[i];
+		if(percentages[i] < 0.25)percentages[i] = 0.25;
+	}
 }
 
 //Gets passed the game state and a problem
@@ -56,9 +154,10 @@ function intervention(gs)
             var problem = sites[i].problems[0];
 			var interventions = get_applicable_interventions(gs, problem);
 			var buttonList = '';
+			var game = gs;
 			for(var i = 0; i < interventions.length; i++)
-			{
-				buttonList += '<button class="info-popup-intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
+			{//Generates the list of buttons
+				buttonList += '<button id="intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
 			}
             GAME_DATA.ticker.pause();//Pause the game
 			vex.dialog.alert({
@@ -70,8 +169,7 @@ function intervention(gs)
                   ],
                 callback: function(value) {    
                     sites[index].problems.pop();//Pop the problem
-					var cost = problem.cost;
-                    new_transaction(-cost);//Deduct cost of fixing problem
+                    new_transaction(-problem.cost);//Deduct cost of fixing problem
                     GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
                     return console.log("Resolution Chosen");
                 }
