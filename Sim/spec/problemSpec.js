@@ -47,6 +47,14 @@ describe("The Intervention Interface", function()
 			expect(reduce_percentages).toHaveBeenCalled();
 		});	
 	});
+	describe("disregardChosenInterventions", function()
+	{
+		//TODO
+	});
+	describe("getChosenIntervention", function()
+	{
+		//TODO
+	});
 	describe("reduce_percentages", function()
 	{	
 		var changes = [0.1,0.2,0.4,0.6,0.5,0,0];
