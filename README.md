@@ -48,7 +48,7 @@ Edit this at /Sim/Data/config_file.json
 * Cultural Distances: Defines cultural differences between home site and other sites.
 * Revenue: Revenue per month.
 * Starting Capital: The amount of money the player starts with.
-* Developer Effort: How hard a developer works
+* Developer Effort: How many effort points a developer delivers per working hour
 * Developer Rate: The cost per hour a developer incurs.
 * Developer Working Hours: Hours a day the developer will work.
 * Interventions: Initial and Daily cost for interventions, and the tasks they will affect. The numbers 0-6 represent the 7 stages of the product's lifecycle. Is_Implemented is the initial state of the intervention, if the user has paid for it, or simply starts with it.
