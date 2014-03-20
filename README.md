@@ -42,7 +42,7 @@ Open localhost:3000/SpecRunner.html in a browser and the results of all present 
 
 ###Master Config:
 Edit this at /Sim/Data/config_file.json
-
+Values & Definitions for Global, Temporal and Cultural Distance were taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
 * Global Distances: Defines geographical distance between home site and other sites.
 * Temporal Distances: Defines time difference between home site and other sites.
 * Cultural Distances: Defines cultural differences between home site and other sites.
