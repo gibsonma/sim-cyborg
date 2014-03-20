@@ -9,7 +9,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
-var PROBLEM_CONSTANT = 0.005; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
+var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
@@ -105,7 +105,9 @@ function load_globals(gs){
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
+		PROBLEM_CONSTANT = obj.problem_constant;
     });
+	console.log(PROBLEM_CONSTANT);
 }
 
 function Site(name, culture_modifier, dev, timezone, home){

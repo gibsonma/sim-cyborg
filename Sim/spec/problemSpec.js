@@ -24,10 +24,6 @@ describe("The Intervention Interface", function()
 			expect(intervention.is_implemented).toBeFalsy();
 		});
 	});
-	describe("displayInterventions", function()
-	{
-		//TODO
-	});
 	describe("implementChosenIntervention", function()
 	{
 		it("Returns -1 if what's passed in is not an intervention", function()
@@ -46,6 +42,34 @@ describe("The Intervention Interface", function()
 			implementChosenIntervention(game, "Cultural Ambassador");
 			expect(reduce_percentages).toHaveBeenCalled();
 		});	
+	});
+	describe("disregardChosenInterventions", function()
+	{
+		load_globals(game);
+		
+		it("Finds the intervention", function()
+		{	
+			getChosenIntervention = jasmine.createSpy();
+			disregard_intervention = jasmine.createSpy();
+			disregardChosenIntervention(game, "Face to face meetings");
+			expect(getChosenIntervention).toHaveBeenCalled();
+			expect(disregard_intervention).toHaveBeenCalled();
+		});
+	});
+	describe("getChosenIntervention", function()
+	{
+		load_globals(game);
+		var result = getChosenIntervention(game, "Face to face meetings");
+		it("Returns the intervention if the name passed in matches", function()
+		{
+			expect(game.interventions).toBeDefined();
+			expect(result).toEqual(game.interventions[0]);
+		});
+		var result_fake = getChosenIntervention(game, "Test");
+		it("Returns -1 if the intervention name doesn't match any interventions", function()
+		{
+			expect(result_fake).toEqual(-1);
+		});
 	});
 	describe("reduce_percentages", function()
 	{	
@@ -100,7 +124,6 @@ describe("Problem Simulator", function()
 {
 	it("checks to make sure the fail value used to calculate problems is valid", function()
 	{
-		//var gs = new GameState(1);
 			for(var i = 0; i < 10; i++)
 			{
 				var fail = problemSim(game);
