@@ -63,14 +63,22 @@ function sum_tasks(site){
     return effort;
 }
 
-function sum_completed_tasks(site){
+function actual_effort_completed_gs(){
+    var gs = GAME_DATA.gs;
+    var total = 0;
+    for (var i=0; i < gs.sites.length; i++){
+        total += actual_effort_completed(gs.sites[i]);
+    }
+    return total;
+}
+
+function actual_effort_completed(site){
     var gs = GAME_DATA.gs;
     var effort=0;
     switch (site.development_type) {
         case "Waterfall":
             for (var j=0; j< site.modules.length; j++){
                 var module = site.modules[j];
-                console.log(JSON.stringify(module));
                 var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
@@ -181,8 +189,8 @@ function report(gs){
 
     var months = gs.current_time/24/gs.days_per_month;
     this.months_str = months_to_str(months);
-
-    this.actual_effort = Math.round(days_completed*effort_per_day);
+    
+    this.actual_effort = Math.round(actual_effort_completed_gs());
     this.expected_effort = Math.round(scheduleCalculator(gs));
 
     this.expected_expenditure = Math.round((scheduleCalculator(gs)/gs.developer_effort) * gs.developer_rate * 1.24); // see email for explanation

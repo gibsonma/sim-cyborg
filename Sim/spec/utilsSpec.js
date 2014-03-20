@@ -45,7 +45,7 @@ describe("Completion calculator ", function()
 	
 	it("Takes into account the work load modifier", function()
 	{
-		expect(sum_completed_tasks(game.sites[0])).toEqual(0);
+		expect(actual_effort_completed(game.sites[0])).toEqual(0);
 	});
 	it("effort_per_time_longest_task", function()
 	{
@@ -54,6 +54,10 @@ describe("Completion calculator ", function()
 	it("the amount of the time for the longest task that is undergoing completion", function()
 	{
 		expect(effort_per_time_longest_task_completion(game.sites[0].modules,0)).toEqual(0);
+	});
+	it("the amount of effort done in the gs taking waterfall and idleness into account", function()
+	{
+		expect(actual_effort_completed_gs()).toBeDefined();// only checking is defined as val returned changes with very gs
 	});
 });
 

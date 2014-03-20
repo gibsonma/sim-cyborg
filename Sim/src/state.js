@@ -107,7 +107,6 @@ function load_globals(gs){
         gs.interventions = obj.interventions;	
 		PROBLEM_CONSTANT = obj.problem_constant;
     });
-	console.log(PROBLEM_CONSTANT);
 }
 
 function Site(name, culture_modifier, dev, timezone, home){
