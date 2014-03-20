@@ -55,10 +55,9 @@ function GameState(setting)
                 site_builder("Poland", "Waterfall", false, [
                         module_builder("Middle End", 6, 9000),
                         module_builder("Backend", 6, 5000)
-                        ]),
-                    ];
+                        ]), // they're finishing at different times
+                ];
             break;
-
         case 3:
             this.sites = [
                 site_builder("New York", "Agile", false, [
@@ -89,7 +88,7 @@ function GameState(setting)
     this.time = {"Current Hour":0, "Days Passed":0}
     this.current_time = 0;
     this.financial_log = []; //log of finances to type for graphing
-	this.interventions = [];
+    this.interventions = [];
     this.days_per_month = 30;
 }
 
@@ -105,7 +104,7 @@ function load_globals(gs){
         gs.developer_rate = obj.developer_rate;
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
-		gs.interventions = obj.interventions;	
+        gs.interventions = obj.interventions;	
     });
 }
 
@@ -153,11 +152,11 @@ function Problem(name,impact, currentProgress, module, taskNum){
 //A class that represents an intervention in the game
 function Intervention(name, init_cost, daily_cost, is_implemented, affects)
 {
-	this.name = name;//Name of the intervention
-	this.init_cost = init_cost;//How much it costs to buy initially
-	this.daily_cost = daily_cost;//How much it costs to keep per day
-	this.is_implemented = is_implemented;//Is it currently implemented?
-	this.affects = affects//Array of bools corresponding to which tasks are affected by the intervention
+    this.name = name;//Name of the intervention
+    this.init_cost = init_cost;//How much it costs to buy initially
+    this.daily_cost = daily_cost;//How much it costs to keep per day
+    this.is_implemented = is_implemented;//Is it currently implemented?
+    this.affects = affects//Array of bools corresponding to which tasks are affected by the intervention
 }
 
 function vary(total){
