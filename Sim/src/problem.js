@@ -24,19 +24,17 @@ function displayInterventions(gs)
 		var item = gs.interventions[i];
 		if(item.is_implemented)
 		{
-			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Sell ' + item.name+'</button></td>'
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Sell ' + item.name+'</button></td>'
 		}
 		else 
 		{
-			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">'+item.init_cost+'</td><td class="itd">'+item.daily_cost+'</td><td class="itd"><button id="intervention">Buy ' + item.name+'</button></td>'
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention">Buy ' + item.name+'</button></td>'
 		}
 		interventions += '</tr>';
-		
-	//	interventions += '<button id="intervention">' + gs.interventions[i].name + ' $' + gs.interventions[i].init_cost +  '</button>' + '</br>';
-	//	console.log(interventions);
 	}
 	interventions += '</table>';
 	vex.dialog.confirm({
+	  css: {'width':'100%'},
       message: '<p>' + interventions + '</p>', 
       callback: function(value) {
         GAME_DATA.ticker.resume();
@@ -145,21 +143,33 @@ function get_applicable_interventions(gs, problem)
 
 function intervention(gs)
 {
-    sites = gs.sites;	
+	sites = gs.sites;	
     for(var i = 0; i < sites.length; i++)
     {
         if(sites[i].problems.length > 0)
         {
+			GAME_DATA.ticker.pause();//Pause the game
             var index = i;//Need to record index for use in callback
             var problem = sites[i].problems[0];
 			var interventions = get_applicable_interventions(gs, problem);
 			var buttonList = '';
 			var game = gs;
+			var buttonList = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
 			for(var i = 0; i < interventions.length; i++)
 			{//Generates the list of buttons
-				buttonList += '<button id="intervention">' + interventions[i].name + ' $' + interventions[i].init_cost +  '</button>'
+				var item = interventions[i];
+				if(item.is_implemented)
+				{
+					buttonList += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Sell ' + item.name+'</button></td>'
+				}
+				else 
+				{
+					buttonList += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention">Buy ' + item.name+'</button></td>'
+				}
+				buttonList += '</tr>';
 			}
-            GAME_DATA.ticker.pause();//Pause the game
+			interventions += '</table>';
+            
 			vex.dialog.alert({
                 message: '<p>'+problem.name+' has occured in site '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
                 buttons: [

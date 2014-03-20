@@ -51,6 +51,7 @@ body {
 	border: 1px #000 solid;
 	background: #5E8DC0;
 	color: white;
+	border-collapse:collapse;
 }
 
 .site_tile {
