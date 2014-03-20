@@ -11,10 +11,7 @@ function disregard_intervention(chosen)
 	chosen.is_implemented = false;
 	console.log("Intervention: " + chosen.name + " is no longer in use by the player");
 }
-//Pauses the game and opens a dialog listing the interventions
-//Add Confirmation that intervention is bought
-//Change to table format
-//Name of intervention 
+//Displays the intervention interaction table
 function displayInterventions(gs)
 {
 	GAME_DATA.ticker.pause();
@@ -38,7 +35,7 @@ function displayInterventions(gs)
       message: '<p>' + interventions + '</p>', 
       callback: function(value) {
         GAME_DATA.ticker.resume();
-        return value;
+        return interventions;
       }
     });
 }
@@ -112,7 +109,7 @@ function disregardChosenIntervention(gs, intervention_name)
 	if(chosen == -1)return -1;
 	disregard_intervention(chosen);
 	GAME_DATA.ticker.pause()
-	vex.dialog.alert(chosen.name + " have been discarded!");
+	vex.dialog.alert("Intervention discarded!");
 	GAME_DATA.ticker.resume();
 }
 //Passed in an array of numbers, subtracts them from the corresponding percentages
