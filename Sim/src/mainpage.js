@@ -351,8 +351,8 @@ function statusClass(site) {
 
         var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
         var expected_completed = effort_per_day * gs.current_time/24;
-        //console.log("actually: " + actually_completed);
-        //console.log("expected: " + expected_completed);
+        console.log("actually: " + actually_completed);
+        console.log("expected: " + expected_completed);
 
         if (actually_completed >= expected_completed) site.state = "schedule-ok"
         else site.state = "schedule-behind";

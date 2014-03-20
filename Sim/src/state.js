@@ -48,7 +48,7 @@ function GameState(setting)
             break;
         case 2:
             this.sites = [
-                site_builder("Poland", "Agile", true, [
+                site_builder("Poland", "Waterfall", true, [
                         module_builder("Middle End", 6, 9000),
                         module_builder("Backend", 6, 5000)
                         ]), // they're finishing at different times - effort not being counted
@@ -157,6 +157,8 @@ function Intervention(name, init_cost, daily_cost, is_implemented, affects)
 }
 
 function vary(total){
+    // TODO:
+    return total;
     var seed = Math.random();
     var actual_total = total;
     if(seed > 0.50 ){
