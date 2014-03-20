@@ -27,7 +27,7 @@ describe("Nominal Schedule Calculator", function()
 	
 	it("Sums all the tasks' effort correctly", function()
 	{
-		expect(sum_tasks(game.sites[0])).toEqual(13120);
+		expect(sum_tasks(Math.round(game.sites[0]))).toEqual(13120);
 	});
 	it("Takes into account the work load modifier", function()
 	{
@@ -54,6 +54,10 @@ describe("Completion calculator ", function()
 	it("the amount of the time for the longest task that is undergoing completion", function()
 	{
 		expect(effort_per_time_longest_task_completion(game.sites[0].modules,0)).toEqual(0);
+	});
+	it("Amount of effort points per time of the longest length module on a site", function()
+	{
+		expect(effort_per_time_longest_module(game.sites[0])).toEqual(0);
 	});
 	it("the amount of effort done in the gs taking waterfall and idleness into account", function()
 	{
