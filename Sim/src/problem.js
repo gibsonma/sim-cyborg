@@ -365,11 +365,11 @@ function encounteredProblems(site)
     GAME_DATA.ticker.pause();
     var past_problems = site.past_problems;
 	var result = "Problems Encountered: ";
-	result += '<table class="ptable"><tr class="ptr"><td class="ptd">Module</td><td class="ptd">Problem</td><td class="ptd">Day Occured</td></tr>'
+	result += '<table class="ptable"><tr class="ptr"><td class="ptd">Module</td><td class="ptd">Problem</td><td class="ptd">Impact (%)</td><td class="ptd">Day Occured</td></tr>'
     for(var i = 0; i < past_problems.length; i++)
     {
         var problem = past_problems[i];
-		result += '<tr class="ptr"><td class="ptd">'+site.modules[problem[0].module].name+'</td><td class="ptd">'+problem[0].name+'</td><td class="ptd">'+problem[1]+'</td></tr>';		
+		result += '<tr class="ptr"><td class="ptd">'+site.modules[problem[0].module].name+'</td><td class="ptd">'+problem[0].name+'</td><td class="ptd">'+problem[0].impact+'</td><td class="ptd">'+problem[1]+'</td></tr>';		
     }
 	result += '</table>';
     vex.dialog.confirm({
