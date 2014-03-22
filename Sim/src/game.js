@@ -45,7 +45,7 @@ function setupGame(scene, setting)
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
     generateProblemPercentages()
-        GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
+    GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
     setLocalTime(GAME_DATA.gs.sites, get_home_site(GAME_DATA.gs.sites));

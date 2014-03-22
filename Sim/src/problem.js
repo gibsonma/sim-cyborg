@@ -149,6 +149,7 @@ function intervention(gs)
 			GAME_DATA.ticker.pause();//Pause the game
             var index = i;//Need to record index for use in callback
             var problem = sites[i].problems[0];
+			sites[i].past_problems.push([problem,gs.time["Days Passed"]]);
 			sites[i].problems.pop();
 			var interventions = get_applicable_interventions(gs, problem);
 			var buttonList = '';
@@ -356,4 +357,27 @@ function problemSim(gs)
     //console.log(failC);
     return failC;
 
+}
+
+//Displays all the problems thus experienced by the site passed in
+function encounteredProblems(site)
+{
+    GAME_DATA.ticker.pause();
+    var past_problems = site.past_problems;
+	var result = "Problems Encountered: ";
+	result += '<table class="ptable"><tr class="ptr"><td class="ptd">Module</td><td class="ptd">Problem</td><td class="ptd">Day Occured</td></tr>'
+    for(var i = 0; i < past_problems.length; i++)
+    {
+        var problem = past_problems[i];
+		result += '<tr class="ptr"><td class="ptd">'+site.modules[problem[0].module].name+'</td><td class="ptd">'+problem[0].name+'</td><td class="ptd">'+problem[1]+'</td></tr>';		
+    }
+	result += '</table>';
+    vex.dialog.confirm({
+        message: '<p>' + result + '</p>' 
+        ,
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return result;
+        }
+    });
 }

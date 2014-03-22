@@ -115,6 +115,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.modules = []; //List of modules
     this.development_type = dev;
     this.problems = [];
+	this.past_problems = [];
     this.critical_problem = false;
     this.timezone = timezone;
     this.problemCooldown = 0.005;
