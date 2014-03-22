@@ -10,7 +10,8 @@ function displayScenarioValues(scenNum)
     {
         site = game.sites[i];
         items[i] = '<br>' + site.name + ' : ' + getSiteWorkers(site) + ' Developers';
-        items[i] += '<br> Modules: ';
+        items[i] += '<br>Development Method: ' + site.development_type;
+		items[i] += '<br> Modules: ';
         for(var j = 0; j < site.modules.length; j++)
         {
             module = site.modules[j];
