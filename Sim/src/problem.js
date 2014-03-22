@@ -30,6 +30,7 @@ function displayInterventions(gs)
 		interventions += '</tr>';
 	}
 	interventions += '</table>';
+	
 	vex.dialog.confirm({
 	  css: {'width':'100%'},
       message: '<p>' + interventions + '</p>', 
@@ -166,8 +167,7 @@ function intervention(gs)
 				}
 				buttonList += '</tr>';
 			}
-			interventions += '</table>';
-            
+			buttonList += '</table>';
 			vex.dialog.confirm({
                 message: '<p>'+problem.name+' in '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
                 buttons: [

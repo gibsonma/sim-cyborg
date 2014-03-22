@@ -190,9 +190,10 @@ function completedTasksEmail(site)
     for(var i = 0; i < modules.length; i++)
     {
         tasks = modules[i].tasks;
+		result += '<br>' + modules[i].name + ' : ';
         for(var j = 0; j < tasks.length; j++)
         {
-            if(tasks[j].completed >= tasks[j].actual_total) result += '<br>' + tasks[j].name;
+            if(tasks[j].completed >= tasks[j].actual_total) result += '<br>&nbsp&nbsp&nbsp&nbsp' + tasks[j].name;
         }
     }
     vex.dialog.confirm({
