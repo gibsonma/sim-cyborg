@@ -36,6 +36,13 @@
 		{"name":"Communication Tools","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Reduce Multi-cultural interactions","init_cost": 200, "daily_cost":25, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Exchange Program", "init_cost": 10000, "daily_cost":350, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
+	],
+	"moral_interventions": [
+		{"name":"Buy Pizza","init_cost": 200, "daily_cost":0, "is_implemented":false, "affects":15},
+		{"name":"Hold Office Party","init_cost": 500, "daily_cost":0, "is_implemented":false, "affects":25},
+		{"name":"Set Up Morale Classes","init_cost": 2000, "daily_cost":100, "is_implemented":false, "affects":10},
+		{"name":"Organise Fun Office Excursion","init_cost": 3000, "daily_cost":0, "is_implemented":false, "affects":40},
+		{"name":"Restock Staff Kitchen","init_cost": 150, "daily_cost":0, "is_implemented":false, "affects":25}
 	]
 }
 
