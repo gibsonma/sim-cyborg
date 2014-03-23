@@ -161,6 +161,22 @@ function Intervention(name, init_cost, daily_cost, is_implemented, affects)
     this.affects = affects//Array of bools corresponding to which tasks are affected by the intervention
 }
 
+//Represents a moral intervention
+function MoralIntervention(name, cost, init_impact)
+{
+	this.name = name;
+	this.cost = cost;//Cost of buying
+	this.init_impact = init_impact;//Initial impact on site morale
+	this.curr_impact = get_moral_impact(init_impact, sites_implemented);//See get_moral_impact
+	this.sites_implemented = [];//A dictionary linking the sites that have purchased the intervention and how many times
+}
+
+//Takes the initial impact of a moral intervention and a dictionary containing sites and the number of times said moral intervention has been implemented there. It then works out the actual impact a moral intervention will have, as the more times that it is implemented at a site, the less effective it becomes
+function get_moral_impact(initial_impact, dictionary)
+{
+
+}
+
 function vary(total){
     var seed = Math.random();
     var actual_total = total;

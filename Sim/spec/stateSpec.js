@@ -133,3 +133,12 @@ describe("Intervention", function()
 		expect(i.is_implemented).toEqual(jasmine.any(Boolean));
 	});
 });
+
+describe("MoralIntervention", function()
+{
+	//TODO
+});
+describe("get_moral_impact", function()
+{
+	//TODO
+});
