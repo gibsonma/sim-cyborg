@@ -184,15 +184,9 @@ function get_moral_impact(m_intervention, site_name)
 	return actual_impact;
 }
 //Updates the intervention's dictionary, by incrementing the value linked to the site key
-function update_moral_dictionary(moral_intervention, site)
+function update_moral_dictionary(moral_intervention, site_name)
 {
-	var result = {};
-	var sites = game.sites;
-	for(var i = 0; i < sites.length; i++)
-	{
-		result[sites[i].name] = 0;
-	}
-	return result;
+	moral_intervention.sites_implemented[site_name] += 1;
 }
 
 function vary(total){
