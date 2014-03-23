@@ -54,7 +54,8 @@ function setupGame(scene, setting)
 //The home site's time is known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and set
 function setLocalTime(sites, homeSite)
 {
-    var homeZone = homeSite.timezone, difference = 0;
+
+	var homeZone = homeSite.timezone, difference = 0;
     for(var i = 0; i < sites.length; i++)
     {
         site = sites[i];
@@ -150,7 +151,7 @@ function update_tileview(gs) {
 }
 
 function display_game_time(gs){
-    var daysRemaining = calculate_days_remaining(gs);
+	var daysRemaining = calculate_days_remaining(gs);
     if (daysRemaining < 0) {
         daysRemaining = "0 (Overdue!)";
     }
