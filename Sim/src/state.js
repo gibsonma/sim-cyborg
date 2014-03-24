@@ -111,10 +111,10 @@ function load_globals(gs){
 function Player(){
     this.sensitivity   = 1; //for noticing workplace issues etc
     this.perception    = 1; //for figuring out potential problems before they happen
-    this.empathy       = 1; //for knowing in advance when your morale is dropping, also gives a bonus to morale
-    this.charisma      = 1; //for interacting with your workers to improve their productivity
-    this.intelligence  = 1; //for making better business decisions, impacts revenue
-    this.assertiveness = 1; //for increasing productivity/developer effort
+    this.empathy       = 1; //for knowing in advance when your morale is dropping, also gives a bonus to morale --DECREASE THIS MODIFIER AT HIGHER LEVELS
+    this.charisma      = 1; //for interacting with your workers to improve their productivity --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.intelligence  = 1; //for making better business decisions, impacts revenue --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.assertiveness = 1; //for increasing productivity/developer effort --INCREASE THIS MODIFIER AT HIGHER LEVELS
     this.luck          = 1; //sometimes, something nice will happen... or sometimes, something bad.
 }
 
