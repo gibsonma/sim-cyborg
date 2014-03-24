@@ -56,7 +56,7 @@ function sum_tasks(site){
                 effort += work;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
-                    effort += remainder(credited_total(task), gs.developer_effort);
+                    effort += remainder(task.total, gs.developer_effort);
                 }
                 //        effort += remainder(task.total, work_done);
             }

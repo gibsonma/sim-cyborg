@@ -187,8 +187,6 @@ function update_moral_dictionary(moral_intervention, site_name)
 }
 
 function vary(total){
-    // TODO:
-    return total;
     var seed = Math.random();
     var actual_total = total;
     if(seed > 0.50 ){

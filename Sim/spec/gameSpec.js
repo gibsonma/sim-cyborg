@@ -107,9 +107,6 @@ describe("Update game state", function (){
     });
 });
 
-	
-
-
 describe("Displaying Scenario Values", function()
 {
 	describe("Calculating Effort for each Module", function()

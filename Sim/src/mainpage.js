@@ -360,8 +360,8 @@ function statusClass(site) {
         console.log("actually: " + actually_completed);
         console.log("expected: " + expected_completed);
         if (actually_completed != expected_completed){
-            console.log(JSON.stringify(gs.sites, null, 3));
-            GAME_DATA.ticker.pause();//Pause the game
+            //console.log(JSON.stringify(gs.sites, null, 3));
+       //     GAME_DATA.ticker.pause();//Pause the game
         }
 
         if (actually_completed >= expected_completed) site.state = "schedule-ok"

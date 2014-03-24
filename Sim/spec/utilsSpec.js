@@ -31,6 +31,16 @@ describe("Nominal Schedule Calculator", function()
     });
     it("Takes into account the work load modifier", function()
     {
+        for (var i=0; i< game.sites.length; i++){
+            var site = game.sites[i];
+            for (var j=0; j < site.modules.length; j++){
+                var module = site.modules[j];
+                for (var k=0; k < module.tasks.length; k++){
+                    var task = module.tasks[k];
+                    task.actual_total = task.total;
+                }
+            }
+        }
         expect(Math.round(scheduleCalculator(game))).toEqual(Math.round(41204));
     });
     it("Takes remainder into account", function()
@@ -57,6 +67,16 @@ describe("Completion calculator ", function()
     });
     it("Amount of effort points per time of the longest length module on a site", function()
     {
+        for (var i=0; i< game.sites.length; i++){
+            var site = game.sites[i];
+            for (var j=0; j < site.modules.length; j++){
+                var module = site.modules[j];
+                for (var k=0; k < module.tasks.length; k++){
+                    var task = module.tasks[k];
+                    task.actual_total = task.total;
+                }
+            }
+        }
         expect(hours_for_longest_module(game.sites[0])).toEqual(1250);
     });
     it("the amount of effort done in the gs taking waterfall and idleness into account", function()
