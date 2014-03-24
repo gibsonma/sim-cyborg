@@ -46,7 +46,7 @@ Values & Definitions for Global, Temporal and Cultural Distance were taken from 
 * Global Distances: Defines geographical distance between home site and other sites.
 * Temporal Distances: Defines time difference between home site and other sites.
 * Cultural Distances: Defines cultural differences between home site and other sites.
-* Revenue: Revenue per month.
+* Revenue: Revenue per year.
 * Starting Capital: The amount of money the player starts with.
 * Developer Effort: How many effort points a developer delivers per working hour
 * Developer Rate: The cost per hour a developer incurs.

@@ -88,6 +88,7 @@ function GameState(setting)
     this.financial_log = []; //log of finances to type for graphing
     this.interventions = [];
     this.days_per_month = 30;
+    this.player = new Player();
 }
 
 function load_globals(gs){
@@ -96,16 +97,25 @@ function load_globals(gs){
         gs.global_distances = obj.global_distances;
         gs.temporal_distances = obj.temporal_distances;
         gs.cultural_distances = obj.cultural_distances;
-        gs.revenue = obj.revenue;
+        gs.revenue = obj.revenue *gs.player.intelligence; //change revenue based on how intelligent the manager is
         gs.starting_capital = obj.starting_capital;
         gs.developer_effort = obj.developer_effort;
-        gs.developer_rate = obj.developer_rate;
+        gs.developer_rate = obj.developer_rate*gs.player.charisma; //more charismatic  managers will improve how workers see you, and therefore how hard they work
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
 		PROBLEM_CONSTANT = obj.problem_constant;
-		MORAL_MOD = obj.moral_modifier;
+		MORAL_MOD = obj.moral_modifier*gs.player.empathy;
     });
+}
+function Player(){
+    this.sensitivity  = 1; //for noticing workplace issues etc
+    this.perception   = 1; //for figuring out potential problems before they happen
+    this.empathy      = 1; //for knowing in advance when your morale is dropping, also gives a bonus to morale
+    this.charisma     = 1; //for interacting with your workers to improve their productivity
+    this.intelligence = 1; //for making better business decisions, impacts revenue
+    this.a            = 1; //need an 'a' personality trait that makes sense
+    this.luck         = 1; //sometimes, something nice will happen... or sometimes, something bad.
 }
 
 function Site(name, culture_modifier, dev, timezone, home){
