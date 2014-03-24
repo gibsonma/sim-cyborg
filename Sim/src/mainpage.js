@@ -350,7 +350,7 @@ function statusClass(site) {
         var actually_completed = actual_effort_completed(site);
 
         var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
-        var expected_completed = effort_per_day * gs.current_time/24;
+        var expected_completed = effort_per_day/24 * gs.current_time;
         console.log("actually: " + actually_completed);
         console.log("expected: " + expected_completed);
 

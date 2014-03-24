@@ -3,22 +3,22 @@
 //by summing up the expected total of its tasks and returning it
 function getEffortForModule(module)
 {
-	if (module.tasks == undefined) return -1;
-	var result = 0;
-	for(var i = 0; i < module.tasks.length; i++)result += module.tasks[i].total;
-	return result;
+    if (module.tasks == undefined) return -1;
+    var result = 0;
+    for(var i = 0; i < module.tasks.length; i++)result += module.tasks[i].total;
+    return result;
 }
 
 //Given a site, this function goes through all the tasks being worked on and returns how many workers that are working at the site
 function getSiteWorkers(site)
 {
-	var result = 0;
+    var result = 0;
 
-	for(var i = 0; i < site.modules.length; i++)
-	{
+    for(var i = 0; i < site.modules.length; i++)
+    {
         result += site.modules[i].assigned;
-	}
-	return result;
+    }
+    return result;
 }
 function scheduleCalculator(gs)
 {   
@@ -52,7 +52,7 @@ function sum_tasks(site){
             for (var j=0; j< site.modules.length; j++){
                 var module = site.modules[j];
                 var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
-                var work =  effort_per_time_longest_module(site) * max_per_hour;
+                var work =  hours_for_longest_module(site) * max_per_hour;
                 effort += work;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
@@ -101,12 +101,12 @@ function actual_effort_completed(site){
             }
             break;
         case "Agile":
-            for (var j=0; j< site.modules.length; j++){
+            for (var j=0; j < site.modules.length; j++){
                 var module = site.modules[j];
 
                 var completed = 0;
                 var out_of = 0;
-                for (var k=0; k<module.tasks.length; k++){
+                for (var k = 0; k < module.tasks.length; k++){
                     var task = module.tasks[k];
                     completed += task.completed;
                     out_of += credited_total(task);
@@ -114,7 +114,7 @@ function actual_effort_completed(site){
                 var ratio_completed = completed/out_of;
 
                 var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
-                var work =  effort_per_time_longest_module(site) * max_per_hour;
+                var work =  hours_for_longest_module(site) * max_per_hour;
                 effort += work * ratio_completed;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
@@ -162,8 +162,7 @@ function effort_per_time_longest_task_completion(modules, task_idx){
     }
 }
 
-
-function effort_per_time_longest_module(site){
+function hours_for_longest_module(site){
     var gs = GAME_DATA.gs;
     var length_of_longest =0;
     for (var i=0; i< site.modules.length; i++){
@@ -171,9 +170,9 @@ function effort_per_time_longest_module(site){
         var module_total = 0;
         for (var j=0; j < module.tasks.length; j++){
             var task = module.tasks[j];
-            module_total += task.total;
+            module_total += task.actual_total;
         }
-        var work_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24
+        var work_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
         var legnth_of_module = module_total/work_per_hour;
         if (legnth_of_module > length_of_longest) length_of_longest = legnth_of_module;
     }
@@ -187,9 +186,9 @@ function effort_per_time_longest_task(modules, task_idx){
         var module = modules[i];
         var task = module.tasks[task_idx];
         var work_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24
-        if (task.total/module.assigned > length_of_longest) {
-            length_of_longest = task.total/work_per_hour;
-        }
+            if (task.total/module.assigned > length_of_longest) {
+                length_of_longest = task.total/work_per_hour;
+            }
     }
     return length_of_longest;
 }
