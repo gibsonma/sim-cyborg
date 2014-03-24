@@ -363,7 +363,6 @@ function statusClass(site) {
             console.log(JSON.stringify(gs.sites, null, 3));
             GAME_DATA.ticker.pause();//Pause the game
         }
-
         if (actually_completed >= expected_completed) site.state = "schedule-ok"
         else site.state = "schedule-behind";
     }

@@ -29,20 +29,6 @@ describe("Nominal Schedule Calculator", function()
     {
         expect(sum_tasks(Math.round(game.sites[0]))).toEqual(0);
     });
-    it("Takes into account the work load modifier", function()
-    {
-        for (var i=0; i< game.sites.length; i++){
-            var site = game.sites[i];
-            for (var j=0; j < site.modules.length; j++){
-                var module = site.modules[j];
-                for (var k=0; k < module.tasks.length; k++){
-                    var task = module.tasks[k];
-                    task.actual_total = task.total;
-                }
-            }
-        }
-        expect(Math.round(scheduleCalculator(game))).toEqual(Math.round(41204));
-    });
     it("Takes remainder into account", function()
     {
         expect(remainder(150, 40)).toEqual(10);
