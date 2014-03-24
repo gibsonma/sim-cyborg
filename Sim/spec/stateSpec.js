@@ -157,5 +157,18 @@ describe("get_moral_impact", function()
 });
 describe("update_moral_dictionary", function()
 {
-	//TODO
+	var m = new MoralIntervention("Test", 1000, 10);
+	m.sites_implemented = {};
+	update_moral_dictionary(m, "New York");
+	update_moral_dictionary(m, "Shanghai");
+	update_moral_dictionary(m, "Shanghai");
+	it("Sets a site's value to 0 if they are not yet added", function()
+	{
+		expect(m.sites_implemented["New York"]).toEqual(1);
+	});
+	it("Increments the site's value correctly", function()
+	{
+		expect(m.sites_implemented["Shanghai"]).toEqual(2);
+	});
+	
 });

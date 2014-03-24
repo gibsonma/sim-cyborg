@@ -1,6 +1,6 @@
 describe("Agile - 1 site - 1 module", function()
 {
-    it("Check sum tasks", function()
+   /* it("Check sum tasks", function()
     {
         setupGame(sjs.Scene({w:1, h:1}), 2 );
         GAME_DATA.ticker.pause();
@@ -47,5 +47,5 @@ describe("Agile - 1 site - 1 module", function()
             update (GAME_DATA.gs);
         }
         expect(Math.round(actual_effort_completed(GAME_DATA.gs.sites[0]))).toEqual(32);
-    });
+    });*/
 });

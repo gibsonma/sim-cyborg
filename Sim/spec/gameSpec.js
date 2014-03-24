@@ -2,6 +2,8 @@ beforeEach(function()
 {
 	vex.closeAll();
 	spyOn(vex, 'dialog');
+	spyOn(vex.dialog, 'alert');
+	spyOn(vex.dialog, 'confirm');
 });
 afterEach(function()
 {

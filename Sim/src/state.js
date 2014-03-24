@@ -181,9 +181,11 @@ function get_moral_impact(m_intervention, site_name)
 	return actual_impact;
 }
 //Updates the intervention's dictionary, by incrementing the value linked to the site key
-function update_moral_dictionary(moral_intervention, site_name)
+function update_moral_dictionary(moral_i, site_name)
 {
-	moral_intervention.sites_implemented[site_name] += 1;
+	
+	if(moral_i.sites_implemented[site_name] == undefined)moral_i.sites_implemented[site_name] = 1;
+	else moral_i.sites_implemented[site_name] += 1;
 }
 
 function vary(total){
