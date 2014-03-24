@@ -154,3 +154,39 @@ describe("encounteredProblems", function()
 {
 	//TODO
 });
+
+
+describe("get_moral_impact", function()
+{
+	var game = new GameState(1);
+	load_globals(game);
+	var m = new MoralIntervention("Test", 1000, 30);
+	m.sites_implemented = {"New York":0, "Shanghai":3};
+	var result = get_moral_impact(m, "New York");
+	var result2 = get_moral_impact(m, "Shanghai");
+	it("Leaves the original impact as is, if site hasn't implemented it at all", function()
+	{
+		expect(result).toEqual(m.init_impact);
+	});
+	it("Reduces the impact of an intervention is it has been implemented by a site before", function()
+	{
+		expect(result2).toEqual(15);
+	});
+});
+describe("update_moral_dictionary", function()
+{
+	var m = new MoralIntervention("Test", 1000, 10);
+	m.sites_implemented = {};
+	update_moral_dictionary(m, "New York");
+	update_moral_dictionary(m, "Shanghai");
+	update_moral_dictionary(m, "Shanghai");
+	it("Sets a site's value to 0 if they are not yet added", function()
+	{
+		expect(m.sites_implemented["New York"]).toEqual(1);
+	});
+	it("Increments the site's value correctly", function()
+	{
+		expect(m.sites_implemented["Shanghai"]).toEqual(2);
+	});
+	
+});

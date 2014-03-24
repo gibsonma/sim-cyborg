@@ -1,6 +1,6 @@
 describe("Estimation: Agile:1, site:1, module:1", function()
 {
-    it("Check sum tasks", function()
+   /* it("Check sum tasks", function()
     {
         sites = [
             site_builder("Poland", "Agile", true, [
@@ -43,5 +43,5 @@ describe("Estimation: Agile:1, site:1, module:1", function()
             GAME_DATA.ticker.lastTicksElapsed ++;
         }
         expect(Math.round(actual_effort_completed(GAME_DATA.gs.sites[0]))).toEqual(32);
-    });
+    });*/
 });
