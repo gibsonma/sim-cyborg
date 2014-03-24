@@ -88,6 +88,7 @@ function GameState(setting)
     this.financial_log = []; //log of finances to type for graphing
     this.interventions = [];
     this.days_per_month = 30;
+    this.player = new Player();
 }
 
 function load_globals(gs){
@@ -106,6 +107,15 @@ function load_globals(gs){
 		PROBLEM_CONSTANT = obj.problem_constant;
 		MORAL_MOD = obj.moral_modifier;
     });
+}
+function Player(){
+    this.sensitivity  = 1; //for noticing work place issues etc
+    this.perception   = 1; //for figuring out potential problems before they happen
+    this.empathy      = 1; //for knowing in advance when your morale is dropping
+    this.charisma     = 1; //for interacting with your workers to improve their productivity
+    this.intelligence = 1; //for making better business decisions, impacts revenue
+    this.a            = 1;
+    this.luck         = 1; //sometimes, something nice will happen
 }
 
 function Site(name, culture_modifier, dev, timezone, home){

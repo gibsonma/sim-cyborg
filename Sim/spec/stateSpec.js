@@ -120,6 +120,16 @@ describe("Task", function()
 	});
 });
 
+describe("Player", function()
+{
+	it("checks if player object is defined", function()
+	{
+		var p = new Player();
+		expect(p).toBeDefined();
+
+	});
+});
+
 describe("Intervention", function()
 {
 	it("Checks that Interventions are initialised properly", function()
