@@ -22,18 +22,22 @@ window.onload = function() {
     GAME_DATA.gs = new GameState(1);
     load_globals(GAME_DATA.gs);
     vex.dialog.alert("Select a scenario to start the simulation! <br> Adjust the speed using the Faster & Slower buttons!");
+    $('#char-Sheet').hide();
     $(document).ready(function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
             renderTileview();
+            $('#char-Sheet').toggle();
         });
         $('#scenario_2').click(function() {
             setupGame(scene,2);
             renderTileview();
+            $('#char-Sheet').toggle();
         });
         $('#scenario_3').click(function() {
             setupGame(scene,3);
             renderTileview();
+            $('#char-Sheet').toggle();
         });
         $('#options').click(function() {
             if(GAME_DATA.ticker)displayInterventions(GAME_DATA.gs);
