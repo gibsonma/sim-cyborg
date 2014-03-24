@@ -179,24 +179,7 @@ function MoralIntervention(name, cost, init_impact)
 	this.sites_implemented = {};//A dictionary linking the sites that have purchased the intervention and how many times
 }
 
-//Takes a moral intervention and a site name. It then works out the actual impact a moral intervention will have on that site, as the more times that it is implemented at a site, the less effective it becomes
-function get_moral_impact(m_intervention, site_name)
-{
-	var actual_impact = m_intervention.init_impact;
-	var num_implemented = m_intervention.sites_implemented[site_name];
-	var modifier = num_implemented * MORAL_MOD;
-	if(modifier > 0)actual_impact -= modifier;
-	if(actual_impact < 0)actual_impact = 0;
-	Math.floor(actual_impact);
-	return actual_impact;
-}
-//Updates the intervention's dictionary, by incrementing the value linked to the site key
-function update_moral_dictionary(moral_i, site_name)
-{
-	
-	if(moral_i.sites_implemented[site_name] == undefined)moral_i.sites_implemented[site_name] = 1;
-	else moral_i.sites_implemented[site_name] += 1;
-}
+
 
 function vary(total){
     var seed = Math.random();
