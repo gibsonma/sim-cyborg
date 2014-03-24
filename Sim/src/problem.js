@@ -134,7 +134,7 @@ function get_applicable_interventions(gs, problem)
 	for(var i = 0; i < gs.interventions.length; i++)
 	{
 		affects = gs.interventions[i].affects;
-		if(affects[task_num])result.push(gs.interventions[i]);
+		if(affects[task_num+1])result.push(gs.interventions[i]);
 	}
 	return result;
 }
@@ -401,4 +401,12 @@ function update_moral_dictionary(moral_i, site_name)
 	
 	if(moral_i.sites_implemented[site_name] == undefined)moral_i.sites_implemented[site_name] = 1;
 	else moral_i.sites_implemented[site_name] += 1;
+}
+
+//Takes a boolean. If a site is the home site (true), return 100, else returns a 25% variance
+function set_moral(is_home)
+{
+	var base_morale = 100;
+	if(is_home)return base_morale;
+	return vary(base_morale);
 }
