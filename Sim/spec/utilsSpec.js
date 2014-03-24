@@ -63,7 +63,7 @@ describe("Completion calculator ", function()
     });
     it("the amount of the time for the longest task that is undergoing completion", function()
     {
-        expect(effort_per_time_longest_task_completion(game.sites[0].modules,0)).toEqual(0);
+        expect(ratio_completed_effort_per_hour_longest_task(game.sites[0].modules,0)).toEqual(0);
     });
     it("Amount of effort points per time of the longest length module on a site", function()
     {

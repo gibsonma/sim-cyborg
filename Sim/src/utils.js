@@ -84,17 +84,11 @@ function actual_effort_completed(site){
                 var work_done = module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
-                    if (task.completed == task.actual_total){
-                        var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
-                        var work = effort_per_time_longest_task_completion(site.modules, k) * max_per_hour;
-                        effort += work;
-                        if (credited_total(task) + work_done > work) {
-                            effort += remainder(credited_total(task), work_done);
-                        }
-                    }
-                    else {
-                        effort += task.completed;
-                    }
+                    var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
+                    var work = ratio_completed_effort_per_hour_longest_task(site.modules, k) * max_per_hour;
+                    var ratio_complete = task.completed/task.total;
+                    effort += work * ratio_complete;
+                    effort += remainder(work*ratio_complete, gs.developer_effort)
                 }
             }
             break;
@@ -137,7 +131,7 @@ function credited_total(task){
     else return task.total + (task.total - task.actual_total);
 }
 
-function effort_per_time_longest_task_completion(modules, task_idx){
+function ratio_completed_effort_per_hour_longest_task(modules, task_idx){
     var gs = GAME_DATA.gs;
     var length_of_longest =0;
     var longest;
