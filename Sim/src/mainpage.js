@@ -352,13 +352,16 @@ function statusClass(site) {
     if(site.critical_problem === true) {
         return "schedule-very-behind";
     }        
-    if (gs.current_time % 24 == 0){
+    if (gs.current_time % 24 == 0 && gs.current_time > 0){
         var actually_completed = actual_effort_completed(site);
 
         var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
         var expected_completed = effort_per_day/24 * gs.current_time;
-        console.log("actually: " + actually_completed);
-        console.log("expected: " + expected_completed);
+        //console.log("actually: " + actually_completed);
+        //console.log("expected: " + expected_completed);
+        if (actually_completed != expected_completed){
+        //    GAME_DATA.ticker.pause();
+        }
 
         if (actually_completed >= expected_completed) site.state = "schedule-ok"
         else site.state = "schedule-behind";

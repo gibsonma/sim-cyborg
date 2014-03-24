@@ -57,7 +57,7 @@ describe("Completion calculator ", function()
 	});
 	it("Amount of effort points per time of the longest length module on a site", function()
 	{
-		expect(effort_per_time_longest_module(game.sites[0])).toEqual(1250);
+		expect(hours_for_longest_module(game.sites[0])).toEqual(1250);
 	});
 	it("the amount of effort done in the gs taking waterfall and idleness into account", function()
 	{
