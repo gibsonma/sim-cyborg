@@ -118,8 +118,8 @@ function actual_effort_completed(site){
                 effort += work * ratio_completed;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
-                    if (credited_total(task) + max_per_hour > work) {
-                        effort += remainder(credited_total(task), work);
+                    if (task.completed >= task.total) {
+                        effort += remainder(credited_total(task), gs.developer_effort);
                     }
                 }
             }

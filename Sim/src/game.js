@@ -178,8 +178,8 @@ function calculate_days_remaining(gs) {
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-    problemSim(gs);
-	intervention(gs);
+    //problemSim(gs);
+	//intervention(gs);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task
