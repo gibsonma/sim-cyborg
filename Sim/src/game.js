@@ -10,7 +10,8 @@ function displayScenarioValues(scenNum)
     {
         site = game.sites[i];
         items[i] = '<br>' + site.name + ' : ' + getSiteWorkers(site) + ' Developers';
-        items[i] += '<br> Modules: ';
+        items[i] += '<br>Development Method: ' + site.development_type;
+		items[i] += '<br> Modules: ';
         for(var j = 0; j < site.modules.length; j++)
         {
             module = site.modules[j];
@@ -44,7 +45,7 @@ function setupGame(scene, setting)
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
     generateProblemPercentages()
-        GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
+    GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
     setLocalTime(GAME_DATA.gs.sites, get_home_site(GAME_DATA.gs.sites));
@@ -53,7 +54,8 @@ function setupGame(scene, setting)
 //The home site's time is known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and set
 function setLocalTime(sites, homeSite)
 {
-    var homeZone = homeSite.timezone, difference = 0;
+
+	var homeZone = homeSite.timezone, difference = 0;
     for(var i = 0; i < sites.length; i++)
     {
         site = sites[i];
@@ -149,7 +151,7 @@ function update_tileview(gs) {
 }
 
 function display_game_time(gs){
-    var daysRemaining = calculate_days_remaining(gs);
+	var daysRemaining = calculate_days_remaining(gs);
     if (daysRemaining < 0) {
         daysRemaining = "0 (Overdue!)";
     }
@@ -176,8 +178,8 @@ function calculate_days_remaining(gs) {
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-    //intervention(gs);
-    //problemSim(gs);
+    problemSim(gs);
+	intervention(gs);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task

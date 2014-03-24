@@ -149,3 +149,8 @@ describe("Problem Percentage Generator", function()
 	});
 
 });
+
+describe("encounteredProblems", function()
+{
+	//TODO
+});

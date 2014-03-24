@@ -133,3 +133,29 @@ describe("Intervention", function()
 		expect(i.is_implemented).toEqual(jasmine.any(Boolean));
 	});
 });
+
+describe("MoralIntervention", function()
+{
+	//TODO
+});
+describe("get_moral_impact", function()
+{
+	var game = new GameState(1);
+	load_globals(game);
+	var m = new MoralIntervention("Test", 1000, 10);
+	m.sites_implemented = {"New York":0, "Shanghai":3};
+	var result = get_moral_impact(m, "New York");
+	var result2 = get_moral_impact(m, "Shanghai");
+	it("Leaves the original impact as is, if site hasn't implemented it at all", function()
+	{
+		expect(result).toEqual(m.init_impact);
+	});
+	it("Reduces the impact of an intervention is it has been implemented by a site before", function()
+	{
+		expect(result2).toEqual(0);
+	});
+});
+describe("update_moral_dictionary", function()
+{
+	//TODO
+});

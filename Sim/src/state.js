@@ -10,6 +10,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
+var MORAL_MOD;//Represents how quickly a moral interventions impact errodes each time its used, the closer to 0, the quicker it erodes
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
@@ -102,6 +103,7 @@ function load_globals(gs){
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
 		PROBLEM_CONSTANT = obj.problem_constant;
+		MORAL_MOD = obj.moral_modifier;
     });
 }
 
@@ -111,6 +113,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.modules = []; //List of modules
     this.development_type = dev;
     this.problems = [];
+	this.past_problems = [];
     this.critical_problem = false;
     this.timezone = timezone;
     this.problemCooldown = 0.005;
@@ -154,6 +157,32 @@ function Intervention(name, init_cost, daily_cost, is_implemented, affects)
     this.daily_cost = daily_cost;//How much it costs to keep per day
     this.is_implemented = is_implemented;//Is it currently implemented?
     this.affects = affects//Array of bools corresponding to which tasks are affected by the intervention
+}
+
+//Represents a moral intervention
+function MoralIntervention(name, cost, init_impact)
+{
+	this.name = name;
+	this.cost = cost;//Cost of buying
+	this.init_impact = init_impact;//Initial impact on site morale
+	this.sites_implemented = {};//A dictionary linking the sites that have purchased the intervention and how many times
+}
+
+//Takes a moral intervention and a site name. It then works out the actual impact a moral intervention will have on that site, as the more times that it is implemented at a site, the less effective it becomes
+function get_moral_impact(m_intervention, site_name)
+{
+	var actual_impact = m_intervention.init_impact;
+	var num_implemented = m_intervention.sites_implemented[site_name];
+	var modifier = num_implemented * MORAL_MOD;
+	if(modifier > 0)actual_impact -= modifier;
+	if(actual_impact < 0)actual_impact = 0;
+	Math.floor(actual_impact);
+	return actual_impact;
+}
+//Updates the intervention's dictionary, by incrementing the value linked to the site key
+function update_moral_dictionary(moral_intervention, site_name)
+{
+	moral_intervention.sites_implemented[site_name] += 1;
 }
 
 function vary(total){

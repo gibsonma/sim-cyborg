@@ -30,6 +30,7 @@ function displayInterventions(gs)
 		interventions += '</tr>';
 	}
 	interventions += '</table>';
+	
 	vex.dialog.confirm({
 	  css: {'width':'100%'},
       message: '<p>' + interventions + '</p>', 
@@ -143,11 +144,13 @@ function intervention(gs)
 	sites = gs.sites;	
     for(var i = 0; i < sites.length; i++)
     {
-        if(sites[i].problems.length > 0)
+		if(sites[i].problems.length > 0)
         {
 			GAME_DATA.ticker.pause();//Pause the game
             var index = i;//Need to record index for use in callback
             var problem = sites[i].problems[0];
+			sites[i].past_problems.push([problem,gs.time["Days Passed"]]);
+			sites[i].problems.pop();
 			var interventions = get_applicable_interventions(gs, problem);
 			var buttonList = '';
 			var game = gs;
@@ -165,20 +168,30 @@ function intervention(gs)
 				}
 				buttonList += '</tr>';
 			}
-			interventions += '</table>';
-            
-			vex.dialog.alert({
-                message: '<p>'+problem.name+' has occured in site '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
+			buttonList += '</table>';
+			vex.dialog.confirm({
+                message: '<p>'+problem.name+' in '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
                 buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
-                      text: 'OK'
+                      text: 'Fix Problem'
+                    }),
+					$.extend({}, vex.dialog.buttons.NO, {
+                      text: 'Ignore Problem'
                     })
                   ],
                 callback: function(value) {    
-                    sites[index].problems.pop();//Pop the problem
-                    new_transaction(-problem.cost);//Deduct cost of fixing problem
-                    GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
-                    return console.log("Resolution Chosen");
+                    if(!value)
+					{
+						GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
+						return console.log("Problem Not Fixed");
+					}
+					else
+					{
+						new_transaction(-problem.cost);//Deduct cost of fixing problem
+						gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+						GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
+						return console.log("Problem Fixed");
+					}
                 }
             });
         }
@@ -285,7 +298,7 @@ function problemSim(gs)
 
                 if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //test
-                    var prob = new Problem("unit tests failed",25, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    var prob = new Problem("Unit Tests have failed",25, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/25; 
                     gs.sites[seed].problems.push(prob);
                 }
@@ -296,7 +309,7 @@ function problemSim(gs)
 
                 if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //integration
-                    var prob = new Problem("integration failure",40, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    var prob = new Problem("An Integration Failure has occured",40, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/40; 
                     gs.sites[seed].problems.push(prob);
                 }
@@ -307,8 +320,9 @@ function problemSim(gs)
 
                 if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //system test
-                    var prob = new Problem("system test failure",55, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    var prob = new Problem("System Tests have failed",55, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/55;
+					gs.sites[seed].problems.push(prob);
                 }
                 break;   
 
@@ -317,8 +331,9 @@ function problemSim(gs)
 
                 if(failC < chanceAfterReduction){
                     var problemTask = problemModule.tasks[problemSeed-1];  //deployment
-                    var prob = new Problem("deployment failure",70, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    var prob = new Problem("A Deployment Failure has occured",70, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/70; 
+					gs.sites[seed].problems.push(prob);
                 }
                 break; 
 
@@ -327,9 +342,10 @@ function problemSim(gs)
 
                 if(failC < chanceAfterReduction){            
                     var problemTask = problemModule.tasks[problemSeed-1];  //acceptance
-                    var prob = new Problem("acceptance test failure",100, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
+                    var prob = new Problem("Acceptance Tests have failed",100, problemModule.tasks[problemSeed-1].actual_total,workingOnSeed,problemSeed);
                     problemTask.actual_total += problemTask.actual_total/100;
                     problemSite.critical_problem = true;
+					gs.sites[seed].problems.push(prob);
                 }
                 break;                        
 
@@ -337,7 +353,31 @@ function problemSim(gs)
                 console.log("What's yer prob");
         }
     }
+	
     //console.log(failC);
     return failC;
 
+}
+
+//Displays all the problems thus experienced by the site passed in
+function encounteredProblems(site)
+{
+    GAME_DATA.ticker.pause();
+    var past_problems = site.past_problems;
+	var result = "Problems Encountered: ";
+	result += '<table class="ptable"><tr class="ptr"><td class="ptd">Module</td><td class="ptd">Problem</td><td class="ptd">Impact (%)</td><td class="ptd">Day Occured</td></tr>'
+    for(var i = 0; i < past_problems.length; i++)
+    {
+        var problem = past_problems[i];
+		result += '<tr class="ptr"><td class="ptd">'+site.modules[problem[0].module].name+'</td><td class="ptd">'+problem[0].name+'</td><td class="ptd">'+problem[0].impact+'</td><td class="ptd">'+problem[1]+'</td></tr>';		
+    }
+	result += '</table>';
+    vex.dialog.confirm({
+        message: '<p>' + result + '</p>' 
+        ,
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return result;
+        }
+    });
 }

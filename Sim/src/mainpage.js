@@ -21,7 +21,7 @@ window.onload = function() {
     });
     GAME_DATA.gs = new GameState(1);
     load_globals(GAME_DATA.gs);
-    vex.dialog.alert("Select a scenario to start the simulation!");
+    vex.dialog.alert("Select a scenario to start the simulation! <br> Adjust the speed using the Faster & Slower buttons!");
     $(document).ready(function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
@@ -66,16 +66,14 @@ window.onload = function() {
     });
 };
 
-//Tracks when the player selects an intervention
+//Tracks when the player selects an intervention to buy
 $('body').on('click', '#intervention', function(){ 
 	var tmp = $(this).context.innerHTML;
-	console.log(tmp);
 	implementChosenIntervention(GAME_DATA.gs, tmp);
 } );
-//Tracks when the player selects an intervention
+//Tracks when the player selects an intervention to sell
 $('body').on('click', '#intervention-sell', function(){ 
 	var tmp = $(this).context.innerHTML;
-	console.log(tmp);
 	disregardChosenIntervention(GAME_DATA.gs, tmp);
 } );
 
@@ -165,6 +163,12 @@ function renderTileview() {
             var site = getSiteByName(siteName, GAME_DATA.gs);
             completedTasksEmail(site);
         });
+		$('.site_tile>.info-popup-problems').click(function() {
+            console.log("Clicked");
+			var siteName = $(this).parent().attr('data-name');
+            var site = getSiteByName(siteName, GAME_DATA.gs);
+            encounteredProblems(site);
+        });
 		
         $('.site_tile').each(function(i) {
             var $el = $(this);
@@ -190,9 +194,10 @@ function completedTasksEmail(site)
     for(var i = 0; i < modules.length; i++)
     {
         tasks = modules[i].tasks;
+		result += '<br>' + modules[i].name + ' : ';
         for(var j = 0; j < tasks.length; j++)
         {
-            if(tasks[j].completed >= tasks[j].actual_total) result += '<br>' + tasks[j].name;
+            if(tasks[j].completed >= tasks[j].actual_total) result += '<br>&nbsp&nbsp&nbsp&nbsp' + tasks[j].name;
         }
     }
     vex.dialog.confirm({
@@ -204,6 +209,7 @@ function completedTasksEmail(site)
         }
     });
 }
+
 
 function inquireAccurate(site)
 {

@@ -53,6 +53,10 @@ body {
 	color: white;
 	border-collapse:collapse;
 }
+.ptable, .ptr, .ptd {
+	border: 1px #000 solid;
+	border-collapse:collapse;
+}
 
 .site_tile {
 	display: inline-block;

@@ -26,6 +26,7 @@
     "developer_rate": 30,
     "developer_working_hours": 8,
 	"problem_constant":0.005,
+	"moral_modifier":10.0,
 	"interventions": [
 		{"name":"Face to face meetings","init_cost": 5000, "daily_cost":150, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Video Conferencing","init_cost": 10000, "daily_cost":300, "is_implemented":false, "affects":[1,0,0,0,0,0,0]},
@@ -36,6 +37,13 @@
 		{"name":"Communication Tools","init_cost": 500, "daily_cost":75, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Reduce Multi-cultural interactions","init_cost": 200, "daily_cost":25, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Exchange Program", "init_cost": 10000, "daily_cost":350, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
+	],
+	"moral_interventions": [
+		{"name":"Buy Pizza","cost": 200, "init_impact":20},
+		{"name":"Hold Office Party","cost": 600, "init_impact":30},
+		{"name":"Set Up Morale Classes","cost": 1000, "init_impact":40},
+		{"name":"Organise Fun Office Excursion","cost": 2000, "init_impact":50},
+		{"name":"Restock Staff Kitchen","cost": 200, "init_impact":10}
 	]
 }
 
