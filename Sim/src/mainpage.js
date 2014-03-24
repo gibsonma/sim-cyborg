@@ -62,6 +62,9 @@ window.onload = function() {
             TICKS_PER_UNIT_TIME -= 1;
             updateSpeedLabel();
         });
+        $('#char-Sheet').click(function(){
+            displayCharSheet(GAME_DATA.gs);
+            });
 
     });
 };
@@ -76,6 +79,7 @@ $('body').on('click', '#intervention-sell', function(){
     var tmp = $(this).context.innerHTML;
     disregardChosenIntervention(GAME_DATA.gs, tmp);
 } );
+
 
 
 function updateSpeedLabel() {
@@ -183,6 +187,27 @@ function renderTileview() {
 
     }
 };
+function displayCharSheet(gs)
+{
+        GAME_DATA.ticker.pause();
+        var result = 'Character Info: '
+        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Sensitivity: " + gs.player.sensitivity;
+        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Perception: " + gs.player.perception;
+        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Empathy: " + gs.player.empathy;
+        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Charisma: " + gs.player.charisma;
+        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Intelligence: " + gs.player.intelligence;
+        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Assertiveness: " + gs.player.assertiveness;
+        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Luck: " + gs.player.luck;
+        vex.dialog.confirm({
+        message: '<p>' + result + '</p>' 
+        ,
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return result;
+        }
+    });
+}
+
 
 function completedTasksEmail(site)
 {
