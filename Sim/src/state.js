@@ -49,8 +49,8 @@ function GameState(setting)
             break;
         case 2:
             this.sites = [
-                site_builder("Poland", "Agile", true, [
-                        module_builder("Middle End", 1, 30),
+                site_builder("Poland", "Waterfall", true, [
+                        module_builder("Middle End", 3, 100),
                         ]), // they're finishing at different times - effort not being counted
                 ];
             break;
@@ -131,6 +131,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.home = home;
     this.local_time = 0;
     this.last_state = "schedule-ok";
+	this.moral = set_moral(home);
 }
 
 function Culture(influence){
@@ -192,6 +193,7 @@ function vary(total){
     }
     return actual_total;
 }
+
 
 function GameState_to_json(gs)
 {
