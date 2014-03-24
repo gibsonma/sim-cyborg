@@ -50,8 +50,7 @@ function GameState(setting)
         case 2:
             this.sites = [
                 site_builder("Poland", "Agile", true, [
-                        module_builder("Middle End", 1, 20),
-                        module_builder("Backend", 1, 32)
+                        module_builder("Middle End", 1, 30),
                         ]), // they're finishing at different times - effort not being counted
                 ];
             break;
@@ -71,6 +70,8 @@ function GameState(setting)
                         ])
                     ];
             break;
+        default:
+            this.sites = setting;
     }
     this.global_distances = 0;
     this.temporal_distances = 0;

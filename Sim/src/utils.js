@@ -56,9 +56,7 @@ function sum_tasks(site){
                 effort += work;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
-                    if (task.total + max_per_hour > work) {
-                        effort += remainder(task.total, work);
-                    }
+                    effort += remainder(credited_total(task), gs.developer_effort);
                 }
                 //        effort += remainder(task.total, work_done);
             }
@@ -186,9 +184,9 @@ function effort_per_time_longest_task(modules, task_idx){
         var module = modules[i];
         var task = module.tasks[task_idx];
         var work_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24
-            if (task.total/module.assigned > length_of_longest) {
-                length_of_longest = task.total/work_per_hour;
-            }
+        if (task.total/module.assigned > length_of_longest) {
+            length_of_longest = task.total/work_per_hour;
+        }
     }
     return length_of_longest;
 }

@@ -1,13 +1,13 @@
 var TEMPLATES = {};
 var scene, background, site_images, office;
 window.onload = function() {
-    
+
 
     var game_height = window.innerHeight - 5;
     var game_width = window.innerWidth;
     scene = sjs.Scene({
         w: game_width,
-          h: game_height
+        h: game_height
     });
     site_images = ['img/EmptyOffice.jpeg', 'img/Office2.jpg', 'img/Office3.jpg'];
     // var exec_list = document.getElementById('exec_list');
@@ -35,9 +35,9 @@ window.onload = function() {
             setupGame(scene,3);
             renderTileview();
         });
-		$('#options').click(function() {
-			if(GAME_DATA.ticker)displayInterventions(GAME_DATA.gs);
-		});
+        $('#options').click(function() {
+            if(GAME_DATA.ticker)displayInterventions(GAME_DATA.gs);
+        });
         $.get('src/templates/tileview.html', function(template) {
             TEMPLATES['tileview'] = template;
             renderTileview();
@@ -62,19 +62,19 @@ window.onload = function() {
             TICKS_PER_UNIT_TIME -= 1;
             updateSpeedLabel();
         });
-		
+
     });
 };
 
 //Tracks when the player selects an intervention to buy
 $('body').on('click', '#intervention', function(){ 
-	var tmp = $(this).context.innerHTML;
-	implementChosenIntervention(GAME_DATA.gs, tmp);
+    var tmp = $(this).context.innerHTML;
+    implementChosenIntervention(GAME_DATA.gs, tmp);
 } );
 //Tracks when the player selects an intervention to sell
 $('body').on('click', '#intervention-sell', function(){ 
-	var tmp = $(this).context.innerHTML;
-	disregardChosenIntervention(GAME_DATA.gs, tmp);
+    var tmp = $(this).context.innerHTML;
+    disregardChosenIntervention(GAME_DATA.gs, tmp);
 } );
 
 
@@ -96,10 +96,10 @@ function renderTileview() {
             template: TEMPLATES['tileview'],
             data: {
                 state: GAME_DATA.gs,
-            statusClass: statusClass,
-            currentTask: currently_doing_which_task,
-            progress: progress_on_current_task,
-            current_total: total_of_current_task
+                statusClass: statusClass,
+                currentTask: currently_doing_which_task,
+                progress: progress_on_current_task,
+                current_total: total_of_current_task
             }
         });
         var home = get_home_site(GAME_DATA.gs.sites);
@@ -127,49 +127,49 @@ function renderTileview() {
             var siteStatus = $(this).parent().attr('class');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             if(site.culture.influence == "asian" || site.culture.influence == "russian")
-			{
-				showEmailResponsePositive();
-			} 
-				else if(siteStatus == 'site_tile schedule-ok')
-			{
-				showEmailResponsePositive();
+            {
+                showEmailResponsePositive();
+            } 
+            else if(siteStatus == 'site_tile schedule-ok')
+            {
+                showEmailResponsePositive();
 
-			}
-				else if(siteStatus == 'site_tile schedule-behind')
-			{
-				showEmailResponseNegative();
-			}
-				else
-			{
-				showEmailResponseCritical();
+            }
+            else if(siteStatus == 'site_tile schedule-behind')
+            {
+                showEmailResponseNegative();
+            }
+            else
+            {
+                showEmailResponseCritical();
 
-			}
+            }
         });
         $('.site_tile>.info-popup-status').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             if(site.culture.influence == "asian" || site.culture.influence == "russian")
-        {
-            inquireCultural(site);//function for all ok
-        }
+            {
+                inquireCultural(site);//function for all ok
+            }
             else
-        {
-            inquireAccurate(site);//function for accurate
-        }
+            {
+                inquireAccurate(site);//function for accurate
+            }
         });
         $('.site_tile>.info-popup-tasks').click(function() {
             console.log("Clicked");
-			var siteName = $(this).parent().attr('data-name');
+            var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             completedTasksEmail(site);
         });
-		$('.site_tile>.info-popup-problems').click(function() {
+        $('.site_tile>.info-popup-problems').click(function() {
             console.log("Clicked");
-			var siteName = $(this).parent().attr('data-name');
+            var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             encounteredProblems(site);
         });
-		
+
         $('.site_tile').each(function(i) {
             var $el = $(this);
             $el.find('button').click(function() {
@@ -179,8 +179,8 @@ function renderTileview() {
                 office.update();
             });
         });
-		
-		
+
+
     }
 };
 
@@ -189,12 +189,12 @@ function completedTasksEmail(site)
     GAME_DATA.ticker.pause();
     new_transaction(-500);
     var result = 'Completed Tasks: ';
-        var tasks = [];
+    var tasks = [];
     var modules = site.modules;
     for(var i = 0; i < modules.length; i++)
     {
         tasks = modules[i].tasks;
-		result += '<br>' + modules[i].name + ' : ';
+        result += '<br>' + modules[i].name + ' : ';
         for(var j = 0; j < tasks.length; j++)
         {
             if(tasks[j].completed >= tasks[j].actual_total) result += '<br>&nbsp&nbsp&nbsp&nbsp' + tasks[j].name;
@@ -299,10 +299,10 @@ function showHomeSitePopup() {
         afterOpen: function($vexContent) {
             popupView = new Ractive({
                 el: 'info-popup',
-            template: TEMPLATES['popupView'],
-            data: {
-                site: get_home_site(GAME_DATA.gs.sites) //Object passed into popUpView
-            }
+                template: TEMPLATES['popupView'],
+                data: {
+                    site: get_home_site(GAME_DATA.gs.sites) //Object passed into popUpView
+                }
             });
         },
         afterClose: function() {
@@ -321,10 +321,10 @@ function showSpecificSitePopup(site, cost) {
             new_transaction(-cost);//Deduct cost of viewing site
             popupView = new Ractive({
                 el: 'info-popup',
-                      template: TEMPLATES['popupView'],
-                      data: {
-                          site: site
-                      }
+                template: TEMPLATES['popupView'],
+                data: {
+                    site: site
+                }
             });
         },
         afterClose: function() {
