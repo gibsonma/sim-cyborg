@@ -134,8 +134,9 @@ function get_applicable_interventions(gs, problem)
 	for(var i = 0; i < gs.interventions.length; i++)
 	{
 		affects = gs.interventions[i].affects;
-		if(affects[task_num+1])result.push(gs.interventions[i]);
+		if(affects[task_num-1])result.push(gs.interventions[i]);
 	}
+	console.log(result);
 	return result;
 }
 
@@ -152,7 +153,6 @@ function intervention(gs)
 			sites[i].past_problems.push([problem,gs.time["Days Passed"]]);
 			sites[i].problems.pop();
 			var interventions = get_applicable_interventions(gs, problem);
-			decreaseMorale(sites[i],problem);//Decrease Site morale
 			var buttonList = '';
 			var game = gs;
 			var buttonList = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
@@ -188,6 +188,7 @@ function intervention(gs)
 					}
 					else
 					{
+						decreaseMorale(sites[index],problem);//Decrease Site morale
 						new_transaction(-problem.cost);//Deduct cost of fixing problem
 						gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
 						GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
@@ -386,8 +387,24 @@ function encounteredProblems(site)
 
 //Morale Related code below
 
+//Goes through each site and randomly decides if it's morale will change. If so then the site's morale will go up or down by 1, representing the day to day changes in the office
+function varySiteMorale(game)
+{
+	var sites = game.sites;
+	var rand1, rand2;
+	for(var i = 0; i < sites.length; i++)
+	{
+			rand1 = Math.random();
+			if(rand1 >= 0.5)
+			{
+				rand2 = Math.random();
+				if(rand2 >= 0.5)sites[i].morale++;
+				else sites[i].morale--;
+			}
+	}
+}
+
 //Takes a site and a problem and calculates by how much a site's morale should drop by. It takes into account the impact of the problem
-//
 function decreaseMorale(site, problem)
 {
 	var impact = problem.impact;
@@ -395,11 +412,12 @@ function decreaseMorale(site, problem)
 	if(site.morale <= 0)site.morale = 1;
 }
 
-//Takes a morale intervention and a site name. It then works out the actual impact a morale intervention will have on that site, as the more times that it is implemented at a site, the less effective it becomes
-function get_morale_impact(m_intervention, site_name)
+//Takes a morale intervention and a site name. It then works out the actual impact a morale intervention will have on that site, as the more times that it is implemented at a site, the less effective it becomes. In addition, if a site's morale is above 100, impacts have a lessened effect
+function get_morale_impact(m_intervention, site)
 {
 	var actual_impact = m_intervention.init_impact;
-	var num_implemented = m_intervention.sites_implemented[site_name];
+	var num_implemented = m_intervention.sites_implemented[site.name];
+	if(site.morale > 100)num_implemented++;//If a site's morale is > 100 then the impact is smaller
 	var modifier = num_implemented * MORAL_MOD;
 	if(modifier > 0)actual_impact -= modifier;
 	if(actual_impact < 0)actual_impact = 0;
@@ -416,7 +434,8 @@ function update_morale_dictionary(morale_i, site_name)
 function purchaseMoraleIntervention(morale_i, site)
 {
 	update_morale_dictionary(morale_i, site.name);
-	site.morale += get_morale_impact(morale_i, site.name);
+	site.morale += get_morale_impact(morale_i, site);
+	new_transaction(-morale_i.cost);
 }
 
 //Takes a boolean. If a site is the home site (true), return 100, else returns a 25% variance

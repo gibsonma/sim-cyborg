@@ -152,6 +152,17 @@ describe("Problem Percentage Generator", function()
 
 describe("Moral Interventions", function()
 {
+	describe("varySiteMorale", function()
+	{
+		var test_game = game;
+		var sites = test_game.sites;
+		it("Only increases/decreases site morale by 1 at a time", function()
+		{
+			var morales = [sites[0].morale,sites[1].morale,sites[2].morale];
+			varySiteMorale(test_game);
+			expect(sites[0].morale - morales[0]).toBeLessThan(2);
+		});
+	});
 	describe("decreaseMorale", function()
 	{
 		var site = game.sites[1];
@@ -175,15 +186,17 @@ describe("Moral Interventions", function()
 		load_globals(game);
 		var m = new MoralIntervention("Test", 1000, 30);
 		m.sites_implemented = {"New York":0, "Shanghai":3};
-		var result = get_morale_impact(m, "New York");
-		var result2 = get_morale_impact(m, "Shanghai");
+		game.sites[0].morale = 50;
+		game.sites[1].morale = 50;
+		var result = get_morale_impact(m, game.sites[0]);
+		var result2 = get_morale_impact(m, game.sites[2]);
 		it("Leaves the original impact as is, if site hasn't implemented it at all", function()
 		{
 			expect(result).toEqual(m.init_impact);
 		});
-		it("Reduces the impact of an intervention is it has been implemented by a site before", function()
+		it("Reduces the impact of an intervention if it has been implemented by a site before", function()
 		{
-			expect(result2).toEqual(15);
+			expect(result2).toEqual(30);
 		});
 	});
 	describe("update_morale_dictionary", function()

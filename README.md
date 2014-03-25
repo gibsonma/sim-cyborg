@@ -38,7 +38,7 @@ Open localhost:3000/SpecRunner.html in a browser and the results of all present 
 * Cultural Influenced Reporting: Not every site will report information accurately, based on cultural influences predefined by the literature in the backlog. This can be seen when an asian site is reporting all green, and the user visits to see that the site may not actually be on track with it's progress.
 * End of Game Report: Score is calculated based on the formula given in the backlog, and displayed at the end of the game. This report also records other metrics such as revenue and productivity etc etc.
 * Schedule Calculator: Used in the end of game report. Is just thge sum of all the efforts estimated for each module defined by an effort value defined in the master config.
-* 
+* Site Morale: Each site has a morale value which reflects how motivated the site is. The player can do things such as hold a party or organise an office excursion. Activities such as these increase morale, whereas encountering problems lowers it. The productivity of a team changes as their morale gets higher/lower.
 
 ###Master Config:
 Edit this at /Sim/Data/config_file.json
