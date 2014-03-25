@@ -87,7 +87,7 @@ $('body').on('click', '#intervention-sell', function(){
     var tmp = $(this).context.innerHTML;
     disregardChosenIntervention(GAME_DATA.gs, tmp);
 } );
-//Tracks when the player selects a moral intervention to buy
+//Tracks when the player selects a morale intervention to buy
 $('body').on('click', '#m_intervention', function(){ 
     var tmp = $(this).context.innerHTML;
     implementChosenMoralIntervention(GAME_DATA.gs, tmp);
@@ -186,11 +186,11 @@ function renderTileview() {
             var site = getSiteByName(siteName, GAME_DATA.gs);
             encounteredProblems(site);
         });
-		$('.site_tile>.info-popup-moral').click(function() {
+		$('.site_tile>.info-popup-morale').click(function() {
             console.log("Clicked");
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
-            showMoralInterventions(GAME_DATA.gs, site);
+            showMoraleInterventions(GAME_DATA.gs, site);
         });
 
         $('.site_tile').each(function(i) {

@@ -1,6 +1,6 @@
 {{#state.sites:i}}
 <div class="site_tile {{ statusClass(.) }}" data-name="{{name}}">
-    <p>{{name}} {{time_padder}}{{local_time}}:00 {{moral}}% Moral</p>
+    <p>{{name}} {{time_padder}}{{local_time}}:00 {{morale}}% Morale</p>
     <table class="status_table">
         <tr>
             <td>Name:</td>
@@ -39,6 +39,6 @@
     <button class="info-popup-status">Send 'status report' email: -$100</button>
     <button class="info-popup-tasks">Send 'completed tasks' email: -$500</button>	
 	<button class="info-popup-problems">Problems Encountered</button>
-	<button class="info-popup-moral">Increase Moral</button>
+	<button class="info-popup-morale">Increase Morale</button>
 </div>
 {{/state.sites}}

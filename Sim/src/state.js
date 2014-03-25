@@ -10,7 +10,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
-var MORAL_MOD;//Represents how quickly a moral interventions impact errodes each time its used, the closer to 0, the quicker it erodes
+var MORAL_MOD;//Represents how quickly a morale interventions impact errodes each time its used, the closer to 0, the quicker it erodes
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
@@ -87,7 +87,7 @@ function GameState(setting)
     this.current_time = 0;
     this.financial_log = []; //log of finances to type for graphing
     this.interventions = [];
-	this.moral_interventions = [];
+	this.morale_interventions = [];
     this.days_per_month = 30;
     this.player = new Player();
 }
@@ -105,9 +105,9 @@ function load_globals(gs){
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
-		gs.moral_interventions = obj.moral_interventions;
+		gs.morale_interventions = obj.morale_interventions;
 		PROBLEM_CONSTANT = obj.problem_constant;
-		MORAL_MOD = obj.moral_modifier*gs.player.empathy;
+		MORAL_MOD = obj.morale_modifier*gs.player.empathy;
     });
 }
 function Player(){
@@ -133,7 +133,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.home = home;
     this.local_time = 0;
     this.last_state = "schedule-ok";
-	this.moral = set_moral(home);
+	this.morale = set_morale(home);
 }
 
 function Culture(influence){
@@ -173,7 +173,7 @@ function Intervention(name, init_cost, daily_cost, is_implemented, affects)
     this.affects = affects//Array of bools corresponding to which tasks are affected by the intervention
 }
 
-//Represents a moral intervention
+//Represents a morale intervention
 function MoralIntervention(name, cost, init_impact)
 {
 	this.name = name;

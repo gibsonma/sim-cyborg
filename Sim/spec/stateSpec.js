@@ -87,7 +87,7 @@ describe("Site", function()
 		var s = new Site("Test Site", "asian", "Agile", TIMEZONE_EUROPE, false);
 		var s2 = new Site("Test Site", "asian", "Agile", TIMEZONE_EUROPE, true);
 		expect(s).toBeDefined();
-		expect(s2.moral).toEqual(100);
+		expect(s2.morale).toEqual(100);
 		
 
 	});

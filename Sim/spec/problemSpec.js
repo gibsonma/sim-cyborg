@@ -150,21 +150,16 @@ describe("Problem Percentage Generator", function()
 
 });
 
-describe("encounteredProblems", function()
-{
-	//TODO
-});
-
 describe("Moral Interventions", function()
 {
-	describe("get_moral_impact", function()
+	describe("get_morale_impact", function()
 	{
 		var game = new GameState(1);
 		load_globals(game);
 		var m = new MoralIntervention("Test", 1000, 30);
 		m.sites_implemented = {"New York":0, "Shanghai":3};
-		var result = get_moral_impact(m, "New York");
-		var result2 = get_moral_impact(m, "Shanghai");
+		var result = get_morale_impact(m, "New York");
+		var result2 = get_morale_impact(m, "Shanghai");
 		it("Leaves the original impact as is, if site hasn't implemented it at all", function()
 		{
 			expect(result).toEqual(m.init_impact);
@@ -174,13 +169,13 @@ describe("Moral Interventions", function()
 			expect(result2).toEqual(15);
 		});
 	});
-	describe("update_moral_dictionary", function()
+	describe("update_morale_dictionary", function()
 	{
 		var m = new MoralIntervention("Test", 1000, 10);
 		m.sites_implemented = {};
-		update_moral_dictionary(m, "New York");
-		update_moral_dictionary(m, "Shanghai");
-		update_moral_dictionary(m, "Shanghai");
+		update_morale_dictionary(m, "New York");
+		update_morale_dictionary(m, "Shanghai");
+		update_morale_dictionary(m, "Shanghai");
 		it("Sets a site's value to 0 if they are not yet added", function()
 		{
 			expect(m.sites_implemented["New York"]).toEqual(1);
@@ -193,9 +188,15 @@ describe("Moral Interventions", function()
 	});
 	describe("purchaseMoralIntervention", function()
 	{
-		//TODO
+		var site = game.sites[0];
+		var morale_i = new MoralIntervention("Test", 1000, 10);
+		purchaseMoraleIntervention(morale_i, site);
+		it("Increases a site's morale", function()
+		{
+		
+		});
 	});
-	describe("set_moral", function()
+	describe("set_morale", function()
 	{
 		//TODO
 	});

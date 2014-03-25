@@ -19,6 +19,7 @@ Filepath,Function Name,Reason its's not tested
 ~\Sim\src\mainpage.js,statusClass,N/A
 ~\Sim\src\problem.js,intervention, External Library
 ~\Sim\src\problem.js,displayInterventions, External Library
+~\Sim\src\problem.js,encounteredProblems, External Library
 ~\Sim\src\scenario.js,site_builder,N/A
 ~\Sim\src\scenario.js,module_builder,N/A
 ~\Sim\src\scenario.js,task_builder,N/A
