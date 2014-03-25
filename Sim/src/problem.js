@@ -384,6 +384,16 @@ function encounteredProblems(site)
 
 
 //Morale Related code below
+
+//Takes a site and a problem and calculates by how much a site's morale should drop by. It takes into account the impact of the problem
+//
+function decreaseMorale(site, problem)
+{
+	var impact = problem.impact;
+	site.morale -= impact;
+	if(site.morale <= 0)site.morale = 1;
+}
+
 //Takes a morale intervention and a site name. It then works out the actual impact a morale intervention will have on that site, as the more times that it is implemented at a site, the less effective it becomes
 function get_morale_impact(m_intervention, site_name)
 {

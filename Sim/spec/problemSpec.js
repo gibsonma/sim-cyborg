@@ -152,6 +152,23 @@ describe("Problem Percentage Generator", function()
 
 describe("Moral Interventions", function()
 {
+	describe("decreaseMorale", function()
+	{
+		var site = game.sites[1];
+		var problem = new Problem("Module failed to integrate",10, 20,0,1);
+		it("Reduces the morale of a site based on the problem's impact", function()
+		{
+			site.morale = 50;
+			decreaseMorale(site, problem);
+			expect(site.morale).toEqual(40);
+		});
+		it("Never reduces a site's morale to below 1", function()
+		{
+			site.morale = 10;
+			decreaseMorale(site, problem);
+			expect(site.morale).toEqual(1);
+		});
+	});
 	describe("get_morale_impact", function()
 	{
 		var game = new GameState(1);
