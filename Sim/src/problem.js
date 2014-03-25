@@ -440,11 +440,14 @@ function showMoraleInterventions(gs, site)
     });
 }
 //Calls the necessary functions to implement a moral intervention
-function implementChosenMoralIntervention(game, morale_details)
+function implementChosenMoraleIntervention(game, morale_details)
 {
-	var m_interventions = game.morale_interventions;
+	console.log("WOO "+morale_details);
 	var chosenDictionary = parseDetails(game, morale_details);
 	purchaseMoraleIntervention(chosenDictionary["Morale I"], chosenDictionary["Site"]);
+	GAME_DATA.ticker.pause();
+	vex.dialog.alert(chosenDictionary["Morale I"].name + ' has been purchased in ' + chosenDictionary["Site"].name);
+	GAME_DATA.ticker.resume();
 }
 //Parses the input from a button press, contains both the site and thw name of the intervention
 function parseDetails(game, morale_details)

@@ -186,30 +186,63 @@ describe("Moral Interventions", function()
 		});
 		
 	});
-	describe("purchaseMoralIntervention", function()
+	describe("purchaseMoraleIntervention", function()
 	{
 		var site = game.sites[0];
 		var morale_i = new MoralIntervention("Test", 1000, 10);
+		site.morale = 100;
 		purchaseMoraleIntervention(morale_i, site);
 		it("Increases a site's morale", function()
 		{
-		
+			expect(site.morale).toEqual(105);
+		});
+		it("Calls its helper functions", function()
+		{
+			update_morale_dictionary = jasmine.createSpy();
+			get_morale_impact = jasmine.createSpy();
+			purchaseMoraleIntervention(morale_i, site);
+			expect(update_morale_dictionary).toHaveBeenCalled();
+			expect(get_morale_impact).toHaveBeenCalled();
 		});
 	});
 	describe("set_morale", function()
 	{
-		//TODO
+		var sites = game.sites;
+		it("Returns 100 if passed true", function()
+		{
+			expect(set_morale(true)).toEqual(100);
+		});
+		it("Returns a 25% variance on 100 otherwise", function()
+		{
+			var result = set_morale(false);
+			expect(result).toBeGreaterThan(74);
+			expect(result).toBeLessThan(126);
+		});
 	});
-	describe("showMoralInterventions", function()
+	describe("implementChosenMoraleIntervention", function()
 	{
-		//TODO
-	});
-	describe("implementChosenMoralIntervention", function()
-	{
-		//TODO
+		it("Calls the purchase function", function()
+		{
+			purchaseMoraleIntervention = jasmine.createSpy();
+			implementChosenMoraleIntervention(game, "Buy Pizza for Dublin");
+			expect(purchaseMoraleIntervention).toHaveBeenCalled();
+		});
 	});
 	describe("parseDetails", function()
 	{
-		//TODO
+		var morale_details = "Buy Pizza For Dublin";
+		var test_details = "TEST";
+		it("Given valid parameters it returns a 2 item array", function()
+		{
+			var result = parseDetails(game, morale_details);
+			expect(result["Morale I"]).toEqual(game.morale_interventions[0]);
+			expect(result["Site"]).toEqual(game.sites[2]);
+		});
+		it("Returns an empty index if parameters are invalid", function()
+		{
+			var result = parseDetails(game, test_details);
+			expect(result["Morale I"]).toEqual(undefined);
+			expect(result["Site"]).toEqual(undefined);
+		});
 	});
 });

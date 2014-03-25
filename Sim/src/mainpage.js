@@ -90,7 +90,7 @@ $('body').on('click', '#intervention-sell', function(){
 //Tracks when the player selects a morale intervention to buy
 $('body').on('click', '#m_intervention', function(){ 
     var tmp = $(this).context.innerHTML;
-    implementChosenMoralIntervention(GAME_DATA.gs, tmp);
+    implementChosenMoraleIntervention(GAME_DATA.gs, tmp);
 } );
 
 

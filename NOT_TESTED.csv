@@ -20,10 +20,11 @@ Filepath,Function Name,Reason its's not tested
 ~\Sim\src\problem.js,intervention, External Library
 ~\Sim\src\problem.js,displayInterventions, External Library
 ~\Sim\src\problem.js,encounteredProblems, External Library
+~\Sim\src\problem.js,showMoraleInterventions, External Library
 ~\Sim\src\scenario.js,site_builder,N/A
 ~\Sim\src\scenario.js,module_builder,N/A
 ~\Sim\src\scenario.js,task_builder,N/A
-~\Sim\src\state.js,load_globals,N/A
+~\Sim\src\state.js,load_globals, External Library
 ~\Sim\src\utils.js,months_to_str,N/A
 ~\Sim\src\utils.js,currently_doing_which_tasks,N/A
 ~\Sim\src\utils.js,progress_on_current_task,N/A
