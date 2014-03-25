@@ -87,6 +87,7 @@ function GameState(setting)
     this.current_time = 0;
     this.financial_log = []; //log of finances to type for graphing
     this.interventions = [];
+	this.moral_interventions = [];
     this.days_per_month = 30;
     this.player = new Player();
 }
@@ -104,6 +105,7 @@ function load_globals(gs){
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
+		gs.moral_interventions = obj.moral_interventions;
 		PROBLEM_CONSTANT = obj.problem_constant;
 		MORAL_MOD = obj.moral_modifier*gs.player.empathy;
     });

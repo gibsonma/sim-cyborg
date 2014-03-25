@@ -398,9 +398,17 @@ function get_moral_impact(m_intervention, site_name)
 //Updates the intervention's dictionary, by incrementing the value linked to the site key
 function update_moral_dictionary(moral_i, site_name)
 {
-	
 	if(moral_i.sites_implemented[site_name] == undefined)moral_i.sites_implemented[site_name] = 1;
 	else moral_i.sites_implemented[site_name] += 1;
+}
+//Updates the dictionary, gets the impact, applies it to the site
+function purchaseMoralIntervention(moral_i, site)
+{
+	update_moral_dictionary(moral_i, site.name);
+	console.log(moral_i);
+	console.log(site.moral);
+	site.moral += get_moral_impact(moral_i, site.name);
+	console.log(site.moral);
 }
 
 //Takes a boolean. If a site is the home site (true), return 100, else returns a 25% variance
@@ -409,4 +417,57 @@ function set_moral(is_home)
 	var base_morale = 100;
 	if(is_home)return base_morale;
 	return vary(base_morale);
+}
+//Displays a list of moral interventions the player can use to improve the moral of the site passed in
+function showMoralInterventions(gs, site)
+{
+	GAME_DATA.ticker.pause();
+	var m_interventions = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td></tr>';
+	for(var i = 0; i < gs.moral_interventions.length; i++)
+	{
+		var item = gs.moral_interventions[i];
+		
+			m_interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.cost+'</td><td class="itd"><button id="m_intervention">' + item.name+' for ' + site.name + '</button></td>'
+		
+		m_interventions += '</tr>';
+	}
+	m_interventions += '</table>';
+	
+	vex.dialog.confirm({
+	  css: {'width':'100%'},
+      message: '<p>' + m_interventions + '</p>', 
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return m_interventions;
+      }
+    });
+}
+function implementChosenMoralIntervention(game, moral_details)
+{
+	var m_interventions = game.moral_interventions;
+	var chosenDictionary = parseDetails(game, moral_details);
+	purchaseMoralIntervention(chosenDictionary["Moral I"], chosenDictionary["Site"]);
+}
+function parseDetails(game, moral_details)
+{
+	var moral_i = game.moral_interventions;
+	var sites = game.sites;
+	var result = [];
+	for(var i = 0; i < moral_i.length; i++)
+	{
+		if(moral_details.indexOf(moral_i[i].name) != -1)
+		{
+			result["Moral I"] = moral_i[i];
+			break;
+		}
+	}
+	for(var j = 0; j < sites.length; j++)
+	{
+		if(moral_details.indexOf(sites[j].name) != -1)
+		{
+			result["Site"] = sites[j];
+			break;
+		}
+	}
+	return result;
 }
