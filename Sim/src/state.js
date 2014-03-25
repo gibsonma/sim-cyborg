@@ -50,7 +50,8 @@ function GameState(setting)
         case 2:
             this.sites = [
                 site_builder("Poland", "Waterfall", true, [
-                        module_builder("Middle End", 3, 100),
+                        module_builder("Middle End", 1, 100),
+                        module_builder("Lol End", 1, 100),
                         ]), // they're finishing at different times - effort not being counted
                 ];
             break;
@@ -182,6 +183,7 @@ function MoralIntervention(name, cost, init_impact)
 
 
 function vary(total){
+    return total;
     var seed = Math.random();
     var actual_total = total;
     if(seed > 0.50 ){
