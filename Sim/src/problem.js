@@ -152,6 +152,7 @@ function intervention(gs)
 			sites[i].past_problems.push([problem,gs.time["Days Passed"]]);
 			sites[i].problems.pop();
 			var interventions = get_applicable_interventions(gs, problem);
+			decreaseMorale(sites[i],problem);//Decrease Site morale
 			var buttonList = '';
 			var game = gs;
 			var buttonList = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
@@ -452,7 +453,6 @@ function showMoraleInterventions(gs, site)
 //Calls the necessary functions to implement a moral intervention
 function implementChosenMoraleIntervention(game, morale_details)
 {
-	console.log("WOO "+morale_details);
 	var chosenDictionary = parseDetails(game, morale_details);
 	purchaseMoraleIntervention(chosenDictionary["Morale I"], chosenDictionary["Site"]);
 	GAME_DATA.ticker.pause();
