@@ -82,11 +82,6 @@ function actual_effort_completed(site){
                     var max_per_hour = (module.assigned*gs.developer_effort*gs.developer_working_hours)/24;
                     var work = ratio_completed_effort_per_hour_longest_task(site.modules, k) * max_per_hour;
                     effort += work;
-/*                    if (task.completed == task.actual_total){
-                        var rem= remainder(task.total, gs.developer_effort*module.assigned);
-                        console.log("adding rem: " + rem);
-                        effort += rem;
-                    }*/
                 }
             }
             break;
@@ -104,7 +99,7 @@ function actual_effort_completed(site){
                 var ratio_completed = completed/out_of;
 
                 var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
-                var work =  hours_for_longest_module(site) * max_per_hour;
+                var work =  hours_for_module(module) * max_per_hour;
                 effort += work * ratio_completed;
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
@@ -190,18 +185,25 @@ function hours_for_longest_module(site){
     var gs = GAME_DATA.gs;
     var length_of_longest =0;
     for (var i=0; i< site.modules.length; i++){
-        var module = site.modules[i];
-        var module_total = 0;
-        for (var j=0; j < module.tasks.length; j++){
-            var task = module.tasks[j];
-            module_total += task.actual_total;
-        }
-        var work_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
-        var legnth_of_module = module_total/work_per_hour;
-        if (legnth_of_module > length_of_longest) length_of_longest = legnth_of_module;
+        var module_length = hours_for_module(site.modules[i]);
+        if (module_length > length_of_longest) length_of_longest = module_length;
     }
     return length_of_longest;
 }
+
+function hours_for_module(module){
+    var gs = GAME_DATA.gs;
+    var module_total = 0;
+    var length_of_idle =0;
+    for (var j=0; j < module.tasks.length; j++){
+        var task = module.tasks[j];
+        var hourly_effort = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
+        length_of_idle += remainder(task.total, module.assigned*gs.developer_effort)/hourly_effort;
+        module_total += credited_total(task)/hourly_effort;
+    }
+    return module_total;
+}
+
 
 function number_assigned_workers(){
 

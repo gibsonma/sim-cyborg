@@ -49,9 +49,9 @@ function GameState(setting)
             break;
         case 2:
             this.sites = [
-                site_builder("Poland", "Waterfall", true, [
+                site_builder("Poland", "Agile", true, [
                 module_builder("Middle End", 1, 100),
-                module_builder("Lol End", 1, 240),
+                module_builder("Lol End", 1, 200),
                         ]), // they're finishing at different times - effort not being counted
                 ];
             break;

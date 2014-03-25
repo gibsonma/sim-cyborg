@@ -359,7 +359,7 @@ function statusClass(site) {
         var expected_completed = effort_per_day/24 * gs.current_time;
         console.log("actually: " + actually_completed);
         console.log("expected: " + expected_completed);
-        if (actually_completed != expected_completed){
+        if (Math.round(actually_completed) != Math.round(expected_completed)){
             console.log(JSON.stringify(gs.sites, null, 3));
             GAME_DATA.ticker.pause();//Pause the game
         }
