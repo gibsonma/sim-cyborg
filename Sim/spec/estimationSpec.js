@@ -198,7 +198,7 @@ describe("Estimation: Waterfall, site:1, module:2, equal workers", function()
             site_builder("Poland", "Waterfall", true, [
                 module_builder("Middle End", 1, 100),
                 module_builder("Lol End", 1, 100),
-            ]), // they're finishing at different times - effort not being counted
+            ]), 
         ];
         for (var i=0; i< sites.length; i++){
             var site = sites[i];
@@ -211,7 +211,7 @@ describe("Estimation: Waterfall, site:1, module:2, equal workers", function()
             }
         }
         setupGame(sjs.Scene({w:1, h:1}), sites );
-        expect(Math.round(sum_tasks(GAME_DATA.gs.sites[0]))).toEqual(156);
+        expect(Math.round(sum_tasks(GAME_DATA.gs.sites[0]))).toEqual(216)
     });
     it("Check getting task completion", function()
     {
@@ -252,7 +252,7 @@ describe("Estimation: Waterfall, site:1, module:2, unequal work amount", functio
             site_builder("Poland", "Waterfall", true, [
                 module_builder("Middle End", 1, 100),
                 module_builder("Lol End", 1, 240),
-            ]), // they're finishing at different times - effort not being counted
+            ]),
         ];
         for (var i=0; i< sites.length; i++){
             var site = sites[i];
@@ -265,7 +265,7 @@ describe("Estimation: Waterfall, site:1, module:2, unequal work amount", functio
             }
         }
         setupGame(sjs.Scene({w:1, h:1}), sites );
-        expect(Math.round(sum_tasks(GAME_DATA.gs.sites[0]))).toEqual(156);
+        expect(Math.round(sum_tasks(GAME_DATA.gs.sites[0]))).toEqual(480);
     });
     it("Check getting task completion", function()
     {

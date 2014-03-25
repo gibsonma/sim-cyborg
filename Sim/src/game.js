@@ -138,6 +138,7 @@ function display_final_score(gs){
     html += "<p>Actual expenditure: $" + stats.actual_expenditure+"</p>";
     html += "<p>Expected revenue: $" + stats.expected_revenue+"</p>";
     html += "<p>Actual revenue: $" + stats.actual_revenue+"</p>";
+    html += "<p>Current time: " + gs.current_time + " hours</p>";
     html += "<br>";
     vex.dialog.alert(html);
 }
