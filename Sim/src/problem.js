@@ -257,7 +257,6 @@ function problemSim(gs)
     var failC = fail*PROBLEM_CONSTANT*probCD;
     gs.sites[seed].problemCooldown += 0.005;
 
-
     var failure_seed = Math.random();
     //console.log(failC +" vs " + failure_seed);
     if(failure_seed < failC)
