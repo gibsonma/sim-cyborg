@@ -187,7 +187,6 @@ function MoralIntervention(name, cost, init_impact)
 
 
 function vary(total){
-    return total;
     var seed = Math.random();
     var actual_total = total;
     if(seed > 0.50 ){
