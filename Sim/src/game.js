@@ -143,6 +143,7 @@ function display_final_score(gs){
     html += "<p>Actual expenditure: $" + stats.actual_expenditure+"</p>";
     html += "<p>Expected revenue: $" + stats.expected_revenue+"</p>";
     html += "<p>Actual revenue: $" + stats.actual_revenue+"</p>";
+    html += "<p>Current time: " + gs.current_time + " hours</p>";
     html += "<br>";
     vex.dialog.alert(html);
 }
@@ -183,8 +184,8 @@ function calculate_days_remaining(gs) {
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-    problemSim(gs);
-	intervention(gs);
+ //   problemSim(gs);
+//	intervention(gs);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task
