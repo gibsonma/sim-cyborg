@@ -417,7 +417,7 @@ function get_morale_impact(m_intervention, site)
 	if(site.morale < 20 && num_implemented > 0)num_implemented--;//If a site's morale is very low then an intervention will have an inflated effect
 	var modifier = num_implemented * MORAL_MOD;
 	if(modifier > 0)actual_impact -= modifier;
-	if(actual_impact < 0)actual_impact = 0;
+	if(actual_impact < 2)actual_impact = 2;
 	Math.floor(actual_impact);
 	return actual_impact;
 }
@@ -446,7 +446,7 @@ function set_morale(is_home)
 function showMoraleInterventions(gs, site)
 {
 	GAME_DATA.ticker.pause();
-	var m_interventions = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td></tr>';
+	var m_interventions = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td class="itd">Cost</td><td class="itd">Action</td></tr>';
 	for(var i = 0; i < gs.morale_interventions.length; i++)
 	{
 		var item = gs.morale_interventions[i];

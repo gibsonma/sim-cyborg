@@ -221,10 +221,12 @@ describe("Moral Interventions", function()
 		var site = game.sites[0];
 		var morale_i = new MoralIntervention("Test", 1000, 10);
 		site.morale = 100;
+		console.log("WOO");
 		purchaseMoraleIntervention(morale_i, site);
 		it("Increases a site's morale", function()
 		{
-			expect(site.morale).toEqual(105);
+			expect(site.morale).toBeGreaterThan(103);
+			expect(site.morale).toBeLessThan(107);
 		});
 		it("Calls its helper functions", function()
 		{
