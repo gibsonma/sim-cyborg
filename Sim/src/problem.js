@@ -171,7 +171,8 @@ function intervention(gs)
 			buttonList += '</table>';
 			vex.dialog.confirm({
                 message: '<p>'+problem.name+' in '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
-                buttons: [
+                css: {'width':'100%'},
+				buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
                       text: 'Fix Problem'
                     }),

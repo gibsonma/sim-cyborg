@@ -238,7 +238,7 @@ function completedTasksEmail(site)
     for(var i = 0; i < modules.length; i++)
     {
         tasks = modules[i].tasks;
-        result += '<br>' + modules[i].name + ' : ';
+        result += '<br><b>' + modules[i].name + '</b> : ';
         for(var j = 0; j < tasks.length; j++)
         {
             if(tasks[j].completed >= tasks[j].actual_total) result += '<br>&nbsp&nbsp&nbsp&nbsp' + tasks[j].name;
