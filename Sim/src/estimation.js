@@ -105,11 +105,14 @@ function remainder(total, work){
     return (Math.ceil(total/work) * work) - total;
 }
 
-function credited_total(task){
-    if (task.actual_total > task.total){
+function credited_completed(task){
+    if (task.completed < task.actual_total){
+        return task.completed;
+    }
+    if (task.completed > task.total){
         return task.total;
     }
-    else return task.total + (task.total - task.actual_total);
+    else return task.completed + (task.total - task.completed);
 }
 
 function longest_task(modules, task_idx){
@@ -174,7 +177,7 @@ function hours_for_task(module,task){
     var gs = GAME_DATA.gs;
     var hourly_effort = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
     var length_of_idle = remainder(task.total, module.assigned*gs.developer_effort)/hourly_effort;
-    var task_total = credited_total(task)/hourly_effort;
+    var task_total = task.total/hourly_effort;
     return length_of_idle + task_total;
 }
 
@@ -186,7 +189,7 @@ function hours_for_longest_task(modules, task_idx){
 function completed_hours_for_task(module,task){
     var gs = GAME_DATA.gs;
     var hourly_effort = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
-    var task_total = task.completed/hourly_effort;
+    var task_total = credited_completed(task)/hourly_effort;
     if (task.completed >= task.actual_total){
         var length_of_idle = remainder(task.total, module.assigned*gs.developer_effort)/hourly_effort;
         task_total += length_of_idle;
