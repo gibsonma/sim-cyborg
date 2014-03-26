@@ -28,7 +28,17 @@ function sum_tasks(site){
                 var module = site.modules[j];
                 var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
                 var work =  hours_for_module(module) * max_per_hour;
-                effort += work;
+
+                var longest_mod = longest_module(site);
+                if (module !== longest_mod){
+                    var ratio_current_to_longest = hours_for_module(longest_mod)/hours_for_module(module);
+                    var ratio = ratio_current_to_longest
+
+                    effort += work * ratio;
+                }
+                else {
+                    effort += work;
+                }
             }
             break;
     }
@@ -76,7 +86,7 @@ function actual_effort_completed(site){
 
                     var ratio = ratio_current_to_longest*ratio_completion_longest
                     if (ratio > 1){
-                        effort += work * ratio_current_to_longest*ratio_completion_longest;
+                        effort += work * ratio;
                     }
                     else {
                         effort += work;
