@@ -136,7 +136,6 @@ function get_applicable_interventions(gs, problem)
 		affects = gs.interventions[i].affects;
 		if(affects[task_num-1])result.push(gs.interventions[i]);
 	}
-	console.log(result);
 	return result;
 }
 
@@ -190,7 +189,7 @@ function intervention(gs)
 					{
 						decreaseMorale(sites[index],problem);//Decrease Site morale
 						new_transaction(-problem.cost);//Deduct cost of fixing problem
-						gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+						if(gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total)gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
 						GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
 						return console.log("Problem Fixed");
 					}
@@ -397,6 +396,11 @@ function varySiteMorale(game)
 		rand2 = Math.random();
 		if(rand2 >= 0.5)sites[i].morale++;
 		else sites[i].morale--;
+		if(sites[i].morale <= 20 && days_since_moral_warning >= 14)
+		{
+			vex.dialog.alert("Morale in " + sites[i].name + " is very low, increase it before progress grinds to a halt!");
+			days_since_moral_warning = 0;
+		}
 	}
 }
 

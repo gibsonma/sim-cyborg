@@ -11,6 +11,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 var GAME_DATA = {};
 var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
 var MORAL_MOD;//Represents how quickly a morale interventions impact errodes each time its used, the closer to 0, the quicker it erodes
+var days_since_moral_warning = 14;//Tracks how many days have passed since the user was last warned about a site's low morale to prevent spamming the user with warnings. Starts at 7 to allow for low morale to be reported during the simulation's first week
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end

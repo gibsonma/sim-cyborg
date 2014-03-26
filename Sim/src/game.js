@@ -107,6 +107,7 @@ function incrementTime(gs){
     if (gs.time["Current Hour"] >= 24)
 	{
 		gs.time["Current Hour"] = 0;
+		days_since_moral_warning++;
 		varySiteMorale(gs);
 	}
     incrementLocalTimes(gs);
