@@ -45,7 +45,6 @@ describe("Estimation: Agile, site:1, module:1", function()
         expect(Math.round(actual_effort_completed(GAME_DATA.gs.sites[0]))).toEqual(32);
     });
 });
-
 describe("Estimation: Waterfall, site:1, module:1", function()
 {
     it("Check sum tasks", function()
