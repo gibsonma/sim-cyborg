@@ -60,12 +60,18 @@ function report(gs){
     this.expected_expenditure = Math.round((scheduleCalculator(gs)/gs.developer_effort) * gs.developer_rate * 1.24); // see email for explanation
     this.actual_expenditure = get_total_expenditure();
 
+    this.expected_months = scheduleCalculator(gs)/ effort_per_day / gs.days_per_month;
     var month = Math.ceil(gs.current_time/24/gs.days_per_month);
     this.expected_revenue = Math.round(gs.revenue/2);
-    this.actual_revenue = Math.round( (6-(month-6)) * (gs.revenue/12) );
+    this.actual_revenue = Math.round( (6-(month-this.expected_months)) * (gs.revenue/12) );
+    if (this.actual_revenue < 0) this.actual_revenue = 0;
 
-    this.expected_months = scheduleCalculator(gs)/ effort_per_day / gs.days_per_month;
-    this.final_score = Math.round(gs.capital + (this.expected_months-(month-6))* (gs.revenue/12));
+    if (this.month <= this.expected_months){
+        this.final_score = Math.round(gs.capital + (month + (this.expected_months-month))* (gs.revenue/12));
+    }
+    else {
+        this.final_score = Math.round(gs.capital + (this.expected_months/month)* (gs.revenue/12));
+    }
 
     this.expected_months_str = months_to_str(this.expected_months);
 }
