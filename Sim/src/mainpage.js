@@ -121,11 +121,11 @@ function renderTileview() {
         });
         var home = get_home_site(GAME_DATA.gs.sites);
         $('.site_tile').not('[data-name="' + home.name + '"]').find('.info-popup').hide();
-        $('.site_tile').find('.info-popup-nonhome.name').hide();
+        $('.site_tile').find('.info-popup-nonhome').hide();
         $('.site_tile').find('.info-popup-email').hide();
         $('.site_tile').find('.info-popup-status').hide();
         $('.site_tile').find('.info-popup-tasks').hide();                  
-        $('.site_tile').not('[data-name="' + home.name + '"]').find('.info-popup-nonhome.name').toggle();
+        $('.site_tile').not('[data-name="' + home.name + '"]').find('.info-popup-nonhome').toggle();
         $('.site_tile').not('[data-name="' + home.name + '"]').find('.info-popup-email').toggle();
         $('.site_tile').not('[data-name="' + home.name + '"]').find('.info-popup-status').toggle();     
         $('.site_tile').not('[data-name="' + home.name + '"]').find('.info-popup-tasks').toggle();      
