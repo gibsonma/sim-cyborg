@@ -8,7 +8,7 @@
 	<ol>
 	{{#tasks}}
 	<li>
-		<p>{{name}}: {{completed.toFixed(2)}}/{{actual_total}} Completion</p>
+		<p>{{name}}: {{completed.toFixed(0)}}/{{actual_total}} ({{Math.floor(completed/actual_total * 100)}}% Done)</p>
 	</li>
 	{{/tasks}}
 	</ol>
