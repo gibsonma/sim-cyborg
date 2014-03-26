@@ -17,7 +17,8 @@ function sum_tasks(site){
                 for (var k=0; k<module.tasks.length; k++){
                     var task = module.tasks[k];
                     var max_per_hour = (module.assigned*gs.developer_effort*gs.developer_working_hours)/24;
-                    var work = hours_for_longest_task(site.modules, k) * max_per_hour;
+                    var longest = longest_task(site.modules, k);
+                    var work = hours_for_task(longest.module, longest.task) * max_per_hour;
                     effort += work;
                 }
             }
@@ -64,7 +65,26 @@ function actual_effort_completed(site){
                 var module = site.modules[j];
                 var max_per_hour = module.assigned*gs.developer_effort*gs.developer_working_hours/24;
                 var work =  completed_hours_for_module(module) * max_per_hour;
-                effort += work;
+
+                var longest_mod = longest_module(site);
+                if (module !== longest_mod){
+                    var longest_completed = completed_hours_for_module(longest_mod);
+                    var longest_total = hours_for_module(longest_mod);
+                    var ratio_completion_longest = longest_completed/longest_total;
+
+                    var ratio_current_to_longest = hours_for_module(longest_mod)/hours_for_module(module);
+
+                    var ratio = ratio_current_to_longest*ratio_completion_longest
+                    if (ratio > 1){
+                        effort += work * ratio_current_to_longest*ratio_completion_longest;
+                    }
+                    else {
+                        effort += work;
+                    }
+                }
+                else {
+                    effort += work;
+                }
             }
             break;
     }
@@ -102,6 +122,19 @@ function longest_task(modules, task_idx){
         }
     }
     return {task:longest, module:module_of_longest};
+}
+
+function longest_module(site){
+    var gs = GAME_DATA.gs;
+    var longest = site.modules[0];
+    for (var i=0; i < site.modules.length; i++){
+        var module = site.modules[i];
+        var length = hours_for_module(module);
+        if (hours_for_module(module) > hours_for_module(longest)){
+            longest = module;
+        }
+    }
+    return longest;
 }
 
 function hours_for_longest_module(site){
