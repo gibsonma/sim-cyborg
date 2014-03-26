@@ -189,7 +189,7 @@ function intervention(gs)
 					{
 						decreaseMorale(sites[index],problem);//Decrease Site morale
 						new_transaction(-problem.cost);//Deduct cost of fixing problem
-						if(gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total)gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+						if(gs.sites[index].modules[problem.module].tasks[problem.taskNum] != undefined)gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
 						GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
 						return console.log("Problem Fixed");
 					}
@@ -243,9 +243,9 @@ function generateProblemPercentages() //to give each problem a minimal level of 
 
 function problemSim(gs)
 {
-    var numSites = gs.sites.length;
-    var seed = Math.floor(Math.random() * numSites); //get a random number between 0 and number of sites
-    var site = gs.sites[seed].name;
+    var numSites = gs.sites.length;  
+	var seed = Math.floor(Math.random() * numSites); //get a random number between 0 and number of sites
+	var site = gs.sites[seed].name;
     var dGeo = gs.global_distances[site];
     var dTemporal = gs.temporal_distances[site]; 
     var dCulture = gs.cultural_distances[site];
@@ -395,7 +395,7 @@ function varySiteMorale(game)
 	{
 		rand2 = Math.random();
 		if(rand2 >= 0.5)sites[i].morale++;
-		else sites[i].morale--;
+		else if(sites[i].morale >= 2)sites[i].morale--;
 		if(sites[i].morale <= 20 && days_since_moral_warning >= 14)
 		{
 			vex.dialog.alert("Morale in " + sites[i].name + " is very low, increase it before progress grinds to a halt!");
