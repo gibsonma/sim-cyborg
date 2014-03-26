@@ -65,7 +65,7 @@ function report(gs){
     this.actual_revenue = Math.round( (6-(month-6)) * (gs.revenue/12) );
 
     this.expected_months = scheduleCalculator(gs)/ effort_per_day / gs.days_per_month;
-    this.final_score = Math.round(gs.capital + (6-(month-6))* (gs.revenue/12));
+    this.final_score = Math.round(gs.capital + (this.expected_months-(month-6))* (gs.revenue/12));
 
     this.expected_months_str = months_to_str(this.expected_months);
 }

@@ -28,52 +28,56 @@ function GameState(setting)
     switch(setting)
     {
         /*
-         * headers:
-         * site_builder(name, dev_type, home, module);
-         * module_builder(name, assigned, effort_points);
-         */
-        case 1:
-            this.sites = [
-                site_builder("New York", "Agile", false, [
-                        module_builder("Backend", 6, 10000),
-                        module_builder("Database", 2, 3000)
-                        ]),
-                site_builder("Shanghai", "Waterfall", false, [
-                        module_builder("Middle End", 6, 10000),
-                        module_builder("Communications Software", 2, 3000)
-                        ]),
-                site_builder("Dublin", "Agile", true, [
-                        module_builder("Front End", 7, 11000),
-                        module_builder("Mobile Client", 3, 3000)
-                        ])
-                    ];
-            break;
-        case 2:
-            this.sites = [
-                site_builder("Poland", "Agile", true, [
-                module_builder("Middle End", 3, 50),
-                module_builder("Lol End", 2, 200),
-                        ]), // they're finishing at different times - effort not being counted
-                ];
-            break;
-        case 3:
-            this.sites = [
-                site_builder("New York", "Agile", false, [
-                        module_builder("Backend", 10, 1000),
-                        module_builder("Database", 8, 100)
-                        ]),
-                site_builder("Shanghai", "Agile", false, [
-                        module_builder("Middle End", 12, 900),
-                        module_builder("Communications Software", 9, 300)
-                        ]),
-                site_builder("Dublin", "Agile", true, [
-                        module_builder("Front End", 15, 1100),
-                        module_builder("Mobile Client", 11, 300)
-                        ])
-                    ];
-            break;
-        default:
-            this.sites = setting;
+        * headers:
+        * site_builder(name, dev_type, home, module);
+        * module_builder(name, assigned, effort_points);
+        */
+    case 1:
+        this.sites = [
+            site_builder("New York", "Waterfall", false, [
+                module_builder("Backend", 6, 10000),
+                module_builder("Database", 2, 3000)
+            ]),
+            site_builder("Shanghai", "Waterfall", false, [
+                module_builder("Middle End", 6, 10000),
+                module_builder("Communications Software", 2, 3000)
+            ]),
+            site_builder("Dublin", "Agile", true, [
+                module_builder("Front End", 7, 11000),
+                module_builder("Mobile Client", 3, 3000)
+            ])
+        ];
+        break;
+    case 2:
+        this.sites = [
+            site_builder("Poland", "Waterfall", false, [
+                module_builder("Backend", 3, 1000),
+                module_builder("Database", 3, 5000),
+            ]), 
+            site_builder("Dublin", "Waterfall", true, [
+                module_builder("Middle End", 2, 1000),
+                module_builder("Mobile Client", 4, 5000),
+            ]), 
+        ];
+        break;
+    case 3:
+        this.sites = [
+            site_builder("New York", "Agile", false, [
+                module_builder("Backend", 10, 1000),
+                module_builder("Database", 8, 100)
+            ]),
+            site_builder("Shanghai", "Agile", false, [
+                module_builder("Middle End", 12, 900),
+                module_builder("Communications Software", 9, 300)
+            ]),
+            site_builder("Dublin", "Agile", true, [
+                module_builder("Front End", 15, 1100),
+                module_builder("Mobile Client", 11, 300)
+            ])
+        ];
+        break;
+    default:
+        this.sites = setting;
     }
     this.global_distances = 0;
     this.temporal_distances = 0;
@@ -89,7 +93,7 @@ function GameState(setting)
     this.current_time = 0;
     this.financial_log = []; //log of finances to type for graphing
     this.interventions = [];
-	this.morale_interventions = [];
+    this.morale_interventions = [];
     this.days_per_month = 30;
     this.player = new Player();
 }
@@ -107,9 +111,9 @@ function load_globals(gs){
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
-		gs.morale_interventions = obj.morale_interventions;
-		PROBLEM_CONSTANT = obj.problem_constant;
-		MORAL_MOD = obj.morale_modifier*gs.player.empathy;
+        gs.morale_interventions = obj.morale_interventions;
+        PROBLEM_CONSTANT = obj.problem_constant;
+        MORAL_MOD = obj.morale_modifier*gs.player.empathy;
     });
 }
 function Player(){
@@ -128,14 +132,14 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.modules = []; //List of modules
     this.development_type = dev;
     this.problems = [];
-	this.past_problems = [];
+    this.past_problems = [];
     this.critical_problem = false;
     this.timezone = timezone;
     this.problemCooldown = 0.005;
     this.home = home;
     this.local_time = 0;
     this.last_state = "schedule-ok";
-	this.morale = set_morale(home);
+    this.morale = set_morale(home);
 }
 
 function Culture(influence){
@@ -178,10 +182,10 @@ function Intervention(name, init_cost, daily_cost, is_implemented, affects)
 //Represents a morale intervention
 function MoralIntervention(name, cost, init_impact)
 {
-	this.name = name;
-	this.cost = cost;//Cost of buying
-	this.init_impact = init_impact;//Initial impact on site morale
-	this.sites_implemented = {};//A dictionary linking the sites that have purchased the intervention and how many times
+    this.name = name;
+    this.cost = cost;//Cost of buying
+    this.init_impact = init_impact;//Initial impact on site morale
+    this.sites_implemented = {};//A dictionary linking the sites that have purchased the intervention and how many times
 }
 
 function vary(total){
