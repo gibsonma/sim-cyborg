@@ -139,7 +139,6 @@ describe("number_assigned_workers", function()
         expect(result).toEqual(num_workers);
     });
 });
-
 describe("report", function()
 {
     var game = new GameState(1);

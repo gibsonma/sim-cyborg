@@ -54,7 +54,6 @@ function report(gs){
 
     var months = gs.current_time/24/gs.days_per_month;
     this.months_str = months_to_str(months);
-
     this.actual_effort = Math.round(actual_effort_completed_gs());
     this.expected_effort = Math.round(scheduleCalculator(gs));
 

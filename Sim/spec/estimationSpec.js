@@ -404,7 +404,6 @@ describe("Estimation: Waterfall, site:1, module:2, unequal workers", function()
         expect(Math.round(actual_effort_completed(GAME_DATA.gs.sites[0]))).toEqual(320);
     });
 });
-
 describe("Estimation: Agile, site:1, module:2, unequal workers", function()
 {
     it("Check sum tasks", function()
@@ -431,10 +430,10 @@ describe("Estimation: Agile, site:1, module:2, unequal workers", function()
     it("Check getting task completion", function()
     {
         sites = [
-            site_builder("Dubin", "Agile", true, [
+            site_builder("Dublin", "Agile", true, [
                 module_builder("Middle End", 3, 50),
                 module_builder("Lol End", 2, 200),
-            ])
+            ]),
         ];
         for (var i=0; i< sites.length; i++){
             var site = sites[i];

@@ -112,15 +112,10 @@ function credited_total(task){
     else return task.total + (task.total - task.actual_total);
 }
 
-function ratio_effort_completed_longest_task(modules, task_idx){
-    var longest = longest_task(modules, task_idx);
-    return completed_hours_for_task(longest.module, longest.task);
-}
-
 function longest_task(modules, task_idx){
     var gs = GAME_DATA.gs;
-    var longest;
-    var module_of_longest;
+    var longest = modules[0].tasks[0];
+    var module_of_longest = modules[0];
     var length_of_longest =0;
     for (var i=0; i < modules.length; i++){
         var module = modules[i];
