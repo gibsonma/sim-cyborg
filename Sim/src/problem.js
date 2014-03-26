@@ -394,13 +394,9 @@ function varySiteMorale(game)
 	var rand1, rand2;
 	for(var i = 0; i < sites.length; i++)
 	{
-			rand1 = Math.random();
-			if(rand1 >= 0.5)
-			{
-				rand2 = Math.random();
-				if(rand2 >= 0.5)sites[i].morale++;
-				else sites[i].morale--;
-			}
+		rand2 = Math.random();
+		if(rand2 >= 0.5)sites[i].morale++;
+		else sites[i].morale--;
 	}
 }
 
@@ -418,6 +414,7 @@ function get_morale_impact(m_intervention, site)
 	var actual_impact = m_intervention.init_impact;
 	var num_implemented = m_intervention.sites_implemented[site.name];
 	if(site.morale > 100)num_implemented++;//If a site's morale is > 100 then the impact is smaller
+	if(site.morale < 20 && num_implemented > 0)num_implemented--;//If a site's morale is very low then an intervention will have an inflated effect
 	var modifier = num_implemented * MORAL_MOD;
 	if(modifier > 0)actual_impact -= modifier;
 	if(actual_impact < 0)actual_impact = 0;
