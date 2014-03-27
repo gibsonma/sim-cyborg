@@ -196,7 +196,7 @@ function update(gs)
                         if (lowest_lifecycle < module.tasks.length){
                             var task = module.tasks[lowest_lifecycle];
                             if (task.completed < task.actual_total){
-                                task.completed += module.assigned * (gs.developer_effort/**(site.morale/100)*/)/TICKS_PER_UNIT_TIME;
+                                task.completed += module.assigned * (gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
                                 if (task.completed > task.actual_total) task.completed = task.actual_total;
                             }
                         }
@@ -206,7 +206,7 @@ function update(gs)
                         for (var k=0; k < module.tasks.length; k++){
                             var task = module.tasks[k];
                             if (task.completed < task.actual_total && worked_on_module == false){
-                                task.completed += module.assigned*(gs.developer_effort/**(site.morale/100)*/)/TICKS_PER_UNIT_TIME;
+                                task.completed += module.assigned*(gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
                                 worked_on_module = true;
                             }
                             if(task.completed > task.actual_total) task.completed = task.actual_total;
