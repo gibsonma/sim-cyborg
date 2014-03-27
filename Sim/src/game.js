@@ -5,31 +5,31 @@
 function displayScenarioValues(scenNum)
 {
     if(isNaN(scenNum))return -1;
-    var game = GAME_DATA.gs, sites = '', modules = '', tasks = '', workers = '', capital = game.capital;
+    var game = GAME_DATA.gs, items = [], result = '', module, site;
     for(var i = 0; i < game.sites.length; i++)
     {
-        sites += '<br>' + game.sites[i].name;
-        workers += '<br>' + game.sites[i].name + ' : ' + getSiteWorkers(game.sites[i]) + ' Developers';
-        modules += '<br>' + game.sites[i].name + ' : ';
-        for(var j = 0; j < game.sites[i].modules.length; j++)
+        site = game.sites[i];
+        items[i] = '<br>' + site.name + ' : ' + getSiteWorkers(site) + ' Developers';
+        items[i] += '<br>Development Method: ' + site.development_type;
+		items[i] += '<br> Modules: ';
+        for(var j = 0; j < site.modules.length; j++)
         {
-            modules += game.sites[i].modules[j].name + '; ';
-            tasks += '<br>' + game.sites[i].modules[j].name + ' : ' + getEffortForModule(game.sites[i].modules[j]) + ' Developer Hours';
+            module = site.modules[j];
+            items[i] += '<br>' + module.name + ' : ' + getEffortForModule(module) + ' effort points';	
         }
-    }
+        items[i] += '<br>';
+        result += items[i];
+    }	
     GAME_DATA.ticker.pause();//Pause the game
     vex.dialog.confirm({
-      message: '<p>You have picked Scenario '+scenNum + '</p>' + 
-               '<p>Sites:' + sites + '</p>' + 
-               '<p>Number of Developers:' + workers + '</p>' +
-               '<p>Modules:' + modules + '</p>' +
-               '<p>Expected Effort:' + tasks + '</p>' +
-               '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
-               '<p>Starting Capital: $'+capital+'</p>',
-      callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return value;
-      }
+        message: '<p>You have picked Scenario '+scenNum + '</p>' + 
+        '<p>Sites:' + result + '</p>' + 
+        '<p>Expected Annual Revenue: $' + game.revenue + '</p>' +
+        '<p>Starting Capital: $'+ game.capital+'</p>',
+        callback: function(value) {
+            GAME_DATA.ticker.resume();
+            return value;
+        }
     });
 }
 
@@ -44,6 +44,7 @@ function setupGame(scene, setting)
     GAME_DATA.scene = scene;
     GAME_DATA.gs = new GameState(setting);
     load_globals(GAME_DATA.gs);
+    generateProblemPercentages()
     GAME_DATA.ticker = scene.Ticker(simpleTick, { tickDuration: MILLIS_PER_FRAME });
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
@@ -53,7 +54,8 @@ function setupGame(scene, setting)
 //The home site's time is known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and set
 function setLocalTime(sites, homeSite)
 {
-    var homeZone = homeSite.timezone, difference = 0;
+
+	var homeZone = homeSite.timezone, difference = 0;
     for(var i = 0; i < sites.length; i++)
     {
         site = sites[i];
@@ -63,7 +65,7 @@ function setLocalTime(sites, homeSite)
             if(difference > 0)site.local_time = TIME_CLOCK[TIME_CLOCK.length - difference]; 
             else if(difference < 0)site.local_time = TIME_CLOCK[-difference];   
         }
-        
+
     }
 }
 
@@ -80,6 +82,7 @@ function simpleTick(ticker)
     if (TICKS_PASSED >= TICKS_PER_UNIT_TIME) {
         incrementTime(GAME_DATA.gs);
         display_game_time(GAME_DATA.gs);
+        display_gold(GAME_DATA.gs);
         TICKS_PASSED = 0;
 
         if (GAME_DATA.gs.current_time % 24 == 0){
@@ -94,25 +97,34 @@ function simpleTick(ticker)
     update(GAME_DATA.gs);
 }
 
+function display_gold(gs){
+    $("#gold").html("<h3>&#36;"+Math.round(gs.capital*100)/100+"</h3>");
+}
+
 function incrementTime(gs){
     gs.current_time ++;
     gs.time["Current Hour"]++;
-    if (gs.time["Current Hour"] >= 24)gs.time["Current Hour"] = 0;
-	incrementLocalTimes(gs);
+    if (gs.time["Current Hour"] >= 24)
+	{
+		gs.time["Current Hour"] = 0;
+		days_since_moral_warning++;
+		varySiteMorale(gs);
+	}
+    incrementLocalTimes(gs);
 }
 //Goes through each site and updates its local time
 function incrementLocalTimes(gs)
 {
-	for(var i = 0; i < gs.sites.length; i++)
-	{
-		gs.sites[i].local_time++;
-		if (gs.sites[i].local_time >= 24)gs.sites[i].local_time = 0;
+    for(var i = 0; i < gs.sites.length; i++)
+    {
+        gs.sites[i].local_time++;
+        if (gs.sites[i].local_time >= 24)gs.sites[i].local_time = 0;
         if (gs.sites[i].local_time < 10) {
             gs.sites[i].time_padder = "0";
         } else {
             gs.sites[i].time_padder = "";
         }
-	}
+    }
 }
 
 function display_final_score(gs){
@@ -125,12 +137,11 @@ function display_final_score(gs){
     html += "<p>You started the game with: $" + gs.starting_capital + "</p>";
     html += "<p>You have " + number_assigned_workers() + " workers</p>";
     html += "<br>";
-    html += "<p>Expected effort: " + stats.expected_effort+" effort points</p>";
-    html += "<p>Actual effort: " + stats.actual_effort+" effort points</p>";
     html += "<p>Expected expenditure: $" + stats.expected_expenditure+"</p>";
     html += "<p>Actual expenditure: $" + stats.actual_expenditure+"</p>";
     html += "<p>Expected revenue: $" + stats.expected_revenue+"</p>";
     html += "<p>Actual revenue: $" + stats.actual_revenue+"</p>";
+    html += "<p>Current time: " + gs.current_time + " hours</p>";
     html += "<br>";
     vex.dialog.alert(html);
 }
@@ -138,20 +149,20 @@ function display_final_score(gs){
 var tileView;
 
 function update_tileview(gs) {
-	if (tileView) {
+    if (tileView) {
         tileView.update('state');    
     }
 }
 
 function display_game_time(gs){
-    var daysRemaining = calculate_days_remaining(gs);
+	var daysRemaining = calculate_days_remaining(gs);
     if (daysRemaining < 0) {
         daysRemaining = "0 (Overdue!)";
     }
     if(gs.time["Current Hour"] % 24 == 0)
-	{
-		gs.time["Days Passed"]++;
-	}
+    {
+        gs.time["Days Passed"]++;
+    }
     var curHour = gs.time["Current Hour"];
     if (curHour < 10) {
         curHour = "0" + curHour;
@@ -171,13 +182,13 @@ function calculate_days_remaining(gs) {
 // Having each module implement its own update() allows for modular behaviour
 function update(gs)
 {
-    intervention(gs);
     problemSim(gs);
+	intervention(gs);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task
-         * once every other module is on the same level (has the same number of tasks done) */
-        var lowest_lifecycle = module_lifecycle_stage(site); 
+         * * once every other module is on the same level (has the same number of tasks done) */
+        var lowest_lifecycle = module_lifecycle_stage(site);
         if (should_be_working(site, gs) && lowest_lifecycle != -1){
             for (var j=0; j < site.modules.length; j++){
                 var module = site.modules[j];
@@ -186,7 +197,7 @@ function update(gs)
                         if (lowest_lifecycle < module.tasks.length){
                             var task = module.tasks[lowest_lifecycle];
                             if (task.completed < task.actual_total){
-                                task.completed += module.assigned * gs.developer_effort/TICKS_PER_UNIT_TIME;
+                                task.completed += module.assigned * (gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
                                 if (task.completed > task.actual_total) task.completed = task.actual_total;
                             }
                         }
@@ -196,7 +207,7 @@ function update(gs)
                         for (var k=0; k < module.tasks.length; k++){
                             var task = module.tasks[k];
                             if (task.completed < task.actual_total && worked_on_module == false){
-                                task.completed += module.assigned*gs.developer_effort/TICKS_PER_UNIT_TIME;
+                                task.completed += module.assigned*(gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
                                 worked_on_module = true;
                             }
                             if(task.completed > task.actual_total) task.completed = task.actual_total;

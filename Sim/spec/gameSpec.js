@@ -2,6 +2,9 @@ beforeEach(function()
 {
 	vex.closeAll();
 	spyOn(vex, 'dialog');
+	spyOn(vex.dialog, 'confirm');
+	spyOn(vex.dialog, 'alert');
+	spyOn(vex.dialog, 'open');
 });
 afterEach(function()
 {
@@ -106,9 +109,6 @@ describe("Update game state", function (){
         expect(oldTime).toBeLessThan(newTime);
     });
 });
-
-	
-
 
 describe("Displaying Scenario Values", function()
 {

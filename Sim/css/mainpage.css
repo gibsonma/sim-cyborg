@@ -47,6 +47,16 @@ body {
 #time_speed_label:after {
 	content: "%";
 }
+.itable, .itr, .itd {
+	border: 1px #000 solid;
+	background: #5E8DC0;
+	color: white;
+	border-collapse:collapse;
+}
+.ptable, .ptr, .ptd {
+	border: 1px #000 solid;
+	border-collapse:collapse;
+}
 
 .site_tile {
 	display: inline-block;
@@ -54,7 +64,7 @@ body {
 	text-align: center;
 	vertical-align: middle;
 	width: 400px;
-	height: 400px;
+	height: 500px;
 	background-color: rgba(121, 202, 100, 0.4);
 	border-radius: 5px 5px;
 	font-weight: bold;

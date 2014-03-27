@@ -85,7 +85,10 @@ describe("Site", function()
 	it("checks if site is defined", function()
 	{
 		var s = new Site("Test Site", "asian", "Agile", TIMEZONE_EUROPE, false);
+		var s2 = new Site("Test Site", "asian", "Agile", TIMEZONE_EUROPE, true);
 		expect(s).toBeDefined();
+		expect(s2.morale).toEqual(100);
+		
 
 	});
 });
@@ -120,6 +123,16 @@ describe("Task", function()
 	});
 });
 
+describe("Player", function()
+{
+	it("checks if player object is defined", function()
+	{
+		var p = new Player();
+		expect(p).toBeDefined();
+
+	});
+});
+
 describe("Intervention", function()
 {
 	it("Checks that Interventions are initialised properly", function()
@@ -131,5 +144,20 @@ describe("Intervention", function()
 		expect(i.init_cost).toEqual(jasmine.any(Number));
 		expect(i.daily_cost).toEqual(jasmine.any(Number));
 		expect(i.is_implemented).toEqual(jasmine.any(Boolean));
+	});
+});
+
+describe("MoralIntervention", function()
+{
+	it("Checks if moral interventions are defined properly", function()
+	{
+		var m = new MoralIntervention("Test", 1000, 50);
+		expect(m).toBeDefined();
+		expect(m.name).toEqual(jasmine.any(String));
+		expect(m.cost).toBeGreaterThan(-1);
+		expect(m.cost).toEqual(1000);
+		expect(m.init_impact).toBeGreaterThan(-1);
+		expect(m.init_impact).toEqual(50);
+		expect(m.sites_implemented).toEqual({});
 	});
 });
