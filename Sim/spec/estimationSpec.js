@@ -450,3 +450,96 @@ describe("Estimation: Agile, site:1, module:2, unequal workers", function()
         expect(Math.round(actual_effort_completed(GAME_DATA.gs.sites[0]))).toEqual(160);
     });
 });
+
+
+describe("Check schedule calculators ", function()
+{
+    it("Schedulecalculator", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(scheduleCalculator(gs)).toEqual(42640);
+    });
+    it("Sum tasks", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(sum_tasks(gs.sites[0])).toEqual(13440);
+    });
+    it("Actual effort completed in the game state", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(actual_effort_completed_gs()).toBeDefined();
+    });
+    it("Actual effort completed in site", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(actual_effort_completed(gs.sites[1])).toBeDefined();
+    });
+});
+
+describe("Private util funcs to estimation ", function()
+{
+    it("Remainder", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(remainder(15, 4)).toEqual(1);
+    });
+    it("Credited completed", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(credited_completed(gs.sites[0].modules[0].tasks[0])).toEqual(0);
+    });
+    it("Longest task", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect((longest_task(gs.sites[0].modules, 1)).task.name).toEqual("Implementation");
+    });
+    it("Longest module", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect((longest_module(gs.sites[0])).name).toEqual("Backend");
+    });
+    it("Hours for longest module", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(hours_for_longest_module(gs.sites[0])).toEqual(1260);
+    });
+    it("Hours for module", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(hours_for_module(gs.sites[0].modules[0])).toEqual(1260);
+    });
+    it("Completed hours for module", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(completed_hours_for_module(gs.sites[0].modules[0])).toEqual(0);
+    });
+    it("Hours for task", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(hours_for_task(gs.sites[0].modules[0], gs.sites[0].modules[0].tasks[0])).toEqual(189);
+    });
+    it("Hours for longest task", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(hours_for_longest_task(gs.sites[0].modules, 2)).toEqual(126);
+    });
+    it("Completed hours for task", function()
+    {
+        setupGame(sjs.Scene({w:1, h:1}), 1 );
+        var gs = GAME_DATA.gs;
+        expect(completed_hours_for_task(gs.sites[0].modules[0], gs.sites[0].modules[0].tasks[0])).toEqual(0);
+    });
+});
