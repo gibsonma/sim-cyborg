@@ -1,6 +1,6 @@
 {{#state.sites:i}}
 <div class="site_tile {{ statusClass(.) }}" data-name="{{name}}">
-    <p>{{name}} {{time_padder}}{{local_time}}:00 {{morale}}% Morale</p>
+    <p>{{name}} {{time_padder}}{{local_time}}:00 {{morale}}% Morale <span class="site_indicator {{ statusClass(.) }}"></span></p>
     <table class="status_table">
         <tr>
             <td>Name:</td>

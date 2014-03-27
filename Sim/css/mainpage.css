@@ -65,7 +65,7 @@ body {
 	vertical-align: middle;
 	width: 400px;
 	height: 500px;
-	background-color: rgba(121, 202, 100, 0.7);
+	background-color: rgba(121, 202, 100, 0.4);
 	border-radius: 5px 5px;
 	font-weight: bold;
 }
@@ -75,16 +75,40 @@ body {
 }
 
 .site_tile.schedule-behind {
-	background-color: rgba(200, 202, 100, 0.7);
+	background-color: rgba(200, 202, 100, 0.4);
 }
 
 .site_tile.schedule-very-behind {
-	background-color: rgba(214, 73, 73, 0.7);
+	background-color: rgba(214, 73, 73, 0.4);
 }
 
 #main_content,#game_state_box {
     background: rgba(0, 0, 0, .8);
 }
+
+.site_indicator {
+	position: relative;
+	top: 2px;
+	left: 5px;
+	display: inline-block;
+	border-radius: 50%;
+	width: 15px;
+	height: 15px;
+}
+
+.site_indicator.schedule-ok {
+	background-color: green;
+}
+
+.site_indicator.schedule-behind {
+	background-color: yellow;
+}
+
+.site_indicator.schedule-very-behind {
+	background-color: red;
+}
+
+
 
 .status_table {
     width: 100%;
