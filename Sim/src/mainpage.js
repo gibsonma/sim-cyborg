@@ -116,7 +116,8 @@ function renderTileview() {
                 statusClass: statusClass,
                 currentTask: currently_doing_which_task,
                 progress: progress_on_current_task,
-                current_total: total_of_current_task
+                current_total: total_of_current_task,
+                schedule_str: on_schedule_str
             }
         });
         var home = get_home_site(GAME_DATA.gs.sites);
@@ -407,10 +408,11 @@ function statusClass(site) {
     //        console.log(JSON.stringify(gs.sites, null, 3));
      //       GAME_DATA.ticker.pause();//Pause the game
         }
-        if (actually_completed >= expected_completed) site.state = "schedule-ok"
-        else site.state = "schedule-behind";
+        var difference = Math.round(actually_completed - expected_completed);
+        site.schedule = difference
     }
-    return site.state;
+    if (site.schedule > 0) return "schedule-ok"
+    else return "schedule-behind";
 }
 
 function statusClassModules(m){
@@ -441,4 +443,12 @@ function statusClassModules(m){
     else {
         return "schedule-behind"
     }
+}
+
+function on_schedule_str(site){
+    var gs = GAME_DATA.gs;
+    var weeks = Math.round(Math.abs(site.schedule/24/7));
+    if (site.schedule > 0) return site.name + " is " + weeks + " weeks ahead of schedule";
+    else if (site.schedule < 0) return site.name + " is " + weeks + " weeks behind schedule";
+    else return site.name + " is dead on schedule";
 }

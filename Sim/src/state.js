@@ -138,8 +138,8 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.problemCooldown = 0.005;
     this.home = home;
     this.local_time = 0;
-    this.last_state = "schedule-ok";
     this.morale = set_morale(home);
+    this.schedule = 0; // how far or behind a site is from the schedule
 }
 
 function Culture(influence){
