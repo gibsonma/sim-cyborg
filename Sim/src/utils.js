@@ -33,18 +33,11 @@ function number_assigned_workers(){
 }
 
 function check_if_completed(gs) {
-    var finished = true;
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
-        for (var j=0; j < site.modules.length; j++){
-            var module = site.modules[j];
-            for (var k=0; k < module.tasks.length; k++){
-                var task = module.tasks[k];
-                if(task.completed < task.actual_total) finished = false;
-            }
-        }
+        if (!site_complete(site)) return false;
     }
-    return finished;
+    return true;
 }
 
 function report(gs){
@@ -170,4 +163,15 @@ function total_of_current_task(module){
     var total = doing_task.total / GAME_DATA.gs.developer_effort / module.assigned / GAME_DATA.gs.developer_working_hours;
     if (doing_task.completed == doing_task.actual_total) return total;
     return total;
+}
+
+function site_complete(site){
+    for (var j=0; j < site.modules.length; j++){
+        var module = site.modules[j];
+        for (var k=0; k < module.tasks.length; k++){
+            var task = module.tasks[k];
+            if(task.completed < task.actual_total) return false;
+        }
+    }
+    return true;
 }

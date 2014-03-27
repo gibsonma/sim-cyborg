@@ -1,13 +1,12 @@
 var TEMPLATES = {};
 var scene, background, site_images, office;
 window.onload = function() {
-
-
     var game_height = window.innerHeight - 5;
     var game_width = window.innerWidth;
     scene = sjs.Scene({
         w: game_width,
-        h: game_height
+        h: game_height,
+        autoPause: false
     });
     site_images = ['img/EmptyOffice.jpeg', 'img/Office2.jpg', 'img/Office3.jpg'];
     // var exec_list = document.getElementById('exec_list');
@@ -397,6 +396,7 @@ function statusClass(site) {
     if(site.critical_problem === true) {
         return "schedule-very-behind";
     }        
+    if (site_complete(site)) return;
     if (gs.current_time % 24 == 0 && gs.current_time > 0){
         var actually_completed = actual_effort_completed(site);
 
@@ -411,7 +411,7 @@ function statusClass(site) {
         var difference = Math.round(actually_completed - expected_completed);
         site.schedule = difference
     }
-    if (site.schedule > 0) return "schedule-ok"
+    if (site.schedule >= 0) return "schedule-ok"
     else return "schedule-behind";
 }
 
@@ -446,8 +446,9 @@ function statusClassModules(m){
 }
 
 function on_schedule_str(site){
+    if (site_complete(site)) return site.name + " is finished";
     var gs = GAME_DATA.gs;
-    var weeks = Math.round(Math.abs(site.schedule/24/7));
+    var weeks = Math.round(Math.abs(site.schedule/(24*7)));
     if (site.schedule > 0) return site.name + " is " + weeks + " weeks ahead of schedule";
     else if (site.schedule < 0) return site.name + " is " + weeks + " weeks behind schedule";
     else return site.name + " is dead on schedule";
