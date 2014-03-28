@@ -65,9 +65,6 @@ function implementChosenIntervention(gs, intervention_name)
 	var chosen = getChosenIntervention(gs, intervention_name);
 	if(chosen == -1)return -1;
 	purchase_intervention(chosen);
-	GAME_DATA.ticker.pause()
-	vex.dialog.alert(chosen.name + " have been purchased!");
-	GAME_DATA.ticker.resume();
 	switch(chosen.name)//Values taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
 	{				   //High impact of 4 translates to a 0.4 reduction in problem occurance
 		case 'Face to face meetings':
@@ -109,9 +106,6 @@ function disregardChosenIntervention(gs, intervention_name)
 	var chosen = getChosenIntervention(gs, intervention_name);
 	if(chosen == -1)return -1;
 	disregard_intervention(chosen);
-	GAME_DATA.ticker.pause()
-	vex.dialog.alert("Intervention discarded!");
-	GAME_DATA.ticker.resume();
 }
 //Passed in an array of numbers, subtracts them from the corresponding percentages
 //to a minimum of 0.25
@@ -408,7 +402,8 @@ function varySiteMorale(game)
 function decreaseMorale(site, problem)
 {
 	var impact = problem.impact;
-	site.morale -= impact;
+	if(impact > 10)site.morale -= 10;
+	else site.morale -= impact;
 	if(site.morale <= 0)site.morale = 1;
 }
 
@@ -464,6 +459,7 @@ function showMoraleInterventions(gs, site)
 	vex.dialog.confirm({
 	  css: {'width':'100%'},
       message: '<p>' + m_interventions + '</p>', 
+	  buttons: [],
       callback: function(value) {
         GAME_DATA.ticker.resume();
         return m_interventions;
@@ -475,9 +471,6 @@ function implementChosenMoraleIntervention(game, morale_details)
 {
 	var chosenDictionary = parseDetails(game, morale_details);
 	purchaseMoraleIntervention(chosenDictionary["Morale I"], chosenDictionary["Site"]);
-	GAME_DATA.ticker.pause();
-	vex.dialog.alert(chosenDictionary["Morale I"].name + ' has been purchased in ' + chosenDictionary["Site"].name);
-	GAME_DATA.ticker.resume();
 }
 //Parses the input from a button press, contains both the site and thw name of the intervention
 function parseDetails(game, morale_details)
