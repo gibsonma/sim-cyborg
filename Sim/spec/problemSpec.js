@@ -277,4 +277,8 @@ describe("Moral Interventions", function()
 			expect(result["Site"]).toEqual(undefined);
 		});
 	});
+	describe("retrieve_current_morale", function()
+	{
+		//TODO
+	});
 });

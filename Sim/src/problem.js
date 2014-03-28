@@ -441,11 +441,25 @@ function set_morale(is_home)
 	if(is_home)return base_morale;
 	return vary(base_morale);
 }
+//Takes a site and looks at its moral. If its not asian or russian it reports accurately else it returns that everything is okay
+function retrieve_current_morale(site)
+{
+	var morale = site.morale;
+	var responses = ["Great", "Okay", "Bad", "Terrible"];
+	if(site.culture.influence == "asian" || site.culture.influence == "russian")return responses[0];
+	if(site.morale >= 70)return responses[0];
+	else if(site.morale >= 50)return responses[1];
+	else if(site.morale >= 30)return responses[2];
+	else return responses[3];
+}
 //Displays a list of morale interventions the player can use to improve the morale of the site passed in
 function showMoraleInterventions(gs, site)
 {
 	GAME_DATA.ticker.pause();
-	var m_interventions = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td class="itd">Cost</td><td class="itd">Action</td></tr>';
+	var response = retrieve_current_morale(site);
+	var m_interventions = '<h2>Site Morale is ' + response + '</h2>';
+	m_interventions += '<h3>Below are some things to raise morale: </h3>';
+	m_interventions += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td class="itd">Cost</td><td class="itd">Action</td></tr>';
 	for(var i = 0; i < gs.morale_interventions.length; i++)
 	{
 		var item = gs.morale_interventions[i];
