@@ -15,7 +15,8 @@ function disregard_intervention(chosen)
 function displayInterventions(gs)
 {
 	GAME_DATA.ticker.pause();
-	var interventions = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
+	var interventions = '<h3> Below are some things you can purchase to try and prevent certain problems from happening again in the future. They are applied to all sites and cost you a certain amount every day to keep them implemented </h3>'; 
+	interventions += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
 	for(var i = 0; i < gs.interventions.length; i++)
 	{
 		var item = gs.interventions[i];
@@ -145,26 +146,9 @@ function intervention(gs)
             var problem = sites[i].problems[0];
 			sites[i].past_problems.push([problem,gs.time["Days Passed"]]);
 			sites[i].problems.pop();
-			var interventions = get_applicable_interventions(gs, problem);
-			var buttonList = '';
 			var game = gs;
-			var buttonList = '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Cost</td><td class="itd">Daily Cost</td><td class ="itd">Buy</td></tr>';
-			for(var i = 0; i < interventions.length; i++)
-			{//Generates the list of buttons
-				var item = interventions[i];
-				if(item.is_implemented)
-				{
-					buttonList += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Sell ' + item.name+'</button></td>'
-				}
-				else 
-				{
-					buttonList += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention">Buy ' + item.name+'</button></td>'
-				}
-				buttonList += '</tr>';
-			}
-			buttonList += '</table>';
 			vex.dialog.confirm({
-                message: '<p>'+problem.name+' in '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, below are some options you can purchase to try and prevent this from happening again in the future</p>' + buttonList,
+                message: '<p>'+problem.name+' in '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, go to Buy Interventions to purchase things to try and prevent this from happening again in the future</p>',
                 css: {'width':'100%'},
 				buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
@@ -251,14 +235,15 @@ function problemSim(gs)
     var fail = dGlobal/(1+dGlobal);
 
     var probCD = gs.sites[seed].problemCooldown;
-    var failC = fail*PROBLEM_CONSTANT*probCD;
+    var failC = fail*PROBLEM_CONSTANT*probCD*time_since_last_problem;
     gs.sites[seed].problemCooldown += 0.005;
-
+	
     var failure_seed = Math.random();
     //console.log(failC +" vs " + failure_seed);
     if(failure_seed < failC)
     {
-        gs.sites[seed].problemCooldown = 0.005;
+        time_since_last_problem = 0.001;
+		gs.sites[seed].problemCooldown = 0.005;
         console.log("A problem has been encountered in the "+ site + " office.")
 
         var problemSeed = Math.floor(Math.random() * 7)+1; //choose one of 7 problems
@@ -350,7 +335,7 @@ function problemSim(gs)
                 console.log("What's yer prob");
         }
     }
-	
+	time_since_last_problem += .001;
     //console.log(failC);
     return failC;
 
