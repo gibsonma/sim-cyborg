@@ -10,8 +10,11 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
-var MORAL_MOD;//Represents how quickly a morale interventions impact errodes each time its used, the closer to 0, the quicker it erodes
-var days_since_moral_warning = 14;//Tracks how many days have passed since the user was last warned about a site's low morale to prevent spamming the user with warnings. Starts at 7 to allow for low morale to be reported during the simulation's first week
+var MORALE_MOD;//Represents how quickly a morale interventions impact errodes each time its used, the closer to 0, the quicker it erodes
+var MIN_MORALE;//Lowest morale a site can have
+var MAX_MORALE;//Highest morale a site can have
+var days_since_morale_warning = 14;//Tracks how many days have passed since the user was last warned about a site's low morale to prevent spamming the user with warnings. Starts at 7 to allow for low morale to be reported during the simulation's first week
+var chance_to_decrease_morale = 0.0;//Chance that morale will decrease, value rises when problems are ignored
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
 
 //Timezones - dictate when sites work. First index is start of work day, second index is end
@@ -113,7 +116,9 @@ function load_globals(gs){
         gs.interventions = obj.interventions;	
         gs.morale_interventions = obj.morale_interventions;
         PROBLEM_CONSTANT = obj.problem_constant;
-        MORAL_MOD = obj.morale_modifier*gs.player.empathy;
+        MORALE_MOD = obj.morale_modifier*gs.player.empathy;
+		MIN_MORALE = obj.min_morale;
+		MAX_MORALE = obj.max_morale;
     });
 }
 function Player(){

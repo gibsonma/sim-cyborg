@@ -21,7 +21,7 @@ function displayInterventions(gs)
 		var item = gs.interventions[i];
 		if(item.is_implemented)
 		{
-			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Sell ' + item.name+'</button></td>'
+			interventions += '<tr class="itr"><td class="itd">'+item.name+'</td><td class="itd">$'+item.init_cost+'</td><td class="itd">$'+item.daily_cost+'</td><td class="itd"><button id="intervention-sell">Stop Paying for ' + item.name+'</button></td>'
 		}
 		else 
 		{
@@ -178,6 +178,7 @@ function intervention(gs)
                     if(!value)
 					{
 						GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
+						chance_to_decrease_morale += 0.2;
 						return console.log("Problem Not Fixed");
 					}
 					else
@@ -185,6 +186,7 @@ function intervention(gs)
 						decreaseMorale(sites[index],problem);//Decrease Site morale
 						new_transaction(-problem.cost);//Deduct cost of fixing problem
 						if(gs.sites[index].modules[problem.module].tasks[problem.taskNum] != undefined)gs.sites[index].modules[problem.module].tasks[problem.taskNum].actual_total -= problem.reduction_in_total;//Undo the changes that the problem did on the task
+						chance_to_decrease_morale -= 0.1;
 						GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
 						return console.log("Problem Fixed");
 					}
@@ -380,20 +382,20 @@ function encounteredProblems(site)
 
 //Morale Related code below
 
-//Goes through each site and randomly decides if it's morale will change. If so then the site's morale will go up or down by 1, representing the day to day changes in the office
+//Goes through each site and checks its schedule. If it is on/ahead of schedule morale will go up, else it will go down
 function varySiteMorale(game)
 {
 	var sites = game.sites;
-	var rand1, rand2;
+	var rand1;
 	for(var i = 0; i < sites.length; i++)
 	{
-		rand2 = Math.random();
-		if(rand2 >= 0.5)sites[i].morale++;
-		else if(sites[i].morale >= 2)sites[i].morale--;
-		if(sites[i].morale <= 20 && days_since_moral_warning >= 14)
+		rand1 = Math.random();
+		if(rand1 > chance_to_decrease_morale && sites[i].schedule > 0 && sites[i].morale < MAX_MORALE)sites[i].morale++;
+		else if(sites[i].morale > MIN_MORALE)sites[i].morale--;
+		if(sites[i].morale <= MIN_MORALE && days_since_morale_warning >= 14)
 		{
 			vex.dialog.alert("Morale in " + sites[i].name + " is very low, increase it before progress grinds to a halt!");
-			days_since_moral_warning = 0;
+			days_since_morale_warning = 0;
 		}
 	}
 }
@@ -404,7 +406,7 @@ function decreaseMorale(site, problem)
 	var impact = problem.impact;
 	if(impact > 10)site.morale -= 10;
 	else site.morale -= impact;
-	if(site.morale <= 0)site.morale = 1;
+	if(site.morale <= MIN_MORALE)site.morale = MIN_MORALE;
 }
 
 //Takes a morale intervention and a site name. It then works out the actual impact a morale intervention will have on that site, as the more times that it is implemented at a site, the less effective it becomes. In addition, if a site's morale is above 100, impacts have a lessened effect
@@ -414,7 +416,7 @@ function get_morale_impact(m_intervention, site)
 	var num_implemented = m_intervention.sites_implemented[site.name];
 	if(site.morale > 100)num_implemented++;//If a site's morale is > 100 then the impact is smaller
 	if(site.morale < 20 && num_implemented > 0)num_implemented--;//If a site's morale is very low then an intervention will have an inflated effect
-	var modifier = num_implemented * MORAL_MOD;
+	var modifier = num_implemented * MORALE_MOD;
 	if(modifier > 0)actual_impact -= modifier;
 	if(actual_impact < 2)actual_impact = 2;
 	Math.floor(actual_impact);
@@ -431,6 +433,7 @@ function purchaseMoraleIntervention(morale_i, site)
 {
 	update_morale_dictionary(morale_i, site.name);
 	site.morale += get_morale_impact(morale_i, site);
+	if(site.morale > 120)site.morale = 120;
 	new_transaction(-morale_i.cost);
 }
 

@@ -27,6 +27,8 @@
     "developer_working_hours": 8,
 	"problem_constant":0.005,
 	"morale_modifier":5.0,
+	"min_morale":20,
+	"max_morale":150,
 	"interventions": [
 		{"name":"Face to face meetings","init_cost": 5000, "daily_cost":150, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Video Conferencing","init_cost": 10000, "daily_cost":300, "is_implemented":false, "affects":[1,0,0,0,0,0,0]},
@@ -39,11 +41,11 @@
 		{"name":"Exchange Program", "init_cost": 10000, "daily_cost":350, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
 	],
 	"morale_interventions": [
-		{"name":"Buy Pizza","cost": 200, "init_impact":5, "sites_implemented":{}},
-		{"name":"Hold Office Party","cost": 600, "init_impact":15, "sites_implemented":{}},
-		{"name":"Set Up Morale Classes","cost": 1000, "init_impact":10, "sites_implemented":{}},
-		{"name":"Organise Fun Office Excursion","cost": 2000, "init_impact":20, "sites_implemented":{}},
-		{"name":"Restock Staff Kitchen","cost": 200, "init_impact":5, "sites_implemented":{}}
+		{"name":"Buy Pizza","cost": 200, "init_impact":10, "sites_implemented":{}},
+		{"name":"Hold Office Party","cost": 600, "init_impact":25, "sites_implemented":{}},
+		{"name":"Set Up Morale Classes","cost": 1000, "init_impact":15, "sites_implemented":{}},
+		{"name":"Organise Fun Office Excursion","cost": 2000, "init_impact":30, "sites_implemented":{}},
+		{"name":"Restock Staff Kitchen","cost": 200, "init_impact":10, "sites_implemented":{}}
 	]
 }
 
