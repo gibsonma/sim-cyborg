@@ -124,11 +124,12 @@ describe("Problem Simulator", function()
 {
 	it("checks to make sure the fail value used to calculate problems is valid", function()
 	{
+			load_globals(game);
 			for(var i = 0; i < 10; i++)
 			{
 				var fail = problemSim(game);
 			}
-		expect(fail).toBeLessThan(1);
+		expect(fail).toBeLessThan(1.0);
 		expect(fail).toBeGreaterThan(-0.1);
 
 	});

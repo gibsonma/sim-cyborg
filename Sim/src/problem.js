@@ -236,14 +236,14 @@ function problemSim(gs)
 
     var probCD = gs.sites[seed].problemCooldown;
     var failC = fail*PROBLEM_CONSTANT*probCD*time_since_last_problem;
-    gs.sites[seed].problemCooldown += 0.005;
+    gs.sites[seed].problemCooldown += PROBLEM_COOLDOWN;
 	
     var failure_seed = Math.random();
-    //console.log(failC +" vs " + failure_seed);
+    console.log(failC +" vs " + failure_seed);
     if(failure_seed < failC)
     {
         time_since_last_problem = 0.001;
-		gs.sites[seed].problemCooldown = 0.005;
+		gs.sites[seed].problemCooldown = PROBLEM_COOLDOWN;
         console.log("A problem has been encountered in the "+ site + " office.")
 
         var problemSeed = Math.floor(Math.random() * 7)+1; //choose one of 7 problems

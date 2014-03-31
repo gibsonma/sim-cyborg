@@ -7,9 +7,11 @@ var TICKS_PER_UNIT_TIME = 1;       // Assuming we don't want the game's time to 
 // only update game time every X ticks
 var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen since last time increment
 
+
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
+var PROBLEM_COOLDOWN = 0.0025;
 var MORALE_MOD;//Represents how quickly a morale interventions impact errodes each time its used, the closer to 0, the quicker it erodes
 var MIN_MORALE;//Lowest morale a site can have
 var MAX_MORALE;//Highest morale a site can have
@@ -120,6 +122,7 @@ function load_globals(gs){
         MORALE_MOD = obj.morale_modifier*gs.player.empathy;
 		MIN_MORALE = obj.min_morale;
 		MAX_MORALE = obj.max_morale;
+        PROBLEM_COOLDOWN = obj.problem_site_cooldown;
     });
 }
 function Player(){
@@ -141,7 +144,7 @@ function Site(name, culture_modifier, dev, timezone, home){
     this.past_problems = [];
     this.critical_problem = false;
     this.timezone = timezone;
-    this.problemCooldown = 0.005;
+    this.problemCooldown = PROBLEM_COOLDOWN;
     this.home = home;
     this.local_time = 0;
     this.morale = set_morale(home);

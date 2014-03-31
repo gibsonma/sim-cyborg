@@ -20,6 +20,7 @@
         "Bangalore": 3,
         "Dublin": 0
     },
+    "problem_site_cooldown" : 0.0025,
     "revenue": 1000000,
     "starting_capital": 300000,
     "developer_effort": 4,
