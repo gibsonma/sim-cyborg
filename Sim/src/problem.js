@@ -235,14 +235,13 @@ function problemSim(gs)
     var fail = dGlobal/(1+dGlobal);
 
     var probCD = gs.sites[seed].problemCooldown;
-    var failC = fail*PROBLEM_CONSTANT*probCD*time_since_last_problem;
+    var failC = fail*PROBLEM_CONSTANT*probCD;
     gs.sites[seed].problemCooldown += PROBLEM_COOLDOWN;
 	
     var failure_seed = Math.random();
  //   console.log(failC +" vs " + failure_seed);
     if(failure_seed < failC)
     {
-        time_since_last_problem = 0.001;
 		gs.sites[seed].problemCooldown = PROBLEM_COOLDOWN;
         console.log("A problem has been encountered in the "+ site + " office.")
 
@@ -335,7 +334,6 @@ function problemSim(gs)
                 console.log("What's yer prob");
         }
     }
-	time_since_last_problem += .001;
     //console.log(failC);
     return failC;
 

@@ -42,20 +42,20 @@ Open localhost:3000/SpecRunner.html in a browser and the results of all present 
 * Management Style: This is done via a series of "stats" that are currently set to a predefined value (1), which will be replaced by a front-end and an allocation system in the final release. Each stat has an impact on the game. Sensitivity reduces potential cultural issues, perception reduces the 'immediate' cost of problems, empathy helps workplace morale, charisma improves productivity, intelligence improves revenue, Assertiveness improves productivity (differently to charisma, effort vs rate), and Luck increases the chances of unspecified "good things" happening, and reduces the chances of "bad things" happening - actual events tbd. A potential example is: "A leading tech website does an article on your product, the ensuing hype gives you a bonus to revenue and morale". All of these stat values can be viewed on the main menu once a simulation has started - this is done by selected "View Character Sheet".
 
 ###Master Config:
-Edit this at /Sim/Data/config_file.json
+Edit this at /Sim/data/config_file.json
 Values & Definitions for Global, Temporal and Cultural Distance were taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
-* Global Distances: Defines geographical distance between home site and other sites.
-* Temporal Distances: Defines time difference between home site and other sites.
-* Cultural Distances: Defines cultural differences between home site and other sites.
-* Revenue: Revenue per year.
-* Starting Capital: The amount of money the player starts with.
-* Developer Effort: How many effort points a developer delivers per working hour
-* Developer Rate: The cost per hour a developer incurs.
+* Global Distances: Defines geographical distance between home site and other sites, a low number indicates that the distance betwen the home site and a given site is small.
+* Temporal Distances: Defines time difference between home site and other sites, a low number indicates that the timzones of the home site and a given site are the same or overlap.
+* Cultural Distances: Defines cultural differences between home site and other sites, a low number indicates that the culture of the home site and a given site are similar.
+* Revenue: Revenue per year in dollars($).
+* Starting Capital: The amount of money the player starts with in dollars($).
+* Developer Effort: How many effort points a developer delivers per working hour.
+* Developer Rate: The cost per hour a developer incurs in dollars($).
 * Developer Working Hours: Hours a day the developer will work.
 * Problem Constant: Constant value for problem simulator, used to tweak difficulty, decrease to reduce frequenecy of problems.
 * Morale Modifer: Determines how quickly a moral intervention's impact errodes after repeated use. The higher the value, the quicker the errosion.
-* Min Morale: Determines the lowest a site's morale can go
-* Max Morale: Determines the highest a site's morale can go
+* Min Morale: Determines the lowest value that a site's morale can be.
+* Max Morale: Determines the highest value that a site's morale can be
 * Interventions: Initial and Daily cost for interventions, and the tasks they will affect. The numbers 0-6 represent the 7 stages of the product's lifecycle. Is_Implemented is the initial state of the intervention, if the user has paid for it, or simply starts with it.
 * Morale Interventions: Details for the morale interventions that the player can buy to boost a site's morale
 * Problem Cooldown: use a lower number for this to decrease frequency of problems experienced in the game, this adds an increasing chance of problems occuring as time advances, which then resets once a problem happens

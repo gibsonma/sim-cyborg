@@ -53,28 +53,36 @@ window.onload = function() {
             TEMPLATES['popupView'] = template;
         });
         $('.site_tile').hide();
-        if (TICKS_PER_UNIT_TIME <= 2) {
-            $('#time_faster').prop('disabled', true);
-        };
-        updateSpeedLabel();
+        updateSpeedLabel(-1);
         $('#time_slower').click(function() {
-            TICKS_PER_UNIT_TIME += 1;
-            $('#time_faster').prop('disabled', false);
-            updateSpeedLabel();
+            updateSpeedLabel(1);
         });
         $('#time_faster').click(function() {
-            if (TICKS_PER_UNIT_TIME === 3) {
-                $('#time_faster').prop('disabled', true);
-            };
-            TICKS_PER_UNIT_TIME -= 1;
-            updateSpeedLabel();
+            updateSpeedLabel(-1);
         });
         $('#char-Sheet').click(function(){
             displayCharSheet(GAME_DATA.gs);
             });
-
     });
 };
+//Passed in a number, +/- add that onto TICKS_PER_UNIT_TIME
+//Recalculate speed and enable/disable any necessary buttons
+function updateSpeedLabel(number_change) {
+	TICKS_PER_UNIT_TIME += number_change;
+	if(TICKS_PER_UNIT_TIME <= 0)TICKS_PER_UNIT_TIME = 1;	
+	if(TICKS_PER_UNIT_TIME >= 20)
+	{
+		$('#time_slower').prop('disabled', true);
+		TICKS_PER_UNIT_TIME = 20;
+	}
+	else $('#time_slower').prop('disabled', false);
+    var speed = 1 / (TICKS_PER_UNIT_TIME);
+    speed *= 100;
+    speed = Math.floor(speed);
+	if(speed >= 100)$('#time_faster').prop('disabled', true);
+	else $('#time_faster').prop('disabled', false);
+    $('#time_speed_label').text(speed);
+} 
 
 //Tracks when the player selects an intervention to buy
 $('body').on('click', '#intervention', function(){ 
@@ -92,14 +100,6 @@ $('body').on('click', '#m_intervention', function(){
     implementChosenMoraleIntervention(GAME_DATA.gs, tmp);
 } );
 
-
-
-function updateSpeedLabel() {
-    var speed = 1 / (TICKS_PER_UNIT_TIME);
-    speed *= 100;
-    speed = Math.floor(speed);
-    $('#time_speed_label').text(speed);
-} 
 
 var tileView;
 //Iterate through sites and create an array which corresponds to each site's local time
