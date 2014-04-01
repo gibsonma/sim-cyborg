@@ -35,6 +35,7 @@ function displayInterventions(gs)
 	vex.dialog.confirm({
 	  css: {'width':'100%'},
       message: '<p>' + interventions + '</p>', 
+	  buttons: [],
       callback: function(value) {
         GAME_DATA.ticker.resume();
         return interventions;
@@ -148,7 +149,7 @@ function intervention(gs)
 			sites[i].problems.pop();
 			var game = gs;
 			vex.dialog.confirm({
-                message: '<p>'+problem.name+' in '+sites[index].name+'. It will cost $' + problem.cost + ' to correct, go to Buy Interventions to purchase things to try and prevent this from happening again in the future</p>',
+                message: '<p>'+problem.name+' in '+sites[index].name+'. It will cost $' + problem.cost + ' to correct.</p><p>Go to "Buy Interventions" to purchase/implement different policies or equipment to try and prevent this problem from happening again in the future</p>',
                 css: {'width':'100%'},
 				buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
@@ -444,7 +445,7 @@ function showMoraleInterventions(gs, site)
 	GAME_DATA.ticker.pause();
 	var response = retrieve_current_morale(site);
 	var m_interventions = '<h2>Site Morale is ' + response + '</h2>';
-	m_interventions += '<h3>Below are some things to raise morale: </h3>';
+	m_interventions += '<h3>Below are some things you can do to raise site morale: </h3>';
 	m_interventions += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td class="itd">Cost</td><td class="itd">Action</td></tr>';
 	for(var i = 0; i < gs.morale_interventions.length; i++)
 	{
