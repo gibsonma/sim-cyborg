@@ -377,7 +377,7 @@ function varySiteMorale(game)
 		rand1 = Math.random();
 		if(rand1 > chance_to_decrease_morale && sites[i].schedule > 0 && sites[i].morale < MAX_MORALE)sites[i].morale++;
 		else if(sites[i].morale > MIN_MORALE)sites[i].morale--;
-		if(sites[i].morale <= MIN_MORALE && days_since_morale_warning >= 14)
+		if(sites[i].morale <= MIN_MORALE && days_since_morale_warning >= 30)
 		{
 			vex.dialog.alert("Morale in " + sites[i].name + " is very low, increase it before progress grinds to a halt!");
 			days_since_morale_warning = 0;

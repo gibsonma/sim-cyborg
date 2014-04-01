@@ -174,11 +174,11 @@ describe("Moral Interventions", function()
 			decreaseMorale(site, problem);
 			expect(site.morale).toEqual(40);
 		});
-		it("Never reduces a site's morale to below 1", function()
+		it("Never reduces a site's morale to below the value of MIN_MORALE", function()
 		{
-			site.morale = 10;
+			site.morale = 21;
 			decreaseMorale(site, problem);
-			expect(site.morale).toEqual(1);
+			expect(site.morale).toEqual(MIN_MORALE);
 		});
 	});
 	describe("get_morale_impact", function()
