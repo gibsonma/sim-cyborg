@@ -139,7 +139,7 @@ function intervention(gs)
 	sites = gs.sites;	
     for(var i = 0; i < sites.length; i++)
     {
-		if(sites[i].problems.length > 0)
+		if(sites[i].problems.length > 0 && !site_complete(sites[i]))
         {
 			GAME_DATA.ticker.pause();//Pause the game
             var index = i;//Need to record index for use in callback
@@ -239,7 +239,7 @@ function problemSim(gs)
     gs.sites[seed].problemCooldown += PROBLEM_COOLDOWN;
 	
     var failure_seed = Math.random();
-    console.log(failC +" vs " + failure_seed);
+ //   console.log(failC +" vs " + failure_seed);
     if(failure_seed < failC)
     {
         time_since_last_problem = 0.001;
