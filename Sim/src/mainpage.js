@@ -27,20 +27,20 @@ window.onload = function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
             renderTileview();
-            $('#char-Sheet').toggle();
-            $('#options').toggle();
+            $('#char-Sheet').show();
+            $('#options').show();
         });
         $('#scenario_2').click(function() {
             setupGame(scene,2);
             renderTileview();
-            $('#char-Sheet').toggle();
-            $('#options').toggle();
+            $('#char-Sheet').show();
+            $('#options').show();
         });
         $('#scenario_3').click(function() {
             setupGame(scene,3);
             renderTileview();
-            $('#char-Sheet').toggle();
-            $('#options').toggle();
+            $('#char-Sheet').show();
+            $('#options').show();
         });
         $('#options').click(function() {
             if(GAME_DATA.ticker)displayInterventions(GAME_DATA.gs);
