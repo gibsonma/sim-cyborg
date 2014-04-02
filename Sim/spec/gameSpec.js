@@ -147,7 +147,17 @@ describe("Displaying Scenario Values", function()
 		expect(getSiteWorkers).toHaveBeenCalled();
 	});
 });
+describe("Checking sprites update properly", function()
+{
+	var game = new GameState(1);
+	load_globals(game);
+	it("checks if a sprite morale check return proper morale",function()
+	{
+		var sprite = update_worker_images(game, 1);
+		expect(sprite).not.toBe(null);
+	});
 
+});
 describe("Setting the local times", function()
 {
 	var game = new GameState(1);
