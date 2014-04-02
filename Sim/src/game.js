@@ -83,6 +83,7 @@ function simpleTick(ticker)
         incrementTime(GAME_DATA.gs);
         display_game_time(GAME_DATA.gs);
         display_gold(GAME_DATA.gs);
+        update_worker_images(GAME_DATA.gs, GAME_DATA.current_site);
         TICKS_PASSED = 0;
 
         if (GAME_DATA.gs.current_time % 24 == 0){
@@ -95,6 +96,35 @@ function simpleTick(ticker)
         }
     }
     update(GAME_DATA.gs);
+}
+
+function update_worker_images(gs, current_site)
+{
+    var morale_level = retrieve_current_morale(gs.sites[current_site])
+    var morale_class = "neutral"
+    switch (morale_level) {
+        case "Great":
+            morale_class = "happy";
+            break;
+        case "Good":
+            morale_class = "neutral";
+            break;
+        case "Okay":
+            morale_class = "worried";
+            break;
+        case "Bad":
+            morale_class = "sad";
+            break;
+        case "Terrible":
+            morale_class = "angry";
+            break;
+    }
+
+    if ($('.workerImages>img.' + morale_class).is(':hidden')) {
+        $('.workerImages>img:not(.' + morale_class + ')').hide();
+        $('.workerImages>img.' + morale_class).show();
+    };
+    
 }
 
 function display_gold(gs){

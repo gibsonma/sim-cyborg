@@ -41,11 +41,24 @@ body {
 	top: 50%;
 }
 
+#time_controls {
+	position: relative;
+	display: inline-block;
+}
 #time_speed_label {
 	display: inline-block;
 }
 #time_speed_label:after {
 	content: "%";
+}
+
+.workerImages {
+	position: absolute;
+	left: -236px;
+	bottom: -38px;
+}
+.workerImages>img {
+	display: none;
 }
 .itable, .itr, .itd {
 	border: 1px #000 solid;

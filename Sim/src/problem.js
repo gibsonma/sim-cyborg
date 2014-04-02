@@ -432,12 +432,13 @@ function set_morale(is_home)
 function retrieve_current_morale(site)
 {
 	var morale = site.morale;
-	var responses = ["Great", "Okay", "Bad", "Terrible"];
+	var responses = ["Great", "Good", "Okay", "Bad", "Terrible"];
 	if(site.culture.influence == "asian" || site.culture.influence == "russian")return responses[0];
-	if(site.morale >= 70)return responses[0];
-	else if(site.morale >= 50)return responses[1];
-	else if(site.morale >= 30)return responses[2];
-	else return responses[3];
+	if(site.morale >= 80)return responses[0];
+	else if(site.morale >= 60)return responses[1];
+	else if(site.morale >= 40)return responses[2];
+	else if(site.morale >= 20)return responses[3];
+	else return responses[4];
 }
 //Displays a list of morale interventions the player can use to improve the morale of the site passed in
 function showMoraleInterventions(gs, site)

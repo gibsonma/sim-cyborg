@@ -200,6 +200,7 @@ function renderTileview() {
                 office.transformOrigin(0, 0);
                 office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
                 office.update();
+                GAME_DATA.current_site = i;
             });
         });
 
