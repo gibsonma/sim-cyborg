@@ -125,6 +125,7 @@ function update_worker_images(gs, current_site)
         $('.workerImages>img.' + morale_class).show();
     };
     
+    return morale_class;
 }
 
 function display_gold(gs){
