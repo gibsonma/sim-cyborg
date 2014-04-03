@@ -49,6 +49,7 @@ function setupGame(scene, setting)
     GAME_DATA.ticker.run();
     displayScenarioValues(setting);
     setLocalTime(GAME_DATA.gs.sites, get_home_site(GAME_DATA.gs.sites));
+    if ($("#report").length != 0)$("#report").remove();
 }
 
 //The home site's time is known to be 0:00 at the start of the simulation. Then, going through each site and comparing their timezone to the home sites, each site's local time can be found and set
@@ -176,6 +177,12 @@ function display_final_score(gs){
     html += "</table>";
     vex.defaultOptions.overlayClosesOnClick = false;
     vex.dialog.alert(html);
+    if ($("#report").length == 0){
+        $("#dialog_box_controls").append("<button id=\"report\">End of game report</button>");
+        $('#report').click(function() {
+            display_final_score(GAME_DATA.gs);
+        });
+    }
 }
 
 var tileView;
@@ -187,7 +194,7 @@ function update_tileview(gs) {
 }
 
 function display_game_time(gs){
-	var daysRemaining = calculate_days_remaining(gs);
+    var daysRemaining = calculate_days_remaining(gs);
     if (daysRemaining < 0) {
         daysRemaining = "0 (Overdue!)";
     }
@@ -215,11 +222,11 @@ function calculate_days_remaining(gs) {
 function update(gs)
 {
     problemSim(gs);
-	intervention(gs);
+    intervention(gs);
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task
-         * * once every other module is on the same level (has the same number of tasks done) */
+        * * once every other module is on the same level (has the same number of tasks done) */
         var lowest_lifecycle = module_lifecycle_stage(site);
         if (should_be_working(site, gs) && lowest_lifecycle != -1){
             for (var j=0; j < site.modules.length; j++){
