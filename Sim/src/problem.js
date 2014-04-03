@@ -376,7 +376,7 @@ function varySiteMorale(game)
 		rand1 = Math.random();
 		if(rand1 > chance_to_decrease_morale && sites[i].schedule > 0 && sites[i].morale < MAX_MORALE)sites[i].morale++;
 		else if(sites[i].morale > MIN_MORALE)sites[i].morale--;
-		if(sites[i].morale <= MIN_MORALE && days_since_morale_warning >= 30)
+		if(sites[i].morale <= MIN_MORALE && days_since_morale_warning >= 30 && sites[i].culture.influence != "asian" && sites[i].culture.influence != "russian")
 		{
 			vex.dialog.alert("Morale in " + sites[i].name + " is very low, increase it before progress grinds to a halt!");
 			days_since_morale_warning = 0;
@@ -434,10 +434,10 @@ function retrieve_current_morale(site)
 	var morale = site.morale;
 	var responses = ["Great", "Good", "Okay", "Bad", "Terrible"];
 	if(site.culture.influence == "asian" || site.culture.influence == "russian")return responses[0];
-	if(site.morale >= 80)return responses[0];
-	else if(site.morale >= 60)return responses[1];
-	else if(site.morale >= 40)return responses[2];
-	else if(site.morale >= 20)return responses[3];
+	if(site.morale >= 90)return responses[0];
+	else if(site.morale >= 70)return responses[1];
+	else if(site.morale >= 50)return responses[2];
+	else if(site.morale >= 30)return responses[3];
 	else return responses[4];
 }
 //Displays a list of morale interventions the player can use to improve the morale of the site passed in
