@@ -79,7 +79,7 @@ function updateSpeedLabel(number_change) {
     var speed = 1 / (TICKS_PER_UNIT_TIME);
     speed *= 100;
     speed = Math.floor(speed);
-	if(speed >= 100)$('#time_faster').prop('disabled', true);
+	if (speed >= 100)$('#time_faster').prop('disabled', true);
 	else $('#time_faster').prop('disabled', false);
     $('#time_speed_label').text(speed);
 } 
@@ -419,7 +419,8 @@ function statusClass(site) {
 function on_schedule_str(site){
     if (site_complete(site)) return site.name + " is finished";
     var gs = GAME_DATA.gs;
-    var weeks = Math.round(Math.abs(site.schedule/(24*7)));
+    var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
+    var weeks = Math.round(Math.abs(site.schedule/(7*effort_per_day)));
     if (site.schedule > 0) return site.name + " is " + weeks + " weeks ahead of schedule";
     else if (site.schedule < 0) return site.name + " is " + weeks + " weeks behind schedule";
     else return site.name + " is dead on schedule";
