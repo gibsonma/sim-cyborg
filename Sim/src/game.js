@@ -161,18 +161,19 @@ function incrementLocalTimes(gs)
 function display_final_score(gs){
     var stats = new report(gs);
     var html = "<h2>End of Game Report</h2>";
-    html += "<h3>Final score: " + Math.round(stats.final_score) +" points</p>";
-    html += "<p>Expected project length: " + stats.expected_months_str + "</p>";
-    html += "<p>Actual Project length: " + stats.months_str + "</p>";
-    html += "<p>You have $" + Math.round(gs.capital*10)/10 + " left</p>";
-    html += "<p>You started the game with: $" + gs.starting_capital + "</p>";
-    html += "<p>You have " + number_assigned_workers() + " workers</p>";
+    html += "<table id=\"end_of_game_table\">";
+    html += tabled("Final score:", Math.round(stats.final_score));
+    html += tabled("Expected project length:",  stats.expected_months_str);
+    html += tabled("Actual project length:",  stats.months_str);
+    html += tabled("Starting capital:", "$" + gs.starting_capital);
+    html += tabled("Capital reamining",  "$" + Math.round(gs.capital*10)/10);
+    html += tabled("Total workers ", number_assigned_workers());
     html += "<br>";
-    html += "<p>Expected expenditure: $" + stats.expected_expenditure+"</p>";
-    html += "<p>Actual expenditure: $" + stats.actual_expenditure+"</p>";
-    html += "<p>Expected revenue: $" + stats.expected_revenue+"</p>";
-    html += "<p>Actual revenue: $" + stats.actual_revenue+"</p>";
-    html += "<br>";
+    html += tabled("Expected expenditure: ", "$" + stats.expected_expenditure);
+    html += tabled("Actual expenditure: ", "$" + stats.actual_expenditure);
+    html += tabled("Expected revenue: ", "$" + stats.expected_revenue);
+    html += tabled("Actual revenue: ", "$" + stats.actual_revenue);
+    html += "</table>";
     vex.dialog.alert(html);
 }
 

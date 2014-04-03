@@ -175,3 +175,12 @@ function site_complete(site){
     }
     return true;
 }
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function tabled(left, right){
+    return "<tr><td>"+left+"</td><td>"+numberWithCommas(right)+"</td></tr>";
+}
+

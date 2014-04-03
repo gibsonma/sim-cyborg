@@ -190,4 +190,14 @@ describe("module_lifecycle_stage", function()
     });
 });
 
-
+describe("Pretty print", function()
+{
+    it("Add commas to thousands", function()
+    {
+        expect(numberWithCommas(3000000)).toEqual("3,000,000");
+    });
+    it("Format tables", function()
+    {
+        expect(tabled("hi","bye")).toEqual("<tr><td>hi</td><td>bye</td></tr>");
+    });
+});
