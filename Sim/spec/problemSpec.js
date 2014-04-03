@@ -280,6 +280,44 @@ describe("Moral Interventions", function()
 	});
 	describe("retrieve_current_morale", function()
 	{
-		//TODO
+		var site = game.sites[0];
+		var asianSite = game.sites[1];
+		var responses = ["Great", "Good", "Okay", "Bad", "Terrible"];
+		var result;
+		it("Returns Great if the culture is asian or russian", function()
+		{
+			result = retrieve_current_morale(asianSite);
+			expect(result).toEqual(responses[0]);
+		});
+		it("Returns Great if a site's morale is above 90", function()
+		{
+			site.morale = 100;
+			result = retrieve_current_morale(site);
+			expect(result).toEqual(responses[0]);
+		});
+		it("Returns Good if a site's morale is above 70", function()
+		{
+			site.morale = 80;
+			result = retrieve_current_morale(site);
+			expect(result).toEqual(responses[1]);
+		});
+		it("Returns Okay if a site's morale is above 50", function()
+		{
+			site.morale = 55;
+			result = retrieve_current_morale(site);
+			expect(result).toEqual(responses[2]);
+		});
+		it("Returns Bad if a site's morale is above 30", function()
+		{
+			site.morale = 35;
+			result = retrieve_current_morale(site);
+			expect(result).toEqual(responses[3]);
+		});
+		it("Returns Terrible if a site's morale is above below 30", function()
+		{	
+			site.morale = 20;
+			result = retrieve_current_morale(site);
+			expect(result).toEqual(responses[4]);
+		});
 	});
 });
