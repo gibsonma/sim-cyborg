@@ -177,6 +177,7 @@ function site_complete(site){
 }
 
 function numberWithCommas(x) {
+    if (typeof x === 'undefined') return x;
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

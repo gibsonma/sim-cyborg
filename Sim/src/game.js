@@ -174,6 +174,7 @@ function display_final_score(gs){
     html += tabled("Expected revenue: ", "$" + stats.expected_revenue);
     html += tabled("Actual revenue: ", "$" + stats.actual_revenue);
     html += "</table>";
+    vex.defaultOptions.overlayClosesOnClick = false;
     vex.dialog.alert(html);
 }
 
