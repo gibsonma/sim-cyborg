@@ -19,8 +19,9 @@ window.onload = function() {
         office.update();
     });
     GAME_DATA.gs = new GameState(1);
+	displayManagementOptions(GAME_DATA.gs);
     load_globals(GAME_DATA.gs);
-    vex.dialog.alert("Select a scenario to start the simulation! <br> Adjust the speed using the Faster & Slower buttons!");
+//    vex.dialog.alert("Select a scenario to start the simulation! <br> Adjust the speed using the Faster & Slower buttons!");
     $('#char-Sheet').hide();
     $('#options').hide();
     $(document).ready(function() {
@@ -100,6 +101,26 @@ $('body').on('click', '#m_intervention', function(){
     implementChosenMoraleIntervention(GAME_DATA.gs, tmp);
 } );
 
+function displayManagementOptions(gs)
+{
+	var interventions = '<h3> Here Are some Management Styles you can choose from. Each one, bar the last one, impacts how the simulation will turn out, chaning things like how lucky you are or how charismatic </h3>'; 
+	interventions += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Description</td><td class ="itd">Select</td></tr>';
+	
+	interventions += '<tr class="itr"><td class="itd">Laissez Faire</td><td class="itd">You take a pretty relaxed approach to management, making friends with your employees and having fun. Morale is always high and you understand what is going on in the workplace, so there is no nasty surprises when problems arise!</td><td class="itd"><button id="management-buy"></button></td></tr>'
+	
+	
+	interventions += '</table>';
+	
+	vex.dialog.confirm({
+	  css: {'width':'100%'},
+      message: '<p>' + interventions + '</p>', 
+	  buttons: [],
+      callback: function(value) {
+        GAME_DATA.ticker.resume();
+        return interventions;
+      }
+    });
+}
 
 var tileView;
 //Iterate through sites and create an array which corresponds to each site's local time
