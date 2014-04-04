@@ -100,24 +100,38 @@ $('body').on('click', '#m_intervention', function(){
     var tmp = $(this).context.innerHTML;
     implementChosenMoraleIntervention(GAME_DATA.gs, tmp);
 } );
+$('body').on('click', '#management-buy', function(){ 
+    var tmp = $(this).context.innerHTML;
+	console.log(tmp);
+    implementChosenManagementStyle(GAME_DATA.gs, tmp);
+} );
+
+function implementChosenManagementStyle(gs, tmp)
+{
+
+}
 
 function displayManagementOptions(gs)
 {
-	var interventions = '<h3> Here Are some Management Styles you can choose from. Each one, bar the last one, impacts how the simulation will turn out, chaning things like how lucky you are or how charismatic </h3>'; 
-	interventions += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Description</td><td class ="itd">Select</td></tr>';
+	var options = '<h3> Here Are some Management Styles you can choose from. Each one, bar the last one, impacts how the simulation will turn out, chaning things like how lucky you are or how charismatic you are</h3>'; 
+	options += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Description</td><td class ="itd">Select</td></tr>';
 	
-	interventions += '<tr class="itr"><td class="itd">Laissez Faire</td><td class="itd">You take a pretty relaxed approach to management, making friends with your employees and having fun. Morale is always high and you understand what is going on in the workplace, so there is no nasty surprises when problems arise!</td><td class="itd"><button id="management-buy"></button></td></tr>'
+	options += '<tr class="itr"><td class="itd">Laissez Faire</td><td class="itd">You take a pretty relaxed approach to management, making friends with your employees and having fun. Morale is always high and you understand what is going on in the workplace, so there is no nasty surprises when problems arise!</td><td class="itd"><button id="management-buy">Select Laissez Faire</button></td></tr>'
 	
+	options += '<tr class="itr"><td class="itd">Authoritarian</td><td class="itd">You Will be Assimilated. Resistance is Futile. An Authoritarian management style with guarantee results, although your employees may resent the attitude you take towards them - morale management will be a high priority. Due to your cold. unfeeling robot heart, you are unable to empathise with your employees, so you may be unaware of brewing trouble in the workplace!</td><td class="itd"><button id="management-buy">Select Authoritarian</button></td></tr>'
 	
-	interventions += '</table>';
+	options += '<tr class="itr"><td class="itd">How Did I get this job?</td><td class="itd">You seem to have just stumbled into the job, without any real idea of how to manage a project. Thankfully, you have always had good luck, and things seem to always go your way.</td><td class="itd"><button id="management-buy">Select How Did I get this job?</button></td></tr>'
+	
+	options += '<tr class="itr"><td class="itd">No Management Style</td><td class="itd">You do not wish to adopt a management style, no bonuses or penalties will be applied to the simulation</td><td class="itd"><button id="management-buy">Select No Management Style</button></td></tr>'
+	
+	options += '</table>';
 	
 	vex.dialog.confirm({
 	  css: {'width':'100%'},
-      message: '<p>' + interventions + '</p>', 
+      message: '<p>' + options + '</p>', 
 	  buttons: [],
       callback: function(value) {
-        GAME_DATA.ticker.resume();
-        return interventions;
+        return options;
       }
     });
 }
