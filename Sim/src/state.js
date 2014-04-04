@@ -110,10 +110,10 @@ function load_globals(gs){
         gs.global_distances = obj.global_distances;
         gs.temporal_distances = obj.temporal_distances;
         gs.cultural_distances = obj.cultural_distances;
-        gs.revenue = obj.revenue *gs.player.intelligence; //change revenue based on how intelligent the manager is
+        gs.revenue = obj.revenue + (obj.revenue/gs.player.intelligence_mod); //change revenue based on how intelligent the manager is
         gs.starting_capital = obj.starting_capital;
         gs.developer_effort = obj.developer_effort*gs.player.assertiveness;
-        gs.developer_rate = obj.developer_rate*gs.player.charisma; //more charismatic  managers will improve how workers see you, and therefore how hard they work
+        gs.developer_rate = obj.developer_rate + (obj.developer_rate/gs.player.charisma_mod); //more charismatic managers will improve how workers see you, and therefore how hard they work
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
