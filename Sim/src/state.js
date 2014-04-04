@@ -110,16 +110,16 @@ function load_globals(gs){
         gs.global_distances = obj.global_distances;
         gs.temporal_distances = obj.temporal_distances;
         gs.cultural_distances = obj.cultural_distances;
-        gs.revenue = obj.revenue + (obj.revenue/gs.player.intelligence_mod); //change revenue based on how intelligent the manager is
+        gs.revenue = obj.revenue *gs.player.intelligence_mod; //change revenue based on how intelligent the manager is
         gs.starting_capital = obj.starting_capital;
-        gs.developer_effort = obj.developer_effort*gs.player.assertiveness;
-        gs.developer_rate = obj.developer_rate + (obj.developer_rate/gs.player.charisma_mod); //more charismatic managers will improve how workers see you, and therefore how hard they work
+        gs.developer_effort = obj.developer_effort*gs.player.assertiveness_mod;
+        gs.developer_rate = obj.developer_rate*gs.player.charisma_mod; //more charismatic  managers will improve how workers see you, and therefore how hard they work
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
         gs.morale_interventions = obj.morale_interventions;
         PROBLEM_CONSTANT = obj.problem_constant;
-        MORALE_MOD = obj.morale_modifier*gs.player.empathy;
+        MORALE_MOD = obj.morale_modifier*gs.player.empathy_mod;
 		MIN_MORALE = obj.min_morale;
 		MAX_MORALE = obj.max_morale;
         PROBLEM_COOLDOWN = obj.problem_site_cooldown;
@@ -134,13 +134,13 @@ function Player(){
     this.assertiveness = 1; //for increasing productivity/developer effort --INCREASE THIS MODIFIER AT HIGHER LEVELS
     this.luck          = 1; //sometimes, something nice will happen... or sometimes, something bad.
 
-    this.sensitivity_mod = this.sensitivity*10;
-    this.perception_mod  = this.perception*10;
-    this.empathy_mod = this.empathy*10;
-    this.charisma_mod = this.charisma*10;
-    this.intelligence_mod = this.charisma*10;
-    this.assertiveness_mod = this.assertiveness*10;
-    this.luck_mod = this.luck*10;
+    this.sensitivity_mod = 1 + (this.sensitivity/10);
+    this.perception_mod  = 1 + (this.perception/10);
+    this.empathy_mod = 1 + (this.empathy/10);
+    this.charisma_mod = 1 + (this.charisma/10);
+    this.intelligence_mod = 1 + (this.intelligence/20);
+    this.assertiveness_mod = 1 +  (this.assertiveness/10);
+    this.luck_mod = this.luck*10;;
 }
 
 function Site(name, culture_modifier, dev, timezone, home){
@@ -203,13 +203,6 @@ function MoralIntervention(name, cost, init_impact)
     this.cost = cost;//Cost of buying
     this.init_impact = init_impact;//Initial impact on site morale
     this.sites_implemented = {};//A dictionary linking the sites that have purchased the intervention and how many times
-}
-
-//Represents special events that can occur based on the value of the luck modifier chosen by the player
-function Event(name, message)
-{
-	this.name = name;
-	this.message = message;
 }
 
 function vary(total){
