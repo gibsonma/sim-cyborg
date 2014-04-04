@@ -41,9 +41,13 @@
 		{"name":"Reduce Multi-cultural interactions","init_cost": 200, "daily_cost":25, "is_implemented":false, "affects":[1,1,1,1,1,1,1]},
 		{"name":"Exchange Program", "init_cost": 10000, "daily_cost":350, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
 	],
-	"special_events": [
+	"bad_special_events": [
 		{"name":"Source Code Released", "message":"Your source code was leaked to the public, this will hurt your revenue"},
 		{"name":"Extreme Partying", "message":"Your workers partied too hard last night, productivity reduced"}
+	],
+	"good_special_events": [
+		{"name":"Good PR", "message":"You have been getting a lot of positive press coverage lately, this will boost morale and end revenue"},
+		{"name":"Surprise Investment", "message":"A substantial investment has just been received from an unknown donor"}
 	],
 	"morale_interventions": [
 		{"name":"Buy Pizza","cost": 200, "init_impact":10, "sites_implemented":{}},

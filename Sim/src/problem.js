@@ -178,6 +178,9 @@ function intervention(gs)
                 }
             });
         }
+		//Generate random number 0-1.  Divide players luck by 1000 to bring it into range
+		//if random number is < Luck then have good event happen
+		//else have bad event happen
     }
 }
 
