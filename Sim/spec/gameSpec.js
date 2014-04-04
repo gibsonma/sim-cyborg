@@ -158,6 +158,17 @@ describe("Checking sprites update properly", function()
 	});
 
 });
+
+describe("Checking player updates properly", function()
+{
+	var player = new Player();
+	it("checks if modifers update on stat change",function()
+	{
+		var p = update_modifiers(player);
+		expect(p).not.toBe(null);
+	});
+
+});
 describe("Setting the local times", function()
 {
 	var game = new GameState(1);
