@@ -161,3 +161,14 @@ describe("MoralIntervention", function()
 		expect(m.sites_implemented).toEqual({});
 	});
 });
+
+describe("Event", function()
+{
+	it("Check that the object is initialised properly", function()
+	{
+		var e = new Event("Test", "TESTTESTTEST");
+		expect(e).toBeDefined();
+		expect(e.name).toEqual("Test");
+		expect(e.message).toEqual("TESTTESTTEST");
+	});
+});
