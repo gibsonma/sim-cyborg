@@ -20,7 +20,7 @@ var MAX_MORALE;//Highest morale a site can have
 var days_since_morale_warning = 14;//Tracks how many days have passed since the user was last warned about a site's low morale to prevent spamming the user with warnings. Starts at 7 to allow for low morale to be reported during the simulation's first week
 var chance_to_decrease_morale = 0.0;//Chance that morale will decrease, value rises when problems are ignored
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
-
+var EVENT_CHANCE;
 //Timezones - dictate when sites work. First index is start of work day, second index is end
 var TIMEZONE_EUROPE = [9,17];
 var TIMEZONE_AMERICA = [2,10];
