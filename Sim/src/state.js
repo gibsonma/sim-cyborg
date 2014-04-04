@@ -119,7 +119,7 @@ function load_globals(gs){
         gs.interventions = obj.interventions;	
         gs.morale_interventions = obj.morale_interventions;
         PROBLEM_CONSTANT = obj.problem_constant;
-        MORALE_MOD = obj.morale_modifier*gs.player.empathy_mod;
+        MORALE_MOD = obj.morale_modifier*(1/gs.player.empathy_mod);
 		MIN_MORALE = obj.min_morale;
 		MAX_MORALE = obj.max_morale;
         PROBLEM_COOLDOWN = obj.problem_site_cooldown;
@@ -140,7 +140,7 @@ function Player(){
     this.charisma_mod = 1 + (this.charisma/10);
     this.intelligence_mod = 1 + (this.intelligence/20);
     this.assertiveness_mod = 1 +  (this.assertiveness/10);
-    this.luck_mod = this.luck*10;;
+    this.luck_mod = this.luck*10;
 }
 
 function Site(name, culture_modifier, dev, timezone, home){
