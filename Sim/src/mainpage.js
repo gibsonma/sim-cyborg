@@ -108,7 +108,36 @@ $('body').on('click', '#management-buy', function(){
 
 function implementChosenManagementStyle(gs, tmp)
 {
-
+	var chosen_m_style = '';
+	if(tmp.indexOf("Laissez Faire") != -1)chosen_m_style = "Laissez Faire";
+	else if(tmp.indexOf("Authoritarian") != -1)chosen_m_style = "Authoritarian";
+	else if(tmp.indexOf("How Did I get this job?") != -1)chosen_m_style = "How Did I get this job?";
+	else chosen_m_style = "No Style";
+	console.log("Chosen " + chosen_m_style);
+	switch(chosen_m_style)
+	{				   //High impact of 4 translates to a 0.4 reduction in problem occurance
+		case 'Laissez Faire':
+				gs.player.sensitivity = 5; 
+				gs.player.perception = 2;
+				gs.player.empathy = 5;
+				gs.player.charisma = 5;
+				gs.player.intelligence = 2; 
+				gs.player.luck = 1;
+				gs.player = update_modifiers(gs.player);
+				break;
+		case 'Authoritarian':
+				
+				break;
+		case 'How Did I get this job?':
+				
+				break;
+		case 'No Style':
+				
+				break;
+		default:
+			console.log("Invalid Style Passed in");
+			break;
+	}
 }
 
 function displayManagementOptions(gs)
