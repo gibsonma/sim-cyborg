@@ -126,20 +126,20 @@ function load_globals(gs){
     });
 }
 function Player(){
-    this.sensitivity   = 1; //for noticing workplace issues etc
-    this.perception    = 1; //for figuring out potential problems before they happen
-    this.empathy       = 1; //for knowing in advance when your morale is dropping, also gives a bonus to morale --DECREASE THIS MODIFIER AT HIGHER LEVELS
-    this.charisma      = 1; //for interacting with your workers to improve their productivity --INCREASE THIS MODIFIER AT HIGHER LEVELS
-    this.intelligence  = 1; //for making better business decisions, impacts revenue --INCREASE THIS MODIFIER AT HIGHER LEVELS
-    this.assertiveness = 1; //for increasing productivity/developer effort --INCREASE THIS MODIFIER AT HIGHER LEVELS
-    this.luck          = 1; //sometimes, something nice will happen... or sometimes, something bad.
+    this.sensitivity   = 0; //for noticing workplace issues etc
+    this.perception    = 0; //for figuring out potential problems before they happen
+    this.empathy       = 0; //for knowing in advance when your morale is dropping, also gives a bonus to morale --DECREASE THIS MODIFIER AT HIGHER LEVELS
+    this.charisma      = 0; //for interacting with your workers to improve their productivity --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.intelligence  = 0; //for making better business decisions, impacts revenue --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.assertiveness = 0; //for increasing productivity/developer effort --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.luck          = 0; //sometimes, something nice will happen... or sometimes, something bad.
 
     this.sensitivity_mod = 1 + (this.sensitivity/10);
     this.perception_mod  = 1 + (this.perception/10);
     this.empathy_mod = 1 + (this.empathy/10);
-    this.charisma_mod = 1 + (this.charisma/10);
+    this.charisma_mod = 1 + (this.charisma/20);
     this.intelligence_mod = 1 + (this.intelligence/20);
-    this.assertiveness_mod = 1 +  (this.assertiveness/10);
+    this.assertiveness_mod = 1 +  (this.assertiveness/20);
     this.luck_mod = this.luck*10;
 }
 
