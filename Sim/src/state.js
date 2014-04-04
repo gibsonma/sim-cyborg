@@ -124,6 +124,7 @@ function load_globals(gs){
 		MIN_MORALE = obj.min_morale;
 		MAX_MORALE = obj.max_morale;
         PROBLEM_COOLDOWN = obj.problem_site_cooldown;
+		EVENT_CHANCE = obj.special_event_constant;
     });
 }
 function Player(){

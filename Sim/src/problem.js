@@ -178,9 +178,16 @@ function intervention(gs)
                 }
             });
         }
-		//Generate random number 0-1.  Divide players luck by 1000 to bring it into range
-		//if random number is < Luck then have good event happen
-		//else have bad event happen
+		else
+		{
+			var rand1 = Math.random(1);
+			if(rand1 <= EVENT_CHANCE)
+			{
+				console.log(rand1);
+				if(Math.random() + gs.player.luck/100 >= 0.5)console.log("Good Event Occured");
+				else console.log("Bad Event Occured");
+			}
+		}
     }
 }
 
