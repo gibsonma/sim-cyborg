@@ -115,7 +115,7 @@ function implementChosenManagementStyle(gs, tmp)
 	else chosen_m_style = "No Style";
 	console.log("Chosen " + chosen_m_style);
 	switch(chosen_m_style)
-	{				   //High impact of 4 translates to a 0.4 reduction in problem occurance
+	{
 		case 'Laissez Faire':
 				gs.player.sensitivity = 5; 
 				gs.player.perception = 2;

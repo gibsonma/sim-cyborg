@@ -11,6 +11,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 GAME_DATA.current_site = 0;
+GAME_DATA.player = new Player();
 var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
 var PROBLEM_COOLDOWN = 0.0025;
 var MORALE_MOD;//Represents how quickly a morale interventions impact errodes each time its used, the closer to 0, the quicker it erodes
@@ -101,7 +102,7 @@ function GameState(setting)
     this.interventions = [];
     this.morale_interventions = [];
     this.days_per_month = 30;
-    this.player = new Player();
+    this.player = GAME_DATA.player;
 }
 
 function load_globals(gs){
