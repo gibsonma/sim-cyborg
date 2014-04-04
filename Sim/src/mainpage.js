@@ -21,7 +21,6 @@ window.onload = function() {
     GAME_DATA.gs = new GameState(1);
 	displayManagementOptions(GAME_DATA.gs);
     load_globals(GAME_DATA.gs);
-//    vex.dialog.alert("Select a scenario to start the simulation! <br> Adjust the speed using the Faster & Slower buttons!");
     $('#char-Sheet').hide();
     $('#options').hide();
     $(document).ready(function() {
@@ -100,9 +99,9 @@ $('body').on('click', '#m_intervention', function(){
     var tmp = $(this).context.innerHTML;
     implementChosenMoraleIntervention(GAME_DATA.gs, tmp);
 } );
+//Tracks what management style the player chooses
 $('body').on('click', '#management-buy', function(){ 
     var tmp = $(this).context.innerHTML;
-	console.log(tmp);
     implementChosenManagementStyle(GAME_DATA.gs, tmp);
 } );
 
@@ -113,7 +112,6 @@ function implementChosenManagementStyle(gs, tmp)
 	else if(tmp.indexOf("Authoritarian") != -1)chosen_m_style = "Authoritarian";
 	else if(tmp.indexOf("How Did I get this job?") != -1)chosen_m_style = "How Did I get this job?";
 	else chosen_m_style = "No Style";
-	console.log("Chosen " + chosen_m_style);
 	switch(chosen_m_style)
 	{
 		case 'Laissez Faire':
@@ -122,14 +120,29 @@ function implementChosenManagementStyle(gs, tmp)
 				gs.player.empathy = 5;
 				gs.player.charisma = 5;
 				gs.player.intelligence = 2; 
+				gs.player.assertiveness = 0;
 				gs.player.luck = 1;
 				gs.player = update_modifiers(gs.player);
 				break;
 		case 'Authoritarian':
-				
+				gs.player.sensitivity = 0; 
+				gs.player.perception = 5;
+				gs.player.empathy = 0;
+				gs.player.charisma = 5;
+				gs.player.intelligence = 5;
+				gs.player.assertiveness = 5;
+				gs.player.luck = 0;
+				gs.player = update_modifiers(gs.player);
 				break;
 		case 'How Did I get this job?':
-				
+				gs.player.sensitivity = 5; 
+				gs.player.perception = 0;
+				gs.player.empathy = 5;
+				gs.player.charisma = 5;
+				gs.player.intelligence = 0; 
+				gs.player.assertiveness = 0;
+				gs.player.luck = 5;
+				gs.player = update_modifiers(gs.player);
 				break;
 		case 'No Style':
 				
@@ -138,6 +151,7 @@ function implementChosenManagementStyle(gs, tmp)
 			console.log("Invalid Style Passed in");
 			break;
 	}
+	vex.dialog.alert("Select a scenario to start the simulation! <br> Adjust the speed using the Faster & Slower buttons!");
 }
 
 function displayManagementOptions(gs)
