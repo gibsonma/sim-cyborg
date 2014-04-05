@@ -184,13 +184,78 @@ function intervention(gs)
 			if(rand1 <= EVENT_CHANCE)
 			{
 				console.log(rand1);
-				if(Math.random() + gs.player.luck/100 >= 0.5)console.log("Good Event Occured");
-				else console.log("Bad Event Occured");
+				if(Math.random() + gs.player.luck/100 >= 0.5)generateGoodEvent(gs);
+				else generateBadEvent(gs);
 			}
 		}
     }
 }
 
+function getEvent(gs, gs_events)
+{
+	var events = gs_events;
+	var index = Math.floor((Math.random()*events.length));
+	var chosen = events[index];
+	GAME_DATA.ticker.pause();
+	vex.dialog.confirm({
+		message: '<p>'+chosen.name+'</p>' + '<p>' +chosen.message+'</p>',
+		buttons: [$.extend({}, vex.dialog.buttons.YES, {text: 'OK'})],
+		callback: function(value) {    
+				GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
+				return console.log("Popup Shown");
+			}
+		
+	});
+	return chosen;
+}
+
+//Randomly picks an event from those defined in the config file. It then executes a vex popup informing the player and makes the necessary changes to the game state based on which event occured
+function generateGoodEvent(gs)
+{
+	var chosen = getEvent(gs, gs.good_events);
+	switch(chosen.name)
+	{
+		case 'Good PR':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],10);
+			}
+			gs.revenue += 100000;
+			break;
+		case 'Surprise Investment':
+			var sum = 100000;
+			gs.capital += sum;
+			new_transaction(sum);
+			break;
+		default:
+			console.log("Invalid Event Passed in");
+			break;
+	}
+}
+
+function generateBadEvent(gs)
+{
+	var chosen = getEvent(gs, gs.bad_events);
+	switch(chosen.name)
+	{
+		case 'Source Code Released':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],-10);
+			}
+			gs.revenue -= 100000;
+			break;
+		case 'Extreme Partying':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],-15);
+			}
+			break;
+		default:
+			console.log("Invalid Event Passed in");
+			break;
+	}
+}
 //Added because vex is being really annoying, so this is called in gameSpec instead of intervention
 //It has the same functionality, but gets passed an extra parameter to tell it whether or not it
 //should fix the problem
@@ -507,4 +572,11 @@ function parseDetails(game, morale_details)
 		}
 	}
 	return result;
+}
+
+function modifyMorale(site, amount)
+{
+	site.morale += amount;
+	if(site.morale > MAX_MORALE)site.morale = MAX_MORALE;
+	if(site.morale < MIN_MORALE)site.morale = MIN_MORALE;
 }

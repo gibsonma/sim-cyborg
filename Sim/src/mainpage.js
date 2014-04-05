@@ -156,7 +156,7 @@ function implementChosenManagementStyle(gs, tmp)
 
 function displayManagementOptions(gs)
 {
-	var options = '<h3> Here Are some Management Styles you can choose from. Each one, bar the last one, impacts how the simulation will turn out, chaning things like how lucky you are or how charismatic you are</h3>'; 
+	var options = '<h3> Here Are some Management Styles you can choose from. Each one, bar the last one, impacts how the simulation will turn out, changing things like how lucky you are or how charismatic you are</h3>'; 
 	options += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Description</td><td class ="itd">Select</td></tr>';
 	
 	options += '<tr class="itr"><td class="itd">Laissez Faire</td><td class="itd">You take a pretty relaxed approach to management, making friends with your employees and having fun. Morale is always high and you understand what is going on in the workplace, so there is no nasty surprises when problems arise!</td><td class="itd"><button id="management-buy">Select Laissez Faire</button></td></tr>'

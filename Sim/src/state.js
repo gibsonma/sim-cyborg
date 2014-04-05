@@ -119,6 +119,8 @@ function load_globals(gs){
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
         gs.morale_interventions = obj.morale_interventions;
+		gs.good_events = obj.good_special_events;
+		gs.bad_events = obj.bad_special_events;
         PROBLEM_CONSTANT = obj.problem_constant;
         MORALE_MOD = obj.morale_modifier*(1/gs.player.empathy_mod);
 		MIN_MORALE = obj.min_morale;
