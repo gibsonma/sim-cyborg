@@ -2,8 +2,9 @@ Filepath,Function Name,Reason its's not tested
 Sim/src/game.js,simpleTick,External Library
 Sim/src/game.js,update_tileView,Tested as part of update
 Sim/src/game.js,update,Tested in Update Game State
+Sim/src/game.js,callback,External Library
+Sim/src/game.js,display_gold,External Library
 Sim/src/finance.js,daily_transactions,Wrapper Function
-Sim/src/finance.js,deduct_daily_expenses,N/A
 Sim/src/finance.js,new_transaction,N/A
 Sim/src/mainpage.js,renderTileView,External Library
 Sim/src/mainpage.js,completedTasksEmail,External Library

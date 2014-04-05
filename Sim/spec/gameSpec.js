@@ -213,4 +213,30 @@ describe("Setting the local times", function()
 		expect(game.sites[0].local_time).toEqual(8);
 	});
 });
+describe("incrementingLocalTimes", function()
+{
+	var game = new GameState(1);
+	it("Increments time by 1 for each iteration", function()
+	{
+			game.sites[0].local_time = 10;
+			incrementLocalTimes(game);
+			expect(game.sites[0].local_time).toEqual(11);
+	});
+	it("Sets the value back to 0 at 24 to simulate a clock", function()
+	{
+		game.sites[0].local_time = 26;
+		incrementLocalTimes(game);
+		expect(game.sites[0].local_time).toEqual(0);
+	});
+});
+describe("calculate_days_remaining", function()
+{
+	var game = new GameState(1);
+	it("Creates a new report to use for its estimation", function()
+	{
+		report = jasmine.createSpy();
+		calculate_days_remaining(game);
+		expect(report).toHaveBeenCalled();
+	});
+});
 
