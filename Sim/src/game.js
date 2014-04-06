@@ -236,8 +236,7 @@ function update(gs)
                         if (lowest_lifecycle < module.tasks.length){
                             var task = module.tasks[lowest_lifecycle];
                             if (task.completed < task.actual_total){
-                                task.completed += module.assigned * (gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
-                                if (task.completed > task.actual_total) task.completed = task.actual_total;
+                                work_on_task(site, module, task);
                             }
                         }
                         break;
@@ -246,14 +245,21 @@ function update(gs)
                         for (var k=0; k < module.tasks.length; k++){
                             var task = module.tasks[k];
                             if (task.completed < task.actual_total && worked_on_module == false){
-                                task.completed += module.assigned*(gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
+                                work_on_task(site, module, task);
                                 worked_on_module = true;
                             }
-                            if(task.completed > task.actual_total) task.completed = task.actual_total;
                         }
                         break;
                 }
             }
         }
     }
+}
+
+function work_on_task(site, module, task){
+    var gs = GAME_DATA.gs;
+    var work_done = module.assigned*(gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
+    task.completed += work_done;
+    if (task.completed > task.actual_total) task.completed = task.actual_total;
+    task.completion_log.push(completed_hours_for_task(module, task));
 }

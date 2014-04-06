@@ -196,4 +196,3 @@ function completed_hours_for_task(module,task){
     }
     return task_total;
 }
-

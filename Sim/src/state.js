@@ -167,6 +167,7 @@ function Task(name, total){
     this.total = total;//Represents total effort required to complete task
     this.status = "Normal";
     this.actual_total = vary(total);
+    this.completion_log = [];
 }
 function Problem(name,impact, currentProgress, module, taskNum){
     this.impact = impact; //a percentage of productivity reduction
