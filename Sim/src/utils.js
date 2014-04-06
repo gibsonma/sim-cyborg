@@ -184,4 +184,3 @@ function numberWithCommas(x) {
 function tabled(left, right){
     return "<tr><td>"+left+"</td><td>"+numberWithCommas(right)+"</td></tr>";
 }
-

@@ -239,28 +239,6 @@ function showHomeSitePopup() {
 
 }
 
-function showSpecificSitePopup(site, cost) {
-    GAME_DATA.ticker.pause();
-    var popupView;
-    vex.open({
-        content: '<div id="info-popup"></div>',
-        afterOpen: function($vexContent) {
-            new_transaction(-cost);//Deduct cost of viewing site
-            popupView = new Ractive({
-                el: 'info-popup',
-                template: TEMPLATES['popupView'],
-                data: {
-                    site: site
-                }
-            });
-        },
-        afterClose: function() {
-            GAME_DATA.ticker.resume();
-        }
-    });
-
-}
-
 //Takes a site and updates it displayed total after player inspects it
 function update_actual_total(site){
     for (var i=0; i < site.modules.length; i++){
@@ -309,4 +287,31 @@ function on_schedule_str(site){
     if (site.schedule > 0) return site.name + " is " + weeks + " weeks ahead of schedule";
     else if (site.schedule < 0) return site.name + " is " + weeks + " weeks behind schedule";
     else return site.name + " is dead on schedule";
+}
+
+function showSpecificSitePopup(site, cost) {
+    GAME_DATA.ticker.pause();
+    var popupView;
+    vex.open({
+        content: '<div id="info-popup"></div>',
+        afterOpen: function($vexContent) {
+            new_transaction(-cost);//Deduct cost of viewing site
+            popupView = new Ractive({
+                el: 'info-popup',
+                template: TEMPLATES['popupView'],
+                data: {
+                    site: site,
+                    graph: graph_tasks
+                }
+            });
+        },
+        afterClose: function() {
+            GAME_DATA.ticker.resume();
+        }
+    });
+
+}
+
+function graph_tasks(module){
+    return module.name;
 }

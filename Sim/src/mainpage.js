@@ -19,7 +19,7 @@ window.onload = function() {
         office.update();
     });
     GAME_DATA.gs = new GameState(1);
-	displayManagementOptions(GAME_DATA.gs);
+    displayManagementOptions(GAME_DATA.gs);
     load_globals(GAME_DATA.gs);
     $('#char-Sheet').hide();
     $('#options').hide();
@@ -62,10 +62,9 @@ window.onload = function() {
         });
         $('#char-Sheet').click(function(){
             displayCharSheet(GAME_DATA.gs);
-            });
+        });
     });
 };
-
 
 //Tracks when the player selects an intervention to buy
 $('body').on('click', '#intervention', function(){ 
@@ -87,10 +86,6 @@ $('body').on('click', '#management-buy', function(){
     var tmp = $(this).context.innerHTML;
     implementChosenManagementStyle(GAME_DATA.gs, tmp);
 } );
-
-
-
-
 
 var tileView;
 //Iterate through sites and create an array which corresponds to each site's local time
@@ -135,35 +130,35 @@ function renderTileview() {
             var siteStatus = $(this).parent().attr('class');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             if(site.culture.influence == "asian" || site.culture.influence == "russian")
-            {
-                showEmailResponsePositive();
-            } 
-            else if(siteStatus == 'site_tile schedule-ok')
-            {
-                showEmailResponsePositive();
+                {
+                    showEmailResponsePositive();
+                } 
+                else if(siteStatus == 'site_tile schedule-ok')
+                    {
+                        showEmailResponsePositive();
 
-            }
-            else if(siteStatus == 'site_tile schedule-behind')
-            {
-                showEmailResponseNegative();
-            }
-            else
-            {
-                showEmailResponseCritical();
+                    }
+                    else if(siteStatus == 'site_tile schedule-behind')
+                        {
+                            showEmailResponseNegative();
+                        }
+                        else
+                            {
+                                showEmailResponseCritical();
 
-            }
+                            }
         });
         $('.site_tile>.info-popup-status').click(function() {
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             if(site.culture.influence == "asian" || site.culture.influence == "russian")
-            {
-                inquireCultural(site);//function for all ok
-            }
-            else
-            {
-                inquireAccurate(site);//function for accurate
-            }
+                {
+                    inquireCultural(site);//function for all ok
+                }
+                else
+                    {
+                        inquireAccurate(site);//function for accurate
+                    }
         });
         $('.site_tile>.info-popup-tasks').click(function() {
             console.log("Clicked");
@@ -177,7 +172,7 @@ function renderTileview() {
             var site = getSiteByName(siteName, GAME_DATA.gs);
             encounteredProblems(site);
         });
-		$('.site_tile>.info-popup-morale').click(function() {
+        $('.site_tile>.info-popup-morale').click(function() {
             console.log("Clicked");
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);

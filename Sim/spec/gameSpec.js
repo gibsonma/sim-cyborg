@@ -240,4 +240,13 @@ describe("calculate_days_remaining", function()
 	});
 });
 
-
+describe("work on task", function()
+{
+	var game = new GameState(1);
+	it("Works on task", function()
+	{
+        game.sites[0].morale = 100;
+        work_on_task(game.sites[0], game.sites[0].modules[0], game.sites[0].modules[0].tasks[0]);
+        expect(Math.round(game.sites[0].modules[0].tasks[0].completed)).toEqual(24);
+	});
+});

@@ -1,19 +1,15 @@
 <div class="popupView">
-<h2>Status for {{site.name}}</h2>
-<h4>Current Site Morale: {{site.morale}}%</h4>
-<h4>Modules + Tasks:</h4>
-<ul>
-{{#site.modules}}
-<li>
-	<p><strong>{{name}}</strong></p>
-	<ol>
-	{{#tasks}}
-	<li>
-		<p>{{name}}: {{completed.toFixed(0)}}/{{actual_total}} ({{Math.floor(completed/actual_total * 100)}}% Done)</p>
-	</li>
-	{{/tasks}}
-	</ol>
-</li>
-{{/site.modules}}
-</ul>
+    <h2>Status for {{site.name}}</h2>
+    <h4>Current Site Morale: {{site.morale}}%</h4>
+    {{#site.modules}}
+    <h2>{{name}}</h2>
+    {{graph(.)}}
+    <ol>
+        {{#tasks}}
+        <li>
+        <p>{{name}}: {{completed.toFixed(0)}}/{{actual_total}} ({{Math.floor(completed/actual_total * 100)}}% Done)</p>
+        </li>
+        {{/tasks}}
+    </ol>
+    {{/site.modules}}
 </div>
