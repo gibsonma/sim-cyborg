@@ -261,6 +261,7 @@ function showSpecificSitePopup(site, cost) {
 
 }
 
+//Takes a site and updates it displayed total after player inspects it
 function update_actual_total(site){
     for (var i=0; i < site.modules.length; i++){
         var module = site.modules[i]
@@ -271,6 +272,7 @@ function update_actual_total(site){
     }
 }
 
+//Takes a site and returns a string based on its schedule to render the site tile colour
 function statusClass(site) {
     var gs = GAME_DATA.gs;
     if (site.culture.influence === "asian" || site.culture.influence === "russian") {

@@ -6,7 +6,7 @@ Sim/src/game.js,callback,External Library
 Sim/src/game.js,display_gold,External Library
 Sim/src/finance.js,daily_transactions,Wrapper Function
 Sim/src/finance.js,new_transaction,N/A
-Sim/src/mainpage.js,renderTileView,External Library
+Sim/src/mainpage.js,renderTileview,External Library
 Sim/src/mainpage.js,completedTasksEmail,External Library
 Sim/src/mainpage.js,inquireAccurate,External Library
 Sim/src/mainpage.js,inquireCultural,External Library
@@ -32,4 +32,7 @@ Sim/src/utils.js,total_of_current_task,N/A
 Sim/src/interact.js,afterClose,External Library
 Sim/src/interact.js,afterOpen,External Library
 Sim/src/interact.js,callback,External Library
+Sim/src/interact.js,displayManagementOptions,External Library
+Sim/src/interact.js,displayCharSheet,External Library
+
 
