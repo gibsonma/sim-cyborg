@@ -290,25 +290,6 @@ function on_schedule_str(site){
 }
 
 function showSpecificSitePopup(site, cost) {
-    var data = {
-        labels : ["January","February","March","April","May","June","July"],
-        datasets : [
-            {
-            fillColor : "rgba(220,220,220,0.5)",
-            strokeColor : "rgba(220,220,220,1)",
-            pointColor : "rgba(220,220,220,1)",
-            pointStrokeColor : "#fff",
-            data : [65,59,90,81,56,55,40]
-        },
-        {
-            fillColor : "rgba(151,187,205,0.5)",
-            strokeColor : "rgba(151,187,205,1)",
-            pointColor : "rgba(151,187,205,1)",
-            pointStrokeColor : "#fff",
-            data : [28,48,40,19,96,27,100]
-        }
-        ]
-    }
     GAME_DATA.ticker.pause();
     var popupView;
     vex.open({
@@ -320,6 +301,7 @@ function showSpecificSitePopup(site, cost) {
                 template: TEMPLATES['popupView'],
                 data: {
                     site: site,
+                    normaliser: normalise_module_name
                 }
             });
             for (var i=0; i < site.modules.length; i++){
@@ -331,8 +313,11 @@ function showSpecificSitePopup(site, cost) {
                     labels: mod_labels,
                     datasets : mod_datasets
                 }
-                var ctx = $("#"+module.name).get(0).getContext("2d");
-                new Chart(ctx).Line(mod_graph_data,{bezierCurve:false});
+                var ctx = $("#"+normalise_module_name(module)).get(0).getContext("2d");
+                new Chart(ctx).Line(mod_graph_data,{
+                    bezierCurve:false,
+                    pointDot:false
+                });
             }
         },
         afterClose: function() {
@@ -368,7 +353,11 @@ function largest_history_labels(module){
     }
     labels = []
     for (var cnt=0; cnt < longest+1; cnt++){
-        labels.push(cnt);
+        labels.push('');
     }
     return labels;
+}
+
+function normalise_module_name(module){
+    return (module.name).replace(' ','');
 }

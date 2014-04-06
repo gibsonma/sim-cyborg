@@ -273,5 +273,5 @@ function work_on_task(site, module, task){
     var work_done = module.assigned*(gs.developer_effort*(site.morale/100))/TICKS_PER_UNIT_TIME;
     task.completed += work_done;
     if (task.completed > task.actual_total) task.completed = task.actual_total;
-    task.completion_log.push(completed_hours_for_task(module, task));
+    task.completion_log.push(100*completed_hours_for_task(module, task)/hours_for_task(module, task));
 }
