@@ -3,7 +3,7 @@
     <h4>Current Site Morale: {{site.morale}}%</h4>
     {{#site.modules}}
     <h2>{{name}}</h2>
-    {{graph(.)}}
+    <canvas id="{{name}}" width="400" height="400"></canvas>
     <ol>
         {{#tasks}}
         <li>

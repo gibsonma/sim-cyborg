@@ -228,7 +228,7 @@ function showHomeSitePopup() {
                 el: 'info-popup',
                 template: TEMPLATES['popupView'],
                 data: {
-                    site: get_home_site(GAME_DATA.gs.sites) //Object passed into popUpView
+                    site: get_home_site(GAME_DATA.gs.sites), //Object passed into popUpView
                 }
             });
         },
@@ -290,6 +290,25 @@ function on_schedule_str(site){
 }
 
 function showSpecificSitePopup(site, cost) {
+    var data = {
+        labels : ["January","February","March","April","May","June","July"],
+        datasets : [
+            {
+            fillColor : "rgba(220,220,220,0.5)",
+            strokeColor : "rgba(220,220,220,1)",
+            pointColor : "rgba(220,220,220,1)",
+            pointStrokeColor : "#fff",
+            data : [65,59,90,81,56,55,40]
+        },
+        {
+            fillColor : "rgba(151,187,205,0.5)",
+            strokeColor : "rgba(151,187,205,1)",
+            pointColor : "rgba(151,187,205,1)",
+            pointStrokeColor : "#fff",
+            data : [28,48,40,19,96,27,100]
+        }
+        ]
+    }
     GAME_DATA.ticker.pause();
     var popupView;
     vex.open({
@@ -301,17 +320,55 @@ function showSpecificSitePopup(site, cost) {
                 template: TEMPLATES['popupView'],
                 data: {
                     site: site,
-                    graph: graph_tasks
                 }
             });
+            for (var i=0; i < site.modules.length; i++){
+                var module = site.modules[i];
+                var mod_labels = largest_history_labels(module);
+                var mod_datasets = task_datasets(module);
+
+                var mod_graph_data = {
+                    labels: mod_labels,
+                    datasets : mod_datasets
+                }
+                var ctx = $("#"+module.name).get(0).getContext("2d");
+                new Chart(ctx).Line(mod_graph_data,{bezierCurve:false});
+            }
         },
         afterClose: function() {
             GAME_DATA.ticker.resume();
         }
     });
-
 }
 
-function graph_tasks(module){
-    return module.name;
+function task_datasets(module){
+    var datasets = [];
+    for (var i=0; i < module.tasks.length; i++){
+        var task = module.tasks[i];
+        var task_data = [];
+        for (var j=0; j < task.completion_log.length; j++){
+            task_data.push(task.completion_log[j]);
+        }
+        datasets.push({
+            fillColor : "rgba(151,187,205,0.5)",
+            strokeColor : "rgba(151,187,205,1)",
+            pointColor : "rgba(151,187,205,1)",
+            pointStrokeColor : "#fff",
+            data : task_data
+        });
+    }
+    return datasets;
+}
+
+function largest_history_labels(module){
+    longest = 0;
+    for (var i=0; i< module.tasks.length; i++){
+        var task = module.tasks[i];
+        if (task.completion_log.length > longest) longest = task.completion_log.length;
+    }
+    labels = []
+    for (var cnt=0; cnt < longest+1; cnt++){
+        labels.push(cnt);
+    }
+    return labels;
 }

@@ -123,7 +123,7 @@ function renderTileview() {
             var siteName = $(this).parent().attr('data-name');
             var site = getSiteByName(siteName, GAME_DATA.gs);
             update_actual_total(site);
-            showSpecificSitePopup(site,1000);
+            showSpecificSitePopup(site,-1000);
         });
         $('.site_tile>.info-popup-email').click(function() {
             var siteName = $(this).parent().attr('data-name');
