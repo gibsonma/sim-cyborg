@@ -111,3 +111,27 @@ describe("inquireCultural", function()
 		expect(new_transaction).toHaveBeenCalledWith(-100);
 	});
 });
+
+describe("task datasets", function()
+{
+	it("get datasets for graph", function()
+	{
+        expect((task_datasets(game.sites[0].modules[0]))[0].title).toEqual("Design");
+	});
+});
+
+describe("largest_history_labels", function()
+{
+	it("how wide should the graph be", function()
+	{
+        expect(largest_history_labels(game.sites[0].modules[0])).toEqual(['']); 
+	});
+});
+
+describe("normalise module name", function()
+{
+	it("remove spaces", function()
+	{
+        expect(normalise_module_name(game.sites[1].modules[1])).toEqual("CommunicationsSoftware"); 
+	});
+});

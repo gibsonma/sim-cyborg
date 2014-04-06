@@ -219,24 +219,8 @@ function showEmailResponseCritical()
 
 
 function showHomeSitePopup() {
-    GAME_DATA.ticker.pause();
-    var popupView;
-    vex.open({
-        content: '<div id="info-popup"></div>',
-        afterOpen: function($vexContent) {
-            popupView = new Ractive({
-                el: 'info-popup',
-                template: TEMPLATES['popupView'],
-                data: {
-                    site: get_home_site(GAME_DATA.gs.sites), //Object passed into popUpView
-                }
-            });
-        },
-        afterClose: function() {
-            GAME_DATA.ticker.resume();
-        }
-    });
-
+    var home = get_home_site(GAME_DATA.gs.sites);
+    showSpecificSitePopup(site, 0);
 }
 
 //Takes a site and updates it displayed total after player inspects it
