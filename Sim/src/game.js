@@ -33,7 +33,7 @@ function displayScenarioValues(scenNum)
     });
 }
 
-//Given a module, this function will calculate how much effort will be required to complete it
+//Given a module, player function will calculate how much effort will be required to complete it
 //by summing up the expected total of its tasks and returning it
 //Ask user which scenario they want
 //Load details of chosen scenario
@@ -73,7 +73,7 @@ function setLocalTime(sites, homeSite)
 function simpleTick(ticker)
 {
     // Ticker only allows for calling afunction taking just the ticker as an argument so need a getGameState() function to allow us access to the game state object.
-    // Not sure how to structure this, maybe use a class?
+    // Not sure how to structure player, maybe use a class?
     // Increment current time
     // Todo: Decide how to represent time
     TICKS_PASSED += ticker.lastTicksElapsed;
@@ -97,6 +97,18 @@ function simpleTick(ticker)
         }
     }
     update(GAME_DATA.gs);
+}
+function update_modifiers(player)
+{
+    player.sensitivity_mod = 1 + (player.sensitivity/10);
+    player.perception_mod  = 1 + (player.perception/10);
+    player.empathy_mod = 1 + (player.empathy/10);
+    player.charisma_mod = 1 + (player.charisma/20);
+    player.intelligence_mod = 1 + (player.intelligence/20);
+    player.assertiveness_mod = 1 +  (player.assertiveness/20);
+    player.luck_mod = player.luck*10;
+
+    return player;
 }
 
 function update_worker_images(gs, current_site)

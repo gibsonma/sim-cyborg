@@ -135,6 +135,49 @@ describe("Problem Simulator", function()
 	});
 
 });
+describe("Random Event Generation", function()
+{
+	describe("getEvent", function()
+	{
+		var g_events = game.good_events;
+		var b_events = game.bad_events;
+		it("Returns a random good event", function()
+		{
+			var result = getEvent(game, g_events);
+			expect(result).toBeDefined();
+			expect(g_events).toContain(result);
+		});
+		it("Returns a random bad event", function()
+		{
+			var result = getEvent(game, b_events);
+			expect(result).toBeDefined();
+			expect(b_events).toContain(result);
+		});
+	});
+	describe("generateGoodEvent", function()
+	{
+		it("Calls getEvent and the apprporiate function in the switch statement", function()
+		{
+			var testGame = game;
+			testGame.good_events = [game.good_events[1]];
+			new_transaction = jasmine.createSpy();
+			generateGoodEvent(testGame);
+			expect(new_transaction).toHaveBeenCalled();
+		});
+	});
+	describe("generateBadEvent", function()
+	{
+		it("Calls getEvent and the apprporiate function in the switch statement", function()
+		{
+			var testGame = game;
+			testGame.bad_events = [game.bad_events[0]];
+			var origRev = testGame.revenue;
+			generateBadEvent(testGame);
+			expect(origRev).toBeGreaterThan(testGame.revenue);
+		});
+	});
+	
+});
 
 describe("Problem Percentage Generator", function()
 {
@@ -226,7 +269,7 @@ describe("Moral Interventions", function()
 		purchaseMoraleIntervention(morale_i, site);
 		it("Increases a site's morale", function()
 		{
-			expect(site.morale).toBeGreaterThan(103);
+			expect(site.morale).toBeGreaterThan(93);
 			expect(site.morale).toBeLessThan(107);
 		});
 		it("Calls its helper functions", function()
@@ -318,6 +361,27 @@ describe("Moral Interventions", function()
 			site.morale = 20;
 			result = retrieve_current_morale(site);
 			expect(result).toEqual(responses[4]);
+		});
+	});
+	describe("modifyMorale", function()
+	{
+		var amount = 20;
+		var site = game.sites[0];
+		it("Correctly Adds the amount onto the morale", function()
+		{
+			site.morale = 50;
+			var orig = site.morale;
+			modifyMorale(site, amount);
+			expect(site.morale).toEqual(orig+amount);
+		});
+		it("Stops the morale from going above or below the constants", function()
+		{
+			site.morale = 25;
+			modifyMorale(site, -100);
+			expect(site.morale).toEqual(MIN_MORALE);
+			site.morale = 120;
+			modifyMorale(site, 100);
+			expect(site.morale).toEqual(MAX_MORALE);
 		});
 	});
 });

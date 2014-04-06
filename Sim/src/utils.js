@@ -139,7 +139,7 @@ function get_home_site(sites){
     }
     console.log("Home site not set");
 }
-
+//Iterates through a list of tasks and return the tasks that are currently being worked on
 function currently_doing_which_task(tasks){
     for (var i=0; i<tasks.length; i++){
         var task = tasks[i];

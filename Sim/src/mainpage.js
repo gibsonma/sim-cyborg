@@ -19,8 +19,8 @@ window.onload = function() {
         office.update();
     });
     GAME_DATA.gs = new GameState(1);
+	displayManagementOptions(GAME_DATA.gs);
     load_globals(GAME_DATA.gs);
-    vex.dialog.alert("Select a scenario to start the simulation! <br> Adjust the speed using the Faster & Slower buttons!");
     $('#char-Sheet').hide();
     $('#options').hide();
     $(document).ready(function() {
@@ -65,24 +65,7 @@ window.onload = function() {
             });
     });
 };
-//Passed in a number, +/- add that onto TICKS_PER_UNIT_TIME
-//Recalculate speed and enable/disable any necessary buttons
-function updateSpeedLabel(number_change) {
-	TICKS_PER_UNIT_TIME += number_change;
-	if(TICKS_PER_UNIT_TIME <= 0)TICKS_PER_UNIT_TIME = 1;	
-	if(TICKS_PER_UNIT_TIME >= 20)
-	{
-		$('#time_slower').prop('disabled', true);
-		TICKS_PER_UNIT_TIME = 20;
-	}
-	else $('#time_slower').prop('disabled', false);
-    var speed = 1 / (TICKS_PER_UNIT_TIME);
-    speed *= 100;
-    speed = Math.floor(speed);
-	if (speed >= 100)$('#time_faster').prop('disabled', true);
-	else $('#time_faster').prop('disabled', false);
-    $('#time_speed_label').text(speed);
-} 
+
 
 //Tracks when the player selects an intervention to buy
 $('body').on('click', '#intervention', function(){ 
@@ -99,6 +82,14 @@ $('body').on('click', '#m_intervention', function(){
     var tmp = $(this).context.innerHTML;
     implementChosenMoraleIntervention(GAME_DATA.gs, tmp);
 } );
+//Tracks what management style the player chooses
+$('body').on('click', '#management-buy', function(){ 
+    var tmp = $(this).context.innerHTML;
+    implementChosenManagementStyle(GAME_DATA.gs, tmp);
+} );
+
+
+
 
 
 var tileView;
@@ -207,221 +198,3 @@ function renderTileview() {
 
     }
 };
-function displayCharSheet(gs)
-{
-        GAME_DATA.ticker.pause();
-        var result = 'Character Info: '
-        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Sensitivity: " + gs.player.sensitivity;
-        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Perception: " + gs.player.perception;
-        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Empathy: " + gs.player.empathy;
-        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Charisma: " + gs.player.charisma;
-        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Intelligence: " + gs.player.intelligence;
-        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Assertiveness: " + gs.player.assertiveness;
-        result += '<br>&nbsp&nbsp&nbsp&nbsp' + "Luck: " + gs.player.luck;
-        vex.dialog.confirm({
-        message: '<p>' + result + '</p>' 
-        ,
-        callback: function(value) {
-            GAME_DATA.ticker.resume();
-            return result;
-        }
-    });
-}
-
-
-function completedTasksEmail(site)
-{
-    GAME_DATA.ticker.pause();
-    new_transaction(-500);
-    var result = 'Completed Tasks: ';
-    var tasks = [];
-    var modules = site.modules;
-    for(var i = 0; i < modules.length; i++)
-    {
-        tasks = modules[i].tasks;
-        result += '<br><b>' + modules[i].name + '</b> : ';
-        for(var j = 0; j < tasks.length; j++)
-        {
-            if(tasks[j].completed >= tasks[j].actual_total) result += '<br>&nbsp&nbsp&nbsp&nbsp' + tasks[j].name;
-        }
-    }
-    vex.dialog.confirm({
-        message: '<p>' + result + '</p>' 
-        ,
-        callback: function(value) {
-            GAME_DATA.ticker.resume();
-            return value;
-        }
-    });
-}
-
-
-function inquireAccurate(site)
-{
-    GAME_DATA.ticker.pause();
-    new_transaction(-100);
-    var result = [];
-    var status = '';
-
-    for(var i = 0; i < site.modules.length; i++){
-        var module = site.modules[i];
-        var completed = completed_hours_for_module(module);
-        var out_of = hours_for_module(module);
-        result += '<br> ' + module.name + ' : completed ' + completed + "/" + out_of + " hours";
-    }
-    vex.dialog.confirm({
-        message: '<p>' + result + '</p>',
-        callback: function(value) {
-            GAME_DATA.ticker.resume();
-            return value;
-        }
-    });
-}
-
-function inquireCultural(site)
-{
-    GAME_DATA.ticker.pause();
-    new_transaction(-100);
-    var result = '';
-    var status = 'On Schedule';
-    var modules = site.modules;
-    for(var i = 0; i < modules.length; i++)
-    {
-        result += '<br> ' + modules[i].name + ' : ' + status;
-    }
-    vex.dialog.confirm({
-        message: '<p>' + result + '</p>'
-        ,
-        callback: function(value) {
-            GAME_DATA.ticker.resume();
-            return value;
-        }
-    });
-}
-
-function showEmailResponsePositive()
-{
-    GAME_DATA.ticker.pause();//Pause the game
-    vex.dialog.confirm({
-        message: '<p>Everything is on schedule at this site.</p>',
-        callback: function(value) {
-            GAME_DATA.ticker.resume();
-            return value;
-        }
-    });
-}
-
-function showEmailResponseNegative()
-{
-    GAME_DATA.ticker.pause();//Pause the game
-    vex.dialog.confirm({
-        message: '<p>We are behind at this site.</p>',
-        callback: function(value) {
-            GAME_DATA.ticker.resume();
-            return value;
-        }
-    });
-}
-
-function showEmailResponseCritical()
-{
-    GAME_DATA.ticker.pause();//Pause the game
-    vex.dialog.confirm({
-        message: '<p>We have a critical problem at this site.</p>',
-        callback: function(value) {
-            GAME_DATA.ticker.resume();
-            return value;
-        }
-    });
-}
-
-
-function showHomeSitePopup() {
-    GAME_DATA.ticker.pause();
-    var popupView;
-    vex.open({
-        content: '<div id="info-popup"></div>',
-        afterOpen: function($vexContent) {
-            popupView = new Ractive({
-                el: 'info-popup',
-                template: TEMPLATES['popupView'],
-                data: {
-                    site: get_home_site(GAME_DATA.gs.sites) //Object passed into popUpView
-                }
-            });
-        },
-        afterClose: function() {
-            GAME_DATA.ticker.resume();
-        }
-    });
-
-}
-
-function showSpecificSitePopup(site, cost) {
-    GAME_DATA.ticker.pause();
-    var popupView;
-    vex.open({
-        content: '<div id="info-popup"></div>',
-        afterOpen: function($vexContent) {
-            new_transaction(-cost);//Deduct cost of viewing site
-            popupView = new Ractive({
-                el: 'info-popup',
-                template: TEMPLATES['popupView'],
-                data: {
-                    site: site
-                }
-            });
-        },
-        afterClose: function() {
-            GAME_DATA.ticker.resume();
-        }
-    });
-
-}
-
-function update_actual_total(site){
-    for (var i=0; i < site.modules.length; i++){
-        var module = site.modules[i]
-        for (var j=0; j < module.tasks.length; j++){
-            var task = module.tasks[j];
-            task.total = task.actual_total;
-        }
-    }
-}
-
-function statusClass(site) {
-    var gs = GAME_DATA.gs;
-    if (site.culture.influence === "asian" || site.culture.influence === "russian") {
-        return "schedule-ok";
-    };
-    if(site.critical_problem === true) {
-        return "schedule-very-behind";
-    }        
-    if (site_complete(site)) return;
-    if (gs.current_time % 24 == 0 && gs.current_time > 0){
-        var actually_completed = actual_effort_completed(site);
-
-        var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
-        var expected_completed = effort_per_day/24 * gs.current_time;
-        //console.log("actually: " + actually_completed);
-        //console.log("expected: " + expected_completed);
-        if (actually_completed != expected_completed){
-    //        console.log(JSON.stringify(gs.sites, null, 3));
-     //       GAME_DATA.ticker.pause();//Pause the game
-        }
-        var difference = Math.round(actually_completed - expected_completed);
-        site.schedule = difference
-    }
-    if (site.schedule >= 0) return "schedule-ok"
-    else return "schedule-behind";
-}
-
-function on_schedule_str(site){
-    if (site_complete(site)) return site.name + " is finished";
-    var gs = GAME_DATA.gs;
-    var effort_per_day = gs.developer_effort * gs.developer_working_hours * getSiteWorkers(site);
-    var weeks = Math.round(Math.abs(site.schedule/(7*effort_per_day)));
-    if (site.schedule > 0) return site.name + " is " + weeks + " weeks ahead of schedule";
-    else if (site.schedule < 0) return site.name + " is " + weeks + " weeks behind schedule";
-    else return site.name + " is dead on schedule";
-}

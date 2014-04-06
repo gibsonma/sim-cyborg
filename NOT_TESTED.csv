@@ -1,30 +1,32 @@
 Filepath,Function Name,Reason its's not tested
 Sim/src/game.js,simpleTick,External Library
-Sim/src/game.js,update_tileView,Tested as part of update
+Sim/src/game.js,update_tileview,External Library
 Sim/src/game.js,update,Tested in Update Game State
+Sim/src/game.js,callback,External Library
+Sim/src/game.js,display_gold,External Library
 Sim/src/finance.js,daily_transactions,Wrapper Function
-Sim/src/finance.js,deduct_daily_expenses,N/A
-Sim/src/finance.js,new_transaction,N/A
-Sim/src/mainpage.js,renderTileView,External Library
-Sim/src/mainpage.js,completedTasksEmail,External Library
-Sim/src/mainpage.js,inquireAccurate,External Library
-Sim/src/mainpage.js,inquireCultural,External Library
-Sim/src/mainpage.js,showEmailResponsePositive,External Library
-Sim/src/mainpage.js,showEmailResponseNegative,External Library
-Sim/src/mainpage.js,showEmailResponseCritical,External Library
-Sim/src/mainpage.js,displayCharSheet,External Library
-Sim/src/mainpage.js,showHomeSitePopup,External Library
-Sim/src/mainpage.js,showSpecificSitePopup,External Library
-Sim/src/mainpage.js,statusClass,N/A
+Sim/src/finance.js,new_transaction,Tested in deduct_daily_expenses
+Sim/src/mainpage.js,renderTileview,External Library
 Sim/src/problem.js,intervention, External Library
 Sim/src/problem.js,displayInterventions, External Library
 Sim/src/problem.js,encounteredProblems, External Library
 Sim/src/problem.js,showMoraleInterventions, External Library
-Sim/src/scenario.js,site_builder,N/A
-Sim/src/scenario.js,module_builder,N/A
-Sim/src/scenario.js,task_builder,N/A
+Sim/src/problem.js,callback, External Library
 Sim/src/state.js,load_globals, External Library
 Sim/src/utils.js,months_to_str, Inbuilt Function
-Sim/src/utils.js,currently_doing_which_tasks,N/A
-Sim/src/utils.js,progress_on_current_task,N/A
-Sim/src/utils.js,total_of_current_task,N/A
+Sim/src/interact.js,afterClose,External Library
+Sim/src/interact.js,afterOpen,External Library
+Sim/src/interact.js,callback,External Library
+Sim/src/interact.js,displayManagementOptions,External Library
+Sim/src/interact.js,displayCharSheet,External Library
+Sim/src/interact.js,showEmailResponsePositive,External Library
+Sim/src/interact.js,showEmailResponseNegative,External Library
+Sim/src/interact.js,showEmailResponseCritical,External Library
+Sim/src/interact.js,showHomeSitePopup,External Library
+Sim/src/interact.js,afterOpen,External Library
+Sim/src/interact.js,afterClose,External Library
+Sim/src/interact.js,showSpecificSitePopup,External Library
+
+
+
+

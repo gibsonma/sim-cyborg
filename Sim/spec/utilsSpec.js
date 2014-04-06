@@ -201,3 +201,50 @@ describe("Pretty print", function()
         expect(tabled("hi","bye")).toEqual("<tr><td>hi</td><td>bye</td></tr>");
     });
 });
+describe("currently_doing_which_task", function()
+{
+	taskA = task_builder("TestA", 100);
+	taskB = task_builder("TestB", 100);
+	taskC = task_builder("TestC", 100);
+	taskD = task_builder("TestD", 100);
+	taskA.completed = 10;taskA.actual_total = 20;
+	taskB.completed = 20;taskB.actual_total = 10;
+	taskC.completed = 0;taskC.actual_total = 10;
+	taskD.completed = 0;taskD.actual_total = 15;
+	
+	it("Return a task if actual_total is larger than completed and completed is not zero", function()
+	{
+		var tasks = [taskA, taskB];
+		expect(currently_doing_which_task(tasks)).toEqual(taskA);
+	});
+	it("Return a list of tasks iterated through before current task if actual total is larger and completed is zero", function()
+	{
+		var tasks = [taskC, taskD, taskA, taskB];
+		expect(currently_doing_which_task(tasks)).toEqual(taskC);
+	});
+});
+describe("progress_on_current_task", function()
+{
+	it("Returns the progress of the module", function()
+	{
+		var mod = module_builder("TestA", 5, 100);
+		expect(progress_on_current_task(mod)).toEqual(0);
+	});
+});
+describe("site_complete", function()
+{
+	var game = new GameState(1);
+	var site = game.sites[0];
+	it("Returns false if the site is not finished", function()
+	{
+		expect(site_complete(site)).toBeFalsy();
+	});
+});
+describe("total_of_current_task", function()
+{
+	var mod = module_builder("TestA", 5, 100);
+	it("Returns the total correctly", function()
+	{
+		expect(total_of_current_task(mod)).toEqual(0.09375);
+	});
+});

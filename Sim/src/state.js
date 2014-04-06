@@ -11,6 +11,7 @@ var TICKS_PASSED = 0;               // Keep track of how many ticks we've seen s
 // Blop to store the global game data/objects such as game state, the scene, the ticker
 var GAME_DATA = {};
 GAME_DATA.current_site = 0;
+GAME_DATA.player = new Player();
 var PROBLEM_CONSTANT; //constant value for problem simulator, used to tweak difficulty, decrease to reduce problems
 var PROBLEM_COOLDOWN = 0.0025;
 var MORALE_MOD;//Represents how quickly a morale interventions impact errodes each time its used, the closer to 0, the quicker it erodes
@@ -19,7 +20,7 @@ var MAX_MORALE;//Highest morale a site can have
 var days_since_morale_warning = 14;//Tracks how many days have passed since the user was last warned about a site's low morale to prevent spamming the user with warnings. Starts at 7 to allow for low morale to be reported during the simulation's first week
 var chance_to_decrease_morale = 0.0;//Chance that morale will decrease, value rises when problems are ignored
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
-
+var EVENT_CHANCE;
 //Timezones - dictate when sites work. First index is start of work day, second index is end
 var TIMEZONE_EUROPE = [9,17];
 var TIMEZONE_AMERICA = [2,10];
@@ -101,7 +102,7 @@ function GameState(setting)
     this.interventions = [];
     this.morale_interventions = [];
     this.days_per_month = 30;
-    this.player = new Player();
+    this.player = GAME_DATA.player;
 }
 
 function load_globals(gs){
@@ -110,29 +111,40 @@ function load_globals(gs){
         gs.global_distances = obj.global_distances;
         gs.temporal_distances = obj.temporal_distances;
         gs.cultural_distances = obj.cultural_distances;
-        gs.revenue = obj.revenue *gs.player.intelligence; //change revenue based on how intelligent the manager is
+        gs.revenue = obj.revenue *gs.player.intelligence_mod; //change revenue based on how intelligent the manager is
         gs.starting_capital = obj.starting_capital;
-        gs.developer_effort = obj.developer_effort*gs.player.assertiveness;
-        gs.developer_rate = obj.developer_rate*gs.player.charisma; //more charismatic  managers will improve how workers see you, and therefore how hard they work
+        gs.developer_effort = obj.developer_effort*gs.player.assertiveness_mod;
+        gs.developer_rate = obj.developer_rate*gs.player.charisma_mod; //more charismatic  managers will improve how workers see you, and therefore how hard they work
         gs.developer_working_hours = obj.developer_working_hours;
         gs.capital = gs.starting_capital;
         gs.interventions = obj.interventions;	
         gs.morale_interventions = obj.morale_interventions;
+		gs.good_events = obj.good_special_events;
+		gs.bad_events = obj.bad_special_events;
         PROBLEM_CONSTANT = obj.problem_constant;
-        MORALE_MOD = obj.morale_modifier*gs.player.empathy;
+        MORALE_MOD = obj.morale_modifier*(1/gs.player.empathy_mod);
 		MIN_MORALE = obj.min_morale;
 		MAX_MORALE = obj.max_morale;
         PROBLEM_COOLDOWN = obj.problem_site_cooldown;
+		EVENT_CHANCE = obj.special_event_constant;
     });
 }
 function Player(){
-    this.sensitivity   = 1; //for noticing workplace issues etc
-    this.perception    = 1; //for figuring out potential problems before they happen
-    this.empathy       = 1; //for knowing in advance when your morale is dropping, also gives a bonus to morale --DECREASE THIS MODIFIER AT HIGHER LEVELS
-    this.charisma      = 1; //for interacting with your workers to improve their productivity --INCREASE THIS MODIFIER AT HIGHER LEVELS
-    this.intelligence  = 1; //for making better business decisions, impacts revenue --INCREASE THIS MODIFIER AT HIGHER LEVELS
-    this.assertiveness = 1; //for increasing productivity/developer effort --INCREASE THIS MODIFIER AT HIGHER LEVELS
-    this.luck          = 1; //sometimes, something nice will happen... or sometimes, something bad.
+    this.sensitivity   = 0; //for noticing workplace issues etc
+    this.perception    = 0; //for figuring out potential problems before they happen
+    this.empathy       = 0; //for knowing in advance when your morale is dropping, also gives a bonus to morale --DECREASE THIS MODIFIER AT HIGHER LEVELS
+    this.charisma      = 0; //for interacting with your workers to improve their productivity --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.intelligence  = 0; //for making better business decisions, impacts revenue --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.assertiveness = 0; //for increasing productivity/developer effort --INCREASE THIS MODIFIER AT HIGHER LEVELS
+    this.luck          = 0; //sometimes, something nice will happen... or sometimes, something bad.
+
+    this.sensitivity_mod = 1 + (this.sensitivity/10);
+    this.perception_mod  = 1 + (this.perception/10);
+    this.empathy_mod = 1 + (this.empathy/10);
+    this.charisma_mod = 1 + (this.charisma/20);
+    this.intelligence_mod = 1 + (this.intelligence/20);
+    this.assertiveness_mod = 1 +  (this.assertiveness/20);
+    this.luck_mod = this.luck*10;
 }
 
 function Site(name, culture_modifier, dev, timezone, home){
@@ -196,6 +208,12 @@ function MoralIntervention(name, cost, init_impact)
     this.cost = cost;//Cost of buying
     this.init_impact = init_impact;//Initial impact on site morale
     this.sites_implemented = {};//A dictionary linking the sites that have purchased the intervention and how many times
+}
+
+function Event(name, message)
+{
+	this.name = name;
+	this.message = message;
 }
 
 function vary(total){
