@@ -153,3 +153,6 @@ button:disabled {
 	background: #9FB2C7;
 }
 
+#legend {
+    margin:5px;
+}

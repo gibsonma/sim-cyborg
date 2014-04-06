@@ -306,18 +306,21 @@ function showSpecificSitePopup(site, cost) {
             });
             for (var i=0; i < site.modules.length; i++){
                 var module = site.modules[i];
-                var mod_labels = largest_history_labels(module);
-                var mod_datasets = task_datasets(module);
 
                 var mod_graph_data = {
-                    labels: mod_labels,
-                    datasets : mod_datasets
+                    labels: largest_history_labels(module),
+                    datasets : task_datasets(module)
                 }
                 var ctx = $("#"+normalise_module_name(module)).get(0).getContext("2d");
                 new Chart(ctx).Line(mod_graph_data,{
                     bezierCurve:false,
-                    pointDot:false
+                    pointDot:false,
+                    scaleOverride:false,
+                    scaleSteps:10,
+                    scaleStepWidth: 10,
+                    scaleStartValue: 0
                 });
+                legend(document.getElementById("legend"), mod_graph_data);
             }
         },
         afterClose: function() {
@@ -334,12 +337,14 @@ function task_datasets(module){
         for (var j=0; j < task.completion_log.length; j++){
             task_data.push(task.completion_log[j]);
         }
+        var color = "hsl(" + i*50 + ", 50%, 50%)";
         datasets.push({
-            fillColor : "rgba(151,187,205,0.5)",
-            strokeColor : "rgba(151,187,205,1)",
-            pointColor : "rgba(151,187,205,1)",
+            fillColor : "rgba(151,187,205,0.0)",
+            strokeColor : color,
+            pointColor : color,
             pointStrokeColor : "#fff",
-            data : task_data
+            data : task_data,
+            title: task.name
         });
     }
     return datasets;
