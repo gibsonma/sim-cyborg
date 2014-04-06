@@ -101,3 +101,13 @@ describe("inquireAccurate", function()
 		expect(new_transaction).toHaveBeenCalledWith(-100);
 	});
 });	
+describe("inquireCultural", function()
+{
+	it("Calls the transaction function", function()
+	{
+		new_transaction = jasmine.createSpy();
+		inquireCultural(game.sites[0]);
+		expect(new_transaction).toHaveBeenCalled();
+		expect(new_transaction).toHaveBeenCalledWith(-100);
+	});
+});
