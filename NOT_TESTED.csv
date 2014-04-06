@@ -1,6 +1,6 @@
 Filepath,Function Name,Reason its's not tested
 Sim/src/game.js,simpleTick,External Library
-Sim/src/game.js,update_tileView,Tested as part of update
+Sim/src/game.js,update_tileview,External Library
 Sim/src/game.js,update,Tested in Update Game State
 Sim/src/game.js,callback,External Library
 Sim/src/game.js,display_gold,External Library
@@ -29,3 +29,7 @@ Sim/src/utils.js,months_to_str, Inbuilt Function
 Sim/src/utils.js,currently_doing_which_tasks,N/A
 Sim/src/utils.js,progress_on_current_task,N/A
 Sim/src/utils.js,total_of_current_task,N/A
+Sim/src/interact.js,afterClose,External Library
+Sim/src/interact.js,afterOpen,External Library
+Sim/src/interact.js,callback,External Library
+
