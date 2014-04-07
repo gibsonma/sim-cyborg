@@ -20,7 +20,8 @@ var MAX_MORALE;//Highest morale a site can have
 var days_since_morale_warning = 14;//Tracks how many days have passed since the user was last warned about a site's low morale to prevent spamming the user with warnings. Starts at 7 to allow for low morale to be reported during the simulation's first week
 var chance_to_decrease_morale = 0.0;//Chance that morale will decrease, value rises when problems are ignored
 var WORK_LOAD = 2; //Sum of effort of all tasks is divided by this to represent accurate effort estimates
-var EVENT_CHANCE;
+var G_EVENT_CHANCE;
+var B_EVENT_CHANCE;
 //Timezones - dictate when sites work. First index is start of work day, second index is end
 var TIMEZONE_EUROPE = [9,17];
 var TIMEZONE_AMERICA = [2,10];
@@ -126,7 +127,8 @@ function load_globals(gs){
 		MIN_MORALE = obj.min_morale;
 		MAX_MORALE = obj.max_morale;
         PROBLEM_COOLDOWN = obj.problem_site_cooldown;
-		EVENT_CHANCE = obj.special_event_constant;
+		G_EVENT_CHANCE = obj.special_g_event_constant;
+		B_EVENT_CHANCE = obj.special_b_event_constant;
     });
 }
 function Player(){

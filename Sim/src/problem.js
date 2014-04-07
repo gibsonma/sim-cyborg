@@ -181,13 +181,15 @@ function intervention(gs)
 		else
 		{
 			var rand1 = Math.random(1);
-			if(rand1 <= EVENT_CHANCE)
+			if(gs.time["Days Passed"] >= 10)
 			{
-				console.log(rand1);
-				if(gs.time["Days Passed"] >= 10)
+				if(rand1 <= G_EVENT_CHANCE)
 				{
 					if(Math.random() + gs.player.luck/100 >= 0.5)generateGoodEvent(gs);
-					else generateBadEvent(gs);
+				}
+				else if(rand1 <= B_EVENT_CHANCE)
+				{
+					if(Math.random() >= 0.5)generateBadEvent(gs);
 				}
 			}
 		}
@@ -201,7 +203,7 @@ function getEvent(gs, gs_events)
 	var chosen = events[index];
 	GAME_DATA.ticker.pause();
 	vex.dialog.confirm({
-		message: '<p>'+chosen.name+'</p>' + '<p>' +chosen.message+'</p>',
+		message: '<p><b>'+chosen.name+'</b></p>' + '<p>' +chosen.message+'</p>',
 		buttons: [$.extend({}, vex.dialog.buttons.YES, {text: 'OK'})],
 		callback: function(value) {    
 				GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed
