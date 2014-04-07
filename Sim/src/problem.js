@@ -70,7 +70,7 @@ function implementChosenIntervention(gs, intervention_name)
 	switch(chosen.name)//Values taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
 	{				   //High impact of 4 translates to a 0.4 reduction in problem occurance
 		case 'Face to face meetings':
-				reduce_percentages([0.4,0.4,0.4,0.4,0.4,0.4,0.4]);
+				reduce_percentages([0.5,0.5,0.5,0.5,0.5,0.5,0.5]);
 				break;
 		case 'Video Conferencing':
 				reduce_percentages([0.2,0,0,0,0,0,0]);
@@ -116,7 +116,7 @@ function reduce_percentages(changes_list)
 	for(var i = 0; i < changes_list.length; i++)
 	{
 		percentages[i] -= changes_list[i];
-		if(percentages[i] < 0.25)percentages[i] = 0.25;
+		if(percentages[i] < 0.10)percentages[i] = 0.10;
 	}
 }
 
@@ -184,8 +184,11 @@ function intervention(gs)
 			if(rand1 <= EVENT_CHANCE)
 			{
 				console.log(rand1);
-				if(Math.random() + gs.player.luck/100 >= 0.5 && gs.time["Days Passed"] >= 10)generateGoodEvent(gs);
-				else generateBadEvent(gs);
+				if(gs.time["Days Passed"] >= 10)
+				{
+					if(Math.random() + gs.player.luck/100 >= 0.5)generateGoodEvent(gs);
+					else generateBadEvent(gs);
+				}
 			}
 		}
     }

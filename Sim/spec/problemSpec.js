@@ -63,7 +63,7 @@ describe("The Intervention Interface", function()
 		it("Returns the intervention if the name passed in matches", function()
 		{
 			expect(game.interventions).toBeDefined();
-			expect(result).toEqual(game.interventions[0]);
+			expect(result).toEqual(game.interventions[3]);
 		});
 		var result_fake = getChosenIntervention(game, "Test");
 		it("Returns -1 if the intervention name doesn't match any interventions", function()
@@ -80,7 +80,7 @@ describe("The Intervention Interface", function()
 			var percents = percentages;
 			for(var i = 0; i < percents.length; i++)
 			{
-				expect(percents[i]).not.toBeLessThan(0.25);
+				expect(percents[i]).not.toBeLessThan(0.10);
 			}
 		});
 	});
@@ -88,7 +88,7 @@ describe("The Intervention Interface", function()
 	{
 		load_globals(game);
 		var problem = new Problem("Module failed to integrate",10, 20,0,1);
-		var intervention = { name : 'Face to face meetings', init_cost : 5000, daily_cost : 150, is_implemented : false, affects : [ 1, 1, 1, 1, 1, 1, 1 ] };
+		var intervention = {"name":"Reduce Multi-cultural interactions","init_cost": 200, "daily_cost":625, "is_implemented":false, "affects":[1,1,1,1,1,1,1]};
 		it("Returns a list of applicable interventions", function()
 		{
 			expect(get_applicable_interventions(game, problem)[0]).toEqual(intervention);
