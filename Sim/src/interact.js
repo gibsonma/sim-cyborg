@@ -68,12 +68,12 @@ function implementChosenManagementStyle(gs, tmp)
 
 function displayManagementOptions(gs)
 {
-	var options = '<h3> Here Are some Management Styles you can choose from. Each one, bar the last one, impacts how the simulation will turn out, changing things like how lucky you are or how charismatic you are</h3>'; 
+	var options = '<h3> Here are some styles of Management you can choose from. Each one, bar the last one, impacts how the simulation will turn out based on your personality.</h3>'; 
 	options += '<table class="itable"><tr class="itr"><td class="itd">Name</td><td = class="itd">Description</td><td class ="itd">Select</td></tr>';
 	
 	options += '<tr class="itr"><td class="itd">Laissez Faire</td><td class="itd">You take a pretty relaxed approach to management, making friends with your employees and having fun. Morale is always high and you understand what is going on in the workplace, so there is no nasty surprises when problems arise!</td><td class="itd"><button id="management-buy">Select Laissez Faire</button></td></tr>'
 	
-	options += '<tr class="itr"><td class="itd">Authoritarian</td><td class="itd">You Will be Assimilated. Resistance is Futile. An Authoritarian management style with guarantee results, although your employees may resent the attitude you take towards them - morale management will be a high priority. Due to your cold. unfeeling robot heart, you are unable to empathise with your employees, so you may be unaware of brewing trouble in the workplace!</td><td class="itd"><button id="management-buy">Select Authoritarian</button></td></tr>'
+	options += '<tr class="itr"><td class="itd">Authoritarian</td><td class="itd">You Will be Assimilated. Resistance is Futile. An Authoritarian management style will guarantee results, although your employees may resent the attitude you take towards them - morale management will be a high priority. Due to your cold. unfeeling robot heart, you are unable to empathise with your employees, so you may be unaware of brewing trouble in the workplace!</td><td class="itd"><button id="management-buy">Select Authoritarian</button></td></tr>'
 	
 	options += '<tr class="itr"><td class="itd">How Did I get this job?</td><td class="itd">You seem to have just stumbled into the job, without any real idea of how to manage a project. Thankfully, you have always had good luck, and things seem to always go your way.</td><td class="itd"><button id="management-buy">Select How Did I get this job?</button></td></tr>'
 	
