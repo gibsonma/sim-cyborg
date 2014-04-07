@@ -245,6 +245,13 @@ function generateGoodEvent(gs)
 		case 'I believe you have my stapler':
 			for(var i = 0; i < gs.sites.length; i++)modifyMorale(gs.sites[i],5);
 			break;
+		case 'New Business Cards':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],-5);
+			}
+			gs.revenue += 1000;
+			break;
 		default:
 			console.log("Invalid Event Passed in");
 			break;
