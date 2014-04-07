@@ -239,6 +239,9 @@ function generateGoodEvent(gs)
 				gs.developer_effort += 0.1;
 			}
 			break;
+		case 'New Office Pet':
+			for(var i = 0; i < gs.sites.length; i++)modifyMorale(gs.sites[i],2);
+			break;
 		default:
 			console.log("Invalid Event Passed in");
 			break;
@@ -268,6 +271,13 @@ function generateBadEvent(gs)
 			{
 				modifyMorale(gs.sites[i],-9);
 				gs.developer_effort -= 0.2;
+			}
+			break;
+		case 'Office Theft':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],-12);
+				gs.developer_effort -= 0.1;
 			}
 			break;
 		default:
