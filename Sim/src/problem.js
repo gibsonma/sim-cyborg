@@ -220,14 +220,14 @@ function generateGoodEvent(gs)
 	var chosen = getEvent(gs, gs.good_events);
 	switch(chosen.name)
 	{
-		case 'Good PR':
+		case 'The power of advertising':
 			for(var i = 0; i < gs.sites.length; i++)
 			{
 				modifyMorale(gs.sites[i],10);
 			}
 			gs.revenue += 100000;
 			break;
-		case 'Surprise Investment':
+		case 'Brown Envelope':
 			var sum = 100000;
 			gs.capital += sum;
 			new_transaction(sum);
@@ -239,10 +239,10 @@ function generateGoodEvent(gs)
 				gs.developer_effort += 0.1;
 			}
 			break;
-		case 'New Office Pet':
+		case 'Canine Companion':
 			for(var i = 0; i < gs.sites.length; i++)modifyMorale(gs.sites[i],2);
 			break;
-		case 'Red Staplers have arrived':
+		case 'I believe you have my stapler':
 			for(var i = 0; i < gs.sites.length; i++)modifyMorale(gs.sites[i],5);
 			break;
 		default:
@@ -256,7 +256,7 @@ function generateBadEvent(gs)
 	var chosen = getEvent(gs, gs.bad_events);
 	switch(chosen.name)
 	{
-		case 'Source Code Released':
+		case 'Blame the interns':
 			for(var i = 0; i < gs.sites.length; i++)
 			{
 				modifyMorale(gs.sites[i],-10);
@@ -276,14 +276,14 @@ function generateBadEvent(gs)
 				gs.developer_effort -= 0.2;
 			}
 			break;
-		case 'Office Theft':
+		case 'Industrial Sabotage':
 			for(var i = 0; i < gs.sites.length; i++)
 			{
 				modifyMorale(gs.sites[i],-12);
 				gs.developer_effort -= 0.1;
 			}
 			break;
-		case 'New T.V. Episode':
+		case 'A Game of (Git) Clones':
 			for(var i = 0; i < gs.sites.length; i++)
 			{
 				modifyMorale(gs.sites[i],-10);
