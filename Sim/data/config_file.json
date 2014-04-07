@@ -44,18 +44,18 @@
 		{"name":"Exchange Program", "init_cost": 30000, "daily_cost":550, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
 	],
 	"bad_special_events": [
-		{"name":"Source Code Released", "message":"Your source code was leaked to the public, this will hurt your revenue"},
+		{"name":"Blame the interns", "message":"Your source code was leaked to the public, the interns have been blamed"},
 		{"name":"Fire in the office", "message":"One of your offices caught fire! The blaze was put out but everyone is a little shaken up about it"},
-		{"name":"Office Theft", "message":"One of your sites has had a break-in and some hardware was stolen"},
-		{"name":"New T.V. Episode", "message":"Last night a popular television show aired a new episode. As a result many employees have come into work tired having stayed up all night to watch it"},
-		{"name":"Extreme Partying", "message":"Your workers partied too hard last night, productivity reduced"}
+		{"name":"Industrial Sabotage", "message":"One of your sites has had a break-in all signs point towards your business rival, IBN"},
+		{"name":"A Game of (Git) Clones", "message":"Last night a popular television show aired a new episode. As a result many employees have come into work tired having stayed up all night to watch it"},
+		{"name":"Extreme Partying", "message":"Your workers partied too hard last night, productivity  will be reduced"}
 	],
 	"good_special_events": [
 		{"name":"Good PR", "message":"You have been getting a lot of positive press coverage lately, this will boost morale and end revenue"},
 		{"name":"The Internet is pleased", "message":"Your product has been getting a lot of positive reinformcement from Twitter and other Internet sites"},
 		{"name":"New Office Pet", "message":"A dog wandered into the office. He had what appeared to be a large thumbs up for a birthmark. The site manager declared the dog to be a good omen and it has now become an office mascot"},
-		{"name":"Red Staplers have arrived", "message":"Large shipments of red staplers have arrived across all of your sites, morale has improved slightly, don't just don't touch them!"},
-		{"name":"Surprise Investment", "message":"A substantial investment has just been received from an unknown donor"}
+		{"name":"I believe you have my stapler", "message":"Large shipments of red staplers have arrived across all of your sites, morale has improved slightly, don't just don't touch them!"},
+		{"name":"Brown Envelope", "message":"A substantial investment has just been received from an unknown donor"}
 	],
 	"morale_interventions": [
 		{"name":"Buy Pizza","cost": 200, "init_impact":10, "sites_implemented":{}},
