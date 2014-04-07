@@ -283,6 +283,13 @@ function generateBadEvent(gs)
 				gs.developer_effort -= 0.1;
 			}
 			break;
+		case 'New T.V. Episode':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],-10);
+				gs.developer_effort -= 0.1;
+			}
+			break;
 		default:
 			console.log("Invalid Event Passed in");
 			break;

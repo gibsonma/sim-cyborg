@@ -47,6 +47,7 @@
 		{"name":"Source Code Released", "message":"Your source code was leaked to the public, this will hurt your revenue"},
 		{"name":"Fire in the office", "message":"One of your offices caught fire! The blaze was put out but everyone is a little shaken up about it"},
 		{"name":"Office Theft", "message":"One of your sites has had a break-in and some hardware was stolen"},
+		{"name":"New T.V. Episode", "message":"Last night a popular television show aired a new episode. As a result many employees have come into work tired having stayed up all night to watch it"},
 		{"name":"Extreme Partying", "message":"Your workers partied too hard last night, productivity reduced"}
 	],
 	"good_special_events": [
