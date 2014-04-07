@@ -242,6 +242,9 @@ function generateGoodEvent(gs)
 		case 'New Office Pet':
 			for(var i = 0; i < gs.sites.length; i++)modifyMorale(gs.sites[i],2);
 			break;
+		case 'Red Staplers have arrived':
+			for(var i = 0; i < gs.sites.length; i++)modifyMorale(gs.sites[i],5);
+			break;
 		default:
 			console.log("Invalid Event Passed in");
 			break;

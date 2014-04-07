@@ -52,7 +52,8 @@
 	"good_special_events": [
 		{"name":"Good PR", "message":"You have been getting a lot of positive press coverage lately, this will boost morale and end revenue"},
 		{"name":"The Internet is pleased", "message":"Your product has been getting a lot of positive reinformcement from Twitter and other Internet sites"},
-		{"name":"New Office Pet", "message":"A dog wandered into the office. He had what appeared to be a large thumbs up for a birthmark. The site manager declared the dog to be good luck and it had now became an office pet"},
+		{"name":"New Office Pet", "message":"A dog wandered into the office. He had what appeared to be a large thumbs up for a birthmark. The site manager declared the dog to be a good omen and it has now become an office mascot"},
+		{"name":"Red Staplers have arrived", "message":"Large shipments of red staplers have arrived across all of your sites, morale has improved slightly, don't just don't touch them!"},
 		{"name":"Surprise Investment", "message":"A substantial investment has just been received from an unknown donor"}
 	],
 	"morale_interventions": [
