@@ -45,10 +45,12 @@
 	],
 	"bad_special_events": [
 		{"name":"Source Code Released", "message":"Your source code was leaked to the public, this will hurt your revenue"},
+		{"name":"Fire in the office", "message":"One of your offices has caught fire"},
 		{"name":"Extreme Partying", "message":"Your workers partied too hard last night, productivity reduced"}
 	],
 	"good_special_events": [
 		{"name":"Good PR", "message":"You have been getting a lot of positive press coverage lately, this will boost morale and end revenue"},
+		{"name":"The Internet is pleased", "message":"Your product has been getting a lot of positive reinformcement from Twitter and other Internet sites"},
 		{"name":"Surprise Investment", "message":"A substantial investment has just been received from an unknown donor"}
 	],
 	"morale_interventions": [

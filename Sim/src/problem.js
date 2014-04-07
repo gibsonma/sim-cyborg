@@ -232,6 +232,13 @@ function generateGoodEvent(gs)
 			gs.capital += sum;
 			new_transaction(sum);
 			break;
+		case 'The Internet is pleased':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],5);
+				gs.developer_effort += 0.1;
+			}
+			break;
 		default:
 			console.log("Invalid Event Passed in");
 			break;
@@ -254,6 +261,13 @@ function generateBadEvent(gs)
 			for(var i = 0; i < gs.sites.length; i++)
 			{
 				modifyMorale(gs.sites[i],-15);
+			}
+			break;
+		case 'Fire in the office':
+			for(var i = 0; i < gs.sites.length; i++)
+			{
+				modifyMorale(gs.sites[i],-9);
+				gs.developer_effort -= 0.2;
 			}
 			break;
 		default:
