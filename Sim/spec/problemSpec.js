@@ -160,9 +160,8 @@ describe("Random Event Generation", function()
 		{
 			var testGame = game;
 			testGame.good_events = [game.good_events[1]];
-			new_transaction = jasmine.createSpy();
 			generateGoodEvent(testGame);
-			expect(new_transaction).toHaveBeenCalled();
+			expect(testGame.revenue).toEqual(1100000);
 		});
 	});
 	describe("generateBadEvent", function()
