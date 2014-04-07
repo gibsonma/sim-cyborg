@@ -184,7 +184,7 @@ function intervention(gs)
 			if(rand1 <= EVENT_CHANCE)
 			{
 				console.log(rand1);
-				if(Math.random() + gs.player.luck/100 >= 0.5)generateGoodEvent(gs);
+				if(Math.random() + gs.player.luck/100 >= 0.5 && gs.time["Days Passed"] >= 10)generateGoodEvent(gs);
 				else generateBadEvent(gs);
 			}
 		}
