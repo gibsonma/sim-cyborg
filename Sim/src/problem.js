@@ -201,9 +201,13 @@ function getEvent(gs, gs_events)
 	var events = gs_events;
 	var index = Math.floor((Math.random()*events.length));
 	var chosen = events[index];
+	var effects = '';
+	for(var i = 0; i < chosen.effects.length; i++)effects += chosen.effects[i] + '<br>';
 	GAME_DATA.ticker.pause();
 	vex.dialog.confirm({
-		message: '<p><b>'+chosen.name+'</b></p>' + '<p>' +chosen.message+'</p>',
+		message: 	'<p><b>'+chosen.name+'</b></p>' + 
+					'<p>' +chosen.message+'</p>'+
+					'<p><i>' + effects + '</i></p>',
 		buttons: [$.extend({}, vex.dialog.buttons.YES, {text: 'OK'})],
 		callback: function(value) {    
 				GAME_DATA.ticker.resume();//Note effect of problem no longer being reversed

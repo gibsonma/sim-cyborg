@@ -44,19 +44,19 @@
 		{"name":"Exchange Program", "init_cost": 30000, "daily_cost":550, "is_implemented":false, "affects":[1,0,0,0,0,1,0]}
 	],
 	"bad_special_events": [
-		{"name":"Blame the interns", "message":"Your source code was leaked to the public, the interns have been blamed"},
-		{"name":"Fire in the office", "message":"One of your offices caught fire! The blaze was put out but everyone is a little shaken up about it"},
-		{"name":"Industrial Sabotage", "message":"One of your sites has had a break-in all signs point towards your business rival, IBN"},
-		{"name":"A Game of (Git) Clones", "message":"Last night a popular television show aired a new episode. As a result many employees have come into work tired having stayed up all night to watch it"},
-		{"name":"Extreme Partying", "message":"Your workers partied too hard last night, productivity  will be reduced"}
+		{"name":"Blame the interns", "message":"Your source code was leaked to the public, the interns have been blamed", "effects":["Morale - 10", "Revenue - $100000"]},
+		{"name":"Fire in the office", "message":"One of your offices caught fire! The blaze was put out but everyone is a little shaken up about it", "effects":["Morale - 9", "Developer Effort - 0.2"]},
+		{"name":"Industrial Sabotage", "message":"One of your sites has had a break-in all signs point towards your business rival, IBN", "effects":["Morale - 12", "Developer Effort - 0.1"]},
+		{"name":"A Game of (Git) Clones", "message":"Last night a popular television show aired a new episode. As a result many employees have come into work tired having stayed up all night to watch it", "effects":["Morale - 10", "Developer Effort - 0.1"]},
+		{"name":"Extreme Partying", "message":"Your workers partied too hard last night, productivity  will be reduced", "effects":["Morale - 15"]}
 	],
 	"good_special_events": [
-		{"name":"The power of advertising", "message":"Your latest company jingle has been featured in Buzzfeed's 'top 20 company jingles' list"},
-		{"name":"The Internet is pleased", "message":"Your product has been getting a lot of positive reinformcement from Twitter and other social media"},
-		{"name":"Canine Companion", "message":"A dog wandered into the office. He had what appeared to be a large thumbs up for a birthmark. The site manager declared the dog to be a good omen and it has now become an office mascot"},
-		{"name":"I believe you have my stapler", "message":"Large shipments of red staplers have arrived across all of your sites, morale has improved slightly, just don't touch them!"},
-		{"name":"New Business Cards", "message":"Look at that subtle off-white coloring. The tasteful thickness of it. Oh my God, it even has a watermark!"},
-		{"name":"Brown Envelope", "message":"A substantial investment has just been received from an unknown donor"}
+		{"name":"The power of advertising", "message":"Your latest company jingle has been featured in Buzzfeed's 'top 20 company jingles' list", "effects":["Morale + 10", "Revenue + $100000"]},
+		{"name":"The Internet is pleased", "message":"Your product has been getting a lot of positive reinformcement from Twitter and other social media", "effects":["Morale + 5", "Developer Effort + 0.1"]},
+		{"name":"Canine Companion", "message":"A dog wandered into the office. He had what appeared to be a large thumbs up for a birthmark. The site manager declared the dog to be a good omen and it has now become an office mascot", "effects":["Morale + 2"]},
+		{"name":"I believe you have my stapler", "message":"Large shipments of red staplers have arrived across all of your sites, morale has improved slightly, just don't touch them!", "effects":["Morale + 5"]},
+		{"name":"New Business Cards", "message":"Look at that subtle off-white coloring. The tasteful thickness of it. Oh my God, it even has a watermark!", "effects":["Morale - 5", "Revenue + 1000"]},
+		{"name":"Brown Envelope", "message":"A substantial investment has just been received from an unknown donor", "effects":["Capital + $100000"]}
 	],
 	"morale_interventions": [
 		{"name":"Buy Pizza","cost": 200, "init_impact":10, "sites_implemented":{}},

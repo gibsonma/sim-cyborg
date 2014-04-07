@@ -212,10 +212,11 @@ function MoralIntervention(name, cost, init_impact)
     this.sites_implemented = {};//A dictionary linking the sites that have purchased the intervention and how many times
 }
 
-function Event(name, message)
+function Event(name, message, effects)
 {
 	this.name = name;
 	this.message = message;
+	this.effects = effects;
 }
 
 function vary(total){
