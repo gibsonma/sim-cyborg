@@ -52,7 +52,7 @@
 	],
 	"good_special_events": [
 		{"name":"The power of advertising", "message":"Your latest company jingle has been featured in Buzzfeed's 'top 20 company jingles' list", "effects":["Morale + 10", "Revenue + $100000"]},
-		{"name":"The Internet is pleased", "message":"Your product has been getting a lot of positive reinformcement from Twitter and other social media", "effects":["Morale + 5", "Developer Effort + 0.1"]},
+		{"name":"The Internet is pleased", "message":"Your product has been getting a lot of positive reinforcement from Twitter and other social media", "effects":["Morale + 5", "Developer Effort + 0.1"]},
 		{"name":"Canine Companion", "message":"A dog wandered into the office. He had what appeared to be a large thumbs up for a birthmark. The site manager declared the dog to be a good omen and it has now become an office mascot", "effects":["Morale + 2"]},
 		{"name":"I believe you have my stapler", "message":"Large shipments of red staplers have arrived across all of your sites, morale has improved slightly, just don't touch them!", "effects":["Morale + 5"]},
 		{"name":"New Business Cards", "message":"Look at that subtle off-white coloring. The tasteful thickness of it. Oh my God, it even has a watermark!", "effects":["Morale - 5", "Revenue + 1000"]},
