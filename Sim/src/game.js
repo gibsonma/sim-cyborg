@@ -174,7 +174,9 @@ function incrementLocalTimes(gs)
 function display_final_score(gs){
     var stats = new report(gs);
     var html = "<h2>End of Game Report</h2>";
+    html += '<canvas id="finance_graph" width="520" height="300"></canvas>';
     html += "<table id=\"end_of_game_table\">";
+    html += '<div id="finance_legend"></div>';
     html += tabled("Final score: ", Math.round(stats.final_score));
     html += tabled("Expected project length: ",  stats.expected_months_str);
     html += tabled("Actual project length: ",  stats.months_str);
@@ -188,13 +190,54 @@ function display_final_score(gs){
     html += tabled("Actual revenue: ", "$" + stats.actual_revenue);
     html += "</table>";
     vex.defaultOptions.overlayClosesOnClick = false;
-    vex.dialog.alert(html);
-    if ($("#report").length == 0){
-        $("#dialog_box_controls").append("<button id=\"report\">End of game report</button>");
-        $('#report').click(function() {
-            display_final_score(GAME_DATA.gs);
-        });
+
+    vex.open({
+        content: html,
+        afterOpen: function($vexContent){
+            graph_financial_log();
+            if ($("#report").length == 0){
+                $("#dialog_box_controls").append("<button id=\"report\">End of game report</button>");
+                $('#report').click(function() {
+                    display_final_score(GAME_DATA.gs);
+                });
+            }
+        }
+    });
+
+}
+
+function graph_financial_log(){
+    var gs =GAME_DATA.gs;
+    time = []
+    capital = []
+    for (var i=0; i < gs.financial_log.length ; i++){
+        time.push(gs.financial_log[i].time);
+        capital.push(gs.financial_log[i].capital);
     }
+    var data = {
+        labels : time,
+        datasets : [
+            {
+            fillColor : "rgba(151,187,205,0.5)",
+            strokeColor : "rgba(151,187,205,1)",
+            pointColor : "rgba(151,187,205,1)",
+            pointStrokeColor : "#fff",
+            data : capital,
+            title: 'Capital'
+        },
+        ]
+    }
+    var ctx = $("#finance_graph").get(0).getContext("2d");
+    new Chart(ctx).Line(data,{
+        bezierCurve:false,
+        pointDot:false,
+        scaleOverride:false,
+        scaleSteps:10,
+        scaleStepWidth: 10,
+        scaleStartValue: 0,
+        datasetStrokeWidth : 4
+    });
+    legend(document.getElementById("finance_legend"), data);
 }
 
 var tileView;
@@ -211,15 +254,15 @@ function display_game_time(gs){
         daysRemaining = "0 (Overdue!)";
     }
     if(gs.time["Current Hour"] % 24 == 0)
-    {
-        gs.time["Days Passed"]++;
-    }
-    var curHour = gs.time["Current Hour"];
-    if (curHour < 10) {
-        curHour = "0" + curHour;
-    }
-    $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+ curHour +":00"+"</h3>");
-    $("#time").append("<h3>Estimated days remaining: " + daysRemaining + "</h3>");
+        {
+            gs.time["Days Passed"]++;
+        }
+        var curHour = gs.time["Current Hour"];
+        if (curHour < 10) {
+            curHour = "0" + curHour;
+        }
+        $("#time").html("<h3>Days Passed: "+gs.time["Days Passed"]+ " Current Time "+ curHour +":00"+"</h3>");
+        $("#time").append("<h3>Estimated days remaining: " + daysRemaining + "</h3>");
 }
 
 function calculate_days_remaining(gs) {
@@ -238,7 +281,7 @@ function update(gs)
     for (var i=0; i < gs.sites.length; i++){
         var site = gs.sites[i];
         /* waterfall needs to be done in stages, so each module can only go onto the next task
-        * * once every other module is on the same level (has the same number of tasks done) */
+         * * once every other module is on the same level (has the same number of tasks done) */
         var lowest_lifecycle = module_lifecycle_stage(site);
         if (should_be_working(site, gs) && lowest_lifecycle != -1){
             for (var j=0; j < site.modules.length; j++){
@@ -246,22 +289,22 @@ function update(gs)
                 switch (site.development_type) {
                     case "Waterfall":
                         if (lowest_lifecycle < module.tasks.length){
-                            var task = module.tasks[lowest_lifecycle];
-                            if (task.completed < task.actual_total){
-                                work_on_task(site, module, task);
-                            }
+                        var task = module.tasks[lowest_lifecycle];
+                        if (task.completed < task.actual_total){
+                            work_on_task(site, module, task);
                         }
-                        break;
+                    }
+                    break;
                     case "Agile":
                         var worked_on_module = false;
-                        for (var k=0; k < module.tasks.length; k++){
-                            var task = module.tasks[k];
-                            if (task.completed < task.actual_total && worked_on_module == false){
-                                work_on_task(site, module, task);
-                                worked_on_module = true;
-                            }
+                    for (var k=0; k < module.tasks.length; k++){
+                        var task = module.tasks[k];
+                        if (task.completed < task.actual_total && worked_on_module == false){
+                            work_on_task(site, module, task);
+                            worked_on_module = true;
                         }
-                        break;
+                    }
+                    break;
                 }
             }
         }

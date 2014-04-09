@@ -17,9 +17,13 @@ function deduct_daily_expenses(){
 }
 
 function new_transaction(amount){
-    GAME_DATA.gs.capital = GAME_DATA.gs.capital + amount;
-    GAME_DATA.gs.financial_log.push({
-        "time":GAME_DATA.gs.current_time, 
+    var gs = GAME_DATA.gs;
+    gs.capital = gs.capital + amount;
+    if (gs.current_time % (24*gs.days_per_month) == 0) var time = gs.current_time % (24*gs.days_per_month);
+    else var time = '';
+    gs.financial_log.push({
+        "time":time,
+        "capital": gs.capital,
         "amount":amount
     });
 }

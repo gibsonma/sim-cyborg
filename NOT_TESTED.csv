@@ -4,6 +4,7 @@ Sim/src/game.js,update_tileview,External Library
 Sim/src/game.js,update,Tested in Update Game State
 Sim/src/game.js,callback,External Library
 Sim/src/game.js,display_gold,External Library
+Sim/src/game.js,graph_financial_log,Passes data to ui no attributes to test
 Sim/src/finance.js,daily_transactions,Wrapper Function
 Sim/src/finance.js,new_transaction,Tested in deduct_daily_expenses
 Sim/src/mainpage.js,renderTileview,External Library
@@ -26,7 +27,6 @@ Sim/src/interact.js,showHomeSitePopup,External Library
 Sim/src/interact.js,afterOpen,External Library
 Sim/src/interact.js,afterClose,External Library
 Sim/src/interact.js,showSpecificSitePopup,External Library
-
 
 
 
