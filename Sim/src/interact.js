@@ -217,7 +217,6 @@ function showEmailResponseCritical()
     });
 }
 
-
 function showHomeSitePopup() {
     var home = get_home_site(GAME_DATA.gs.sites);
     showSpecificSitePopup(site, 0);
@@ -302,7 +301,8 @@ function showSpecificSitePopup(site, cost) {
                     scaleOverride:false,
                     scaleSteps:10,
                     scaleStepWidth: 10,
-                    scaleStartValue: 0
+                    scaleStartValue: 0,
+                    datasetStrokeWidth : 4
                 });
                 legend(document.getElementById("legend"), mod_graph_data);
             }
@@ -321,7 +321,8 @@ function task_datasets(module){
         for (var j=0; j < task.completion_log.length; j++){
             task_data.push(task.completion_log[j]);
         }
-        var color = "hsl(" + i*50 + ", 50%, 50%)";
+        if (task.completed < task.actual_total) var color = "hsl(" + i*50 + ", 50%, 50%)";
+        else var color = "hsla(" + i*50 + ", 50%, 50%, 0.3)";
         datasets.push({
             fillColor : "rgba(151,187,205,0.0)",
             strokeColor : color,

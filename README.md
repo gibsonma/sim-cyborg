@@ -46,7 +46,7 @@ Changing values in the config will alter how the simulation runs. For example, c
 ####Description
 This runs in the background and controls all development and progress on modules, this can be viewed whenever a scenario is selected. Sites and time progress, which drives the other features. Sites also only work for 8 hours a day (this can be changed in the master config), within their own appropriate time zone.
 ####How to Evaluate
-After selecting a management style and picking a scenario to use you will see your sites appear and start working on their assigned tasks. You will also see the time progress at the bottom of the screen.
+After selecting a management style and picking a scenario to use you will see your sites appear and start working on their assigned tasks. You will also see the time progress at the bottom of the screen. Clicking 'visit site' or 'inspect site' will display the progress of each task of each module for the site. It will also display a graph for each module of each task and it's completion %. The tasks with a bold colour are in progress, and tasks that are completed turns semi transparent. The straight line indicates on target.
 
 ###Status Display - Feature 6
 ####Description
@@ -66,8 +66,6 @@ This is the report that is shown to the player at the end of a simulation. It de
 ####How to Evaluate
 The end of game report appears at the end of each simulation. To view it quickly select the fast scenario as this only lasts 3 days. Below is an explanation of each item in the report and how it is calculated.
 
-* Final Score
-    * This is calculated using a given formula (see end of README).
 * Expected Project Length
     * This uses the nominal schedule calculater which takes the total effort needed to complete all the tasks and how much a developer can optimally do in one day and calculates how long the project should take in theory. This does not factor in any problems that happen or anything else that may effect worker productivity or the effort to complete one or more tasks.
 * Actual Project Length
@@ -83,9 +81,13 @@ The end of game report appears at the end of each simulation. To view it quickly
 * Actual Expenditure
     * This represents the actual amount of capital spent through the length of the simulation. It is calculated by summing all the costs incurred throughout the simulation.
 * Expected Revenue
-    * 
+    * This is the amount of revenue a player is expected to earn in 6 months. It is defined in the master config.
 * Actual Revenue
-    * 
+    * The actual revenue is the amount of revenue a player expects to make in 6 months, plus revenue for the number of months they are early or minus revenue for the months they are late
+        * Note that the formula to calculate the amount of months expected and remaining is passed to Math.ceiling(). This means that if a player goes even 1 day into the next release, it is seen as an extra month of work time.
+* Final Score
+    * This is calculated using the formula that we discussed:
+        * final_score = remaining_capital + actual_revenue
 
 ###Nominal Schedule Calculator - Feature 5
 ####Description
@@ -93,12 +95,11 @@ Computes the schedule of the entire project taking waterfall and agile developme
 
 The schedule calculator intelligently recognises that in waterfall modules will be waiting on the longest module to finish each task and accounts for this in the estimation. It also recognises that in waterfall a module that is delayed may not be be behind schedule, if that module is not the longest module and does not delay the project as a whole. 
 
-In agile it recognises that if  a module is finished but is waiting on other modules to finish that it is not behind schedule. 
+In agile it recognises that if a module is finished but is waiting on other modules to finish that it is not behind schedule. 
 
 The schedule calculator is used to display the status of sites, modules and tasks, is used to estimate the days remaining in a project, and is used in the end of game screen to calculate final game score, revenue, the expected project length and the expected expenditure.
-####How to Evaluate
-As the simulation is running, the player can see how well each site is doing with regard to their schedule, as the status is displayed on the tile, telling the player if the site is ahead/behind and also by how far.
-
+#####How to Evaluate
+As the simulation is running, the player can see how well each site is doing with regard to their schedule, as the status is displayed on the tile, telling the player if the site is ahead/behind and also by how far. The player can also see how many days are remaining in the simulation according to the schedue calculator. The schedule calculator is also used in the end of game report.
 ###Game Score Calculator - Feature 3
 ####Description
 This feature calculates the final game score shown in the end of game report. It does this by taking into account the player's budget and their revenue.
