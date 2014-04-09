@@ -181,7 +181,7 @@ function display_final_score(gs){
     html += tabled("Expected project length: ",  stats.expected_months_str);
     html += tabled("Actual project length: ",  stats.months_str);
     html += tabled("Starting capital: ", "$" + gs.starting_capital);
-    html += tabled("Capital reamining: ",  "$" + Math.round(gs.capital*10)/10);
+    html += tabled("Capital remaining: ",  "$" + Math.round(gs.capital*10)/10);
     html += tabled("Total workers: ", number_assigned_workers());
     html += "<br>";
     html += tabled("Expected expenditure: ", "$" + stats.expected_expenditure);
