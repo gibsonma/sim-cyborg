@@ -200,8 +200,8 @@ The user may see random world events happen based on their luck stat, each of wh
 Edit this at /Sim/data/config_file.json
 Values & Definitions for Global, Temporal and Cultural Distance were taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
 
-* Global Distances: Defines geographical distance between home site and other sites, a low number indicates that the distance between the home site and a given site is small.
-* Temporal Distances: Defines time difference between home site and other sites, a low number indicates that the time zones of the home site and a given site are the same or overlap.
+* Global Distances: Defines geographical distance between home site and other sites, a low number indicates that the distance betwen the home site and a given site is small.
+* Temporal Distances: Defines time difference between home site and other sites, a low number indicates that the timzones of the home site and a given site are the same or overlap.
 * Cultural Distances: Defines cultural differences between home site and other sites, a low number indicates that the culture of the home site and a given site are similar.
 * Revenue: Revenue per year in dollars($).
 * Starting Capital: The amount of money the player starts with in dollars($).
@@ -209,7 +209,8 @@ Values & Definitions for Global, Temporal and Cultural Distance were taken from 
 * Developer Rate: The cost per hour a developer incurs in dollars($).
 * Developer Working Hours: Hours a day the developer will work.
 * Problem Constant: Constant value for problem simulator, used to tweak difficulty, decrease to reduce frequency of problems.
-* Special Event Constant: Represents the chance that a good/bad event will occur. A lower value reduces the probability while a higher value does the opposite
+* Special G Event Constant: Represents the chance that a good event will occur. A lower value reduces the probability while a higher value does the opposite
+* Special B Event Constant: Represents the chance that a bad event will occur. A lower value reduces the probability while a higher value does the opposite
 * Morale Modifier: Determines how quickly a moral intervention's impact errodes after repeated use. The higher the value, the quicker the erosion.
 * Min Morale: Determines the lowest value that a site's morale can be.
 * Max Morale: Determines the highest value that a site's morale can be
