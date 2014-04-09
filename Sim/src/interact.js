@@ -217,7 +217,6 @@ function showEmailResponseCritical()
     });
 }
 
-
 function showHomeSitePopup() {
     var home = get_home_site(GAME_DATA.gs.sites);
     showSpecificSitePopup(site, 0);

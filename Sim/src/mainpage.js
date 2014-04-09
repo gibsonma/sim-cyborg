@@ -130,7 +130,7 @@ function renderTileview() {
         $('.site_tile').not('[data-name="' + home.name + '"]').find('.info-popup-tasks').toggle();      
         $('.site_tile>.info-popup').click(function() {
             update_actual_total(home);
-            showHomeSitePopup();
+            showSpecificSitePopup(home,0);
         });
         $('.site_tile>.info-popup-nonhome').click(function() {
             var siteName = $(this).parent().attr('data-name');

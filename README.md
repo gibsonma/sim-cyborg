@@ -46,7 +46,7 @@ Changing values in the config will alter how the simulation runs. For example, c
 ####Description
 This runs in the background and controls all development and progress on modules, this can be viewed whenever a scenario is selected. Sites and time progress, which drives the other features. Sites also only work for 8 hours a day (this can be changed in the master config), within their own appropriate time zone.
 ####How to Evaluate
-After selecting a management style and picking a scenario to use you will see your sites appear and start working on their assigned tasks. You will also see the time progress at the bottom of the screen.
+After selecting a management style and picking a scenario to use you will see your sites appear and start working on their assigned tasks. You will also see the time progress at the bottom of the screen. Clicking 'visit site' or 'inspect site' will display the progress of each task of each module for the site. It will also display a graph for each module of each task and it's completion %. The tasks with a bold colour are in progress, and tasks that are completed turns semi transparent. The straight line indicates on target.
 
 ###Status Display - Feature 6
 ####Description
