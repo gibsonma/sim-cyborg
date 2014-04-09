@@ -79,8 +79,19 @@ body {
 	width: 400px;
 	height: 500px;
 	background-color: rgba(121, 202, 100, 0.5);
-	border-radius: 5px 5px;
+	border-color: rgb(121, 202, 100);
+	border-radius: 10px 10px;
+	border-width: 5px;
+	border-style: none;
 	font-weight: bold;
+	transition: border 500ms ease-out; 
+  	-webkit-transition: border 500ms ease-out; 
+  	-moz-transition: border 500ms ease-out;
+  	-o-transition: border 500ms ease-out; 
+}
+
+.site_tile.current-site {
+	border-style: solid;
 }
 
 .site_tile>.info-popup {
@@ -89,10 +100,12 @@ body {
 
 .site_tile.schedule-behind {
 	background-color: rgba(200, 202, 100, 0.5);
+	border-color: rgb(200, 202, 100);
 }
 
 .site_tile.schedule-very-behind {
 	background-color: rgba(214, 73, 73, 0.5);
+	border-color: rgb(214, 73, 100);
 }
 
 #main_content,#game_state_box {
