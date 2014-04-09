@@ -200,8 +200,8 @@ The user may see random world events happen based on their luck stat, each of wh
 Edit this at /Sim/data/config_file.json
 Values & Definitions for Global, Temporal and Cultural Distance were taken from http://jnoll.nfshost.com/cs4098/projects/global_distance.html
 
-* Global Distances: Defines geographical distance between home site and other sites, a low number indicates that the distance betwen the home site and a given site is small.
-* Temporal Distances: Defines time difference between home site and other sites, a low number indicates that the timzones of the home site and a given site are the same or overlap.
+* Global Distances: Defines geographical distance between home site and other sites, a low number indicates that the distance between the home site and a given site is small.
+* Temporal Distances: Defines time difference between home site and other sites, a low number indicates that the time zones of the home site and a given site are the same or overlap.
 * Cultural Distances: Defines cultural differences between home site and other sites, a low number indicates that the culture of the home site and a given site are similar.
 * Revenue: Revenue per year in dollars($).
 * Starting Capital: The amount of money the player starts with in dollars($).
