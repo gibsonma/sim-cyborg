@@ -26,18 +26,21 @@ window.onload = function() {
     $(document).ready(function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
+            showHomeSiteBackground();
             renderTileview();
             $('#char-Sheet').show();
             $('#options').show();
         });
         $('#scenario_2').click(function() {
             setupGame(scene,2);
+            showHomeSiteBackground();
             renderTileview();
             $('#char-Sheet').show();
             $('#options').show();
         });
         $('#scenario_3').click(function() {
             setupGame(scene,3);
+            showHomeSiteBackground();
             renderTileview();
             $('#char-Sheet').show();
             $('#options').show();
@@ -64,6 +67,15 @@ window.onload = function() {
             displayCharSheet(GAME_DATA.gs);
         });
     });
+};
+
+function showHomeSiteBackground() {
+    index = get_home_site_index(GAME_DATA.gs.sites);
+    office = background.Sprite(site_images[index] || site_images[0]);
+    office.transformOrigin(0, 0);
+    office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
+    office.update();
+    GAME_DATA.current_site = index;
 };
 
 //Tracks when the player selects an intervention to buy

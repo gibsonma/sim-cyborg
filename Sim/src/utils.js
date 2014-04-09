@@ -139,6 +139,14 @@ function get_home_site(sites){
     }
     console.log("Home site not set");
 }
+
+function get_home_site_index(sites){
+    for (var i=0; i < sites.length; i++){
+        if (sites[i].home == true) return i;
+    }
+    console.log("Home site not set");
+}
+
 //Iterates through a list of tasks and return the tasks that are currently being worked on
 function currently_doing_which_task(tasks){
     for (var i=0; i<tasks.length; i++){
