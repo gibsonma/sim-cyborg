@@ -29,7 +29,6 @@ Details of the config file are given at the end of this README.
 ###To Run tests:
 Open localhost:3000/SpecRunner.html in a browser and the results of all present tests will be displayed on the screen. Source code is found in /src and the specifications for the tests themselves are found in /spec.
 
-
 ###List of Features and their usage:
 
 ###Release 1
@@ -39,21 +38,25 @@ Open localhost:3000/SpecRunner.html in a browser and the results of all present 
 See bottom of README
 #####How to Evaluate
 See bottom of README
+
 ####Process Simulator - Feature 9
 #####Description
 This runs in the background and controls all development and progress on modules, this can be viewed whenever a scenario is selected. Sites and time progress, which drives the other features. Sites also only work for 8 hours a day (this can be changed in the master config), within their own appropriate time zone.
 #####How to Evaluate
 After selecting a management style and picking a scenario to use you will see your sites appear and start working on their assigned tasks. You will also see the time progress at the bottom of the screen.
+
 ####Status Display - Feature 6
 #####Description
 After selecting a management style and picking a scenario the simulation will start. Each site will have an associated tile which will be coloured green at the start of the simulation. As the game progresses these tiles may change to yellow or red depending on the current state of the site. 
 #####How to Evaluate
 If a problem is ignored then there is a chance that a site's tile will turn red, indicating that the site has experienced a critical problem. In addition, the degree to which the site is on schedule is displayed on each site tile, ranging from a site begin on, behind or ahead of schedule. As a site falls behind schedule its site tile will change from green to yellow to reflect this.
+
 ####Default Scenarios - Feature 20
 #####Description
 The default scenarios allow the player to quickly select one of three predefined simulation modes without having to define which sites they have, what modules to work on etc. Upon selecting a scenario the details of said scenario will be presented to the user, detailing which sites are present in the scenario, the development method used, how many workers are at each site and what modules are being worked on.
 #####How to Evaluate
 Clicking different scenarios changes how the simulation plays. Choosing the global scenario gives the player 3 sites, New York, Shanghai and Dublin while picking the Waterfall scenario gives Poland and Dublin. The fast scenario is mainly used for testing purposes, giving the same sites as the global scenario. Each scenario also lasts for differing amounts of time, with the fast scenario only lasting for 3 days for example.
+
 ####End of Game Report - Feature 14
 #####Description
 This is the report that is shown to the player at the end of a simulation. It details how the simulation went, giving actual and estimated running time, revenue and productivity.
@@ -80,7 +83,6 @@ The end of game report appears at the end of each simulation. To view it quickly
     * 
 * Actual Revenue
     * 
-
 
 ####Nominal Schedule Calculator - Feature 5
 #####Description
@@ -141,7 +143,6 @@ This feature allows the player to see the current state of a site through the me
 As the site’s morale changes the facial expression/mood of the sprite displayed on the tile view changes.
 There are also unique sprites for each site so each sprite does not share morale with the other sites.
 
-
 ####Site Morale - Feature 31
 #####Description
 Each site has a morale value which reflects how motivated the site is. The player can do things such as hold a party or organise a fun office excursion to increase a site's morale. However, repeated use of such activities will render them less effective at boosting morale. 
@@ -176,6 +177,7 @@ Once a problem occurs the player is notified of the type of problem and where it
 ####Management Style - Feature 34
 #####Description
 The management style strives to provide a way of adding in the human element to the software development process by creating for the player an avatar with positive and negative qualities to represent their agency in the world. Each player is assigned “stats” based on one of three archetypes:
+
 * Laissez-Faire
 * Authoritarian
 * A person who got the job through luck alone
@@ -183,6 +185,7 @@ The management style strives to provide a way of adding in the human element to 
 Each of these have their own associated benefits and downsides which are intentionally hidden from the player to encourage experimentation and replayability. The impact that each management style has is relatively small, however, it can be the difference between success and failure of the project.
 #####How to Evaluate
 Once the game begins the user will be immediately presented with a choice of management styles, and once selected they may view their statistics in the “View Character Sheet” tab, listed at the top of the screen. The relevant stats are listed below for posterity.
+
 * Sensitivity - used to reduce cultural issues
 * Perception - reduces the monetary cost of problems
 * Empathy - increases morale
@@ -192,9 +195,6 @@ Once the game begins the user will be immediately presented with a choice of man
 * Luck - allows for random world events to happen
 
 The user may see random world events happen based on their luck stat, each of which may be positive or negative. These events are all listed in the master config file and may be adjusted at will.
-
-
-
 
 ###Master Config:
 Edit this at /Sim/data/config_file.json
