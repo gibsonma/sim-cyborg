@@ -54,7 +54,7 @@ body {
 
 .workerImages {
 	position: absolute;
-	left: -236px;
+	left: -307px;
 	bottom: -38px;
 }
 .workerImages>img {
@@ -65,6 +65,13 @@ body {
 	background: #5E8DC0;
 	color: white;
 	border-collapse:collapse;
+}
+.management-buy {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.management-buy>img {
+	margin-bottom: 5px;
 }
 .ptable, .ptr, .ptd {
 	border: 1px #000 solid;

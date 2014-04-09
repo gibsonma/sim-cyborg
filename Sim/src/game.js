@@ -132,10 +132,10 @@ function update_worker_images(gs, current_site)
             morale_class = "angry";
             break;
     }
-
-    if ($('.workerImages>img.' + morale_class).is(':hidden')) {
-        $('.workerImages>img:not(.' + morale_class + ')').hide();
-        $('.workerImages>img.' + morale_class).show();
+    $imageSet = $('.workerImages').eq(GAME_DATA.current_site);
+    if ($imageSet.find('img.' + morale_class).is(':hidden')) {
+        $('.workerImages>img').hide();
+        $imageSet.find('img.' + morale_class).show();
     };
     
     return morale_class;

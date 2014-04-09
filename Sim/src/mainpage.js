@@ -95,7 +95,7 @@ $('body').on('click', '#m_intervention', function(){
     implementChosenMoraleIntervention(GAME_DATA.gs, tmp);
 } );
 //Tracks what management style the player chooses
-$('body').on('click', '#management-buy', function(){ 
+$('body').on('click', '.management-buy', function(){ 
     var tmp = $(this).context.innerHTML;
     implementChosenManagementStyle(GAME_DATA.gs, tmp);
 } );
