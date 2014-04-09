@@ -244,7 +244,9 @@ var tileView;
 
 function update_tileview(gs) {
     if (tileView) {
-        tileView.update('state');    
+        tileView.update();
+        $('.current-site').removeClass('current-site');
+        $('.site_tile').eq(GAME_DATA.current_site).addClass('current-site');    
     }
 }
 

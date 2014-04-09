@@ -27,17 +27,20 @@ window.onload = function() {
         $('#scenario_1').click(function() {
             setupGame(scene,1);
             renderTileview();
+            showHomeSiteBackground();
             $('#char-Sheet').show();
             $('#options').show();
         });
         $('#scenario_2').click(function() {
             setupGame(scene,2);
+            showHomeSiteBackground();
             renderTileview();
             $('#char-Sheet').show();
             $('#options').show();
         });
         $('#scenario_3').click(function() {
             setupGame(scene,3);
+            showHomeSiteBackground();
             renderTileview();
             $('#char-Sheet').show();
             $('#options').show();
@@ -64,6 +67,16 @@ window.onload = function() {
             displayCharSheet(GAME_DATA.gs);
         });
     });
+};
+
+function showHomeSiteBackground() {
+    var index = get_home_site_index(GAME_DATA.gs.sites);
+    office = background.Sprite(site_images[index] || site_images[0]);
+    office.transformOrigin(0, 0);
+    office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
+    office.update();
+    GAME_DATA.current_site = index;
+    $('.site_tile').eq(index).addClass('current-site');
 };
 
 //Tracks when the player selects an intervention to buy
@@ -186,7 +199,7 @@ function renderTileview() {
                 office.transformOrigin(0, 0);
                 office.scale(office.scene.w / office.imgNaturalWidth, office.scene.h / office.imgNaturalHeight);            
                 office.update();
-                GAME_DATA.current_site = i;
+                GAME_DATA.current_site = i;     
             });
         });
 

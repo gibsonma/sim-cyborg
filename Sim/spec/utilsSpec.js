@@ -98,6 +98,22 @@ describe("get_home_site", function()
     });
 });
 
+describe("get_home_site_index", function()
+{
+    var game = new GameState(1);
+    var sites = game.sites;
+    var fake_sites = [];
+    game.home_site = sites[2];
+    it("Returns the index of the home site when given an array of sites", function()
+    {
+        expect(get_home_site_index(sites)).toEqual(2);
+    });
+    it("Doesn't return anything of site not found", function()
+    {
+        expect(get_home_site_index(fake_sites)).not.toBeDefined();
+    });
+});
+
 //NOTE result is passed to the expect as calling the function
 //or assigning result inside the it block causes it to return undefined...
 describe("getEffortForModule", function()
