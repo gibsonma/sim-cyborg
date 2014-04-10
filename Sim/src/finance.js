@@ -19,8 +19,9 @@ function deduct_daily_expenses(){
 function new_transaction(amount){
     var gs = GAME_DATA.gs;
     gs.capital = gs.capital + amount;
-    if (gs.current_time % (24*gs.days_per_month) == 0) var time = gs.current_time /(24*gs.days_per_month);
+    if (gs.current_time % (24*7) == 0) var time = gs.current_time /(24*7);
     else var time = '';
+    console.log("capital: " + gs.capital);
     gs.financial_log.push({
         "time":time,
         "capital": gs.capital,

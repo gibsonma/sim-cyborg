@@ -231,10 +231,6 @@ function graph_financial_log(){
     new Chart(ctx).Line(data,{
         bezierCurve:false,
         pointDot:false,
-        scaleOverride:false,
-        scaleSteps:10,
-        scaleStepWidth: 10,
-        scaleStartValue: 0,
         datasetStrokeWidth : 4
     });
     legend(document.getElementById("finance_legend"), data);
